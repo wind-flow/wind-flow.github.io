@@ -11,6 +11,6 @@ economy :
   description: False
   cover: assets/built/images/background-frontend.jpg
 splunk :
-  name: security
+  name: splunk
   description: False
-  cover: assets/built/images/background-frontend.jpg
+  cover: assets/images/splunk.jpg

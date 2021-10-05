@@ -12,5 +12,4 @@ author: wind-flow
 ---
 {% include bots-table-of-contents.html %}
 
-PDT(Pacific Daylight Time)
-출처 : https://luran.me/339
+BOTS-V3
