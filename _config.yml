@@ -51,13 +51,13 @@ title: wind-flow Tech Blog
 description: wind-flow Tech Blog
 # blog home에 표시될 blog에 대한 전반적인 설명.
 
-cover: assets/built/images/blog-cover1.png
+cover: assets/images/blog-cover1.png
 # blog home에 표시될 blog cover image.
 
 logo:
 logo_dark:
 
-favicon: assets/built/images/favicon.jpg
+favicon: assets/built/images/wind-flow.png
 # favicon으로 사용할 image
 
 production_url: https://wind-flow.github.io/
