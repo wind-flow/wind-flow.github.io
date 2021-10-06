@@ -63,7 +63,7 @@ favicon: assets/built/images/wind-flow.png
 production_url: https://wind-flow.github.io/
 # 최종적으로 blog가 운영될 url
 
-source_url: https://github.com/wind-flow/wind-flow.github.io/
+source_url: https://github.com/wind-flow/GithubPageSourceRepo/
 # blogmaker(jekyll source folder)에 대한 github repository
 
 # Social info
