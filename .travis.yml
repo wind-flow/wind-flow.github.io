@@ -18,10 +18,3 @@ env:
 branches:
   only:
   - main
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: "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"
-  keep_history: true
-  on:
-    branch: main
