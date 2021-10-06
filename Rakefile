@@ -68,14 +68,16 @@ namespace :site do
     sha = `git log`.match(/[a-z0-9]{40}/)[0]
     Dir.chdir(CONFIG["destination"]) do
       # check if there is anything to add and commit, and pushes it
-      sh "echo \"hello5\" out"
-      sh "echo \"https://$GITHUB_TOKEN@github.com/#{USERNAME}/#{USERNAME}.github.io.git #{DESTINATION_BRANCH}\""
       sh "if [ -n '$(git status)' ]; then
-            echo \"hello5 in\"
+            echo \"hello1 in\"
             git add --all .;
+            echo \"hello2 in\"
             git commit -m 'Updating to #{USERNAME}/#{REPO}@#{sha}.';
+            echo \"hello3 in\"
             git push https://$GITHUB_TOKEN@github.com/#{USERNAME}/#{USERNAME}.github.io.git #{DESTINATION_BRANCH} --quiet ;
+            echo \"hello4 in\"
          fi"
+       sh "echo \"hello5 out\""
       puts "Pushed updated branch #{DESTINATION_BRANCH} to GitHub Pages"
     end
   end
