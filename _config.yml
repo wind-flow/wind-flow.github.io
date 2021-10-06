@@ -102,7 +102,7 @@ permalink: /:title
 
 # gems and other configs
 plugins: [jekyll-paginate, jekyll-feed, jekyll-gist]
-
+ 
 feed:
   path: feed.xml
 
