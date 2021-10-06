@@ -77,7 +77,6 @@ namespace :site do
             git push https://$GITHUB_TOKEN@github.com/#{USERNAME}/#{USERNAME}.github.io.git #{DESTINATION_BRANCH} --quiet ;
             echo \"hello4 in\"
          fi"
-       sh "echo \"hello5 out\""
       puts "Pushed updated branch #{DESTINATION_BRANCH} to GitHub Pages"
     end
   end
