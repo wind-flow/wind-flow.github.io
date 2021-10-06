@@ -6,8 +6,10 @@ rvm:
 install:
 - bundle install
 before_script:
+- git config --global --unset credential.helper
 - git config --global user.email "jnu2345@gmail.com"
 - git config --global user.name "wind-flow"
+
 script: bundle exec rake site:deploy --quiet
 env:
   global:
