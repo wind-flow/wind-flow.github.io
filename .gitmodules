@@ -1,0 +1,3 @@
+[submodule "output"]
+	path = output
+	url = https://github.com/wind-flow/wind-flow.github.io
