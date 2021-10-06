@@ -75,7 +75,6 @@ namespace :site do
             git commit -m 'Updating to #{USERNAME}/#{REPO}@#{sha}.';
             echo \"hello3 in\"
             git push https://$GITHUB_TOKEN@github.com/#{USERNAME}/#{USERNAME}.github.io.git #{DESTINATION_BRANCH} --quiet ;
-            echo \"hello4 in\"
          fi"
       puts "Pushed updated branch #{DESTINATION_BRANCH} to GitHub Pages"
     end
