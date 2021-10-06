@@ -12,6 +12,13 @@ before_script:
 - git config --global user.name "wind-flow"
 
 script: bundle exec rake site:deploy --quiet
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: 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  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
+  on:
+    branch: main
 env:
   global:
     secure: O+1eAn8imGVeqdoTynOl7uD/WYlXQpd9EgdZ86/kZjr9wvynJvMaJ7aVCUrElA4/HmaZ+TnR8ZyAO062AeNDm4jz290tpByxUSI1ucpTF5dwqG+QEfwKFApl8+wuUQ2BeDBZ5SYjl75OrW57CCQy5qkfYnPiRhhxiJCTHchmi81UW03rtCg0YRA/72TPtoRWBKDk0IOTUw5ZBM0JkvBVb+/K8aUD8WHGvPeBs19WFZmtzlxo/lZpMW0Ww5F7dZ1T295jfIm8pZjVgMQQBxzrL5+K/KfaL/P4DEiqRGU5nJPtIg5cb10uiTUroUURS4+R4CHgJQc7XGI+NZDPpHhXwscUoEj1QqwNZhgijyJKFBgHLi4K6tVaHPa4/DAzjDJRkVvPIrpD4GNU+Q20cU2VnSkV6qUB2w7+NCCbi6nxiDFofYglOuom0w5Mib9nX9BxN+naGlXrEQq/89w0HOaaGic8u9WoOSb76nwSfSWW8DfdQTQmQ/boyvr3oxhWv5juJxPbJuXWQGQbgiDqGHv+RbLPbs/Cz93mhaSjD4Kd+a+S3p94AE2A91RL3O1hrkcV1G3XtqfMPCdgDKosRV8hwgKd2yqzsAXgJgBka42Y1aO6fOS2zrlQvBkwXXFfJ8IvIAc6qw4xdpyK4kIqF0AdEDaweWOgdvdtJxNRmKdIVPY=
