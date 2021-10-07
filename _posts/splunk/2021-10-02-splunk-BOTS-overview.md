@@ -41,6 +41,16 @@ metadata 명령어에 대해선 [이 링크](https://docs.splunk.com/Documentati
 | eval extract_values=mvdedup(extract_values)
 ```
 
+2. 검색 매크로 옆 ```+새로 추가```를 누릅니다.
+![매크로 추가#1]({{site.url}}/assets/built/images/bots/overview/createMacro-1.jpg)
+
+3. 위 쿼리를 fieldbrief란 이름의 매크로로 저장합니다.
+![매크로 추가#2]({{site.url}}/assets/built/images/bots/overview/createMacro-2.jpg)
+
+4. 조회할 sourcetype을 기재 후 `fieldsbreif`를 추가하면 아래와 같이 field와 값들을 한눈에 볼 수 있다.
+![매크로 추가#2]({{site.url}}/assets/built/images/bots/overview/macroResult.jpg)
+
+
 # LookUp file 조회
 ```
 | rest /servicesNS/-/-/data/lookup-table-files
