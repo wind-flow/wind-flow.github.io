@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots-v1.jpg
+cover:  assets/built/images/bots/v1/bots-v1.jpg
 navigation: True
 title: splunk-bots-v1 write up
 date: '2021-10-03 20:04:36 +0530'

@@ -20,3 +20,7 @@ author: wind-flow
 Boss of the SOC (BOTS) 대회는 Splunk를 활용, 제한 시간 동안 해커들의 침입으로 발생한 보안 사고를 해결하는 보안 전문가들의 대회입니다. 매일 발생하는 실제 보안 사고 시나리오를 바탕으로 Splunk의 모든 보안 솔루션(Splunk User Behavior analytics, Splunk Enterprise Security, Splunk Phantom)을 활용하여 보안 사고에 방어해야 합니다.
 
 [BOTS 대회 안내](https://events.splunk.com/Splunk-Korea-2020-BOTS-Day)
+
+앞서 필요한 데이터 발췌에 유용한 검색 기법을 소개하고자 합니다.
+
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/overview/fieldbrief.jpg)
