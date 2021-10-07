@@ -2,6 +2,7 @@
 markdown: kramdown #rdiscount, redcarpet, kramdown
 # kramdown : markdown의 개조판.
 # markdown에서 불편한 사항을 개선한 형태.
+words_per_minute: 200
 
 # MyData
 owner:

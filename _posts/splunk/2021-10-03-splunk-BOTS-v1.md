@@ -13,36 +13,43 @@ author: wind-flow
 
 ## Splunk SOC 대회인 BOSS OF THE SOC(BOTS) Write up
 
-{% include bots-table-of-contents.html %}
+{% include bots-table-of-contents.html %}  
+  
+시나리오는 아래와 같습니다.
 
 Scenario 1 (APT):
-
 The focus of this hands on lab will be an APT scenario and a ransomware scenario. You assume the persona of Alice Bluebird, the analyst who has recently been hired to protect and defend Wayne Enterprises against various forms of cyberattack.
+In this scenario, reports of the below graphic come in from your user community when they visit the Wayne Enterprises website, and some of the reports reference "P01s0n1vy." In case you are unaware, P01s0n1vy is an APT group that has targeted Wayne Enterprises. Your goal, as Alice, is to investigate the defacement, with an eye towards reconstructing the attack via the Lockheed Martin Kill Chain.  
 
-In this scenario, reports of the below graphic come in from your user community when they visit the Wayne Enterprises website, and some of the reports reference "P01s0n1vy." In case you are unaware, P01s0n1vy is an APT group that has targeted Wayne Enterprises. Your goal, as Alice, is to investigate the defacement, with an eye towards reconstructing the attack via the Lockheed Martin Kill Chain.
+\- 시나리오#1 요약  
+해킹그룹 ```P01s0n1vy```가 ```Wayne```기업를 해킹했습니다. 당신은 보안 담당자, Alice Bluebird의 입장에서 ```Lockheed Martin의 Cyberkillchain``` 모델을 이용해 침해 사고를 분석해야 합니다.
 
 ![Scenario 1](https://cyberdefenders.org/static/img/BOTSv1/Defacement.png)
 
-Scenario 2 (Ransomeware):
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/botsv1/cyberkillchain.jpg)
 
-In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack. 
+Scenario 2 (Ransomeware):
+In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack.  
+
+\- 시나리오#2 요약  
+```Wayne```기업 직원 중 한 명이 시스템의 파일이 암호화 되었으며 파일을 복호화하려면 비용을 지불해야 하는 내용의 이미지를 보게 됩니다. 시스템이 ```Wayne```의 ```Cerber 랜섬웨어```에 감염된 것으로 보이며 귀하의 목표는 재공격을 염두에 두고 랜섬웨어를 조사하는 것입니다.
 
 ![Scenario 2](https://cyberdefenders.org/static/img/BOTSv1/ransomewere.png)
 
-요약 : 
-
-![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/botsv1/cyberkillchain.jpg)
-
 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?  
-\(웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까??)
-<details><summary>hint#1</summary>
-Start your search with "sourcetype=stream:http" and review the rich data captured in these events.
+웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까?
+<details>
+  <summary alignment="left">hint#1</summary>
+Start your search with "sourcetype=stream:http" and review the rich data captured in these events.<br>
+(sourcetype=stream:http로 검색을 시작하고 이러한 이벤트에서 캡처된 풍부한 데이터를 검토하십시오.)
 </details>
 
 <details>
   <summary>hint#2</summary>
-You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count" </span>
+You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count"<br>
+(출발지 및 대상 IP 주소가 각각 src_ip 및 dest_ip라는 필드에 저장되어 있습니다. 조합하여 가장 많은 HTTP이벤트를 조사합니다.)
 </details>
+
 ㅇㅇ
 
 
