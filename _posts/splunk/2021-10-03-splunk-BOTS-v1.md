@@ -24,7 +24,7 @@ In this scenario, reports of the below graphic come in from your user community 
 ({{site.baseurl}}/assets/built/images/botsv1/bots-v1-scnario.jpg)
 
 
-![록히드마틴 사이버킬체인 7단계]({{site.baseurl}}/cyberkillchain.jpg)
+![록히드마틴 사이버킬체인 7단계]({{site.baseurl}}/assets/built/images/botsv1/cyberkillchain.jpg)
 
 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?  
 \(웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까??)
