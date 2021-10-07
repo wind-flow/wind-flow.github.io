@@ -21,7 +21,7 @@ The focus of this hands on lab will be an APT scenario and a ransomware scenario
 
 In this scenario, reports of the below graphic come in from your user community when they visit the Wayne Enterprises website, and some of the reports reference "P01s0n1vy." In case you are unaware, P01s0n1vy is an APT group that has targeted Wayne Enterprises. Your goal, as Alice, is to investigate the defacement, with an eye towards reconstructing the attack via the Lockheed Martin Kill Chain.
 
-({{site.baseurl}}/assets/built/images/botsv1/bots-v1-scnario.jpg)
+![Scenario 1]({{site.baseurl}}/assets/built/images/botsv1/bots-v1-scenario.jpg)
 
 
 ![록히드마틴 사이버킬체인 7단계]({{site.baseurl}}/assets/built/images/botsv1/cyberkillchain.jpg)
