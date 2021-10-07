@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/splunk-logo.png
+cover:  assets/built/images/bots-v1.jpg
 navigation: True
 title: splunk-bots-v1 write up
 date: '2021-10-03 20:04:36 +0530'
@@ -11,7 +11,8 @@ subclass: 'post tag-splunk'
 author: wind-flow
 ---
 
-## Splunk SOC 대회인 BOTS 풀이를 작성
+## Splunk SOC 대회인 BOSS OF THE SOC(BOTS) Write up
+
 {% include bots-table-of-contents.html %}
 
 ![록히드마틴 사이버킬체인 7단계]({{site.baseurl}}/cyberkillchain.jpg)
@@ -21,8 +22,8 @@ index=botsv1 imreallynotbatman.com sourcetype=stream:http http_method=POST
 
 ### 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?
 ---
-
 hint#1 : <span style="color:white"> Start your search with "sourcetype=stream:http" and review the rich data captured in these events. </span>
+
 hint#2 : <span style="color:white"> You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count" </span>
 
 ### 102	What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example "Microsoft" or "Oracle")

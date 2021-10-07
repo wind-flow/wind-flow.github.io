@@ -51,7 +51,7 @@ title: wind-flow Tech Blog
 description: wind-flow Tech Blog
 # blog home에 표시될 blog에 대한 전반적인 설명.
 
-cover: assets/images/blog-cover1.png
+cover: assets/images/background.jpg
 # blog home에 표시될 blog cover image.
 
 logo:
@@ -131,17 +131,17 @@ destination: ./output/
 # exclude는 Jekyll컴파일 시 destination에 포함될 필요가
 # 없는것들을 명시한다. (node_modules와 필요없는 것들은 제외)
 exclude:
-  - README.md
-  - Rakefile
-  - Gemfile
-  - Gemfile.lock
-  - changelog.md
-  - "*.Rmd"
-  - vendor
-  - .travis.yml
-  - node_modules
-  - assets/css
-  - assets/images
+  # - README.md
+  # - Rakefile
+  # - Gemfile
+  # - Gemfile.lock
+  # - changelog.md
+  # - "*.Rmd"
+  # - vendor
+  # - .travis.yml
+  # - node_modules
+  # - assets/css
+  # - assets/images
 #   - _posts/angular
 #   - _posts/et-cetera
 #   - _posts/python

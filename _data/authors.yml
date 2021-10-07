@@ -1,9 +1,9 @@
 wind-flow:
   username: kimgunwoo
   name: wind-flow
-  url_full: # http://wind-flow.github.io/jasper2/
+  url_full: http://wind-flow.github.io/
   url: wind-flow.github.io
-  bio: Finance Security
+  bio: Finance Security IT Analyst
   picture: assets/images/profile.png
   # facebook: ghost
   # twitter: tryghost
