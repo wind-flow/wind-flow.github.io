@@ -1,10 +1,11 @@
 wind-flow:
-  username: kimgunwoo
-  name: wind-flow
+  username: wind-flow
+  name: Kim-Gunwoo
   url_full: http://wind-flow.github.io/
   url: wind-flow.github.io
   bio: Finance Security IT Analyst
   picture: assets/images/profile.png
   # facebook: ghost
   # twitter: tryghost
+  linkedin: wind-flow
   cover: False

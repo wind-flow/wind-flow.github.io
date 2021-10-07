@@ -1,16 +1,4 @@
-jekyll :
-  name: jekyll
-  description: False
-  cover: assets/built/images/background-frontend.jpg
-python :
-  name: python
-  description: False
-  cover: assets/built/images/background-frontend.jpg
-economy :
-  name: economy
-  description: False
-  cover: assets/built/images/background-frontend.jpg
 splunk :
   name: splunk
-  description: False
+  description: Splunk에 대한 지식
   cover: assets/images/splunk.jpg
