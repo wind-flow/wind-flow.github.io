@@ -22,8 +22,8 @@ index=botsv1 imreallynotbatman.com sourcetype=stream:http http_method=POST
 ### 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?
 ---
 
-hint#1 : <span style="color:whithe"> Start your search with "sourcetype=stream:http" and review the rich data captured in these events. </span>
-hint#2 : <span style="color:whithe"> You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count" </span>
+hint#1 : <span style="color:white"> Start your search with "sourcetype=stream:http" and review the rich data captured in these events. </span>
+hint#2 : <span style="color:white"> You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count" </span>
 
 ### 102	What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example "Microsoft" or "Oracle")
 ---
