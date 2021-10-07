@@ -22,10 +22,26 @@ Boss of the SOC (BOTS) 대회는 Splunk를 활용, 제한 시간 동안 해커�
 [BOTS 대회 안내](https://events.splunk.com/Splunk-Korea-2020-BOTS-Day)
 
 앞서 필요한 데이터 발췌에 유용한 검색 기법을 소개하고자 합니다.
+# Sourcetype 한눈에 보기
+![sourcetype 검색 쿼리]({{site.url}}/assets/built/images/bots/overview/sourcetypequery.jpg)
 
-[sourcetype 검색 쿼리]({{site.url}}/assets/built/images/bots/overview/sourcetypequery.jpg)
+metadata 명령어에 대해선 [이 링크](https://docs.splunk.com/Documentation/SplunkCloud/latest/SearchReference/metadata)를 참고하세요
 
-metadata 명령어에 대해선 [이 링크](https://docs.splunk.com/Documentation/SplunkCloud/latest/SearchReference/Metadata)를 참고하세요
+# field와 vaule 한눈에 보기
 
 1. 설정 클릭 후 고급검색을 누릅니다.
 ![고급검색]({{site.url}}/assets/built/images/bots/overview/fieldbrief.jpg)
+
+```
+| fieldsummary
+| search values!="[]"
+| fields field values
+| rex field=values max_match=0 "\{\"value\":\"(?<extract_values>[^\"]+)\""
+| fields field extract_values
+| eval extract_values=mvdedup(extract_values)
+```
+
+# LookUp file 조회
+```
+| rest /servicesNS/-/-/data/lookup-table-files
+```
