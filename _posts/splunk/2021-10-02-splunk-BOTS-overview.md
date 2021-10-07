@@ -33,7 +33,6 @@ Boss of the SOC (BOTS) 대회는 Splunk를 활용, 제한 시간 동안 해커�
 metadata 명령어에 대해선 [이 링크](https://docs.splunk.com/Documentation/SplunkCloud/latest/SearchReference/metadata)를 참고하세요
 
 # Field와 Vaule 한눈에 보기
-
 1. 설정 클릭 후 고급검색을 누릅니다.
 ![고급검색]({{site.url}}/assets/built/images/bots/overview/fieldbrief.jpg)
 
@@ -63,8 +62,8 @@ splunk에 어떤 데이터들이 import되었는지 조회할 수 있는 쿼리�
 | rest /servicesNS/-/-/data/lookup-table-files
 ```
 
-V1의 115번 문제를 풀때 Coldplay의 노래제목 데이터가 필요합니다.
+V1의 115번 문제를 풀때 Coldplay의 노래제목 데이터가 필요합니다.  
 115	One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. Hint: we are looking for a six character word on this one. Which is it?  
 coldplay 노래 데이터를 lookup파일 형태로 제공하고 있는지 위 쿼리로 조회를 해볼 수 있습니다.
 
-![csv파일 조회]({{site.url}}/assets/built/images/bots/overview/csvFileSearch..jpg)
+![csv파일 조회]({{site.url}}/assets/built/images/bots/overview/csvFileSearch.jpg)
