@@ -23,4 +23,9 @@ Boss of the SOC (BOTS) 대회는 Splunk를 활용, 제한 시간 동안 해커�
 
 앞서 필요한 데이터 발췌에 유용한 검색 기법을 소개하고자 합니다.
 
-![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/overview/fieldbrief.jpg)
+[sourcetype 검색 쿼리]({{site.url}}/assets/built/images/bots/overview/sourcetypequery.jpg)
+
+metadata 명령어에 대해선 [이 링크](https://docs.splunk.com/Documentation/SplunkCloud/latest/SearchReference/Metadata)를 참고하세요
+
+1. 설정 클릭 후 고급검색을 누릅니다.
+![고급검색]({{site.url}}/assets/built/images/bots/overview/fieldbrief.jpg)
