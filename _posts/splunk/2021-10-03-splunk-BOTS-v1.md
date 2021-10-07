@@ -21,10 +21,17 @@ The focus of this hands on lab will be an APT scenario and a ransomware scenario
 
 In this scenario, reports of the below graphic come in from your user community when they visit the Wayne Enterprises website, and some of the reports reference "P01s0n1vy." In case you are unaware, P01s0n1vy is an APT group that has targeted Wayne Enterprises. Your goal, as Alice, is to investigate the defacement, with an eye towards reconstructing the attack via the Lockheed Martin Kill Chain.
 
-![Scenario 1]({{site.baseurl}}/assets/built/images/botsv1/bots-v1-scenario.jpg)
+![Scenario 1](https://cyberdefenders.org/static/img/BOTSv1/Defacement.png)
 
+Scenario 2 (Ransomeware):
 
-![록히드마틴 사이버킬체인 7단계]({{site.baseurl}}/assets/built/images/botsv1/cyberkillchain.jpg)
+In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack. 
+
+![Scenario 2](https://cyberdefenders.org/static/img/BOTSv1/ransomewere.png)
+
+요약 : 
+
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/botsv1/cyberkillchain.jpg)
 
 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?  
 \(웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까??)
