@@ -21,17 +21,26 @@ Boss of the SOC (BOTS) 대회는 Splunk를 활용, 제한 시간 동안 해커�
 
 [BOTS 대회 안내](https://events.splunk.com/Splunk-Korea-2020-BOTS-Day)
 
-앞서 필요한 데이터 발췌에 유용한 검색 기법을 소개하고자 합니다.
+대회 출전에 앞서 필요한 데이터 발췌에 유용한 검색 기법을 소개하고자 합니다.
 # Sourcetype 한눈에 보기
+```
+| metadata type=sourcetypes index=botsv1
+| stats values(sourcetype)
+```
+
 ![sourcetype 검색 쿼리]({{site.url}}/assets/built/images/bots/overview/sourcetypequery.jpg)
 
 metadata 명령어에 대해선 [이 링크](https://docs.splunk.com/Documentation/SplunkCloud/latest/SearchReference/metadata)를 참고하세요
 
-# field와 vaule 한눈에 보기
+# Field와 Vaule 한눈에 보기
 
 1. 설정 클릭 후 고급검색을 누릅니다.
 ![고급검색]({{site.url}}/assets/built/images/bots/overview/fieldbrief.jpg)
 
+2. 검색 매크로 옆 ```+새로 추가```를 누릅니다.
+![매크로 추가#1]({{site.url}}/assets/built/images/bots/overview/createMacro-1.jpg)
+
+3. 아래 쿼리를 fieldbrief란 이름의 매크로로 저장합니다.
 ```
 | fieldsummary
 | search values!="[]"
@@ -41,17 +50,21 @@ metadata 명령어에 대해선 [이 링크](https://docs.splunk.com/Documentati
 | eval extract_values=mvdedup(extract_values)
 ```
 
-2. 검색 매크로 옆 ```+새로 추가```를 누릅니다.
-![매크로 추가#1]({{site.url}}/assets/built/images/bots/overview/createMacro-1.jpg)
-
-3. 위 쿼리를 fieldbrief란 이름의 매크로로 저장합니다.
 ![매크로 추가#2]({{site.url}}/assets/built/images/bots/overview/createMacro-2.jpg)
 
-4. 조회할 sourcetype을 기재 후 `fieldsbreif`를 추가하면 아래와 같이 field와 값들을 한눈에 볼 수 있다.
+4. 조회할 sourcetype을 기재 후 `fieldsbreif`를 추가하면 아래와 같이 field와 값들을 한눈에 볼 수 있습니다.
 ![매크로 추가#2]({{site.url}}/assets/built/images/bots/overview/macroResult.jpg)
 
-
 # LookUp file 조회
+
+splunk에 어떤 데이터들이 import되었는지 조회할 수 있는 쿼리입니다.
+
 ```
 | rest /servicesNS/-/-/data/lookup-table-files
 ```
+
+V1의 115번 문제를 풀때 Coldplay의 노래제목 데이터가 필요합니다.
+115	One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. Hint: we are looking for a six character word on this one. Which is it?  
+coldplay 노래 데이터를 lookup파일 형태로 제공하고 있는지 위 쿼리로 조회를 해볼 수 있습니다.
+
+![csv파일 조회]({{site.url}}/assets/built/images/bots/overview/csvFileSearch..jpg)
