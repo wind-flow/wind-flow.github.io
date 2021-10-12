@@ -26,7 +26,8 @@ In this scenario, reports of the below graphic come in from your user community 
 
 ![Scenario 1]({{site.url}}/assets/built/images/bots/v1/Defacement.png)
 
-![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/v1/cyberkillchain.jpg)
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/v1/cyberkillchain.jpg)  
+[록히드마틴 사이버킬체인 7단계]
 
 Scenario 2 (Ransomeware):
 In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack.  
@@ -59,13 +60,13 @@ You'll notice that source and destination IP addresses are stored in fields call
 sourcetype은 아래와 같습니다.
 ![sourcetype]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-38-04.png)
 
-스캐닝한 ip를 찾는거니 stream:http를 찾아보면 될것이다. 
-또, scan을 수행하면 http header의 user-agent에 scan tool에 대한 정보가 추가되므로 scan키워드를 추가해본다.
+scan을 수행한 컴퓨터의 ip를 찾는거니 stream:http에 우리가 원하는 데이터가 있을것입니다.
+또, scan tool을 실행하면 http header의 user-agent에 scan tool에 대한 정보가 추가되므로 scan키워드를 추가해서 검색해봅니다.
 
 ```
 sourcetype=stream:http imreallynotbatman.com *scan*
 ```
-![수행결과](({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
+![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
 
 src_header에 scan 정보를 볼 수 있다.
 
