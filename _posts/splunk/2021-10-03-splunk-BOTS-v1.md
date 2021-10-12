@@ -24,9 +24,9 @@ In this scenario, reports of the below graphic come in from your user community 
 \- 시나리오#1 요약  
 해킹그룹 ```P01s0n1vy```가 ```Wayne```기업를 해킹했습니다. 당신은 보안 담당자, Alice Bluebird의 입장에서 ```Lockheed Martin의 Cyberkillchain``` 모델을 이용해 침해 사고를 분석해야 합니다.
 
-![Scenario 1](https://cyberdefenders.org/static/img/BOTSv1/Defacement.png)
+![Scenario 1]({{site.url}}/assets/built/images/bots/v1/Defacement.png)
 
-![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/botsv1/cyberkillchain.jpg)
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/v1/cyberkillchain.jpg)
 
 Scenario 2 (Ransomeware):
 In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack.  
