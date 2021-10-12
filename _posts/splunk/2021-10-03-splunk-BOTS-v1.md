@@ -194,7 +194,7 @@ url field를 보니 의심스러운 url이 있습니다.
 ```
 index=botsv1 src_ip=192.168.250.70 sourcetype=stream:http
 ```
-![src결과](({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-06-49.png)
+![src결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-06-49.png)
 suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. poisonivy-is-coming-for-you-batman.jpeg
 
 답 : poisonivy-is-coming-for-you-batman.jpeg
@@ -208,7 +208,7 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
   104번 질문에 대한 답을 생각해 보십시오. 정규화된 도메인 이름은 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
 </details>
 
-104번에서 확인한 jpg파일을 키워드로, strean:http sourcetype에서 url 필드를 확인해보면 된다.
+104번에서 확인한 jepg파일을 키워드로, strean:http sourcetype에서 url 필드를 확인해보면 full domain이 나올것입니다.
 
 ![105url]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-06-49.png2021-10-12-17-52-17.png)
 
