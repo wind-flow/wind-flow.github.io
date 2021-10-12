@@ -34,7 +34,7 @@ In the second scenario, one of your users is greeted by this image on a Windows 
 \- 시나리오#2 요약  
 ```Wayne```기업 직원 중 한 명이 시스템의 파일이 암호화 되었으며 파일을 복호화하려면 비용을 지불해야 하는 내용의 이미지를 보게 됩니다. 시스템이 ```Wayne```의 ```Cerber 랜섬웨어```에 감염된 것으로 보이며 귀하의 목표는 재공격을 염두에 두고 랜섬웨어를 조사하는 것입니다.
 
-![Scenario 2](https://cyberdefenders.org/static/img/BOTSv1/ransomewere.png)
+![Scenario 2]({{site.url}}/assets/built/images/bots/v1/ransomewere.png)
 
 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?  
 웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까?
@@ -50,8 +50,26 @@ You'll notice that source and destination IP addresses are stored in fields call
 (출발지 및 대상 IP 주소가 각각 src_ip 및 dest_ip라는 필드에 저장되어 있습니다. 조합하여 가장 많은 HTTP이벤트를 조사합니다.)
 </details>
 
-ㅇㅇ
+원하는 데이터는 IP에 있다. 어떤 sourcetype 있을지 생각해봅시다.
+```
+| metadata type=sourcetypes index=botsv1
+| stats values(sourcetype)
+```
 
+sourcetype은 아래와 같습니다.
+![sourcetype]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-38-04.png)
+
+스캐닝한 ip를 찾는거니 stream:http를 찾아보면 될것이다. 
+또, scan을 수행하면 http header의 user-agent에 scan tool에 대한 정보가 추가되므로 scan키워드를 추가해본다.
+
+```
+sourcetype=stream:http imreallynotbatman.com *scan*
+```
+![수행결과](({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
+
+src_header에 scan 정보를 볼 수 있다.
+
+답 : 40.80.148.42
 
 102 What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example "Microsoft" or "Oracle")  
 
