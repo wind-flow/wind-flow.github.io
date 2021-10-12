@@ -73,21 +73,52 @@ src_header에 scan 정보를 볼 수 있다.
 답 : 40.80.148.42
 
 102 What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example "Microsoft" or "Oracle")  
+Po1s0n1vy가 사용하는 웹 취약점 스캐너를 만든 회사는? 회사 이름을 입력합니다. (예: "Microsoft" 또는 "Oracle")
 
 <details>
   <summary>hint#1</summary>
+  Many commercial web vulnerability scanners clearly identify themselves in the headers of the HTTP request. Inspect the HTTP source headers (src_headers) of requests from the IP identified in question 101.
+  많은 상용 웹 취약점 스캐너는 HTTP 요청의 헤더에서 자신을 명확하게 식별합니다. 질문 101에서 식별된 IP의 요청에 대한 HTTP 소스 헤더(src_headers)를 검사합니다.
 </details>
 
-```
-index=botsv1 imreallynotbatman.com sourcetype=stream:http http_method=POST
-```
+![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
+header정보가 "Acunetix"라는 키워드가 있다. 구글링해봅시다.
 
-103	What content management system is imreallynotbatman.com likely using?(Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)
+![Acunetix]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-03-12.png)
+구글링결과, scan tool을 제작하는 회사명이다.
 
+답 : Acunetix
+
+103	What content management system is imreallynotbatman.com likely using?(Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)  
+imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있습니까?(답변에 . , ! ?와 같은 문장부호를 포함하지 마십시오. 우리는 알파 문자만 찾고 있습니다.)
 
 <details>
   <summary>hint#1</summary>
+  Look for successful (http status code of 200) GET requests from the scanning IP address (identified previously) and inspect the fields related to URL/URI for clues to the CMS in use.
+  스캐닝 IP 주소(이전에 식별)에서 성공적인(http 상태 코드 200) GET 요청을 찾고 사용 중인 CMS에 대한 단서가 있는지 URL/URI와 관련된 필드를 검사합니다.
 </details>
+
+content management system가 뭔지부터 알아봅시다.
+![cms란?]({{site.url}}/assets/built/images/bots/v12021-10-12-15-11-21.png)
+저작물 관리시스템이라함은, 파일 등을 upload하는 서버일 것입니다. 
+아래 조건을 추가해 URL field를 검색해봅시다. 
+1. http status code를 200이다.
+2. HTTP요청은 POST일것 이다.(upload)
+3. upload할떄 content-type은 ```application/x-www-form-urlencoded```일것이다.
+
+```
+sourcetype=stream:http imreallynotbatman.com status=200 http_method=POST cs_content_type=application/x-www-form-urlencoded
+```
+
+결과 중 uri_path field를 보면 joomla라는 키워드를 발견할 수 있습니다.
+![uri joomla]({{site.url}}/assets/built/images/bots/2021-10-12-15-18-42.png)
+
+joomla를 구글링해봅시다.
+![what is joomla?]({{site.url}}/assets/built/images/bots/2021-10-12-15-20-03.png)
+
+joomla는 CMS의 종류임을 알 수있습니다.
+
+답 : joomla
 
 104	What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension (For example "notepad.exe" or "favicon.ico")
 
