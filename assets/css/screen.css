@@ -712,7 +712,7 @@ The first (most recent) post in the list is styled to be bigger than the others 
 }
 
 .post-template .kg-card-markdown > p:first-child {
-    font-size: 1.25em;
+    font-size: 1.0em;
     line-height: 1.5em;
 }
 

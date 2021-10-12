@@ -69,6 +69,7 @@ sourcetype=stream:http imreallynotbatman.com *scan*
 ![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
 
 src_header에 scan 정보를 볼 수 있다.
+추가로, imreallynotbatman.com의 ip는 192.168.250.70라는 정보도 얻을 수 있습니다.
 
 답 : 40.80.148.42
 
@@ -94,12 +95,12 @@ imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있�
 
 <details>
   <summary>hint#1</summary>
-  Look for successful (http status code of 200) GET requests from the scanning IP address (identified previously) and inspect the fields related to URL/URI for clues to the CMS in use.
+  Look for successful (http status code of 200) GET requests from the scanning IP address (identified previously) and inspect the fields related to URL/URI for clues to the CMS in use.  
   스캐닝 IP 주소(이전에 식별)에서 성공적인(http 상태 코드 200) GET 요청을 찾고 사용 중인 CMS에 대한 단서가 있는지 URL/URI와 관련된 필드를 검사합니다.
 </details>
 
 content management system가 뭔지부터 알아봅시다.
-![cms란?]({{site.url}}/assets/built/images/bots/v12021-10-12-15-11-21.png)
+![cms란?]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-11-21.png)
 저작물 관리시스템이라함은, 파일 등을 upload하는 서버일 것입니다. 
 아래 조건을 추가해 URL field를 검색해봅시다. 
 1. http status code를 200이다.
@@ -111,35 +112,46 @@ sourcetype=stream:http imreallynotbatman.com status=200 http_method=POST cs_cont
 ```
 
 결과 중 uri_path field를 보면 joomla라는 키워드를 발견할 수 있습니다.
-![uri joomla]({{site.url}}/assets/built/images/bots/2021-10-12-15-18-42.png)
+![uri joomla]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-18-42.png)
 
 joomla를 구글링해봅시다.
-![what is joomla?]({{site.url}}/assets/built/images/bots/2021-10-12-15-20-03.png)
+![what is joomla?]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-20-03.png)
 
 joomla는 CMS의 종류임을 알 수있습니다.
 
 답 : joomla
 
-104	What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension (For example "notepad.exe" or "favicon.ico")
-
+104	What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension (For example "notepad.exe" or "favicon.ico")  
+imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니까? 확장자가 있는 파일 이름만 제출하십시오(예: "notepad.exe" 또는 "favicon.ico").
 
 <details>
   <summary>hint#1</summary>
+  First find the IP address of the web server hosting imreallynotbatman.com. You may have found this IP during the course of answering the previous few questions.  
+  먼저 imreallynotbatman.com을 호스팅하는 웹 서버의 IP 주소를 찾습니다. 이전 질문에 답하는 과정에서 이 IP를 발견했을 수 있습니다.
 </details>
 
 <details>
   <summary>hint#2</summary>
+  Revealing sourcetypes include stream:http, fgt_utm, and suricata.  
+  소스 유형에는 stream:http, fgt_utm 및 suricata가 포함됩니다.
 </details>
 
 <details>
   <summary>hint#3</summary>
+  The key here is searching for events where the IP address of the web server is the source. Because it's a web server, we most often see it as a destination but in this case the intruder took control of the server and pulled the defacement file from an internet site.  
+  여기서 핵심은 웹 서버의 IP 주소가 소스인 이벤트를 검색하는 것입니다. 웹 서버이기 때문에 우리는 목적지로 가장 많이 보지만 이 경우에는 침입자가 서버를 제어하고 인터넷 사이트에서 변조 파일을 가져왔습니다.
 </details>
 
+우선 imreallynotbatman.com의
+
+※ 이 문제는 풀기 어려웠습니다. 
 
 105	This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
 
 <details>
   <summary>hint#1</summary>
+  Consider the answer to question 104. The fully qualified domain name was recorded by Stream, Suricata, and the Fortigate firewall.  
+  104번 질문에 대한 답을 생각해 보십시오. 정규화된 도메인 이름은 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
 </details>
 
 
