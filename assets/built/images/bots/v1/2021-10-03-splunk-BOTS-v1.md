@@ -200,6 +200,7 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
 답 : poisonivy-is-coming-for-you-batman.jpeg
 
 105	This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
+이 공격은 동적 DNS를 사용하여 악성 IP를 확인합니다. 이 공격과 관련된 FQDN(도메인 이름)은 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
@@ -207,6 +208,15 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
   104번 질문에 대한 답을 생각해 보십시오. 정규화된 도메인 이름은 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
 </details>
 
+104번에서 확인한 jpg파일을 키워드로, strean:http sourcetype에서 url 필드를 확인해보면 된다.
+
+![105url]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-06-49.png2021-10-12-17-52-17.png)
+
+```
+sourcetype=stream:http src=192.168.250.70 poisonivy-is-coming-for-you-batman.jpeg
+```
+
+답 : prankglassinebracket.jumpingcrab.com
 
 106	What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?
 

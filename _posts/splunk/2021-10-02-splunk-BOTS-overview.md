@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/splunk.jpg
+cover:  assets/built/images/bots/overview/bots.jpg
 navigation: True
 title: splunk-bots 개론
 date: '2021-10-02 20:04:36 +0530'

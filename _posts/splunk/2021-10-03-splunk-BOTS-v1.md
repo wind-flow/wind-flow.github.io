@@ -27,7 +27,6 @@ In this scenario, reports of the below graphic come in from your user community 
 ![Scenario 1]({{site.url}}/assets/built/images/bots/v1/Defacement.png)
 
 ![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/v1/cyberkillchain.jpg)  
-[록히드마틴 사이버킬체인 7단계]
 
 Scenario 2 (Ransomeware):
 In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack.  
@@ -38,20 +37,20 @@ In the second scenario, one of your users is greeted by this image on a Windows 
 ![Scenario 2]({{site.url}}/assets/built/images/bots/v1/ransomewere.png)
 
 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?  
-웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까?
+웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 IP 주소는 무엇입니까?
 <details>
   <summary alignment="left">hint#1</summary>
-Start your search with "sourcetype=stream:http" and review the rich data captured in these events.<br>
-(sourcetype=stream:http로 검색을 시작하고 이러한 이벤트에서 캡처된 풍부한 데이터를 검토하십시오.)
+Start your search with "sourcetype=stream:http" and review the rich data captured in these events.<br>  
+sourcetype=stream:http에서 찾으세요.
 </details>
 
 <details>
   <summary>hint#2</summary>
-You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count"<br>
-(출발지 및 대상 IP 주소가 각각 src_ip 및 dest_ip라는 필드에 저장되어 있습니다. 조합하여 가장 많은 HTTP이벤트를 조사합니다.)
+You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count"<br>  
+출발지 및 대상 IP 주소가 각각 src_ip 및 dest_ip라는 필드에 저장되어 있습니다. 조합하여 가장 많은 HTTP이벤트를 조사합니다.
 </details>
 
-원하는 데이터는 IP에 있다. 어떤 sourcetype 있을지 생각해봅시다.
+원하는 데이터는 ip입니다. 어떤 sourcetype 있을지 추론해봅시다.
 ```
 | metadata type=sourcetypes index=botsv1
 | stats values(sourcetype)
@@ -68,7 +67,7 @@ sourcetype=stream:http imreallynotbatman.com *scan*
 ```
 ![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
 
-src_header에 scan 정보를 볼 수 있다.
+src_header에 scan 정보를 볼 수 있습니다.
 추가로, imreallynotbatman.com의 ip는 192.168.250.70라는 정보도 얻을 수 있습니다.
 
 답 : 40.80.148.42
@@ -83,7 +82,7 @@ Po1s0n1vy가 사용하는 웹 취약점 스캐너를 만든 회사는? 회사 �
 </details>
 
 ![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
-header정보가 "Acunetix"라는 키워드가 있다. 구글링해봅시다.
+header정보가 "Acunetix"라는 키워드가 있으니, 구글링해봅시다.
 
 ![Acunetix]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-03-12.png)
 구글링결과, scan tool을 제작하는 회사명이다.
@@ -91,7 +90,7 @@ header정보가 "Acunetix"라는 키워드가 있다. 구글링해봅시다.
 답 : Acunetix
 
 103	What content management system is imreallynotbatman.com likely using?(Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)  
-imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있습니까?(답변에 . , ! ?와 같은 문장부호를 포함하지 마십시오. 우리는 알파 문자만 찾고 있습니다.)
+imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있습니까?(답변에 . , ! ?와 같은 문장부호를 포함하지 마세요. 우리는 영문벳만 찾고 있습니다.)
 
 <details>
   <summary>hint#1</summary>
@@ -103,9 +102,9 @@ content management system가 뭔지부터 알아봅시다.
 ![cms란?]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-11-21.png)
 저작물 관리시스템이라함은, 파일 등을 upload하는 서버일 것입니다. 
 아래 조건을 추가해 URL field를 검색해봅시다. 
-1. http status code를 200이다.
-2. HTTP요청은 POST일것 이다.(upload)
-3. upload할떄 content-type은 ```application/x-www-form-urlencoded```일것이다.
+1. http status code를 200
+2. HTTP요청은 POST일것.(upload)
+3. 파일 upload 시 content-type은 ```application/x-www-form-urlencoded```일것.
 
 ```
 sourcetype=stream:http imreallynotbatman.com status=200 http_method=POST cs_content_type=application/x-www-form-urlencoded
@@ -203,10 +202,9 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
 
 <details>
   <summary>hint#1</summary>
-  Consider the answer to question 104. The fully qualified domain name was recorded by Stream, Suricata, and the Fortigate firewall.  
+  Consider the answer to question 104. The fully qualified domain name was recorded by Stream, Suricata, and the Fortigate firewall. <br>
   104번 질문에 대한 답을 생각해 보십시오. 정규화된 도메인 이름은 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
 </details>
-
 
 106	What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?
 
