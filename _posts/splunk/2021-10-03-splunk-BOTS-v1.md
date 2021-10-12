@@ -142,9 +142,62 @@ imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니
   여기서 핵심은 웹 서버의 IP 주소가 소스인 이벤트를 검색하는 것입니다. 웹 서버이기 때문에 우리는 목적지로 가장 많이 보지만 이 경우에는 침입자가 서버를 제어하고 인터넷 사이트에서 변조 파일을 가져왔습니다.
 </details>
 
-우선 imreallynotbatman.com의
+우선 101질문에서 보았듯이, imreallynotbatman.com의 IP는 192.168.250.70입니다. suricata에서 특이한 이벤트가 있는지 찾아봅니다.
+※ suricata는 오픈소스 IDS입니다. 패턴에 의해 악성패킷을 차단하는 이벤트가 있을것으로 예상합니다.  
+[suricata란?](https://bricata.com/blog/what-is-suricata-ids/)
 
-※ 이 문제는 풀기 어려웠습니다. 
+```
+sourcetype=suricata dest=192.168.250.70 
+| stats count by src
+```
+|src|count|
+|------|---|
+|192.168.2.50|211
+|192.168.250.70|210|
+
+별 특이점은 없어보입니다. 리버스 커넥션의 경우도 있을 수 있으니 해당 ip를 src로 두어 다시 검색해봅니다.  
+리버스 커넥션은 inbound가 아닌 outbound로 CnC서버(악성서버)에 접속하는 기법을 말합니다.
+자세한 내용은 아래사이트 참고해주세요.
+
+[reverse connection이란?](https://oggwa.tistory.com/62)
+
+```
+sourcetype=suricata src=192.168.250.70 
+| stats count by dest_ip
+| sort -count
+```
+
+|dest_ip|count|
+|------|---|
+|40.80.148.42|10317|
+|23.22.63.114|1294|
+|192.168.250.40|758|
+|192.168.2.50	|214|
+|192.168.250.70|210|
+|108.161.187.134|12|
+|192.168.250.255|3|
+|224.0.0.252|3|
+
+공인망중 접근 count가 많은것이 있습니다. \(40.80.148.42, 23.22.63.114)\
+보통 웹서버는 outbound 통신이 많지 않습니다.
+40.80.148.42은 101번 문제에서 풀었던 scan pc의 IP입니다.
+
+해당 통신 중 특이한 점이 있는지 찾아봅니다.
+```
+sourcetype=suricata src=192.168.250.70 dest_ip=23.22.63.114
+```
+url field를 보니 의심스러운 url이 있습니다.
+![poisonivy-is-coming-for-you-batman.jpeg]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-01-19.png)
+
+확실하지 않으니, 192.168.250.70(imreallynotbatman.com)가 src인 이벤트가 얼마나 많은지 stream:http에서 찾아봅니다.
+
+```
+index=botsv1 src_ip=192.168.250.70 sourcetype=stream:http
+```
+![src결과](({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-06-49.png)
+suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. poisonivy-is-coming-for-you-batman.jpeg
+
+답 : poisonivy-is-coming-for-you-batman.jpeg
 
 105	This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
 
