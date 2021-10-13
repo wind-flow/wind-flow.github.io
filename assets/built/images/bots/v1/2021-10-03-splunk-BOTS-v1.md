@@ -234,6 +234,12 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 107	Based on the data gathered from this attack and common open source intelligence sources for domain names, what is the email address that is most likely associated with Po1s0n1vy APT group?  
 이 공격에서 수집한 데이터와 도메인 이름에 대한 일반적인 오픈 소스 인텔리전스 소스를 기반으로 할 때 Po1s0n1vy APT 그룹과 가장 관련이 있는 이메일 주소는 무엇입니까?
 
+<details>
+  <summary>hint#1</summary>
+  Malicious IP addresses, like the one in the last question are examples of attacker infrastructure. Infrastructure is often reused by the same group. Use a service like www.robtex.com to determine other domains that are or have been associated with this attacker infrastructure (IP address).  
+  마지막 질문과 같은 악성 IP 주소는 공격자 인프라의 예입니다. 인프라는 종종 동일한 그룹에서 재사용됩니다. www.robtex.com과 같은 서비스를 사용하여 이 공격자 인프라(IP 주소)와 관련되어 있거나 연결된 다른 도메인을 확인합니다.
+</details>
+
 이 문제는 OSINT(공개된 출처에서 얻은 정보)를 사용해야합니다. 현재는 OSINT의 해당정보가 변경되어 과거 자료를 인용해서 해결하겠습니다.
 [OSINT란?](https://ko.wikipedia.org/wiki/%EC%98%A4%EC%8B%A0%ED%8A%B8)  
 [splunk OSINT 관련 포스팅](https://www.splunk.com/en_us/blog/tips-and-tricks/work-flow-ing-your-osint.html)
