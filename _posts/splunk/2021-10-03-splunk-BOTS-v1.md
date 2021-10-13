@@ -144,7 +144,7 @@ imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니
 
 우선 101질문에서 보았듯이, imreallynotbatman.com의 IP는 192.168.250.70입니다. suricata에서 특이한 이벤트가 있는지 찾아봅니다.
 ※ suricata는 오픈소스 IDS입니다. 패턴에 의해 악성패킷을 차단하는 이벤트가 있을것으로 예상합니다.  
-[suricata란?](https://bricata.com/blog/what-is-suricata-ids/)
+- [suricata란?](https://bricata.com/blog/what-is-suricata-ids/)
 
 ```
 sourcetype=suricata dest=192.168.250.70 
@@ -159,7 +159,7 @@ sourcetype=suricata dest=192.168.250.70
 리버스 커넥션은 inbound가 아닌 outbound로 CnC서버(악성서버)에 접속하는 기법을 말합니다.
 자세한 내용은 아래사이트 참고해주세요.
 
-[reverse connection이란?](https://oggwa.tistory.com/62)
+- [reverse connection이란?](https://oggwa.tistory.com/62)
 
 ```
 sourcetype=suricata src=192.168.250.70 
@@ -237,12 +237,20 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 <details>
   <summary>hint#1</summary>
   Malicious IP addresses, like the one in the last question are examples of attacker infrastructure. Infrastructure is often reused by the same group. Use a service like www.robtex.com to determine other domains that are or have been associated with this attacker infrastructure (IP address).  
-  마지막 질문과 같은 악성 IP 주소는 공격자 인프라의 예입니다. 인프라는 종종 동일한 그룹에서 재사용됩니다. www.robtex.com과 같은 서비스를 사용하여 이 공격자 인프라(IP 주소)와 관련되어 있거나 연결된 다른 도메인을 확인합니다.
+
+  마지막 질문과 같은 악성 IP 주소는 공격자 인프라의 예시입니다. 인프라는 동일한 그룹에서 재사용되는 경우가 많습니다. www.robtex.com과 같은 서비스를 사용하여 이 공격자 인프라(IP 주소)와 관련되어 있거나 연결된 다른 도메인을 확인합니다.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+  Use the whois lookup on domaintools.com to iterate through domains associated with this IP and visually search for suspicious email addresses. Your knowledge of Batman will help you here!
+
+  domaintools.com에서 whois 조회를 사용하여 이 IP와 연결된 도메인을 반복하고 의심스러운 이메일 주소를 시각적으로 검색합니다.   
 </details>
 
 이 문제는 OSINT(공개된 출처에서 얻은 정보)를 사용해야합니다. 현재는 OSINT의 해당정보가 변경되어 과거 자료를 인용해서 해결하겠습니다.
-[OSINT란?](https://ko.wikipedia.org/wiki/%EC%98%A4%EC%8B%A0%ED%8A%B8)  
-[splunk OSINT 관련 포스팅](https://www.splunk.com/en_us/blog/tips-and-tricks/work-flow-ing-your-osint.html)
+- [OSINT란?](https://ko.wikipedia.org/wiki/%EC%98%A4%EC%8B%A0%ED%8A%B8)  
+- [splunk OSINT 관련 포스팅](https://www.splunk.com/en_us/blog/tips-and-tricks/work-flow-ing-your-osint.html)
 
 robtex.com는 IP, Domain을 통해서 해당 사이트의 정보에 대해 알 수 있습니다.
 
@@ -257,51 +265,234 @@ domain정보에 email 정보를 발견할 수 있습니다.
 
 답 : lillian.rose@po1s0n1vy.com
 
+108	What IP address is likely attempting a brute force password attack against imreallynotbatman.com?  
+imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가능성이 있는 IP 주소는 무엇입니까?
 
-108	What IP address is likely attempting a brute force password attack against imreallynotbatman.com?
+<details>
+  <summary>hint#1</summary>
+  Login attempts will use the HTTP POST method, and they will include some obvious fields in the form_data field of stream:http events.
+  로그인 시도는 HTTP POST 메서드를 사용하며 여기에는 stream:http 이벤트의 form_data 필드에 몇 가지 명백한 필드가 포함됩니다.
+</details>
+
+- [brute force 공격이란?](https://ko.wikipedia.org/wiki/%EB%AC%B4%EC%B0%A8%EB%B3%84_%EB%8C%80%EC%9E%85_%EA%B3%B5%EA%B2%A9)  
+
+login 관련 데이터는 stream:http에 있을 것입니다. 아래 기준에 맞춰 쿼리를 작성해보겠습니다.
+1. method는 post일것.
+2. login 데이터는 form_data 태그에 있을 것.
+3. password, passwd, admin등의 키워드가 있을것.
+4. brute force를 시행했다면, 통신 수가 많을 것.
+
+```
+sourcetype=stream:http http_method=POST form_data=*passwd* OR form_data=*password* OR form_data=*admin* dest=192.168.250.70
+| stats count by src
+```
+- 쿼리 결과
+
+|dest_ip|count|
+|------|---|
+|23.22.63.114|412|
+|40.80.148.42|8|
+
+src가 23.22.63.114인 form_data의 결과를 보면 
+```username=admin&task=login&return=aW5kZXgucGhw&option=com_login&passwd=7777777&1af64a5fa91b91c7107ac2b8e2d4d28a=1```로, 전형적인 brute force attack의 형태이다.
+
+답 : 23.22.63.114
 
 109	What is the name of the executable uploaded by Po1s0n1vy? Please include file extension. (For example, "notepad.exe" or "favicon.ico")
 
+<details>
+  <summary>hint#1</summary>
+  File uploads to web forms use the HTTP POST method.
+  파일 업로드는 HTTP POST 방법을 사용합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+  The question mentions and executable. Search for common executable filename extensions on Windows systems.
+  Windows 시스템에서 실행 파일 이름 확장자를 검색합니다.
+</details>
+
+1. window의 excuteable file이니 .exe가 포함될것.
+2. file upload시 http method는 post입니다.
+
+```
+sourcetype=stream:http http_method=POST dest=192.168.250.70 *.exe
+```
+
+part_filename이라는 필드에 3791.exe라는 이름의 파일이 보입니다.
+![part_filename]({{site.url}}/assets/built/images/bots/v1/2021-10-13-16-16-27.png)
+
+해당파일을 전송한 ip를 확인해보니, 101번 문제해서 scan했던 IP와 같으므로 악성파일임을 확신할 수 있습니다.
+![]({{site.url}}/assets/built/images/bots/v1/2021-10-13-16-21-24.png)
+
+답 : 3791.exe
+
 110	What is the MD5 hash of the executable uploaded?
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
 
 111	GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 112	What special hex code is associated with the customized malware discussed in question 111? (Hint: It's not in Splunk)
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
 
 113	One of Po1s0n1vy's staged domains has some disjointed "unique" whois information. Concatenate the two codes together and submit as a single answer.
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 114	What was the first brute force password used?
+
+<details>
+  <summary>hint#1</summary>
+  Login attempts will use the HTTP POST method, and they will include some obvious fields that you can search for in the form_data field of stream:http events.
+</details>
+<details>
+  <summary>hint#2</summary>
+  By default, Splunk will put the most recent events at the top of the list. You can use the "reverse" SPL command to show you least recent first.
+</details>
+
+| rex field=form_data "passwd=(?<userpassword>\w+)"
 
 115	One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. Hint: we are looking for a six character word on this one. Which is it?
 
+<details>
+  <summary>hint#1</summary>
+  If you have not done so already, try to extract the attempted password into a new field using the "rex" SPL command and a regular expression. Having the password attempt in its own field will serve you well for the next several questions!  
+</details>
+<details>
+  <summary>hint#2</summary>
+  It's not hard to get a list of songs by the artist. Once you have that,use the "len()" function of the "eval" SPL command. For Splunk style points, use a lookup table to match the password attempts with songs.
+</details>
 116	What was the correct password for admin access to the content management system running "imreallynotbatman.com"?
+
+<details>
+  <summary>hint#1</summary>
+  From the previous questions, you should know how to extract the password attempts.  You should also know what IP is submitting passwords.  Are any other IP addresses submitting passwords?  
+</details>
 
 117	What was the average password length used in the password brute forcing attempt? (Round to closest whole integer. For example "5" not "5.23213")
 
+<details>
+  <summary>hint#1</summary>
+  Calculate the length of every password attempt and store the result in a new field. Then calulate the average of that new field with a stats command. Use eval to average, or just visually inspect.
+</details>
+<details>
+  <summary>hint#2</summary>
+  Then calulate the average of that new length field with a stats command, and finally use eval to round, or just manually round.
+</details>
+
 118	How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? Round to 2 decimal places.
+
+<details>
+  <summary>hint#1</summary>
+  You'll note from previous answers that one of the passwords was attempted twice. You need to calculate the duration of time between those two attempts.
+</details>
+<details>
+  <summary>hint#2</summary>
+  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.
+</details>
 
 119	How many unique passwords were attempted in the brute force attempt?
 
+<details>
+  <summary>hint#1</summary>
+  Be sure you are extracting the password attempts correctly, then use a stats function to count unique (not total) attempts.
+</details>
+
 200	What was the most likely IP address of we8105desk on 24AUG2016?
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
 
 201	Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 202	What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
 
 203	What was the first suspicious domain visited by we8105desk on 24AUG2016?
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 204	During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length in characters of the value of this field?
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
 
 205	What is the name of the USB key inserted by Bob Smith?
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 206	Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
 
 207	How many distinct PDFs did the ransomware encrypt on the remote file server?
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 208	The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
 
 209	The Cerber ransomware encrypts files located in Bob Smith's Windows profile. How many .txt files does it encrypt?
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 210	The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?
 
+<details>
+  <summary>hint#1</summary>
+  
+</details>
+
 211	Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?
+
+<details>
+  <summary>hint#1</summary>
+  
+</details>
