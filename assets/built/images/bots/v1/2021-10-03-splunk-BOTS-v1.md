@@ -210,7 +210,7 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
 
 104번에서 확인한 jepg파일을 키워드로, strean:http sourcetype에서 url 필드를 확인해보면 full domain이 나올것입니다.
 
-![105url]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-06-49.png2021-10-12-17-52-17.png)
+![105url]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-52-17.png)
 
 ```
 sourcetype=stream:http src=192.168.250.70 poisonivy-is-coming-for-you-batman.jpeg
@@ -218,9 +218,39 @@ sourcetype=stream:http src=192.168.250.70 poisonivy-is-coming-for-you-batman.jpe
 
 답 : prankglassinebracket.jumpingcrab.com
 
-106	What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?
+106	What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?  
+Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인에 연결된 IP 주소는 무엇입니까?
 
-107	Based on the data gathered from this attack and common open source intelligence sources for domain names, what is the email address that is most likely associated with Po1s0n1vy APT group?
+<details>
+  <summary>hint#1</summary>
+  Consider the answer to question 104. The IP address was recorded by Stream, Suricata, and the Fortigate firewall. Do you dig me?
+  104번 질문에 대한 답을 생각해 보십시오. IP 주소는 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
+</details>
+
+104번 문제에서 공격자의 IP주소는 23.22.63.114 이었음을 파악했습니다.
+
+답 : 23.22.63.114
+
+107	Based on the data gathered from this attack and common open source intelligence sources for domain names, what is the email address that is most likely associated with Po1s0n1vy APT group?  
+이 공격에서 수집한 데이터와 도메인 이름에 대한 일반적인 오픈 소스 인텔리전스 소스를 기반으로 할 때 Po1s0n1vy APT 그룹과 가장 관련이 있는 이메일 주소는 무엇입니까?
+
+이 문제는 OSINT(공개된 출처에서 얻은 정보)를 사용해야합니다. 현재는 OSINT의 해당정보가 변경되어 과거 자료를 인용해서 해결하겠습니다.
+[OSINT란?](https://ko.wikipedia.org/wiki/%EC%98%A4%EC%8B%A0%ED%8A%B8)  
+[splunk OSINT 관련 포스팅](https://www.splunk.com/en_us/blog/tips-and-tricks/work-flow-ing-your-osint.html)
+
+robtex.com는 IP, Domain을 통해서 해당 사이트의 정보에 대해 알 수 있습니다.
+
+robtex에 prankglassinebracket.jumpingcrab.com 검색하면 아래와 같이 조회됩니다.  
+![robtex]({{site.url}}/assets/built/images/bots/v1/OSINT-robtex-domain.png)
+
+robtex에서 특이한 정보를 찾지 못했으니 virustotal에 검색해봅시다.
+
+domain정보에 email 정보를 발견할 수 있습니다.  
+![virustotal#1]({{site.url}}/assets/built/images/bots/v1/OSINT-virustotal-ip.png)  
+![virustotal#2]({{site.url}}/assets/built/images/bots/v1/OSINT-virustotal-domain.png)  
+
+답 : lillian.rose@po1s0n1vy.com
+
 
 108	What IP address is likely attempting a brute force password attack against imreallynotbatman.com?
 
