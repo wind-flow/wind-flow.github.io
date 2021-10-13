@@ -330,53 +330,125 @@ part_filename이라는 필드에 3791.exe라는 이름의 파일이 보입니다
 
 <details>
   <summary>hint#1</summary>
-  
+  It will be difficult to calulate a hash based on the Splunk event you used to answer 109. Instead Search for the file name in a different data source to find evidence of execution, including file hash values.  
+  109번에서 사용한 Splunk 이벤트를 기반으로 해시를 계산하는 것은 어려울 것입니다. 대신 다른 데이터 소스에서 파일 이름을 검색하여 파일 해시 값을 포함하여 실행 증거를 찾으십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+  This is an ideal use case for Microsoft Sysmon data. Determine the sourcetype for Sysmon events and search them for the executable.  
+  이것은 이상적인 Microsoft Sysmon 데이터 usecase 입니다. Sysmon 이벤트의 소스 유형을 결정하고 실행 파일을 검색합니다.
 </details>
 
+해답은 window 이벤트 로그인 sysmon에서 찾을 수 있을 것입니다.
+[syslog란?](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
+
+sourcetype Sysmon에서 3791.exe를 키워드로 이벤트를 검색합니다.
+![sourcetype]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-38-04.png)
+```
+
+```
 111	GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.
 
 <details>
   <summary>hint#1</summary>
-  
+  You need to pivot outside of Splunk to answer this question. Use the IP address discovered earlier to search for malware that has been associated with it in the past.
+  이 질문에 답하려면 Splunk 외부로 피벗해야 합니다. 이전에 검색된 IP 주소를 사용하여 과거에 연결된 맬웨어를 검색합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+  Experienced analysts know to use sites like www.threatminer.org to search for malware associated with the malicious IP address, but if all alse fails, Google it!  
+  전문분석가는 www.threatminer.org와 같은 사이트를 사용하여 악성 IP 주소와 관련된 맬웨어를 검색하지만, 발견 실패시 Google에서 검색하십시오!
 </details>
 
 112	What special hex code is associated with the customized malware discussed in question 111? (Hint: It's not in Splunk)
 
 <details>
   <summary>hint#1</summary>
-  
+  Do some further research on the hash discovered in the last question. Virustotal.com is a good starting place.    
+  마지막 문제에서 발견된 해시에 대해 좀 더 조사하십시오. Virustotal.com에서 검색해봅니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+  malwr.com might lead you astray.  
+  malwr.com은 잘못된 방향입니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+  The hex codes we are after here will be formatted like this: 49 66 20 79 6f 75 20 64 65 63 6f 64 65 20 74 68 65 20 68 69 6e 74 2c 20 79 6f 75 20 64 6f 6e 27 74 20 6e 65 65 64 20 61 20 68 69 6e 74 21. Submit the hex codes, but decode them on the web for fun!  
+  16진수 코드는 49 66 20 79 6f 75 20 64 65 63 6f 64 65 20 74 68 65 20 68 69 6e 74 2c 20 79 6f 645 64 20 61 20 68 69 6e 74 21. 16진수 코드를 제출하되 웹에서 디코딩하십시오!
 </details>
 
 113	One of Po1s0n1vy's staged domains has some disjointed "unique" whois information. Concatenate the two codes together and submit as a single answer.
 
 <details>
   <summary>hint#1</summary>
-  
+  Use a service like www.robtex.com to determine other domains that are or have been associated with the attacker infrastructure (IP address).    
+</details>
+
+<details>
+  <summary>hint#2</summary>
+  Use a high quality whois site like www.domaintools.com to perform whois lookups against these domains until you see a hex code where you were expecting text. Warning not all whois sites show you all fields!  
 </details>
 
 114	What was the first brute force password used?
 
 <details>
   <summary>hint#1</summary>
-  Login attempts will use the HTTP POST method, and they will include some obvious fields that you can search for in the form_data field of stream:http events.
+  Login attempts will use the HTTP POST method, and they will include some obvious fields that you can search for in the form_data field of stream:http events.  
+  로그인 시도는 HTTP POST 메서드를 사용하며 여기에는 stream:http 이벤트의 form_data 필드에서 검색할 수 있는 몇 가지 명백한 필드가 포함됩니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  By default, Splunk will put the most recent events at the top of the list. You can use the "reverse" SPL command to show you least recent first.
+  By default, Splunk will put the most recent events at the top of the list. You can use the "reverse" SPL command to show you least recent first.  
+  Splunk는 가장 최근 이벤트를 목록 맨 위에 놓습니다. "reverse" SPL 명령을 사용하여 가장 최근의 것을 먼저 표시할 수 있습니다.
 </details>
 
-| rex field=form_data "passwd=(?<userpassword>\w+)"
+108번에서 발견한 정보를 토대로 brute force attack를 발췌해봅시다.
+형식은 passwd=xxx기준이니, 정규표현식을 사용합니다.
 
-115	One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. Hint: we are looking for a six character word on this one. Which is it?
+```
+sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
+| rex field=form_data "passwd=(?<brutePassword>\w+)"
+| table _time brutePassword
+| sort _time
+```
 
+- 결과
+![passwdfield]({{site.url}}/assets/built/images/bots/v1/2021-10-13-17-35-23.png)
+
+제일 먼저 나오는 패스워드는 12345678입니다.
+
+답 : 12345678
+
+115	One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. Hint: we are looking for a six character word on this one. Which is it?  
+brute force attack의 암호 중 하나는 James Brodsky가 가장 좋아하는 Coldplay 노래입니다. 힌트: 이 단어에서 6자 단어를 찾고 있습니다. 어떤것 인가?
 <details>
   <summary>hint#1</summary>
   If you have not done so already, try to extract the attempted password into a new field using the "rex" SPL command and a regular expression. Having the password attempt in its own field will serve you well for the next several questions!  
+  아직 수행하지 않은 경우 "rex" SPL 명령과 정규식을 사용하여 시도한 암호를 새 필드에 추출해 보십시오. 자체 필드에 비밀번호를 입력하면 다음 몇 가지 질문에 도움이 됩니다!
 </details>
 <details>
   <summary>hint#2</summary>
   It's not hard to get a list of songs by the artist. Once you have that,use the "len()" function of the "eval" SPL command. For Splunk style points, use a lookup table to match the password attempts with songs.
+  아티스트의 노래 목록을 얻는 것은 어렵지 않습니다. 일단 가지고 있으면 "eval" SPL 명령의 "len()" 함수를 사용하십시오. Splunk 스타일의 경우 조회 테이블을 사용하여 노래와 비밀번호를 일치시킵니다.  
 </details>
+
+114번에서 사용한 쿼리를 사용하겠습니다.
+그리고, 조건을 걸어 6자리 패스워드를 발췌하겠습니다.
+
+```
+sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
+| rex field=form_data "passwd=(?<brutePassword>\w+)"
+| where len(brutePassword)=6
+```
+
+overview에서 소개한 쿼리를 사용할 차례입니다. csv파일중 cp.csv 파일이 있습니다.
+```
+| rest /servicesNS/-/-/data/lookup-table-files
+```
+![csv파일 조회]({{site.url}}/assets/built/images/bots/overview/csvFileSearch.jpg)
+
 116	What was the correct password for admin access to the content management system running "imreallynotbatman.com"?
 
 <details>
