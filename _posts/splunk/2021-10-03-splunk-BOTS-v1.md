@@ -547,10 +547,10 @@ brute force attack시 올바른 암호를 식별한 시간과 성공한 로그�
   <summary>hint#2</summary>
   Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.  
   도움이 더 필요하세요? 질문에서 두 개의 이벤트만 반환하는 검색을 작성한 다음 "| delta _time" 또는 "| transaction <extracted-pword-attempt>" SPL 명령을 사용하십시오.
-</details>
+</details>  
 
-위에서 올바른 암호는 batman이었으니, 암호가 batman인 이벤트의 시간차를 구해봅시다.
-
+위에서 올바른 암호는 batman이었으니, 암호가 batman인 이벤트의 시간차를 구해봅시다.  
+  
 ```
 sourcetype=stream:http dest=192.168.250.70
 | rex field=form_data "passwd=(?<brutePassword>\w+)"
