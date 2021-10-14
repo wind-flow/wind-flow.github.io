@@ -449,41 +449,160 @@ overview에서 소개한 쿼리를 사용할 차례입니다. csv파일중 cp.cs
 ```
 ![csv파일 조회]({{site.url}}/assets/built/images/bots/overview/csvFileSearch.jpg)
 
-116	What was the correct password for admin access to the content management system running "imreallynotbatman.com"?
+```
+sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
+| rex field=form_data "passwd=(?<brutePassword>\w+)" ```brutePassword변수에 패스워드 발췌 표현식```
+| where len(brutePassword)=6```패스워드 중 6자리글자인것만 발췌```
+| table brutePassword 
+| join type=inner brutePassword ```cold play 노래제목 파일과 join```
+    [ | inputlookup coldplay.csv 
+    | rename song as brutePassword 
+    | fields brutePassword ]
+```
 
+- 결과    
+
+|brutePassword|
+|:---:|
+|yellow|
+
+답 : yellow
+
+116	What was the correct password for admin access to the content management system running "imreallynotbatman.com"?  
+"imreallynotbatman.com"을 실행하는 콘텐츠 관리 시스템에 대한 관리자 액세스의 올바른 비밀번호는 무엇입니까?
 <details>
   <summary>hint#1</summary>
-  From the previous questions, you should know how to extract the password attempts.  You should also know what IP is submitting passwords.  Are any other IP addresses submitting passwords?  
+  From the previous questions, you should know how to extract the password attempts.  You should also know what IP is submitting passwords.  Are any other IP addresses submitting passwords?
+  전 질문에서 비밀번호 시도를 추출하는 방법을 알아야 합니다. 또한 어떤 IP가 로그인 시도했는지 알아야 합니다. 로그인을 시도하는 다른 IP 주소가 있습니까?  
 </details>
+
+탐색 전략은 아래와 같습니다.
+1. brute force는 같은 패스워드는 한번만 시도한다.
+2. 올바른 패스워드를 찾았다면 같은 패스워드 사용이 2번이상 있을것이다.
+
+```
+sourcetype=stream:http dest=192.168.250.70
+| rex field=form_data "passwd=(?<brutePassword>\w+)"
+| stats count by brutePassword
+| sort -count
+```
+
+- 결과 
+
+|brutePassword|count|
+|---|---|
+|batman|2|
+|000000|1|
+|1111|1|
+
+
+|brutePassword|count|values(src)|
+|---|---|---|
+|batman|2|23.22.63.114<br>40.80.148.42|
+|000000|1|23.22.63.114|
+|1111|1|23.22.63.114|
+
+40.80.148.42(scan ip)로 로그인했음을 알 수 있습니다.
+
+답 : batman
 
 117	What was the average password length used in the password brute forcing attempt? (Round to closest whole integer. For example "5" not "5.23213")
+brute force attack 시도에 사용된 평균 암호 길이는 얼마입니까? (가장 가까운 정수로 반올림합니다. 예를 들어 "5.23213"이 아닌 "5")
 
 <details>
   <summary>hint#1</summary>
-  Calculate the length of every password attempt and store the result in a new field. Then calulate the average of that new field with a stats command. Use eval to average, or just visually inspect.
+  Calculate the length of every password attempt and store the result in a new field. Then calulate the average of that new field with a stats command. Use eval to average, or just visually inspect.  
+  모든 암호 시도의 길이를 계산하고 결과를 새 필드에 저장합니다. 그런 다음 stats 명령으로 새 필드의 평균을 계산합니다. 평균을 내기 위해 eval을 사용하거나 그냥 육안으로 검사하십시오.
 </details>
 <details>
   <summary>hint#2</summary>
-  Then calulate the average of that new length field with a stats command, and finally use eval to round, or just manually round.
+  Then calulate the average of that new length field with a stats command, and finally use eval to round, or just manually round.  
+  그 후 stats 명령으로 새 길이 필드의 평균을 계산하고 마지막으로 eval을 사용하여 반올림하거나 수동으로 반올림합니다.
 </details>
 
-118	How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? Round to 2 decimal places.
+```
+sourcetype=stream:http dest=192.168.250.70
+| rex field=form_data "passwd=(?<brutePassword>\w+)"
+| eval lenPwd = len(brutePassword)
+| stats avg(lenPwd) as avglenPwd
+| eval answer=round(avglenPwd,0)
+```
+
+
+|avglenPwd|answer|
+|---|---|
+|6.174334140435835|6|
+
+답 : 6
+
+118	How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? Round to 2 decimal places.  
+brute force attack시 올바른 암호를 식별한 시간과 성공한 로그인 사이에 몇 초가 경과했습니까? 소수점 이하 2자리까지 반올림합니다.
 
 <details>
   <summary>hint#1</summary>
-  You'll note from previous answers that one of the passwords was attempted twice. You need to calculate the duration of time between those two attempts.
+  You'll note from previous answers that one of the passwords was attempted twice. You need to calculate the duration of time between those two attempts.  
+  이전 답변에서 비밀번호 중 하나가 두 번 시도되었음을 알 수 있습니다. 이 두 시도 사이의 시간을 계산해야 합니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.
+  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.  
+  도움이 더 필요하세요? 질문에서 두 개의 이벤트만 반환하는 검색을 작성한 다음 "| delta _time" 또는 "| transaction <extracted-pword-attempt>" SPL 명령을 사용하십시오.
 </details>
 
-119	How many unique passwords were attempted in the brute force attempt?
+위에서 올바른 암호는 batman이었으니, 암호가 batman인 이벤트의 시간차를 구해봅시다.
+
+```
+sourcetype=stream:http dest=192.168.250.70
+| rex field=form_data "passwd=(?<brutePassword>\w+)"
+| search brutePassword=batman
+| table _time brutePassword
+```
+
+|_time|brutePassword|
+|---|---|
+|2016/08/10 21:46:33.689|batman|
+|2016/08/10 21:48:05.858|batman|
+
+차이는 92.169인데, 2번째자리에서 반올림하면 92.17이다.
+
+답 : 92.17
+
+※ 풀이2
+transaction이라는 명령어가 있다.
+[splunk transaction명령어](https://docs.splunk.com/Documentation/Splunk/8.2.2/SearchReference/Transaction)
+
+```
+sourcetype=stream:http  
+| rex field=form_data "passwd=(?<brutePassword>\w+)" 
+| search brutePassword=batman
+| transaction brutePassword 
+| eval duration=round(duration, 2)
+| table duration
+```
+
+|duration|
+|---|
+|92.169084|
+
+119	How many unique passwords were attempted in the brute force attempt?  
+brute force attack에서 사용한 패스워드는 몇가지입니까?  
 
 <details>
   <summary>hint#1</summary>
   Be sure you are extracting the password attempts correctly, then use a stats function to count unique (not total) attempts.
+  비밀번호 시도를 올바르게 추출했는지 확인한 다음 통계 기능을 사용하여 고유한(총 시도가 아닌) 시도를 계산하십시오.
 </details>
+
+중복값을 제거하는 dedup명령어를 사용하여 총 이벤트 수를 파악한다.
+```
+sourcetype=stream:http  
+| rex field=form_data "passwd=(?<brutePassword>\w+)" 
+| dedup brutePassword
+```
+
+![password수]({{site.url}}/assets/built/images/bots/overview/2021-10-14-16-18-05.png)
+
+답 : 412
 
 200	What was the most likely IP address of we8105desk on 24AUG2016?
 
