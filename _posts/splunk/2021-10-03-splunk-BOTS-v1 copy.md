@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/built/images/bots/v1/bots-v1.jpg
 navigation: True
-title: splunk-bots-v1 write up
+title: splunk-bots-v1 write up - part1
 date: '2021-10-03 20:04:36 +0530'
 tags: [splunk]
 class: post-template
@@ -339,14 +339,29 @@ part_filename이라는 필드에 3791.exe라는 이름의 파일이 보입니다
   이것은 이상적인 Microsoft Sysmon 데이터 usecase 입니다. Sysmon 이벤트의 소스 유형을 결정하고 실행 파일을 검색합니다.
 </details>
 
+sourcetype Sysmon에서 3791.exe를 키워드로 이벤트를 검색합니다.
+![sourcetype]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-38-04.png)
+
 해답은 window 이벤트 로그인 sysmon에서 찾을 수 있을 것입니다.
 [syslog란?](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
 
-sourcetype Sysmon에서 3791.exe를 키워드로 이벤트를 검색합니다.
-![sourcetype]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-38-04.png)
-```
+3791.exe파일을 실행하는 event값에 hash 정보가 포함되어있을 것이다.
 
 ```
+sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational 3791.exe 
+| where isnotnull(ParentCommandLine) and isnotnull(CommandLine)
+| table EventDescription CommandLine ParentCommandLine MD5
+```
+
+
+|EventDescription|	CommandLine|	ParentCommandLine|	MD5
+|---|---|---|---|
+|Process Create	|3791.exe	|cmd.exe /c "3791.exe 2&gt;&amp;1"|AAE3F5A29935E6ABCC2C2754D12A9AF0|
+|Process Create	|\??\C:\Windows\system32\conhost.exe 0xffffffff	|cmd.exe /c "3791.exe 2&gt;&amp;1"	|626A9EC445D06FBC1502BF53A1E3356B
+|Process Create	|cmd.exe /c "3791.exe 2&gt;&amp;1"|"C:\Program Files (x86)\PHP\v5.5\php-cgi.exe"	|59A1D4FACD7B333F76C4142CD42D3ABA|
+|Process Create	|C:\Windows\system32\cmd.exe|	3791.exe|	59A1D4FACD7B333F76C4142CD42D3ABA|
+|Process Create	|C:\Windows\system32\cmd.exe|	3791.exe|	59A1D4FACD7B333F76C4142CD42D3ABA|
+
 111	GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.
 
 <details>
@@ -545,12 +560,12 @@ brute force attack시 올바른 암호를 식별한 시간과 성공한 로그�
 </details>
 <details>
   <summary>hint#2</summary>
-  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction [extracted-pword-attempt]" SPL commands.  
-  도움이 더 필요하세요? 질문에서 두 개의 이벤트만 반환하는 검색을 작성한 다음 "| delta _time" 또는 "| transaction [extracted-pword-attempt]" SPL 명령을 사용하십시오.  
-</details>  
+  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.  
+  도움이 더 필요하세요? 질문에서 두 개의 이벤트만 반환하는 검색을 작성한 다음 "| delta _time" 또는 "| transaction <extracted-pword-attempt>" SPL 명령을 사용하십시오.
+</details>
 
-위에서 올바른 암호는 batman이었으니, 암호가 batman인 이벤트의 시간차를 구해봅시다.  
-  
+위에서 올바른 암호는 batman이었으니, 암호가 batman인 이벤트의 시간차를 구해봅시다.
+
 ```
 sourcetype=stream:http dest=192.168.250.70
 | rex field=form_data "passwd=(?<brutePassword>\w+)"
@@ -603,87 +618,3 @@ sourcetype=stream:http
 ![password수]({{site.url}}/assets/built/images/bots/overview/2021-10-14-16-18-05.png)
 
 답 : 412
-
-200	What was the most likely IP address of we8105desk on 24AUG2016?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-201	Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-202	What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-203	What was the first suspicious domain visited by we8105desk on 24AUG2016?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-204	During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length in characters of the value of this field?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-205	What is the name of the USB key inserted by Bob Smith?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-206	Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-207	How many distinct PDFs did the ransomware encrypt on the remote file server?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-208	The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-209	The Cerber ransomware encrypts files located in Bob Smith's Windows profile. How many .txt files does it encrypt?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-210	The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
-
-211	Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?
-
-<details>
-  <summary>hint#1</summary>
-  
-</details>
