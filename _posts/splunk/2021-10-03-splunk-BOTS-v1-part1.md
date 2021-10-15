@@ -204,7 +204,7 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
 
 <details>
   <summary>hint#1</summary>
-  Consider the answer to question 104. The fully qualified domain name was recorded by Stream, Suricata, and the Fortigate firewall.  
+  Consider the answer to question 104. The fully qualified domain name was recorded by Stream, Suricata, and the Fortigate firewall.<br>
   104번 질문에 대한 답을 생각해 보십시오. 정규화된 도메인 이름은 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
 </details>
 
@@ -223,7 +223,7 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 
 <details>
   <summary>hint#1</summary>
-  Consider the answer to question 104. The IP address was recorded by Stream, Suricata, and the Fortigate firewall. Do you dig me?
+  Consider the answer to question 104. The IP address was recorded by Stream, Suricata, and the Fortigate firewall. Do you dig me?  
   104번 질문에 대한 답을 생각해 보십시오. IP 주소는 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
 </details>
 
@@ -231,19 +231,19 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 
 답 : 23.22.63.114
 
-107	Based on the data gathered from this attack and common open source intelligence sources for domain names, what is the email address that is most likely associated with Po1s0n1vy APT group?  
+107	Based on the data gathered from this attack and common open source intelligence sources for domain names, what is the email address that is most likely associated with Po1s0n1vy APT group?   
 이 공격에서 수집한 데이터와 도메인 이름에 대한 일반적인 오픈 소스 인텔리전스 소스를 기반으로 할 때 Po1s0n1vy APT 그룹과 가장 관련이 있는 이메일 주소는 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-  Malicious IP addresses, like the one in the last question are examples of attacker infrastructure. Infrastructure is often reused by the same group. Use a service like www.robtex.com to determine other domains that are or have been associated with this attacker infrastructure (IP address).  
+  Malicious IP addresses, like the one in the last question are examples of attacker infrastructure. Infrastructure is often reused by the same group. Use a service like www.robtex.com to determine other domains that are or have been associated with this attacker infrastructure (IP address).  <br>
 
   마지막 질문과 같은 악성 IP 주소는 공격자 인프라의 예시입니다. 인프라는 동일한 그룹에서 재사용되는 경우가 많습니다. www.robtex.com과 같은 서비스를 사용하여 이 공격자 인프라(IP 주소)와 관련되어 있거나 연결된 다른 도메인을 확인합니다.
 </details>
 
 <details>
   <summary>hint#2</summary>
-  Use the whois lookup on domaintools.com to iterate through domains associated with this IP and visually search for suspicious email addresses. Your knowledge of Batman will help you here!
+  Use the whois lookup on domaintools.com to iterate through domains associated with this IP and visually search for suspicious email addresses. Your knowledge of Batman will help you here!  <br>
 
   domaintools.com에서 whois 조회를 사용하여 이 IP와 연결된 도메인을 반복하고 의심스러운 이메일 주소를 시각적으로 검색합니다.   
 </details>
@@ -270,7 +270,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 
 <details>
   <summary>hint#1</summary>
-  Login attempts will use the HTTP POST method, and they will include some obvious fields in the form_data field of stream:http events.
+  Login attempts will use the HTTP POST method, and they will include some obvious fields in the form_data field of stream:http events.  
   로그인 시도는 HTTP POST 메서드를 사용하며 여기에는 stream:http 이벤트의 form_data 필드에 몇 가지 명백한 필드가 포함됩니다.
 </details>
 
@@ -302,12 +302,12 @@ src가 23.22.63.114인 form_data의 결과를 보면
 
 <details>
   <summary>hint#1</summary>
-  File uploads to web forms use the HTTP POST method.
+  File uploads to web forms use the HTTP POST method.  
   파일 업로드는 HTTP POST 방법을 사용합니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  The question mentions and executable. Search for common executable filename extensions on Windows systems.
+  The question mentions and executable. Search for common executable filename extensions on Windows systems.  
   Windows 시스템에서 실행 파일 이름 확장자를 검색합니다.
 </details>
 
@@ -330,12 +330,12 @@ part_filename이라는 필드에 3791.exe라는 이름의 파일이 보입니다
 
 <details>
   <summary>hint#1</summary>
-  It will be difficult to calulate a hash based on the Splunk event you used to answer 109. Instead Search for the file name in a different data source to find evidence of execution, including file hash values.  
+  It will be difficult to calulate a hash based on the Splunk event you used to answer 109. Instead Search for the file name in a different data source to find evidence of execution, including file hash values.   <br>
   109번에서 사용한 Splunk 이벤트를 기반으로 해시를 계산하는 것은 어려울 것입니다. 대신 다른 데이터 소스에서 파일 이름을 검색하여 파일 해시 값을 포함하여 실행 증거를 찾으십시오.
 </details>
 <details>
   <summary>hint#2</summary>
-  This is an ideal use case for Microsoft Sysmon data. Determine the sourcetype for Sysmon events and search them for the executable.  
+  This is an ideal use case for Microsoft Sysmon data. Determine the sourcetype for Sysmon events and search them for the executable.  <br>
   이것은 이상적인 Microsoft Sysmon 데이터 usecase 입니다. Sysmon 이벤트의 소스 유형을 결정하고 실행 파일을 검색합니다.
 </details>
 
@@ -368,12 +368,12 @@ sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational 3791.exe
 
 <details>
   <summary>hint#1</summary>
-  You need to pivot outside of Splunk to answer this question. Use the IP address discovered earlier to search for malware that has been associated with it in the past.
+  You need to pivot outside of Splunk to answer this question. Use the IP address discovered earlier to search for malware that has been associated with it in the past.<br>
   이 질문에 답하려면 Splunk 외부로 피벗해야 합니다. 이전에 검색된 IP 주소를 사용하여 과거에 연결된 맬웨어를 검색합니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  Experienced analysts know to use sites like www.threatminer.org to search for malware associated with the malicious IP address, but if all alse fails, Google it!  
+  Experienced analysts know to use sites like www.threatminer.org to search for malware associated with the malicious IP address, but if all alse fails, Google it!<br>  
   전문분석가는 www.threatminer.org와 같은 사이트를 사용하여 악성 IP 주소와 관련된 맬웨어를 검색하지만, 발견 실패시 Google에서 검색하십시오!
 </details>
 
@@ -381,18 +381,18 @@ sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational 3791.exe
 
 <details>
   <summary>hint#1</summary>
-  Do some further research on the hash discovered in the last question. Virustotal.com is a good starting place.    
+  Do some further research on the hash discovered in the last question. Virustotal.com is a good starting place.    <br>
   마지막 문제에서 발견된 해시에 대해 좀 더 조사하십시오. Virustotal.com에서 검색해봅니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  malwr.com might lead you astray.  
+  malwr.com might lead you astray.  <br>
   malwr.com은 잘못된 방향입니다.
 </details>
 
 <details>
   <summary>hint#3</summary>
-  The hex codes we are after here will be formatted like this: 49 66 20 79 6f 75 20 64 65 63 6f 64 65 20 74 68 65 20 68 69 6e 74 2c 20 79 6f 75 20 64 6f 6e 27 74 20 6e 65 65 64 20 61 20 68 69 6e 74 21. Submit the hex codes, but decode them on the web for fun!  
+  The hex codes we are after here will be formatted like this: 49 66 20 79 6f 75 20 64 65 63 6f 64 65 20 74 68 65 20 68 69 6e 74 2c 20 79 6f 75 20 64 6f 6e 27 74 20 6e 65 65 64 20 61 20 68 69 6e 74 21. Submit the hex codes, but decode them on the web for fun!  <br>
   16진수 코드는 49 66 20 79 6f 75 20 64 65 63 6f 64 65 20 74 68 65 20 68 69 6e 74 2c 20 79 6f 645 64 20 61 20 68 69 6e 74 21. 16진수 코드를 제출하되 웹에서 디코딩하십시오!
 </details>
 
@@ -400,24 +400,24 @@ sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational 3791.exe
 
 <details>
   <summary>hint#1</summary>
-  Use a service like www.robtex.com to determine other domains that are or have been associated with the attacker infrastructure (IP address).    
+  Use a service like www.robtex.com to determine other domains that are or have been associated with the attacker infrastructure (IP address).    <br>
 </details>
 
 <details>
   <summary>hint#2</summary>
-  Use a high quality whois site like www.domaintools.com to perform whois lookups against these domains until you see a hex code where you were expecting text. Warning not all whois sites show you all fields!  
+  Use a high quality whois site like www.domaintools.com to perform whois lookups against these domains until you see a hex code where you were expecting text. Warning not all whois sites show you all fields!  <br>
 </details>
 
 114	What was the first brute force password used?
 
 <details>
   <summary>hint#1</summary>
-  Login attempts will use the HTTP POST method, and they will include some obvious fields that you can search for in the form_data field of stream:http events.  
+  Login attempts will use the HTTP POST method, and they will include some obvious fields that you can search for in the form_data field of stream:http events. <br> 
   로그인 시도는 HTTP POST 메서드를 사용하며 여기에는 stream:http 이벤트의 form_data 필드에서 검색할 수 있는 몇 가지 명백한 필드가 포함됩니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  By default, Splunk will put the most recent events at the top of the list. You can use the "reverse" SPL command to show you least recent first.  
+  By default, Splunk will put the most recent events at the top of the list. You can use the "reverse" SPL command to show you least recent first.  <br>
   Splunk는 가장 최근 이벤트를 목록 맨 위에 놓습니다. "reverse" SPL 명령을 사용하여 가장 최근의 것을 먼저 표시할 수 있습니다.
 </details>
 
@@ -442,12 +442,12 @@ sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
 brute force attack의 암호 중 하나는 James Brodsky가 가장 좋아하는 Coldplay 노래입니다. 힌트: 이 단어에서 6자 단어를 찾고 있습니다. 어떤것 인가?
 <details>
   <summary>hint#1</summary>
-  If you have not done so already, try to extract the attempted password into a new field using the "rex" SPL command and a regular expression. Having the password attempt in its own field will serve you well for the next several questions!  
+  If you have not done so already, try to extract the attempted password into a new field using the "rex" SPL command and a regular expression. Having the password attempt in its own field will serve you well for the next several questions! <br> 
   아직 수행하지 않은 경우 "rex" SPL 명령과 정규식을 사용하여 시도한 암호를 새 필드에 추출해 보십시오. 자체 필드에 비밀번호를 입력하면 다음 몇 가지 질문에 도움이 됩니다!
 </details>
 <details>
   <summary>hint#2</summary>
-  It's not hard to get a list of songs by the artist. Once you have that,use the "len()" function of the "eval" SPL command. For Splunk style points, use a lookup table to match the password attempts with songs.
+  It's not hard to get a list of songs by the artist. Once you have that,use the "len()" function of the "eval" SPL command. For Splunk style points, use a lookup table to match the password attempts with songs.<br>
   아티스트의 노래 목록을 얻는 것은 어렵지 않습니다. 일단 가지고 있으면 "eval" SPL 명령의 "len()" 함수를 사용하십시오. Splunk 스타일의 경우 조회 테이블을 사용하여 노래와 비밀번호를 일치시킵니다.  
 </details>
 
@@ -489,7 +489,7 @@ sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
 "imreallynotbatman.com"을 실행하는 콘텐츠 관리 시스템에 대한 관리자 액세스의 올바른 비밀번호는 무엇입니까?
 <details>
   <summary>hint#1</summary>
-  From the previous questions, you should know how to extract the password attempts.  You should also know what IP is submitting passwords.  Are any other IP addresses submitting passwords?
+  From the previous questions, you should know how to extract the password attempts.  You should also know what IP is submitting passwords.  Are any other IP addresses submitting passwords?<br>
   전 질문에서 비밀번호 시도를 추출하는 방법을 알아야 합니다. 또한 어떤 IP가 로그인 시도했는지 알아야 합니다. 로그인을 시도하는 다른 IP 주소가 있습니까?  
 </details>
 
@@ -528,12 +528,12 @@ brute force attack 시도에 사용된 평균 암호 길이는 얼마입니까? 
 
 <details>
   <summary>hint#1</summary>
-  Calculate the length of every password attempt and store the result in a new field. Then calulate the average of that new field with a stats command. Use eval to average, or just visually inspect.  
+  Calculate the length of every password attempt and store the result in a new field. Then calulate the average of that new field with a stats command. Use eval to average, or just visually inspect.  <br>
   모든 암호 시도의 길이를 계산하고 결과를 새 필드에 저장합니다. 그런 다음 stats 명령으로 새 필드의 평균을 계산합니다. 평균을 내기 위해 eval을 사용하거나 그냥 육안으로 검사하십시오.
 </details>
 <details>
   <summary>hint#2</summary>
-  Then calulate the average of that new length field with a stats command, and finally use eval to round, or just manually round.  
+  Then calulate the average of that new length field with a stats command, and finally use eval to round, or just manually round.  <br>
   그 후 stats 명령으로 새 길이 필드의 평균을 계산하고 마지막으로 eval을 사용하여 반올림하거나 수동으로 반올림합니다.
 </details>
 
@@ -557,12 +557,12 @@ brute force attack시 올바른 암호를 식별한 시간과 성공한 로그�
 
 <details>
   <summary>hint#1</summary>
-  You'll note from previous answers that one of the passwords was attempted twice. You need to calculate the duration of time between those two attempts.  
+  You'll note from previous answers that one of the passwords was attempted twice. You need to calculate the duration of time between those two attempts.  <br>
   이전 답변에서 비밀번호 중 하나가 두 번 시도되었음을 알 수 있습니다. 이 두 시도 사이의 시간을 계산해야 합니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.  
+  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.  <br>
   도움이 더 필요하세요? 질문에서 두 개의 이벤트만 반환하는 검색을 작성한 다음 "| delta _time" 또는 "| transaction <extracted-pword-attempt>" SPL 명령을 사용하십시오.
 </details>
 
@@ -606,7 +606,7 @@ brute force attack에서 사용한 패스워드는 몇가지입니까?
 
 <details>
   <summary>hint#1</summary>
-  Be sure you are extracting the password attempts correctly, then use a stats function to count unique (not total) attempts.
+  Be sure you are extracting the password attempts correctly, then use a stats function to count unique (not total) attempts.<br>
   비밀번호 시도를 올바르게 추출했는지 확인한 다음 통계 기능을 사용하여 고유한(총 시도가 아닌) 시도를 계산하십시오.
 </details>
 
