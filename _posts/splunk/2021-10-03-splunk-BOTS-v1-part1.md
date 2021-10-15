@@ -78,7 +78,7 @@ Po1s0n1vy가 사용하는 웹 취약점 스캐너를 만든 회사는? 회사 �
 
 <details>
   <summary>hint#1</summary>
-  Many commercial web vulnerability scanners clearly identify themselves in the headers of the HTTP request. Inspect the HTTP source headers (src_headers) of requests from the IP identified in question 101.
+  Many commercial web vulnerability scanners clearly identify themselves in the headers of the HTTP request. Inspect the HTTP source headers (src_headers) of requests from the IP identified in question 101.  
   많은 상용 웹 취약점 스캐너는 HTTP 요청의 헤더에서 자신을 명확하게 식별합니다. 질문 101에서 식별된 IP의 요청에 대한 HTTP 소스 헤더(src_headers)를 검사합니다.
 </details>
 
@@ -95,7 +95,7 @@ imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있�
 
 <details>
   <summary>hint#1</summary>
-  Look for successful (http status code of 200) GET requests from the scanning IP address (identified previously) and inspect the fields related to URL/URI for clues to the CMS in use.  
+  Look for successful (http status code of 200) GET requests from the scanning IP address (identified previously) and inspect the fields related to URL/URI for clues to the CMS in use.  <br>
   스캐닝 IP 주소(이전에 식별)에서 성공적인(http 상태 코드 200) GET 요청을 찾고 사용 중인 CMS에 대한 단서가 있는지 URL/URI와 관련된 필드를 검사합니다.
 </details>
 
@@ -126,19 +126,19 @@ imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니
 
 <details>
   <summary>hint#1</summary>
-  First find the IP address of the web server hosting imreallynotbatman.com. You may have found this IP during the course of answering the previous few questions.  
+  First find the IP address of the web server hosting imreallynotbatman.com. You may have found this IP during the course of answering the previous few questions.  <br>
   먼저 imreallynotbatman.com을 호스팅하는 웹 서버의 IP 주소를 찾습니다. 이전 질문에 답하는 과정에서 이 IP를 발견했을 수 있습니다.
 </details>
 
 <details>
   <summary>hint#2</summary>
-  Revealing sourcetypes include stream:http, fgt_utm, and suricata.  
+  Revealing sourcetypes include stream:http, fgt_utm, and suricata.  <br>
   소스 유형에는 stream:http, fgt_utm 및 suricata가 포함됩니다.
 </details>
 
 <details>
   <summary>hint#3</summary>
-  The key here is searching for events where the IP address of the web server is the source. Because it's a web server, we most often see it as a destination but in this case the intruder took control of the server and pulled the defacement file from an internet site.  
+  The key here is searching for events where the IP address of the web server is the source. Because it's a web server, we most often see it as a destination but in this case the intruder took control of the server and pulled the defacement file from an internet site.  <br>
   여기서 핵심은 웹 서버의 IP 주소가 소스인 이벤트를 검색하는 것입니다. 웹 서버이기 때문에 우리는 목적지로 가장 많이 보지만 이 경우에는 침입자가 서버를 제어하고 인터넷 사이트에서 변조 파일을 가져왔습니다.
 </details>
 
@@ -223,7 +223,7 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 
 <details>
   <summary>hint#1</summary>
-  Consider the answer to question 104. The IP address was recorded by Stream, Suricata, and the Fortigate firewall. Do you dig me?  
+  Consider the answer to question 104. The IP address was recorded by Stream, Suricata, and the Fortigate firewall. Do you dig me?  <br>
   104번 질문에 대한 답을 생각해 보십시오. IP 주소는 Stream, Suricata 및 Fortigate 방화벽에 의해 기록되었습니다.
 </details>
 
@@ -270,7 +270,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 
 <details>
   <summary>hint#1</summary>
-  Login attempts will use the HTTP POST method, and they will include some obvious fields in the form_data field of stream:http events.  
+  Login attempts will use the HTTP POST method, and they will include some obvious fields in the form_data field of stream:http events.  <br>
   로그인 시도는 HTTP POST 메서드를 사용하며 여기에는 stream:http 이벤트의 form_data 필드에 몇 가지 명백한 필드가 포함됩니다.
 </details>
 
@@ -302,12 +302,12 @@ src가 23.22.63.114인 form_data의 결과를 보면
 
 <details>
   <summary>hint#1</summary>
-  File uploads to web forms use the HTTP POST method.  
+  File uploads to web forms use the HTTP POST method.  <br>
   파일 업로드는 HTTP POST 방법을 사용합니다.
 </details>
 <details>
   <summary>hint#2</summary>
-  The question mentions and executable. Search for common executable filename extensions on Windows systems.  
+  The question mentions and executable. Search for common executable filename extensions on Windows systems.  <br>
   Windows 시스템에서 실행 파일 이름 확장자를 검색합니다.
 </details>
 
