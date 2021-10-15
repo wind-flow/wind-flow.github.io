@@ -37,18 +37,22 @@ In the second scenario, one of your users is greeted by this image on a Windows 
 
 ![Scenario 2]({{site.url}}/assets/built/images/bots/v1/ransomewere.png)
 
-200	What was the most likely IP address of we8105desk on 24AUG2016?
-
+200	What was the most likely IP address of we8105desk on 24AUG2016?  
+2016년 8월 24일 we8105desk의 가장 가능성이 높은 IP 주소는 무엇입니까?
 <details>
   <summary>hint#1</summary>
+  Keep it simple and just search for the hostname provided in the question.  Try using the stats command to get a count of events by source ip address to point you in the right direction.<br>
   
+  간단하게 유지하고 질문에 제공된 호스트 이름을 검색하십시오. stats 명령을 사용하여 소스 IP 주소별로 이벤트 수를 가져와 올바른 방향으로 안내해 보세요.
 </details>
 
-201	Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)
-
+201	Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)  
+Cerber 악성코드를 탐지한 Suricata 시그니처 중 가장 적게 경고한 것은? 서명 ID 값만 답변으로 제출하십시오. (구두점은 없고 7개의 정수만 있습니다.)
 <details>
   <summary>hint#1</summary>
+  Keep it simple and start your search by looking at only the sourcetype associated with Suricata and maybe even the name of the malware in question.  The field containing the signature ID should be obvious.  Use stats to create a count by the field containing the signature ID.<br>
   
+  단순하게 유지하고 Suricata와 연결된 소스 유형만 보고 심지어 문제의 맬웨어 이름까지 살펴봄으로써 검색을 시작하십시오. 서명 ID가 포함된 필드는 명확해야 합니다. 통계를 사용하여 서명 ID가 포함된 필드로 개수를 만듭니다.
 </details>
 
 202	What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?

@@ -42,16 +42,16 @@ In the second scenario, one of your users is greeted by this image on a Windows 
 <details>
   <summary alignment="left">hint#1</summary>
 Start your search with "sourcetype=stream:http" and review the rich data captured in these events.<br>
-(sourcetype=stream:http로 검색을 시작하고 이러한 이벤트에서 캡처된 풍부한 데이터를 검토하십시오.)
+sourcetype=stream:http로 검색을 시작하고 이러한 이벤트에서 캡처된 풍부한 데이터를 검토하십시오.
 </details>
 
 <details>
   <summary>hint#2</summary>
 You'll notice that source and destination IP addresses are stored in fields called src_ip and dest_ip respectively. Determine top-talkers for HTTP by combining : "sourcetype=stream:http | stats count by src_ip, dest_ip | sort -count"<br>
-(출발지 및 대상 IP 주소가 각각 src_ip 및 dest_ip라는 필드에 저장되어 있습니다. 조합하여 가장 많은 HTTP이벤트를 조사합니다.)
+출발지 및 대상 IP 주소가 각각 src_ip 및 dest_ip라는 필드에 저장되어 있습니다. 조합하여 가장 많은 HTTP이벤트를 조사합니다.
 </details>
 
-원하는 데이터는 IP에 있다. 어떤 sourcetype 있을지 생각해봅시다.
+원하는 데이터는 IP입니다. 어떤 sourcetype에 있을지 찾아봅니다.
 ```
 | metadata type=sourcetypes index=botsv1
 | stats values(sourcetype)
@@ -66,6 +66,7 @@ scan을 수행한 컴퓨터의 ip를 찾는거니 stream:http에 우리가 원�
 ```
 sourcetype=stream:http imreallynotbatman.com *scan*
 ```
+
 ![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
 
 src_header에 scan 정보를 볼 수 있다.
@@ -562,8 +563,8 @@ brute force attack시 올바른 암호를 식별한 시간과 성공한 로그�
 </details>
 <details>
   <summary>hint#2</summary>
-  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction <extracted-pword-attempt>" SPL commands.  <br>
-  도움이 더 필요하세요? 질문에서 두 개의 이벤트만 반환하는 검색을 작성한 다음 "| delta _time" 또는 "| transaction <extracted-pword-attempt>" SPL 명령을 사용하십시오.
+  Need more help? Write a search that returns only the two events in questions, then use  either "| delta _time" or "| transaction [extracted-pword-attempt]" SPL commands.  <br>
+  도움이 더 필요하세요? 질문에서 두 개의 이벤트만 반환하는 검색을 작성한 다음 "| delta _time" 또는 "| transaction [extracted-pword-attempt]" SPL 명령을 사용하십시오.
 </details>
 
 위에서 올바른 암호는 batman이었으니, 암호가 batman인 이벤트의 시간차를 구해봅시다.
