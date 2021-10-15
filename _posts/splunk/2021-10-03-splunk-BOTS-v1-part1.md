@@ -151,7 +151,7 @@ sourcetype=suricata dest=192.168.250.70
 | stats count by src
 ```
 |src|count|
-|------|---|
+|---|---|
 |192.168.2.50|211
 |192.168.250.70|210|
 
