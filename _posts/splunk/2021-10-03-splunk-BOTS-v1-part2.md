@@ -271,14 +271,17 @@ Bob Smith의 워크스테이션(we8105desk)은 랜섬웨어가 발생하는 동�
   해당 날짜에 감염된 장치에서 SMB(Windows 파일 공유 프로토콜) 트래픽을 검색합니다. "stats" SPL 명령은 SMB 프로토콜에 대한 가장 일반적인 대상 IP를 계산하는 데 사용할 수 있습니다.
 </details>
 
+이 질문은 207, 209를 풀면 더 쉽게 알 수 있습니다.
 
+답 : 192.168.250.20
 
-
-207	How many distinct PDFs did the ransomware encrypt on the remote file server?
+207	How many distinct PDFs did the ransomware encrypt on the remote file server?  
+랜섬웨어는 원격 파일 서버에서 얼마나 많은 개별 PDF를 암호화했습니까?
 
 <details>
   <summary>hint#1</summary>
-  Don't use SMB this time - it's a trap!  Windows event logs are the way to go for this one.  Focus on the event types that deal with windows shares and narrow the search by looking for distinct filenames for the extension in question.
+  Don't use SMB this time - it's a trap!  Windows event logs are the way to go for this one.  Focus on the event types that deal with windows shares and narrow the search by looking for distinct filenames for the extension in question.<br>
+  이번에는 SMB를 사용하지 마십시오. 함정입니다! Windows 이벤트 로그는 이를 위한 방법입니다. Windows 공유를 처리하는 이벤트 유형에 집중하고 해당 확장에 대한 고유한 파일 이름을 찾아 검색 범위를 좁힙니다.
 </details>
 
 208	The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?

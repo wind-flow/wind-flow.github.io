@@ -246,7 +246,7 @@ USB의 이름은 friendlyname 컬럼에 저장되어있습니다. 해당값은 r
 friendlyname
 ```
 - 결과  
-
+```
 08/24/2016 10:42:17.287  
 event_status="(0)The operation completed successfully."  
 pid=708  
@@ -256,39 +256,94 @@ key_path="HKLM\system\controlset001\enum\wpdbusenumroot\umb\2&37c186b&0&storage#
 data_type="REG_SZ"  
 data="MIRANDA_PRI"  
 host=we8105desk source=WinRegistry sourcetype=WinRegistry
+```
 
+registry의 data값이 MIRANDA_PRI임을 알수 있습니다.
 
-206	Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?
+답 : MIRANDA_PRI
 
-<details>
-  <summary>hint#1</summary>
-  Search for SMB (Windows file sharing protocol) traffic from the infected device on the date in question. The "stats" SPL command can be used to count the most common destination IP for the SMB protocol.
-</details>
-
-207	How many distinct PDFs did the ransomware encrypt on the remote file server?
+206	Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?  
+Bob Smith의 워크스테이션(we8105desk)은 랜섬웨어가 발생하는 동안 파일 서버에 연결되었습니다. 파일 서버의 IP 주소는 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-  Don't use SMB this time - it's a trap!  Windows event logs are the way to go for this one.  Focus on the event types that deal with windows shares and narrow the search by looking for distinct filenames for the extension in question.
+  Search for SMB (Windows file sharing protocol) traffic from the infected device on the date in question. The "stats" SPL command can be used to count the most common destination IP for the SMB protocol.  
+  해당 날짜에 감염된 장치에서 SMB(Windows 파일 공유 프로토콜) 트래픽을 검색합니다. "stats" SPL 명령은 SMB 프로토콜에 대한 가장 일반적인 대상 IP를 계산하는 데 사용할 수 있습니다.
 </details>
 
-208	The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?
+이 질문은 207, 209를 풀면 더 쉽게 알 수 있습니다.
+207번 질문에서 원격 파일 서버의 pdf가 암호화되었다고 했으니, 검색해보면
+hostname은 we9041srv.waynecorpinc.local, IP는 192.168.250.20인것을 알 수 있습니다.
+
+답 : 192.168.250.20
+
+207	How many distinct PDFs did the ransomware encrypt on the remote file server?  
+랜섬웨어는 원격 파일 서버에서 얼마나 많은 개별 PDF를 암호화했습니까?
 
 <details>
   <summary>hint#1</summary>
-  Embrace your sysmon data.  Search for a command issued by the infected device on the date in question referencing the filename in question, and use the process_id, ParentProcessId, CommandLine,  and ParentCommandLine, to track down the parent process id of them all.
+  Don't use SMB this time - it's a trap!  Windows event logs are the way to go for this one.  Focus on the event types that deal with windows shares and narrow the search by looking for distinct filenames for the extension in question.<br>
+  이번에는 SMB를 사용하지 마십시오. 함정입니다! Windows 이벤트 로그는 이를 위한 방법입니다. Windows 공유를 처리하는 이벤트 유형에 집중하고 해당 확장에 대한 고유한 파일 이름을 찾아 검색 범위를 좁힙니다.
 </details>
 
-209	The Cerber ransomware encrypts files located in Bob Smith's Windows profile. How many .txt files does it encrypt?
+pdf 확장자를 검색해봅니다.
+
+```
+.pdf
+```
+![pdf확장자]({{site.url}}/assets/built/images/bots/v1/2021-10-18-17-48-58.png)
+
+파일이 암호화되었다면 eventlog에 파일생성, 파일 변경 등의 로그가 있을것입니다.
+
+sourcetype=wineventlog
+
+we9041srv.waynecorpinc.local
+
+208	The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?  
+문제 204에서 찾은 VBscript는 121214.tmp를 시작합니다. 이 초기 실행의 ParentProcessId는 무엇입니까?
+
+<details>
+  <summary>hint#1</summary>
+  Embrace your sysmon data.  Search for a command issued by the infected device on the date in question referencing the filename in question, and use the process_id, ParentProcessId, CommandLine,  and ParentCommandLine, to track down the parent process id of them all.<br> 
+  sysmon 데이터를 수용하십시오. 해당 파일 이름을 참조하여 해당 날짜에 감염된 장치에서 실행된 명령을 검색하고 process_id, ParentProcessId, CommandLine 및 ParentCommandLine을 사용하여 모두의 상위 프로세스 ID를 추적합니다.
+</details>
+
+parentprocessid는 sysmon에서 찾을 수 있습니다.
+
+```
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" 121214.tmp
+| where isnotnull(parent_process_id)
+| table _time parent_process_id ParentCommandLine process_id CommandLine 
+| sort _time
+```
+
+|_time|parent_process_id|ParentCommandLine|process_id|CommandLine|
+|---|---|---|---|---|
+|2016/08/24 16:48:21|	1476|	"C:\Windows\System32\cmd.exe" /C START "" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"	|2948|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|
+|2016/08/24 16:48:21|	3968|	"C:\Windows\System32\WScript.exe" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\20429.vbs"	|1476|	"C:\Windows\System32\cmd.exe" /C START "" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"
+|2016/08/24 16:48:29|	2948|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|	3828|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|
+|2016/08/24 16:48:41|	1280|	/d /c taskkill /t /f /im "121214.tmp" &gt; NUL &amp; ping -n 1 127.0.0.1 &gt; NUL &amp; del "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp" &gt; NUL	|1684|	taskkill  /t /f /im "121214.tmp"|
+|2016/08/24 16:48:41|	3828|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|	1280|	/d /c taskkill /t /f /im "121214.tmp" &gt; NUL &amp; ping -n 1 127.0.0.1 &gt; NUL &amp; del "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp" &gt; NUL
+|2016/08/24 16:48:41|	3828|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|	3836	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\{35ACA89F-933F-6A5D-2776-A3589FB99832}\osk.exe"
+|2016/08/24 16:48:42|	1280|	/d /c taskkill /t /f /im "121214.tmp" &gt; NUL &amp; ping -n 1 127.0.0.1 &gt; NUL &amp; del "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp" &gt; NUL	|556|	ping  -n 1 127.0.0.1|
+
+209	The Cerber ransomware encrypts files located in Bob Smith's Windows profile. How many .txt files does it encrypt?  
+Cerber 랜섬웨어는 Bob Smith의 Windows 프로필에 있는 파일을 암호화합니다. 얼마나 많은 .txt 파일을 암호화합니까?
 
 <details>
   <summary>hint#1</summary>
   Sysmon to the rescue again.  Focus on the infected machine as well as the user profile while searching for the filename extension in question.
+  Sysmon에서 다시 찾읍시다. 문제의 파일 이름 확장자를 검색하는 동안 감염된 시스템과 사용자 프로필에 집중하십시오.
 </details>
 <details>
   <summary>hint#2</summary>
-  In Sysmon events, EventCode=2 indicates file creation time has changed. Watch out for duplicates!
+  In Sysmon events, EventCode=2 indicates file creation time has changed. Watch out for duplicates!<br>
+  Sysmon 이벤트에서 EventCode=2는 파일 생성 시간이 변경되었음을 나타냅니다. 중복에 주의하세요!
 </details>
+
+```
+.txt host=we8105desk
+```
 
 210	The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?
 
