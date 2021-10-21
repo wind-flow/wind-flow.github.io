@@ -14,107 +14,59 @@ author: wind-flow
 
 APT Scenarios:
 
-In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.
-
- 
+In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.  
+이 실습에서는 Wayne Enterprises를 성공적으로 지원하고 Frothly의 Grace Hoppy에게 최근 문제를 지원하도록 추천된 분석가 Alice Bluebird의 페르소나를 가정합니다.
 
 Hunting Scenarios:
 
-PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.
-Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP
-Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS
-Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.
-Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.
-User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.
-Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.
-Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.
-Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.
-Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.
-OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.
-Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).
-Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.
+PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.  
+PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.  
+Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP  
+Exfiltration Over Alternative Protocol - FTP: 데이터 유출은 주로 FTP와 같은 일반적인 네트워크 프로토콜을 사용하여 발생할 수 있습니다.  
+Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS  
+Exfiltration Over Alternative Protocol - DNS: 데이터 유출은 일반적인 네트워크 프로토콜, 특히 DNS를 사용하여 발생할 수 있습니다.  
+Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.  
+Adversary Infrastructure: 적군은 우리가 이미 밝혀낸 것 이상의 기반 시설의 여러 구성 요소를 구축했습니다.  
+Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.  
+Spearphishing Attachment: 적들은 피싱을 사용하여 Froth.ly 내에 거점을 구축하려고 시도합니다.  
+User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.  
+User Execution: 공격자는 사용자가 파일에 대해 작업을 실행하도록 유인하여 Froth.ly 내에서 거점을 설정하려고 시도합니다.  
+Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.  
+Persistence - Create Account: 공격자는 사용자 계정을 생성하여 기업 전체에서 지속성을 유지하려고 합니다.  
+Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.  
+Persistence - Scheduled Task: 공격자는 작업 스케줄러를 사용하여 재부팅 시 지속성을 유지하려고 합니다.  
+Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.  
+Indicator Removal On Host: 감사/이벤트 로그를 지우면 공격자가 자신의 흔적을 덮으려는 것을 나타낼 수 있습니다.  
+Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.  
+Reconaissance: 사용자 에이전트 문자열은 의도하지 않은 적에 대한 통찰력을 제공할 수 있습니다.
+OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.  
+OSINT: 공개적으로 사용 가능한 회사 정보와 해당 정보에 액세스하는 사람을 식별하면 적에 대한 통찰력을 제공할 수 있습니다.  
+Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).  
+Lateral Movement: 공격자는 WMI(Windows Management Instrumentation)를 사용하여 측면으로 다른 시스템으로 이동합니다.  
+Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.  
+Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.  
 
 
-100	Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited? Answer guidance: Do not provide the FQDN. Answer example: google.com  
-Amber Turing은 Frothly가 잠재적인 경쟁업체에 인수되기를 바랐지만, 웹사이트를 방문하여 경영진의 연락처를 찾았습니다. 그녀가 방문한 웹사이트 도메인은 무엇입니까? 주의 : 답은 FQDN형태가 아닙니다. 답변 예시: google.com
+![Scenario 1]({{site.url}}/assets/built/images/bots/v2/b21.jpg)
+
+The data included in this app was generated in August of 2017 by members of Splunk's Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.  
+이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.
+
+![Scenario 2]({{site.url}}/assets/built/images/bots/v2/b22.jpg)
+
+200	What is the public IPv4 address of the server running www.brewertalk.com?  
+www.brewertalk.com의 공개 IPv4 주소는 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-    Look at Amber's web traffic.<br>
-    Amber의 웹 트래픽을 보십시오.
+  Do you have access to a network diagram? If you do, use it!
+  네트워크 다이어그램에 액세스할 수 있습니까? 있으면, 사용하세요!
 </details>
 
 <details>
   <summary>hint#2</summary>
-    Find Amber's hostname and find the IP address that she was most likely using. Then look at the stream:http sourcetype.<br>
-    Amber의 호스트 이름을 찾고 그녀가 사용했을 가능성이 가장 높은 IP 주소를 찾습니다. 그런 다음 stream:http 소스 유형을 보십시오.
-</details>
-
-<details>
-  <summary>hint#3</summary>
-    Take a look at src_ip=10.0.2.101 and the stream:http sourcetype. Look at the websites that Amber visited over the month of August.<br>
-    src_ip=10.0.2.101 및 stream:http 소스 유형을 살펴보십시오. Amber가 8월 한 달 동안 방문한 웹사이트를 보십시오
-</details>
-
-Amber Turing의 IP부터 확인해봅시다.
-
-```
-Amber Turing
-```
-
-sourcetype="pan:traffic"
-
-101	Amber found the executive contact information and sent him an email. What is the CEO's name? Provide the first and last name.  
-Amber는 임원 연락처 정보를 찾아 이메일을 보냈습니다. CEO의 이름은 무엇입니까? 이름과 성을 제공하십시오.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-Look for emails to Amber Turing.
-
-<details>
-  <summary>hint#2</summary>
-    Find emails from aturing that were sent to the domain from question 100.
-</details>
-<details>
-  <summary>hint#3</summary>
-    Look at the sourcetype=stream:smtp and filter on the sender=aturing@froth.ly and/or recipient=aturing@froth.ly. Look at the content and body of emails that have something to do with competitors. The name of the CEO should be in the email.
-</details>
-
-102	After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-103	What is the name of the file attachment that Amber sent to a contact at the competitor?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-104	What is Amber's personal email address?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-105	What version of TOR did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-200	What is the public IPv4 address of the server running www.brewertalk.com?
-
-<details>
-  <summary>hint#1</summary>
-
+  A Splunk Stream forwarder running in the Frothly on-prem environment would observe http traffic destined for www.brewertalk.com as having an internet routable IP address.<br>
+  Frothly 온프레미스 환경에서 실행되는 Splunk Stream 포워더는 www.brewertalk.com으로 향하는 http 트래픽이 인터넷 라우팅 가능한 IP 주소를 갖는 것으로 관찰합니다.
 </details>
 
 201	Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.
