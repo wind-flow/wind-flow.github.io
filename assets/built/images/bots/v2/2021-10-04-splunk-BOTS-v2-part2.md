@@ -66,15 +66,70 @@ www.brewertalk.com의 공개 IPv4 주소는 무엇입니까?
 <details>
   <summary>hint#2</summary>
   A Splunk Stream forwarder running in the Frothly on-prem environment would observe http traffic destined for www.brewertalk.com as having an internet routable IP address.<br>
-  Frothly 온프레미스 환경에서 실행되는 Splunk Stream 포워더는 www.brewertalk.com으로 향하는 http 트래픽이 인터넷 라우팅 가능한 IP 주소를 갖는 것으로 관찰합니다.
+  Frothly 온프레미스 환경에서 실행되는 Splunk Stream forwarder는 www.brewertalk.com으로 향하는 http 트래픽이 인터넷 라우팅 가능한 IP 주소를 갖는 것으로 관찰합니다.
 </details>
 
-201	Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.
+stream:http에서 해당 URL로 검색한 후, dest_ip필드에서 찾을 가능성이 높습니다.
+```
+sourcetype=stream:http www.brewertalk.com
+| dedup site dest_ip
+| table site dest_ip
+```
+
+
+site|	dest_ip|
+|---|---|
+|www.brewertalk.com|172.31.4.249|
+|www.brewertalk.com|52.42.208.228|
+|ec2-52-40-10-231.us-west-2.compute.amazonaws.com:8088|172.31.10.10|
+|ec2-52-40-10-231.us-west-2.compute.amazonaws.com:8088|52.40.10.231|
+|45.77.65.211:9999|45.77.65.211|
+|brewertalk.com|172.31.4.249|
+
+www.brewertalk.com의 dest_ip의 값을 보면 172.31.4.249와 52.42.208.228이 있습니다.
+문제에서 공개IP를 물어봤으니 사설IP대역은 172.31.4.249이 아닌, 52.42.208.228이 공개 IP입니다.
+
+답 : 52.42.208.228
+
+201	Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.  
+www.brewertalk.com에 대해 웹 취약점 스캔을 실행하는 데 사용되는 시스템의 IP 주소를 제공하십시오.
 
 <details>
   <summary>hint#1</summary>
-
+  App scanners are often 'noisy' and therefore easy to detect with automated correlation searches.<br>
+  앱 스캐너는 '잡음'일 경우가 많기 때문에 자동화된 상관 관계 검색으로 쉽게 감지할 수 있습니다.
 </details>
+
+<details>
+  <summary>hint#2</summary>
+  Drill down into contributing events if you can!<br>
+  가능하면 기여 이벤트를 자세히 살펴보십시오!
+</details>
+
+scan이면 request 횟수가 많을것입니다.
+
+www.berkbeer.com의 ip(52.42.208.228, 172.31.4.249)를 dest_ip로 설정하고 count해봅시다.
+그리고, header에 
+
+쿼리결과를 토대로 검증해봅니다.(스캔치고 이벤트 수가 적습니다.)
+
+```
+sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
+| stats count by src_ip dest_ip
+| sort -count
+```
+
+|src_ip	dest_ip	count
+|45.77.65.211|172.31.4.249|9708|
+|52.40.10.231|172.31.4.249|634|
+|172.31.10.10|52.42.208.228|303|
+|71.39.18.125|172.31.4.249|160|
+|174.209.13.154|172.31.4.249|134|
+|10.0.2.109|52.42.208.228|84|
+|136.0.2.138|172.31.4.249|24|
+|136.0.0.125|172.31.4.249|8|
+
+답 : 45.77.65.211
 
 202	The IP address from question 201 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php
 
