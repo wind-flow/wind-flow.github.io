@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/built/images/bots/v2/bots-v2.jpg
 navigation: True
-title: splunk-bots-v2 write up(1)
+title: splunk-bots-v2 write up(2)
 date: '2021-10-04 20:04:36 +0530'
 tags: [splunk]
 class: post-template
@@ -131,11 +131,12 @@ sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
 
 답 : 45.77.65.211
 
-202	The IP address from question 201 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php
-
+202	The IP address from question 201 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php  
+201번 문제의 IP 주소는 URI 경로를 공격하기 위해 다른 소프트웨어에서도 사용되고 있습니다. URI 경로는 무엇입니까? 답변 안내: 답변에 선행 슬래시를 포함하십시오. 쿼리 문자열이나 URI의 다른 부분을 포함하지 마십시오. 답변 예시: /phpinfo.php
 <details>
   <summary>hint#1</summary>
-
+  Analyze all HTTP traffic from the scanning system to www.brewertalk.com, and inspect the different HTTP user agents. A different HTTP user agent often indicates a different HTTP client program was in use.<br>
+  스캐닝 시스템에서 www.brewertalk.com으로의 모든 HTTP 트래픽을 분석하고 다양한 HTTP 사용자 에이전트를 검사합니다. 다른 HTTP 사용자 에이전트는 종종 다른 HTTP 클라이언트 프로그램이 사용 중임을 나타냅니다.
 </details>
 
 203	What SQL function is being abused on the uri path from question 202?
