@@ -135,23 +135,128 @@ sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
 201번 문제의 IP 주소는 URI 경로를 공격하기 위해 다른 소프트웨어에서도 사용되고 있습니다. URI 경로는 무엇입니까? 답변 안내: 답변에 선행 슬래시를 포함하십시오. 쿼리 문자열이나 URI의 다른 부분을 포함하지 마십시오. 답변 예시: /phpinfo.php
 <details>
   <summary>hint#1</summary>
-  Analyze all HTTP traffic from the scanning system to www.brewertalk.com, and inspect the different HTTP user agents. A different HTTP user agent often indicates a different HTTP client program was in use.<br>
-  스캐닝 시스템에서 www.brewertalk.com으로의 모든 HTTP 트래픽을 분석하고 다양한 HTTP 사용자 에이전트를 검사합니다. 다른 HTTP 사용자 에이전트는 종종 다른 HTTP 클라이언트 프로그램이 사용 중임을 나타냅니다.
+    Analyze all HTTP traffic from the scanning system to www.brewertalk.com, and inspect the different HTTP user agents. A different HTTP user agent often indicates a different HTTP client program was in use.<br>
+    스캐닝 시스템에서 www.brewertalk.com으로의 모든 HTTP 트래픽을 분석하고 다양한 HTTP 사용자 에이전트를 검사합니다. 다른 HTTP 사용자 에이전트는 종종 다른 HTTP 클라이언트 프로그램이 사용 중임을 나타냅니다.
 </details>
 
-203	What SQL function is being abused on the uri path from question 202?
+<details>
+  <summary>hint#2</summary>
+    For each HTTP user agent, inspect the URI that the user agent is interacting with.<br>
+    각 HTTP 사용자 에이전트에 대해 사용자 에이전트가 상호 작용하는 URI를 검사합니다.
+</details>
+
+```
+sourcetype=stream:http src_ip=45.77.65.211
+```
+
+field중 uri_path 필드가 있으니, 어떤 uri가 있는지 봅시다.
+
+![uri_path]({{site.url}}/assets/built/images/bots/v2/2021-10-24-02-53-51.png)
+
+"/member.php"가 가장 많습니다. 어떤 특이사항이 있는지 봅시다.
+
+```
+sourcetype=stream:http src_ip=45.77.65.211 uri_path="/member.php"
+```
+
+dest_content 필드의 내용을 보면 중간 SQL Injection의 흔적이 보입니다.
+
+```
+SELECT q.*, s.sid
+			FROM mybb_questionsessions s
+			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
+			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SUBSTRING((SELECT password FROM mybb_users ORDER BY UID LIMIT 5,1), 32, 31))),NULL) and '1'
+```
+
+/member.php uri에 SQL Injection 공격을 하고있는 것을 알 수 있습니다.
+
+답 : /member.php
+
+203	What SQL function is being abused on the uri path from question 202?  
+문제 202의 uri 경로에서 어떤 SQL 함수가 남용되고 있습니까?
 
 <details>
   <summary>hint#1</summary>
-
+    SQL stands for Structured Query Language and it is used to interact with relational databases like mysql. Some common terms in SQL include 'SELECT' 'WHERE' 'FROM' and 'JOIN'.<br>
+    SQL은 Structured Query Language의 약자로 mysql과 같은 관계형 데이터베이스와 상호 작용하는 데 사용됩니다. SQL의 일반적인 용어로는 'SELECT' 'WHERE' 'FROM' 및 'JOIN'이 있습니다.
 </details>
 
-204	What is Frank Ester's password salt value on www.brewertalk.com?
+<details>
+  <summary>hint#2</summary>
+    SQL injection vulnerabilities can arise when a programmer does not properly check user input for characters that might have an impact on how the underlying database query is assembled in his or her code. A single quote character provided as input to a web page ' is often a tell-tale sign of a SQL injection attack.<br>
+    SQL injection 취약점은 프로그래머가 기본 데이터베이스 쿼리가 코드에서 어셈블되는 방식에 영향을 미칠 수 있는 문자에 대한 사용자 입력을 적절하게 확인하지 않을 때 발생할 수 있습니다. 웹 페이지에 대한 입력으로 제공되는 작은 따옴표 '는 종종 SQL 주입 공격을 알리는 신호입니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    XML is one of many data formats that can be stored in relational databases like mysql. Some SQL commands in the MySQL database can be used to produce an error that leaks database contents. Look for a SQL command that updates XML.<br>
+    XML은 mysql과 같은 관계형 데이터베이스에 저장할 수 있는 많은 데이터 형식 중 하나입니다. MySQL 데이터베이스의 일부 SQL 명령을 사용하여 데이터베이스 내용을 누출하는 오류를 생성할 수 있습니다. XML을 업데이트하는 SQL 명령을 찾으십시오.
+</details>
+
+문제 202에서 파악한 SQL에서 포함된 함수는 updatexml입니다.
+
+답 : updatexml
+
+204	What is Frank Ester's password salt value on www.brewertalk.com?  
+www.brewertalk.com에서 Frank Ester의 비밀번호의 salt 값은 얼마입니까?
 
 <details>
   <summary>hint#1</summary>
-
+    Narrow down the events to only those that include the suspected SQL injection traffic. Stream HTTP events contain the details you need. Filter on the source IP, dest, IP, HTTP user agent and URI path.<br>
+    의심되는 SQL injection 트래픽을 포함하는 이벤트로만 이벤트 범위를 좁힙니다. 스트림 HTTP 이벤트에는 필요한 세부 정보가 포함되어 있습니다. 소스 IP, 대상, IP, HTTP 사용자 에이전트 및 URI 경로를 필터링합니다.
 </details>
+
+<details>
+  <summary>hint#2</summary>
+    These events will probably make a lot more sense if you reverse the Splunk event ordering by piping your search results to the reverse command. This will show you the first SQL injection commands at the top of the list and later events below.
+    검색 결과를 reverse 명령으로 파이프하여 Splunk 이벤트 순서를 반대로 하면 이러한 이벤트가 훨씬 더 의미가 있을 것입니다. 이렇게 하면 목록 상단에 첫 번째 SQL injection 명령이 표시되고 아래에 이후 이벤트가 표시됩니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    There is a lot of data captured in these events. You are looking for two pieces of data in the dest_content field. The first can be found following the string 'XPATH syntax error: '<br>
+    이러한 이벤트에는 많은 데이터가 캡처되어 있습니다. dest_content 필드에서 두 개의 데이터를 찾고 있습니다. 첫 번째는 'XPATH 구문 오류: ' 문자열 다음에서 찾을 수 있습니다.
+</details>
+
+<details>
+  <summary>hint#4</summary>
+    The other important piece of data in the dest_content field can be extracted with the following regular expression: '<dt>Query:</dt>\s+<dd>\s+(?<sqli_query>[^<]+)' Look for the sqli_query values that are stealing salt values.<br>
+    dest_content 필드의 다른 중요한 데이터는 다음 정규식으로 추출할 수 있습니다. '<dt>Query:</dt>\s+<dd>\s+(?<sqli_query>[^<]+)' 솔트 값을 훔치는 sqli_query 값.
+</details>
+
+문제 202번에서 사용했던 쿼리에 키워드 'salt'를 추가해봅시다.
+
+```
+sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php *frank* OR *ester*
+```
+
+dest_content필드의 중간 내용을 보면 username과 email을 알기위해 SQL injection 공격시도흔적이 보입니다.
+
+```
+1. 결과
+<dt>SQL Error:</dt>
+<dd>1105 - XPATH syntax error: ':frankesters47@gmail.com'</dd>
+<dt>Query:</dt>
+<dd>
+			SELECT q.*, s.sid
+			FROM mybb_questionsessions s
+			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
+			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SELECT email FROM mybb_users ORDER BY UID LIMIT 0,1)),NULL) and '1'
+		</dd>
+2. 결과
+<dt>SQL Error:</dt>
+<dd>1105 - XPATH syntax error: ':frank'</dd>
+<dt>Query:</dt>
+<dd>
+			SELECT q.*, s.sid
+			FROM mybb_questionsessions s
+			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
+			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SELECT username FROM mybb_users ORDER BY UID LIMIT 0,1)),NULL) and '1'
+		</dd>
+
+```
+
+순차
 
 205	What is user btun's password on brewertalk.com?
 
