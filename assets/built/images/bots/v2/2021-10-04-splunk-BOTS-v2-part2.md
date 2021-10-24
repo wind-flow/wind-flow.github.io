@@ -173,7 +173,7 @@ SELECT q.*, s.sid
 답 : /member.php
 
 203	What SQL function is being abused on the uri path from question 202?  
-문제 202의 uri 경로에서 어떤 SQL 함수가 남용되고 있습니까?
+문제 202의 uri 경로에서 어떤 SQL 함수를 통해 침입시도를 하고 있습니까?
 
 <details>
   <summary>hint#1</summary>
@@ -224,7 +224,7 @@ www.brewertalk.com에서 Frank Ester의 비밀번호의 salt 값은 얼마입니
     dest_content 필드의 다른 중요한 데이터는 다음 정규식으로 추출할 수 있습니다. '<dt>Query:</dt>\s+<dd>\s+(?<sqli_query>[^<]+)' 솔트 값을 훔치는 sqli_query 값.
 </details>
 
-문제 202번에서 사용했던 쿼리에 키워드 'salt'를 추가해봅시다.
+문제 202번에서 사용했던 쿼리에 frank ester관련 키워드를 추가해봅시다.
 
 ```
 sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php *frank* OR *ester*
@@ -256,15 +256,49 @@ dest_content필드의 중간 내용을 보면 username과 email을 알기위해 
 
 ```
 
-순차
+첫번째는 eamil, 두번째는 username 조회시도를 하고있습니다. 해당 이벤트 시간을 기준으로 ±5초로 발생한 SQL문의 이벤트를 봅시다.
 
-205	What is user btun's password on brewertalk.com?
+![](2021-10-24-12-09-35.png)
+
+```
+sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php
+| rex field=dest_content "<dt>Query:</dt>\s+<dd>\s+(?<sqli_query>[^<]+)"
+| rex field=dest_content "<dd>1105 - XPATH syntax error:\s+(?<sql_errcode>[^<]+)"
+| search sqli_query=*
+| table _time sql_errcode sqli_query
+| sort _time
+```
+
+sql_errcode 필드를 보면 아래차례대로 sql injection시도를 하고 있습니다.
+테이블명(mybb_users) -> row수(6) -> uid(1) -> username의 길이(5) -> 유저이름(frank) -> email주소길이(23) -> email(frankesters47@gmail.com) -> salt길이(8) -> salt(gGsxysZL) -> 비밀번호 길이(32) 
+
+답 : gGsxysZL
+
+205	What is user btun's password on brewertalk.com?  
+berwertalk.com에서 btun의 비밀번호는 무엇입니까 ?
 
 <details>
   <summary>hint#1</summary>
-
+    His hashed password and salt was stolen via SQLi and captured in Splunk. Also note a 'top 1000' password list is available in a Splunk lookup table file called 'top_1000.csv'. Use '| inputlookup top_1000.csv' to inspect it.<br>
+    그의 해시된 암호와 slat값은 SQL injection을 통해 도난당했으며 Splunk에서 발견되었습니다. 또한 'top_1000.csv'라는 Splunk 조회 테이블 파일에서 '상위 1000' 암호 목록을 사용할 수 있습니다. 사용 '| inputlookup top_1000.csv'를 검사하여 검사합니다.
 </details>
 
+<details>
+  <summary>hint#2</summary>
+    By inspecting the code for this forum software, it can be determined that the stored password hash is computed as follows: md5( md5(salt) + md5(plaintext password) ) where '+' is simple string concatenation.<br>
+    이 포럼 소프트웨어의 코드를 검사하여 저장된 암호 해시가 다음과 같이 계산되었음을 확인할 수 있습니다. md5(md5(salt) + md5(일반 텍스트 암호)) 여기서 '+'는 단순히 문자열 연결을 뜻합니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    The Splunk eval command includes an md5 hash function. Beware that the exploit used in this attack chops the final character from the password hash and includes it as a single character string in the next SQLi extraction. When you use this string, either add the character back to the end of the hash, or just use a wildcard match on the beginning of it.<br>
+    Splunk eval 명령에는 md5 해시 함수가 포함되어 있습니다. 이 공격에 사용된 익스플로잇은 비밀번호 해시에서 최종 문자를 잘라내고 다음 SQLi 추출에서 단일 문자열로 포함한다는 점에 유의하십시오. 이 문자열을 사용할 때 해시 끝에 문자를 다시 추가하거나 시작 부분에 와일드카드 일치를 사용하십시오.
+</details>
+
+<details>
+  <summary>hint#4</summary>
+
+</details>
 206	What are the characters displayed by the XSS probe? Answer guidance: Submit answer in native language or character set.
 
 <details>
