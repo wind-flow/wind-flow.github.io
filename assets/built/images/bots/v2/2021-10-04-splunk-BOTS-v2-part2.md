@@ -297,41 +297,113 @@ berwertalk.com에서 btun의 비밀번호는 무엇입니까 ?
 
 <details>
   <summary>hint#4</summary>
-
+    Btun's salt value is 'tlX7cQPE' and his complete password hash is 'f91904c1dd2723d5911eeba409cc0d14'<br>
+    Btun의 salt 값은 'tlX7cQPE'이고 전체 암호 해시는 'f91904c1dd2723d5911eeba409cc0d14'입니다.
 </details>
-206	What are the characters displayed by the XSS probe? Answer guidance: Submit answer in native language or character set.
+
+
+
+
+
+
+
+
+
+
+
+206	What are the characters displayed by the XSS probe? Answer guidance: Submit answer in native language or character set.  
+XSS 프로브가 표시하는 문자는 무엇입니까? 답변 안내: 영어 또는 문자 집합으로 답변을 제출합니다.
 
 <details>
   <summary>hint#1</summary>
-
+    The attack is obscured in the logs by URL encoding.<br>
+    공격은 URL 인코딩에 의해 로그에서 가려집니다.
 </details>
 
-207	What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
+<details>
+  <summary>hint#2</summary>
+    Splunk has the capability to URLdecode strings. Check your quick reference guide or Google for it.<br>
+    Splunk에는 문자열을 URL 디코딩하는 기능이 있습니다. 빠른 참조 가이드 또는 Google을 확인하십시오.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Try using | eval decoded_uri=urldecode(uri)<br>
+    SPL을 사용해보세요 "| eval decoded_uri=urldecode(uri)"
+</details>
+
+<details>
+  <summary>hint#4</summary>
+    Don't forget to check if others on your team have investigated this before.<br>
+    팀의 다른 사람들이 전에 이것을 조사했는지 확인하는 것을 잊지 마십시오.
+</details>
+
+
+
+
+207	What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.  
+XSS 공격의 일환으로 Kevin의 브라우저가 악성 URL에 전송한 쿠키의 값은 무엇입니까? 답변 안내: 모든 숫자. 쿠키 이름이나 등호와 같은 기호가 아닙니다.
 
 <details>
   <summary>hint#1</summary>
-
+    Check out sourcetype=stream:http <br>
+    sourcetype=stream:http를 확인하십시오.
 </details>
 
-208	The brewertalk.com web site employed Cross Site Request Forgery (CSRF) techniques. What was the value of the anti-CSRF token that was stolen from Kevin Lagerfield's computer and used to help create an unauthorized admin user on brewertalk.com?
+<details>
+  <summary>hint#2</summary>
+    Inspect the uri_query field.<br>
+    uri_query 필드를 검사합니다.
+</details>
+
+208	The brewertalk.com web site employed Cross Site Request Forgery (CSRF) techniques. What was the value of the anti-CSRF token that was stolen from Kevin Lagerfield's computer and used to help create an unauthorized admin user on brewertalk.com?  
+brewertalk.com 웹 사이트는 CSRF(Cross Site Request Forgery) 기술을 사용했습니다. Kevin Lagerfield의 컴퓨터에서 도난당하여 brewertalk.com에서 권한이 없는 관리자를 만드는 데 사용된 anti-CSRF 토큰의 가치는 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-
+    Anti-CSRF tokens are usually hidden form elements set when the browser loads an HTML page containing a form. If the form is submitted without the anti-CSRF token, the backend code of the website rejects the transaction as it might have come from a malicious source rather than from a legitimate user of the form.<br>
+    Anti-CSRF 토큰은 일반적으로 브라우저가 양식을 포함하는 HTML 페이지를 로드할 때 설정된 숨겨진 양식 요소입니다. 안티 CSRF 토큰 없이 양식을 제출하는 경우 웹사이트의 백엔드 코드는 해당 양식의 합법적인 사용자가 아닌 악의적인 소스에서 왔을 수 있으므로 트랜잭션을 거부합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    One of the many ways that an attacker can abuse a cross site scripting vulnerability is to use it to defeat CSRF protections. If you carefully inspect XSS attacks in the data set, you will stumble on some malicious code that is stealing the anti-CSRF token.<br>
+    공격자가 크로스 사이트 스크립팅 취약점을 악용할 수 있는 여러 방법 중 하나는 이를 사용하여 CSRF 보호를 무력화하는 것입니다. 데이터 세트에서 XSS 공격을 주의 깊게 검사하면 안티 CSRF 토큰을 훔치는 일부 악성 코드를 발견하게 될 것입니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    On brewertalk.com, users created with usergroup=4 are administrators.<br>
+    brewertalk.com에서 usergroup=4로 생성된 사용자는 관리자입니다.
+</details>
+<details>
+  <summary>hint#4</summary>
+    The name of the anti-CSRF token is my_post_key<br>
+    안티 CSRF 토큰의 이름은 my_post_key입니다.
 </details>
 
-209	What brewertalk.com username was maliciously created by a spearphishing attack?
+209	What brewertalk.com username was maliciously created by a spearphishing attack?  
+스피어피싱 공격에 의해 악의적으로 생성된 brewertalk.com 사용자 이름은 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-
+    The attacker was trying to masquerade as something that would look legitimate to a casual observer.<br>
+    공격자는 평범한 관찰자에게 합법적으로 보이는 것으로 가장하려고 했습니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    The attacker stole a trick from domain squatters by using a homograph attack. More info on homograph attacks can be found on Wikipedia.<br>
+    공격자는 동형이의어(homograph) 공격을 사용하여 도메인 점거자로부터 속임수를 훔쳤습니다. 동형 이의어 공격에 대한 자세한 정보는 Wikipedia에서 찾을 수 있습니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    The password of this new, unauthorized, malicious administrative account is beer_lulz<br>
+    이 새로운 승인되지 않은 악의적인 관리 계정의 암호는 beer_lulz입니다.
 </details>
 
-300	According to Frothly's records, what is the likely MAC address of Mallory's corporate MacBook? Answer guidance: Her corporate MacBook has the hostname MACLORY-AIR13.
+300	According to Frothly's records, what is the likely MAC address of Mallory's corporate MacBook? Answer guidance: Her corporate MacBook has the hostname MACLORY-AIR13.  
+Frothly의 기록에 따르면 Mallory의 회사 MacBook의 MAC 주소는 무엇입니까? 답변 안내: 그녀의 회사 MacBook의 호스트 이름은 MACLORY-AIR13입니다.
 
 <details>
   <summary>hint#1</summary>
-
+    Use Asset Center in ES.
 </details>
 
 301	What episode of Game of Thrones is Mallory excited to watch? Answer guidance: Submit the HBO title of the episode.
