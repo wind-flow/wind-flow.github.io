@@ -194,10 +194,11 @@ ctime : 1503093022
 PDT는 UTC-7과 같다고 설명되어있습니다.
 ![PDT Time 설명]({{site.url}}/assets/built/images/bots/v2/2021-10-26-17-44-48.png)
 
-Sat Aug 19 2017 06:50:22 UTC+0900에서 -16시간을 빼면
+Sat Aug 19 2017 06:50:22 UTC+0900에서 UTC-7로 환산해보면(-16시간)
 Sat Aug 18 2017 14:50:22 입니다.
 
-306	How many seconds elapsed between the time the ransomware executable was written to disk on MACLORY-AIR13 and the first local file encryption? Answer guidance: Use the index times (_time) instead of other timestamps in the events.
+306	How many seconds elapsed between the time the ransomware executable was written to disk on MACLORY-AIR13 and the first local file encryption? Answer guidance: Use the index times (_time) instead of other timestamps in the events.  
+MACLORY-AIR13의 디스크에 랜섬웨어 실행 파일이 작성된 시간과 첫 번째 로컬 파일 암호화 사이에 몇 초가 걸렸습니까? 답변 안내: 이벤트의 다른 타임스탬프 대신 인덱스 시간(_time)을 사용하세요.
 
 <details>
   <summary>hint#1</summary>
@@ -211,47 +212,178 @@ Sat Aug 18 2017 14:50:22 입니다.
     MACLORY-AIR13의 파일 시스템에 *.crypt가 추가된 첫 번째 파일은 언제였습니까?
 </details>
 
-307	Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.
+.crypt가 처음붙은 파일과 MAC의 실행파일 확장자인 .app간 _time의 차를 구해봅시다.
+
+```
+sourcetype=osquery_results host=MACLORY-AIR13 columns.target_path=*.app
+| reverse
+| table _time columns.target_path
+| head 1 ```로컬실행파일
+| append 
+    [ search sourcetype=osquery_results host=MACLORY-AIR13 columns.target_path=*.crypt
+| reverse
+| table _time columns.target_path
+| head 1```첫 암호화된 로컬 파일]
+| transaction maxevents=2
+| table columns.target_path duration eventcount
+```
+※ transaction함수는 이벤트간 시간차이를 duration이라는 변수를 통해 계산해주는 함수입니다.  
+[splunk transaction함수](https://docs.splunk.com/Documentation/Splunk/8.2.2/SearchReference/Transaction)
+
+|columns.target_path|duration|eventcount|
+|---|---|---|
+|/Users/mallorykraeusen/Desktop/.DS_Store.crypt<br>/Users/mallorykraeusen/Downloads/Office 2016 Patcher.app|132|2|
+
+답 : 132
+
+307	Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.  
+Kevin Lagerfield는 USB 드라이브를 사용하여 Mallory의 개인 MacBook인 kutekitten에 멀웨어를 옮겼습니다. 그녀는 실행 중에 스스로를 난독화하는 맬웨어를 실행했습니다. Kevin이 사용했을 가능성이 있는 USB 드라이브의 공급업체 이름을 제공합니다. 답변 지침: 시간 상관 관계를 사용하여 USB 드라이브를 식별합니다.
+<details>
+  <summary>hint#1</summary>
+    osquery_results is a great sourcetype to review.<br>
+    osquery_results에서 찾아보세요.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Look for unusual files in a place that Mallory would come across them.<br>
+    Mallory가 발견할 수 있는 장소에서 특이한 파일을 찾으십시오.
+</details>
+<details>
+  <summary>hint#3</summary>
+    If you can figure out what kind of malware this is, do some open source intelligence research to determine how it behaves. Find an online database of USB vendors.<br>이것이 어떤 종류의 맬웨어인지 알아낼 수 있다면 오픈 소스 인텔리전스 연구를 수행하여 작동 방식을 확인하십시오. USB 공급업체의 온라인 데이터베이스를 찾으십시오.
+</details>
+<details>
+  <summary>hint#4</summary>
+    Various sourcetypes can tell you how things look when the run. Look at 'ps' and look at 'osquery_results' from kutekitten.<br>
+    다양한 소스 유형은 실행될 때 상황이 어떻게 보이는지 알려줄 수 있습니다. kutekitten의 'ps'와 'osquery_results'를 보세요.    
+</details>
+
+해당 정보는 osquery관련 sourcetype에 있을것으로 추측됩니다. osquery는 실행중인 프로세스, 네트워크, 하드웨어 이벤트 등을 포함한 OS의 정보를 쿼리형식으로 질의하여 얻은 값을 갖고 있습니다.  
+[osquery란?](https://github.com/osquery/osquery)
+
+MACBook의 이름인 kutekitten, 그리고 usb를 키워드로 두고, osquery_result에서 조사해봅시다.
+
+```
+sourcetype=osquery_results *kutekitten* *usb*
+```
+
+columns.vendor_id라는 필드를 보면 058f, 13fe라는 값이 있습니다.
+columns.vendor_id이 있고, USB를 삽입한 데이터만 보도록 합시다.
+![]{{site.url}}/assets/built/images/bots/v2/(2021-10-27-13-49-54.png)
+
+
+```
+sourcetype=osquery_results *kutekitten* *usb* "columns.vendor_id"=* action=added
+```
+
+이벤트 2개가 있습니다. 각 이벤트에 대해 탐색기간을 ±60초로 설정해두고, 어떤 파일을 반입했는지 확인해봅시다.
+첫번째로 vendor_id가 058f인 이벤트의 ±60초로 두고 반입된 파일의 hash값을 찾아봅시다.
+
+```
+sourcetype=osquery_results *kutekitten*
+```
+
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-34-51.png)
+
+columns.sha256의 hash값을 virustotal에서 조회해봅시다.
+![sha256]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-34-11.png)
+sha256 : befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271
+
+MAC BackDoor 악성코드입니다.
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-40-12.png)
+
+혹시모르니 제조사 13fe의 이벤트도 찾아봅시다.
+
+columns.device의 값이 devfs인것을 보아하니, 파일이 아닌 드라이브임을 알 수 있습니다.
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-47-18.png)
+
+악성코드를 반입한 USB의 제조사의 ID는 058f입니다. 구글에 해당 제조사의 ID를 검색해봅니다.
+
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-47-46.png)
+vendorid 058f는 **Alcor Micro Corp.** 입니다.
+
+답 : Alcor
+
+308	What programming language is at least part of the malware from the question above written in?  
+위의 질문에서 적어도 악성 코드의 일부인 프로그래밍 언어는 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-
+    Review the hints for question 307.<br>
+    문제 307에 대한 힌트를 검토하세요.
 </details>
 
-308	What programming language is at least part of the malware from the question above written in?
+문제 307번에서 발견한 악성코드의 sha256 해쉬값은 **befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271**입니다.
+해당 hash값으로 virustotal에서  자세한 정보를 파악해봅시다.
+
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-15-39-44.png)
+Virustotal의 Detail탭의 FileType을 보면 Perl로 작성된 언어임을 알 수 있습니다.
+
+답 : Perl
+
+309	The malware from the two questions above appears as a specific process name in the process table when it is running. What is it?  
+위의 두 질문에 대한 맬웨어는 실행 중일 때 프로세스 테이블에 특정 프로세스 이름으로 나타납니다. 그것은 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-
+    Review the hints for question 307.
 </details>
 
-309	The malware from the two questions above appears as a specific process name in the process table when it is running. What is it?
+(추후 풀이 예정)
+답 : java
+
+310	The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?  
+kutekitten을 감염시키는 악성코드는 설치 직후 2개의 C&C 서버와 통신하기 위해 동적 DNS 대상을 사용합니다. 이러한 대상 중 첫 번째(알파벳 순)의 정규화된 도메인 이름(FQDN)은 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
-
+    Have a look at the stream:dns sourcetype and observe queries from kutekitten.<br>
+    stream:dns와 kutekitten이 요청한 쿼리를 보세요.
+</details>
+<details>
+  <summary>hint#2</summary>
+    You need a lookup. Find one, and also review this: https://www.splunk.com/blog/2015/08/04/detecting-dynamic-dns-domains-in-splunk.html<br>
+    lookup이 필요합니다. https://www.splunk.com/blog/2015/08/04/detecting-dynamic-dns-domains-in-splunk.html를 참고하세요
 </details>
 
-310	The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?
+virustotal의 Realtions 탭을 보면, **eidk.duckdns.org, eidk.hopto.org** 두개 url이 악성으로 발견되어있습니다.
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-16-55-36.png)
+
+철자 순서에 의해 답은 eidk.duckdns.org입니다.
+
+답 : eidk.duckdns.org
+
+311	From the question above, what is the fully-qualified domain name (FQDN) of the second (alphabetically) contacted C&C server?  
+위의 질문에서 두 번째(알파벳순)로 연결된 C&C 서버의 FQDN(정규화된 도메인 이름)은 무엇입니까?  
 
 <details>
   <summary>hint#1</summary>
-
+    Review the hints for question 310.
+    문제 310에 대한 힌트를 검토하세요.
 </details>
 
-311	From the question above, what is the fully-qualified domain name (FQDN) of the second (alphabetically) contacted C&C server?
+답은 eidk.hopto.org 입니다.
+
+답 :  eidk.hopto.org
+
+312	What is the average Alexa 1M rank of the domains between August 18 and August 19 that MACLORY-AIR13 tries to resolve while connected via VPN to the corporate network? Answer guidance: Round to two decimal places. Remember to include domains with no rank in your average! Answer example: 3.23 or 223234.91  
+8월 18일부터 8월 19일 사이에 MACLORY-AIR13이 VPN을 통해 기업 네트워크에 연결되어 있는 동안 해결하려고 하는 도메인의 평균 Alexa 1M 순위는 얼마입니까? 답변 안내: 소수점 이하 두 자리까지 반올림합니다. 평균에 순위가 없는 도메인을 포함하는 것을 잊지 마십시오! 답변 예: 3.23 또는 223234.91
 
 <details>
   <summary>hint#1</summary>
-
+    You're going to need a lookup. Are there any loaded in the system that might help you?<br>
+    조회가 필요합니다. 당신을 도울 수 있는 시스템에 로드된 것이 있습니까?
 </details>
-
-312	What is the average Alexa 1M rank of the domains between August 18 and August 19 that MACLORY-AIR13 tries to resolve while connected via VPN to the corporate network? Answer guidance: Round to two decimal places. Remember to include domains with no rank in your average! Answer example: 3.23 or 223234.91
-
 <details>
-  <summary>hint#1</summary>
-
+  <summary>hint#2</summary>
+    We want the average of ranks. Not the average of hits to the domains.<br>
+    우리는 순위의 평균을 원합니다. 도메인에 대한 평균 조회수가 아닙니다.
 </details>
+<details>
+  <summary>hint#3</summary>
+    https://www.splunk.com/blog/2016/03/22/splunking-1-million-urls.html
+</details>
+
 
 
 313	Two .jpg-formatted photos of Mallory exist in Kevin Lagerfield's server home directory that have eight-character file names, not counting the .jpg extension. Both photos were encrypted by the ransomware. One of the photos can be downloaded at the following link, replacing 8CHARACTERS with the eight characters from the file name. https://splunk.box.com/v/8CHARACTERS After you download the file to your computer, decrypt the file using the encryption key used by the ransomware. What is the complete line of text in the photo, including any punctuation? Answer guidance: The encryption key can be found in Splunk.
