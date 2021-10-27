@@ -259,7 +259,8 @@ UDP 추출 데이터가 포함된 하위 도메인의 평균 Shannon 엔트로�
 </details>
 <details>
   <summary>hint#3</summary>
-    
+    If you have never calculated Shannon Entropy, look at the documents for the tool 'URL TOOLBOX' or recent entries in https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics.html. This will teach you how to calculate Shannon entropy. Also review https://www.splunk.com/pdfs/events/govsummit/hunting_the_known_unknowns_with_DNS.pdf where you can learn how to detect DNS exfiltration<br>
+    Shannon Entropy를 계산한 적이 없다면 https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics에서 도구 'URL TOOLBOX' 또는 최근 항목에 대한 문서를 살펴보십시오. .html. 이것은 섀넌 엔트로피를 계산하는 방법을 알려줄 것입니다. DNS 유출을 감지하는 방법을 배울 수 있는 https://www.splunk.com/pdfs/events/govsummit/hunting_the_known_unknowns_with_DNS.pdf도 검토하십시오.
 </details>
 
 407	To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks? Answer guidance: Remove the path and type a single value with an extension. Answer example: index.php or images.html  
