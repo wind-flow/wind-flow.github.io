@@ -216,13 +216,96 @@ AWS 공식문서에 해당 필드가 MFA 사용여부를 확인하는 필드임�
     CPU 통계, 하드 드라이브, 네트워크 인터페이스 카드, 메모리 등과 같은 하드웨어 정보의 소스 유형으로 하드웨어를 사용합니다.
 </details>
 
+CPU 이름에 intel 혹은 amd가 포함되어있을테니 해당 키워드로 검색해봅니다.
 
+```
+intel OR amd
+| stats count by sourcetype
+```
 
-203	Bud accidentally makes an S3 bucket publicly accessible. What is the event ID of the API call that enabled public access? Answer guidance: Include any special characters/punctuation.
+|sourcetype|count|
+|---|---|
+|WinHostMon|	1916|
+|aws:elb:accesslogs|	430|
+|stream:http|	368|
+|access_combined|	366|
+|stream:mysql|	172|
+|aws:rds:audit|	93|
+|ms:o365:management|	63|
+|wineventlog|	29|
+|o365:management:activity|	18|
+|syslog|	8|
+|dmesg|	6|
+|osquery:results|	4|
+|aws:cloudwatchlogs|	3|
+|hardware|	3|
+|stream:udp|	2|
+|stream:smtp|	1|
+
+WinHostMon이 유력하지만, **hardware**라는 sourcetype이 눈에 띕니다.
+해당 sourcetype으로 검색해봅니다.
+
+```
+intel OR amd sourcetype=hardware
+```
+CPU_TYPE필드 값은 다음과 같습니다. Intel(R) Xeon(R) CPU **E5-2676** v3 @ 2.40GHz
+
+답 : E5-2676
+
+203	Bud accidentally makes an S3 bucket publicly accessible. What is the event ID of the API call that enabled public access? Answer guidance: Include any special characters/punctuation.  
+Bud가 실수로 S3 버킷에 공개적으로 액세스할 수 있도록 합니다. 공개 액세스를 활성화한 API 호출의 이벤트 ID는 무엇입니까? 답변 안내: 특수 문자/문장부호를 포함하십시오.
 <details>
   <summary>hint#1</summary>
     Use aws:cloudtrail as the sourcetype.
+    sourcetype aws:cloudtrail을 보세요.
 </details>
+
+설정관련 로그는 cloudtrail에 있을것입니다. s3를 키워드로 검색해봅니다.
+```
+sourcetype=aws:cloudtrail s3
+```
+
+field중에 eventName이 있습니다. 어떤 eventName이 있는지 봅시다.
+
+```
+sourcetype=aws:cloudtrail s3
+| dedup eventName
+| table eventName
+```
+설정하는 이벤트(Set이 포함된 이벤트이름 등)가 있을것입니다.
+
+- 결과
+
+|eventName|
+|---|
+|DescribeConfigRuleEvaluationStatus|
+|DescribeConfigRules|
+|GetBucketLocation|
+|GetBucketCors|
+|GetBucketTagging|
+|GetBucketLifecycle|
+|GetBucketLogging|
+|ListBuckets|
+|GetBucketEncryption|
+|GetBucketVersioning|
+|GetBucketPolicy|
+|GetBucketAcl|
+|GetComplianceDetailsByConfigRule|
+|PutEvaluations|
+|GetBucketRequestPayment|
+|GetBucketReplication|
+|GetBucketWebsite|
+|GetBucketNotification|
+|PutBucketAcl|
+|DescribeLoadBalancerAttributes|
+
+중간에 PutBucketAcl이란 이벤트 이름이 보입니다.
+해당키워드로 검색해봅니다.
+
+grant.URL을 보면 AllUsers란 게있습니다.
+![]({{site.url}}/assets/built/images/bots/v3/2021-10-28-22-46-22.png)
+
+답 : ab45689d-69cd-41e7-8705-5350402cf7ac
 
 204	What is the name of the S3 bucket that was made publicly accessible?
 <details>
