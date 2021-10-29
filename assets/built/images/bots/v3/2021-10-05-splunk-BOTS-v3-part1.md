@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/built/images/bots/v3/bots-v3.jpg
 navigation: True
-title: splunk-bots-v3 write up
+title: splunk-bots-v3 write up(1)
 date: '2021-10-05 20:04:36 +0530'
 tags: [splunk]
 class: post-template
@@ -302,68 +302,188 @@ sourcetype=aws:cloudtrail s3
 중간에 PutBucketAcl이란 이벤트 이름이 보입니다.
 해당키워드로 검색해봅니다.
 
-grant.URL을 보면 AllUsers란 게있습니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-28-22-46-22.png)
+Grantee.URL을 보면 AllUsers란 게있습니다.
+![Grantee.URL]({{site.url}}/assets/built/images/bots/v3/2021-10-28-22-46-22.png)
+
+```
+sourcetype="aws:cloudtrail" eventName="PutBucketAcl"
+| table _time eventID requestParameters.AccessControlPolicy.AccessControlList.Grant{}.Grantee.URI requestParameters.AccessControlPolicy.AccessControlList.Grant{}.Permission
+```
+
+|_time|eventID|requestParameters.AccessControlPolicy.AccessControlList.Grant{}.Grantee.URI|requestParameters.AccessControlPolicy.AccessControlList.Grant{}.Permission|
+|---|---|---|---|
+|2018/08/20 13:57:54|9a33d8df-1e16-4d58-b36d-8e80ce68f8a3|http://acs.amazonaws.com/groups/s3/LogDelivery<br>http://acs.amazonaws.com/groups/s3/ogDelivery<br>http://acs.amazonaws.com/groups/s3/LogDelivery|FULL_CONTROL<br>WRITE<br>READ_ACP<br>READ<br>FULL_CONTROL|
+|2018/08/20 13:01:46|ab45689d-69cd-41e7-8705-5350402cf7ac|http://acs.amazonaws.com/groups/s3/LogDelivery<br>http://acs.amazonaws.com/groups/s3/LogDelivery<br>http://cs.amazonaws.com/groups/s3/LogDelivery<br>http://acs.amazonaws.com/groups/global/AllUsers<br>http://acs.amazonaws.com/groups/global/AllUsers|FULL_CONTROL<br>WRITE<br>READ_ACP<br>READ<br>FULL_CONTROL<br>READ<br>WRITE|
+
+AllUsers에 대한 READ, WRITE 권한이 2018/08/20 13:57:54에 빠졌습니다.
+
+S3 Bucket이 모든사용자에게 공개된 시간은 2018/08/20 13:01:46 ~ 2018/08/20 13:57:54 입니다.
+공개정책을 넣은 eventID는 **ab45689d-69cd-41e7-8705-5350402cf7ac**입니다.
 
 답 : ab45689d-69cd-41e7-8705-5350402cf7ac
 
-204	What is the name of the S3 bucket that was made publicly accessible?
+204	What is the name of the S3 bucket that was made publicly accessible?  
+공개적으로 액세스할 수 있게 된 S3 버킷의 이름은 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    Use aws:cloudtrail as the sourcetype.
+    Use aws:cloudtrail as the sourcetype.<br>
+    sourcetype aws:cloudtrail에서 찾으세요.
 </details>
 
-205	What is the name of the text file that was successfully uploaded into the S3 bucket while it was publicly accessible? Answer guidance: Provide just the file name and extension, not the full path. (Example: filename.docx instead of /mylogs/web/filename.docx)
+https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_Trail.html
+![s3bucketname]({{site.url}}/assets/built/images/bots/v3/2021-10-29-13-05-45.png)
+
+splunk 로그에서는 S3BucketName이 아닌, bucketName 입니다.
+203번문제에서 발생한 bucketName은 **frothlywebcode** 입니다.
+![bucketName]({{site.url}}/assets/built/images/bots/v3/2021-10-29-13-13-35.png)
+
+205	What is the name of the text file that was successfully uploaded into the S3 bucket while it was publicly accessible? Answer guidance: Provide just the file name and extension, not the full path. (Example: filename.docx instead of /mylogs/web/filename.docx)  
+공개적으로 액세스할 수 있는 동안 S3 버킷에 성공적으로 업로드된 텍스트 파일의 이름은 무엇입니까? 답변 안내: 전체 경로가 아닌 파일 이름과 확장자만 제공하세요. (예: /mylogs/web/filename.docx 대신 filename.docx)
 <details>
   <summary>hint#1</summary>
     Use aws:s3:accesslogs as the sourcetype.
 </details>
 
-206	What is the size (in megabytes) of the .tar.gz file that was successfully uploaded into the S3 bucket while it was publicly accessible? Answer guidance: Round to two decimal places without the unit of measure. Use 1024 for the byte conversion. Use a period (not a comma) as the radix character.
+sourctype중 **aws:s3:accesslogs**가 있습니다. 여기서 frothlywebcode로 업로드 된 텍스트 파일을 찾아봅시다.
+검색범위를 줄이기 위해 aws:s3:accesslogs의 필드를 보니 요청 성공여부를 나타내는 http_status, 수행 함수를 뜻하는 opertaion필드가 있습니다.
+
+http_status=200, REST.**PUT**.OBJECT 조건을 추가로 넣어 검색해봅니다.
+
+```
+sourcetype=aws:s3:accesslogs frothlywebcode http_status=200 operation="REST.PUT.OBJECT" .txt
+```
+
+![텍스트 파일]({{site.url}}/assets/built/images/bots/v3/2021-10-29-13-52-12.png)
+**OPEN_BUCKET_PLEASE_FIX.txt**라는 이름의 텍스트 파일을 발견할 수 있습니다.
+
+답 : OPEN_BUCKET_PLEASE_FIX.txt
+
+206	What is the size (in megabytes) of the .tar.gz file that was successfully uploaded into the S3 bucket while it was publicly accessible? Answer guidance: Round to two decimal places without the unit of measure. Use 1024 for the byte conversion. Use a period (not a comma) as the radix character.  
+공개적으로 액세스할 수 있는 동안 S3 버킷에 성공적으로 업로드된 .tar.gz 파일의 크기(MB)는 얼마입니까? 답변 안내: 측정 단위 없이 소수점 이하 두 자리까지 반올림합니다. 바이트 변환에 1024를 사용합니다. 기수 문자로 마침표(쉼표 아님)를 사용합니다.
 <details>
   <summary>hint#1</summary>
-    Use aws:s3:accesslogs as the sourcetype.
+    Use aws:s3:accesslogs as the sourcetype.<br>
+    sourcetype aws:s3:accesslogs에서 찾으세요.
 </details>
 <details>
   <summary>hint#1</summary>
     Take a closer look at who made (or requested) the upload.
+    누가 업로드를 했는지(또는 요청했는지) 자세히 살펴보세요.
 </details>
 
-207문제는 없네요
+공개된 시간은 2018/08/20 13:01:46 ~ 2018/08/20 13:57:54이므로, 해당 시간안에 .tar.gz 확장자의 파일이 업로드된 이벤트를 탐색해봅시다.
 
-208	A Frothly endpoint exhibits signs of coin mining activity. What is the name of the first process to reach 100 percent CPU processor utilization time from this activity on this endpoint? Answer guidance: Include any special characters/punctuation.
+![]({{site.url}}/assets/built/images/bots/v3/2021-10-29-14-54-36.png)
+
+```
+sourcetype=aws:s3:accesslogs frothlywebcode http_status=200 operation="REST.PUT.OBJECT" .tar.gz
+```
+
+object_size 필드가 눈에 띕니다.
+![object_size]({{site.url}}/assets/built/images/bots/v3/2021-10-29-14-55-18.png)
+해당 값을 MiB(1024)로 변환해봅시다.
+
+※ MiB (메비바이트 : mebibyte) :  
+메비바이트는 1,024키비바이트, 220(10242 = 1,048,576)바이트를 뜻하는 정보의 단위이다.  
+
+![데이터 변환]({{site.url}}/assets/built/images/bots/v3/2021-10-29-14-55-47.png)
+
+답 : 2.93
+
+*207 문제는 없습니다.*
+
+208	A Frothly endpoint exhibits signs of coin mining activity. What is the name of the first process to reach 100 percent CPU processor utilization time from this activity on this endpoint? Answer guidance: Include any special characters/punctuation.  
+Frothly 엔드포인트는 코인 채굴 활동의 징후를 보입니다. 이 끝점에서 이 활동에서 100% CPU 프로세서 사용 시간에 도달한 첫 번째 프로세스의 이름은 무엇입니까? 답변 안내: 특수 문자/문장부호를 포함하십시오.
 <details>
   <summary>hint#1</summary>
-    Use perfmonmk:process as the sourcetype.
+    Use perfmonmk:process as the sourcetype.<br>
+    sourcetype perfmonmk:process에서 조사하세요.
 </details>
 <details>
   <summary>hint#2</summary>
-    Which browser was in use when this endpoint visited the coin mining site(s)?
+    Which browser was in use when this endpoint visited the coin mining site(s)?<br>
+    이 엔드포인트가 코인 마이닝 사이트를 방문했을 때 어떤 브라우저가 사용 중이었습니까?
 </details>
 
-209	When a Frothly web server EC2 instance is launched via auto scaling, it performs automated configuration tasks after the instance starts. How many packages and dependent packages are installed by the cloud initialization script? Answer guidance: Provide the number of installed packages then number of dependent packages, comma separated without spaces.
+cpu를 포함한 process의 자원 사용률은 **PerfmonMk:Process**에서 찾을 수 있을것입니다. 자세한 사항은 splunk 홈페이지에서 확인 가능합니다.
+[PerfmonMk:Process in splunk](https://docs.splunk.com/Documentation/WindowsAddOn/8.1.2/User/SourcetypesandCIMdatamodelinfo)
+
+```
+sourcetype=perfmonmk:process
+```
+
+해당 sourcetype에 **process_cpu_used_percent**와 **process_name**이라는 필드가 눈에 띕니다.
+process_cpu_used_percent=100을 추가하고, process_name을 보도록합니다.
+
+```
+sourcetype=perfmonmk:process process_cpu_used_percent=100 process_name=*
+| sort -_time
+```
+
+
+|_time|	process_name|	process_cpu_used_percent|
+|---|---|---
+|2018/08/20 09:36:26|	MicrosoftEdgeCP#2|	100|
+|2018/08/20 13:37:50|	chrome#5|	100|
+|2018/08/20 13:38:20|	chrome#5|	100|
+....
+
+제일먼저 cpu가 100%인 프로세스는 MicrosoftEdgeCP#2입니다. 하지만 답은 **chrome#5**입니다.
+근거를 찾지 못하였으니 아시는 분은 댓글로 제보 바랍니다.
+
+답 : chrome#5
+
+209	When a Frothly web server EC2 instance is launched via auto scaling, it performs automated configuration tasks after the instance starts. How many packages and dependent packages are installed by the cloud initialization script? Answer guidance: Provide the number of installed packages then number of dependent packages, comma separated without spaces.  
+Frothly 웹 서버 EC2 인스턴스가 Auto Scaling을 통해 시작되면 인스턴스가 시작된 후 자동화된 구성 작업을 수행합니다. 클라우드 초기화 스크립트에 의해 설치되는 패키지 및 종속 패키지는 몇 개입니까? 답변 안내: 설치된 패키지 수와 종속 패키지 수를 공백 없이 쉼표로 구분하여 제공하십시오.
 <details>
   <summary>hint#1</summary>
     Use cloud-init-output as the sourcetype.
+    sourcetype cloud-init-output를 조사해보세요.
 </details>
 <details>
   <summary>hint#1</summary>
     Check out the AWS docs: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html#user-data-cloud-init
+    AWS 공식문서를 참고하세요 : https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html#user-data-cloud-init
 </details>
 
-210	What is the short hostname of the only Frothly endpoint to actually mine Monero cryptocurrency? (Example: ahamilton instead of ahamilton.mycompany.com)
+문제에서 auto scaling을 수행하면 인스턴스가 시작된 후 자동화 작업을 시작한다는 설명이 있습니다.
+인스턴스 시작관련 로그는 [clould-init](https://zetawiki.com/wiki/Cloud-init)에 있습니다.
+
+could-init과 관련된 sourcetype은 cloud-init과 cloud-init-output이 있습니다.  
+두 sourcetype 모두 조사해보도록 합시다.
+packages와 dependent를 키워드로 두고 검색해봅니다.
+
+```
+sourcetype=cloud-init* *packages* *dependent*
+```
+
+![쿼리수행결과]({{site.url}}/assets/built/images/bots/v3/2021-10-29-16-28-10.png)
+
+로그를 확인하면 **Install  7 Packages (+13 Dependent packages)** 7개의 패키지와, 13개의 의존 패키지가 설치된 사실을 파악할 수 있습니다.
+
+답 : 7,13
+
+210	What is the short hostname of the only Frothly endpoint to actually mine Monero cryptocurrency? (Example: ahamilton instead of ahamilton.mycompany.com)  
+실제로 Monero 암호화폐를 채굴하는 유일한 Frothly 엔드포인트의 짧은 호스트 이름은 무엇입니까? (예: ahamilton.mycompany.com 대신 ahamilton)
 <details>
   <summary>hint#1</summary>
-    What is the most common browser-based cryptominer?
+    What is the most common browser-based cryptominer?<br>
+    가장 일반적인 브라우저 기반 크립토마이너는 무엇입니까?
 </details>
 <details>
   <summary>hint#2</summary>
-    Can you find DNS traffic with evidence of a common browser-based cryptomining technology?
+    Can you find DNS traffic with evidence of a common browser-based cryptomining technology?<br>
+    일반적인 브라우저 기반 크립토마이닝 기술의 증거로 DNS 트래픽을 찾을 수 있습니까?
 </details>
 <details>
   <summary>hint#3</summary>
-    Is there a laptop that communicates successfully to coinhive servers?
+    Is there a laptop that communicates successfully to coinhive servers?<br>
+    coinhive 서버와 성공적으로 통신하는 노트북이 있습니까?
 </details>
+
+```
+
+```
 
 211	How many cryptocurrency mining destinations are visited by Frothly endpoints?
 <details>
