@@ -417,15 +417,15 @@ process_cpu_used_percent=100을 추가하고, process_name을 보도록합니다
 
 ```
 sourcetype=perfmonmk:process process_cpu_used_percent=100 process_name=*
-| sort -_time
+| sort _time
+| table _time host process_name process_cpu_used_percent
 ```
 
-
-|_time|	process_name|	process_cpu_used_percent|
-|---|---|---
-|2018/08/20 09:36:26|	MicrosoftEdgeCP#2|	100|
-|2018/08/20 13:37:50|	chrome#5|	100|
-|2018/08/20 13:38:20|	chrome#5|	100|
+|_time|host|	process_name|	process_cpu_used_percent|
+|---|---|---|---|
+|2018/08/20 09:36:26|BSTOLL-L|	MicrosoftEdgeCP#2|	100|
+|2018/08/20 13:37:50|BSTOLL-L|	chrome#5|	100|
+|2018/08/20 13:38:20|BSTOLL-L|	chrome#5|	100|
 ....
 
 제일먼저 cpu가 100%인 프로세스는 MicrosoftEdgeCP#2입니다. 하지만 답은 **chrome#5**입니다.
@@ -481,98 +481,512 @@ sourcetype=cloud-init* *packages* *dependent*
     coinhive 서버와 성공적으로 통신하는 노트북이 있습니까?
 </details>
 
-```
+google에 **browser based crypto miner**를 검색해 봅시다.
+
+다음 검색결과를 얻을 수 있습니다.
+해당 사이트에서 **coinhive**와 **Cryptojacking**이 있다고 알 수 있습니다. 해당 키워드로 검색해봅니다.
+![]({{site.url}}/assets/built/images/bots/v3/2021-10-30-18-46-49.png)
+
+208번문제에서 BSTOLL-L
 
 ```
+coinhive
+```
+
+총 34개의 이벤트이고, BSTOLL-L의 이벤트가 가장 많습니다. 
+BSTOLL-L이 모두 DNS Query관련 이벤트입니다.(21개)
+
+Query를 질의하는 host인 BSTOLL-L이 채굴하는 host로 볼 수 있습니다.
+
+답 : BSTOLL-L
 
 211	How many cryptocurrency mining destinations are visited by Frothly endpoints?
+Frothly 엔드포인트는 얼마나 많은 암호화폐 채굴 목적지를 방문합니까?
 <details>
   <summary>hint#1</summary>
-    Use stream:dns as the sourcetype.
+    Use stream:dns as the sourcetype.<br>
+    sorucetype stream:dns에서 조사하세요.
 </details>
 
-212	Using Splunk's event order functions, what is the first seen signature ID of the coin miner threat according to Frothly's Symantec Endpoint Protection (SEP) data?
+채굴 목적지 수는 dns에서 query목록중 coinhive가 포함된 주소의 수를 찾으면 될것입니다.
+
+```
+sourcetype=stream:dns query=*coinhive*
+| dedup query
+| table query
+```
+
+|query|
+|---|
+|ws019.coinhive.com|
+|coinhive.com|
+|ws014.coinhive.com|
+|ws011.coinhive.com|
+|ws005.coinhive.com|
+|ws001.coinhive.com|
+
+총 6개의 주소를 발견할 수 있습니다.
+
+참고로, dc함수를 이용해 이벤트 결과 수를 알아낼 수 있습니다.
+
+```
+sourcetype=stream:dns query=*coinhive*
+| stats dc(query)
+```
+
+답 : 6
+
+212	Using Splunk's event order functions, what is the first seen signature ID of the coin miner threat according to Frothly's Symantec Endpoint Protection (SEP) data?  
+Splunk의 이벤트 정렬 기능을 사용할 때 Frothly의 SEP(Symantec Endpoint Protection) 데이터에 따르면 코인 마이너 위협의 첫 번째 signature ID는 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use symantec:ep:security:file as the sourcetype.<br>
+    sourcetype symantec:ep:security:file에서 조사하세요.
+</details>
+<details>
+  <summary>hint#2</summary>
+    First seen refers to the first event in the search results. See: https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Eventorderfunctions<br>
+    처음 발견한 것은 검색 결과의 첫 번째 이벤트를 나타냅니다. 참조: https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Eventorderfunctions
 </details>
 
-213	According to Symantec's website, what is the severity of this specific coin miner threat?
+sourcetype 중 symantec:ep:security:file이 눈에 띕니다.
+
+symantec:ep:security:file는 단말의 보안로그가 있다고 설명되어있습니다. [Source types for the Splunk Add-on for Symantec Endpoint Protection](https://docs.splunk.com/Documentation/AddOns/released/SymantecEP/Sourcetypes)
+
+sourcetype symantec:ep:security:file에 Event_Description 필드에 SID라는 내용이 있습니다.
+해당 sourcetype에서 우리가 눈여겨봐야할 필드는 아래와 같습니다.
+action
+CIDS_Signature_ID
+CIDS_Signature_String
+CIDS_Signature_SubID
+Event_Description
+Host_Name
+Remote_Host_IP
+severity
+SHA_256
+signature
+user
+vendor_severity
+
+이 필드들을 시간순서대로 살펴봅니다. 
+```
+sourcetype=symantec:ep:security:file *coin*
+| table _time action CIDS_Signature_ID CIDS_Signature_String CIDS_Signature_SubID Event_Description Host_Name Remote_Host_IP severity SHA_256 signature user vendor_severity
+| sort _time
+```
+
+결과 중 CIDS_Signature_ID은 30356, 30358 두가지가 발견되었는데, _time의 값은 2018/08/20 13:37:40로 같습니다. 처음 발견된 값을 찾기위해 first함수를 사용합니다. (용법은 hint#2 참고)
+
+```
+sourcetype=symantec:ep:security:file *coin*
+| table _time action CIDS_Signature_ID CIDS_Signature_String CIDS_Signature_SubID Event_Description Host_Name Remote_Host_IP severity SHA_256 signature user vendor_severity
+| stats first(CIDS_Signature_ID)
+```
+
+|first(CIDS_Signature_ID)|
+|---|
+|30358|
+
+first 함수를 이용해 제일 처음 발견된 이벤트의 SID는 30358입니다.
+
+답 : 30358
+
+213	According to Symantec's website, what is the severity of this specific coin miner threat?  
+시만텍 웹사이트에 따르면 이 특정 코인 채굴기 위협의 심각성은 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Google search for the signature ID from the previous question and the term Symantec together.<br>
+    Google은 이전 질문의 signatrue ID와 Symantec이라는 용어를 함께 검색합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Symantec has an online database of all signature IDs detected by SEP here: https://www.broadcom.com/support/security-center/attacksignatures
+    시만텍은 SEP에서 탐지한 모든 서명 ID의 온라인 데이터베이스를 여기에서 보유하고 있습니다. https://www.broadcom.com/support/security-center/attacksignatures
 </details>
 
-214	What is the short hostname of the only Frothly endpoint to show evidence of defeating the cryptocurrency threat? (Example: ahamilton instead of ahamilton.mycompany.com)
+악성코드의 심각도를 묻는 문제입니다. 212문제에서 serverity, vendor_severity의 값을 보면 각각 high, Major란 값을 얻을 수 있습니다. 하지만 답은 6글자입니다.
+
+시만텍 웹사이트 OSINT에서 심각도를 찾아봅니다.
+
+![symanetc security center]({{site.url}}/assets/built/images/bots/v3/2021-10-30-19-58-57.png)
+(symantec인데 도메인이 broadcom이어서 처음에 헷갈렸습니다)
+
+Attack Signatures를 클릭합니다.
+
+해당 검색창에 212번문제에서 파악한 JSCoinminer를 검색합니다.
+![malware list]({{site.url}}/assets/built/images/bots/v3/2021-10-30-19-59-43.png)
+
+여러개가나오는데, 그중 **Web Attack: JSCoinminer Download 8**을 클릭합니다.
+
+사이트에서 심각도는 Medium임을 알 수 있습니다. (Severity:Medium)
+![]({{site.url}}/assets/built/images/bots/v3/2021-10-30-20-11-06.png)
+
+답 : Medium
+
+214	What is the short hostname of the only Frothly endpoint to show evidence of defeating the cryptocurrency threat? (Example: ahamilton instead of ahamilton.mycompany.com)  
+암호화폐 위협을 물리쳤다는 증거를 보여주는 유일한 Frothly 엔드포인트의 짧은 호스트 이름은 무엇입니까? (예: ahamilton.mycompany.com 대신 ahamilton)
 <details>
   <summary>hint#1</summary>
-    
+    Figure out what applications were blocked. The WinEventLog:Application sourcetype is helpful, as is the symantec:ep:security:file sourcetype.<br>
+    차단된 응용 프로그램을 파악합니다. WinEventLog:Application 소스 유형은 symantec:ep:security:file 소스 유형과 마찬가지로 유용합니다.
 </details>
 
-215	What is the FQDN of the endpoint that is running a different Windows operating system edition than the others?
+212번문제에서 JSCoinminer를 Block한 host는 **BTUN-L**입니다.
+
+답 : BTUN-L
+
+215	What is the FQDN of the endpoint that is running a different Windows operating system edition than the others?  
+다른 Windows 운영 체제 버전과 다른 버전을 실행하는 끝점의 FQDN은 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Frothly gathers system information from Cisco NVM clients on their mobile workstations.<br>
+    Frothly는 모바일 워크스테이션의 Cisco NVM 클라이언트로부터 시스템 정보를 수집합니다.
+</detail>
+
+window 혹은 OS 관련 sourcetype에 해당 데이터가 있을것으로 예상됩니다.
+
+windows를 키워드로 어떤 sourcetype이 있는지 조사해봅니다.
+
+```
+windows
+| stats count by sourcetype
+```
+
+|sourcetype	|count|
+|---|---|
+|WinHostMon	|72002|
+|wineventlog	|47827|
+|xmlwineventlog	|9212|
+
+상위 3개가 window와 관련된 sourcetype입니다.
+WinHostMon부터 조사해봅니다.
+WinHostMon 중 눈여겨볼 필드는 **OS ComputerName**입니다.
+```
+sourcetype=WinHostMon OS=*
+| dedup host OS ComputerName 
+| table host OS ComputerName
+```
+
+
+|host	|OS|	ComputerName|
+|---|---|---|
+|FYODOR-L	| Microsoft Windows 10 Pro|	        FYODOR-L	|
+|JWORTOS-L|	Microsoft Windows 10 Pro|	        JWORTOS-L	|
+|BSTOLL-L	| Microsoft Windows 10 Enterprise|	BSTOLL-L	|
+|BTUN-L	  | Microsoft Windows 10 Pro	|       BTUN-L|
+|MKRAEUS-L|	Microsoft Windows 10 Pro	|       MKRAEUS-L	|
+|BGIST-L	| Microsoft Windows 10 Pro	|       BGIST-L|
+|PCERF-L	| Microsoft Windows 10 Pro	|       PCERF-L|
+|ABUNGST-L|	Microsoft Windows 10 Pro	|       ABUNGST-L	|
+
+BSTOLL-L 하나만 Enterprise버전을 사용하고 있습니다. domain을 알아야하니 BSTOLL을 키워드로 찾아봅니다.(microsoft는 로그에 없을 수도 있어 제외합니다)
+
+```
+BSTOLL "Windows 10 Enterprise"
+```
+
+sourcetype syslog에 2개의 이벤트가 있습니다.
+```
+Aug 20 13:37:20 splunkhwf.froth.ly  fv="nvzFlow_v3" vsn="BSTOLL-L.froth.ly" udid="1DD75FEDA01F1AE457AF4307EA6DCA0946CFED56" osn="WinNT" osv="10.0.17134" ose="Windows 10 Enterprise" sm="VMware, Inc." st="x64"
+host=splunkhwf.froth.ly source=cisconvmsysdata sourcetype=syslog
+```
+
+vsn필드에 도메인 값이 있음을 확인할 수 있습니다.
+
+답 : BSTOLL-L.froth.ly
+
+216	According to the Cisco NVM flow logs, for how many seconds does the endpoint generate Monero cryptocurrency? Answer guidance: Round to the nearest second without the unit of meadsure.
+Cisco NVM 흐름 로그에 따르면 엔드포인트는 몇 초 동안 Monero 암호 화폐를 생성합니까? 답변 안내: 측정 단위 없이 가장 가까운 초로 반올림합니다.
+<details>
+  <summary>hint#1</summary>
+    Use cisconvmflowdata as the source to give you details about network flows, including the start and end times of flows.<br>
+    cisconvmflowdata를 소스로 사용하여 흐름의 시작 및 종료 시간을 포함하여 네트워크 흐름에 대한 세부 정보를 제공합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    In order for Monero to be mined after it is created on a laptop, the laptop must be connected to one or more mining servers.<br>
+    모네로가 노트북에서 생성된 후 채굴되기 위해서는 노트북이 하나 이상의 채굴 서버에 연결되어 있어야 합니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Calculate the start and end times of communication to the mining servers according to the NVM fields. Then calculate the delta between the first and last communications. This can all be done within a Splunk search.<br>
+    NVM 필드에 따라 마이닝 서버와의 통신 시작 및 종료 시간을 계산합니다. 그런 다음 첫 번째 통신과 마지막 통신 간의 델타를 계산합니다. 이 모든 작업은 Splunk 검색 내에서 수행할 수 있습니다.
 </details>
 
-216	According to the Cisco NVM flow logs, for how many seconds does the endpoint generate Monero cryptocurrency? Answer guidance: Round to the nearest second without the unit of measure.
+nvm은 데이터 유출, 승인되지 않은 애플리케이션 또는 SaaS 서비스, 보안 회피 및 악성코드 활동을 고객들이 탐지할 수 있는 고유한 기기 ID, 기기 이름, 프로세스/컨테이너 이름, 상위 프로세스, 권한 변경, 소스/목적지 도메인, DNS 정보 및 네트워크 인터페이스 등의 보안 정보 데이터입니다.(https://www.ciokorea.com/ciostory/152668 참고)  
+[cisco flow data 공식 문서](https://community.cisco.com/t5/security-documents/cisco-network-visibility-nvm-collector/ta-p/4309825)
+
+host나 sourcetype이 아닌, source에 cisconvmflowdata가 있습니다.
+coinhive에 요청한 정보를 찾아봅시다.
+
+```
+source=cisconvmflowdata coinhive
+```
+
+6개의 이벤트가 나옵니다. coinhive url요청 시작과 끝 필드를 찾아 계산해봅시다.
+공식문서에 따르면 요청시간은 fss, 종료시간은 fes입니다.
+![fss fes]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-01-41.png)
+
+시작시간과 끝시간을 계산해봅시다.
+
+```
+source=cisconvmflowdata coinhive
+| stats min(fss) as starttime, max(fes) as endtime
+| eval duration=endtime-starttime
+| table duration
+```
+
+|duration|
+|---|
+|1667|
+
+하지만 답은 1666입니다.
+이유를 찾으신분은 제보바랍니다.
+
+답 : 1666
+
+217	What kind of Splunk visualization was in the first file attachment that Bud emails to Frothly employees to illustrate the coin miner issue? Answer guidance: Two words. (Example: choropleth map)  
+Bud가 코인 채굴 문제를 설명하기 위해 Frothly 직원에게 이메일로 보낸 첫 번째 첨부 파일에는 어떤 종류의 Splunk 시각화가 포함되어 있습니까? 답변 안내: 두 단어. (예: 등치 지도)
 <details>
   <summary>hint#1</summary>
-    
+    Use stream:smtp as the sourcetype to find details of emails between Frothly employees.<br>
+    stream:smtp를 소스 유형으로 사용하여 Frothly 직원 간의 이메일 세부 정보를 찾습니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Images are encoded within email in base64. Bud would have sent this email after the mining activity started.
+    이미지는 이메일 내에서 base64로 인코딩됩니다. Bud는 채굴 활동이 시작된 후에 이 이메일을 보냈을 것입니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    You will need to find a site to decode the base64 to a viewable image. CyberChef is a good one!
+    base64를 볼 수 있는 이미지로 디코딩하려면 사이트를 찾아야 합니다. CyberChef는 좋은 방법입니다!
 </details>
 
-217	What kind of Splunk visualization was in the first file attachment that Bud emails to Frothly employees to illustrate the coin miner issue? Answer guidance: Two words. (Example: choropleth map)
+송신자에 bud가 포함되고 attach_filename 포함된 이메일로그를 조사해봅니다.
+
+```
+sourcetype=stream:smtp sender=*bud* attach_filename{}=*
+```
+
+attach_filename이 image001.jpg, image002.jpg, image003.jpg이 있습니다.
+이메일에서는 이미지가 base64로 인코딩 되므로, base64를 찾아 이미지로 변환해봅시다.
+변환할 수 있는 CyberChef라는 사이트가 있습니다.  
+[CyberChef(https://gchq.github.io/CyberChef/)](https://gchq.github.io/CyberChef/)
+
+ Content-Type이 Content-Type: image/jpeg; 부분의 base64코드를 찾아봅시다.
+
+content{}필드 중간에 인코딩된 base64값이 있습니다.
+![]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-39-14.png)
+
+image002.jpg는 **/9j/4AAQSkZJRgABAQEAjACMAAD/**부터 **rk38qKKAP//Z**입니다.
+image003.jpg은 **/9j/4AAQSkZJRgABAQEAjACMAAD/**부터 **oJoooA//2Q==**입니다.
+
+cyberchef에서 각각 render image를 클릭하고, input을 base64변경하면 image결과가 나옵니다.
+
+- Cyberchef  
+![Cyberchef]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-47-57.png)
+
+- image002.jpg
+![line chart]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-46-14.png)
+
+- image003.jpg
+![column chart]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-47-25.png)
+
+답 : column chart
+
+218	What IAM user access key generates the most distinct errors when attempting to access IAM resources?  
+IAM 리소스에 액세스하려고 할 때 가장 뚜렷한 오류를 생성하는 IAM 사용자 액세스 키는 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use aws:cloudtrail as the sourcetype.<br>
+    sourcetype aws:cloudtrail에서 조사하세요.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Make sure to include all the error codes, such as AccessDenied and NoSuchEntityException.<br>
+    AccessDenied 및 NoSuchEntityException과 같은 모든 오류 코드를 포함해야 합니다.
 </details>
 
-218	What IAM user access key generates the most distinct errors when attempting to access IAM resources?
+액세스 오류관련 로그는 cloudtrail에 있을것입니다. aws 공식문서에서 찾아봅니다.
+
+**오류 코드 및 메시지 로그의 예**[AWS cloudtrail 문서](https://docs.aws.amazon.com/ko_kr/awscloudtrail/latest/userguide/cloudtrail-log-file-examples.html)
+errorCode 및 errorMessage 요소에 이 오류를 표시합니다.
+
+```
+sourcetype=aws:cloudtrail errorCode=*access*
+| dedup errorCode errorMessage
+| table errorCode errorMessage
+```
+
+errorcode필드에서 **AccessDenied**값을 발견할 수 있습니다. 이 키워드를 중심으로 검색해봅니다.
+
+```
+sourcetype=aws:cloudtrail errorCode=AccessDenied
+```
+6개의 이벤트가 있고, userIdentity.accessKeyId필드 **AKIAJOGCDXJ5NW5PXUPA**와 **ASIAZB6TMXZ7LL6JBJQA**를 발견할 수 있습니다.
+
+key가 AKIAJOGCDXJ5NW5PXUPA인 이벤트의 errorMessage를 보면 __User: arn:aws:iam::622676721278:user/web_admin is not authorized to perform: iam:GetUser on resource: user web_admin__ 이므로, IAM리스소에 접속하는 이벤트의 액세스키는 AKIAJOGCDXJ5NW5PXUPA입니다.
+(ASIAZB6TMXZ7LL6JBJQA는 bucketlist에 접속하는 이벤트입니다)
+
+답 : AKIAJOGCDXJ5NW5PXUPA
+
+219	Bud accidentally commits AWS access keys to an external code repository. Shortly after, he receives a notification from AWS that the account had been compromised. What is the support case ID that Amazon opens on his behalf?  
+Bud가 실수로 AWS 액세스 키를 외부 코드 리포지토리에 커밋합니다. 얼마 후 그는 AWS로부터 계정이 손상되었다는 알림을 받습니다. Amazon이 그의 행동으로 여는 case ID는 무엇입니까?
+
 <details>
   <summary>hint#1</summary>
-    
+    Use stream:smtp as the sourcetype.<br>
+    sourcetype stream:smtp에서 조사하십시오.
 </details>
 
-219	Bud accidentally commits AWS access keys to an external code repository. Shortly after, he receives a notification from AWS that the account had been compromised. What is the support case ID that Amazon opens on his behalf?
+```
+aws support case
+```
+위와 같이 검색하면 sourcetype stream:smtp의 subject필드에 support case ID정보를 발견할 수 있습니다.
+**subject: Amazon Web Services: New Support case: 5244329601**
+
+답 : 5244329601
+
+220	AWS access keys consist of two parts: an access key ID (e.g., AKIAIOSFODNN7EXAMPLE) and a secret access key (e.g., wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY). What is the secret access key of the key that was leaked to the external code repository?  
+AWS 액세스 키는 액세스 키 ID(예: AKIAIOSFODNN7EXAMPLE)와 보안 액세스 키(예: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY)의 두 부분으로 구성됩니다. 외부 코드 저장소로 유출된 키의 비밀 접근 키는 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use stream:smtp as the sourcetype.<br>
+    sourcetype stream:smtp에서 조사하십시오.
 </details>
 
-220	AWS access keys consist of two parts: an access key ID (e.g., AKIAIOSFODNN7EXAMPLE) and a secret access key (e.g., wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY). What is the secret access key of the key that was leaked to the external code repository?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
+219문제에서 발견한 email의 content내용을 보면 아래와 같습니다.
+```
+Your security is important to us. We have become aware that the AWS Access Key AKIAJOGCDXJ5NW5PXUPA (belonging to IAM user "web_admin") along with the corresponding Secret Key is publicly available online at https://github.com/FrothlyBeers/BrewingIOT/blob/e4a98cc997de12bb7a59f18aea207a28bcec566c/MyDocuments/aws_credentials.bak.
+```
+해당 github page로 가면 secret key를 발견할 수 있습니다.  
+https://github.com/FrothlyBeers/BrewingIOT/blob/e4a98cc997de12bb7a59f18aea207a28bcec566c/MyDocuments/aws_credentials.bak
+
+답 : Bx8/gTsYC98T0oWiFhpmdROqhELPtXJSR9vFPNGk
 
 221	Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource? Answer guidance: One word.
+유출된 키를 사용하여 공격자는 승인되지 않은 특정 리소스에 대한 키 생성을 시도합니다. 그 자원의 이름은 무엇입니까? 답변 안내: 한 단어.
 <details>
   <summary>hint#1</summary>
-    
+    Use aws:cloudtrail as the sourcetype.<br>
+    sourcetype aws:cloudtrail에서 조사하십시오.
 </details>
 
-222	Using the leaked key, the adversary makes an unauthorized attempt to describe an account. What is the full user agent string of the application that originated the request?
+계정생성관련 이벤트는 cloudtrail에 있으므로, 위에서 파악한 키를 키워드로 **키 생성**같은 이벤트를 찾아봅니다.
+```
+sourcetype=aws:cloudtrail *AKIAJOGCDXJ5NW5PXUPA*
+| table eventName
+```
+
+|eventName|
+|---|
+|UpdateAccessKey|
+|GetUser|
+|DescribeAccountAttributes|
+|ListAccessKeys|
+|GetSessionToken|
+|CreateAccessKey|
+|DeleteAccessKey|
+|CreateUser|
+|ListAccessKeys|
+|GetCallerIdentity|
+
+eventName이 CreateAccessKey인 이벤트를 살펴봅시다.
+
+```
+sourcetype=aws:cloudtrail *AKIAJOGCDXJ5NW5PXUPA* eventName=CreateAccessKey
+```
+error message 필드를 보면 __User: arn:aws:iam::622676721278:user/web_admin is not authorized to perform: iam:CreateAccessKey on resource: user nullweb_admin__
+자원이름은 nullweb_admin입니다.
+
+답 : nullweb_admin
+
+222	Using the leaked key, the adversary makes an unauthorized attempt to describe an account. What is the full user agent string of the application that originated the request?  
+유출된 키를 사용하여 공격자는 계정을 알아내기 위해 무단으로 시도합니다. 요청을 시작한 애플리케이션의 전체 사용자 에이전트 문자열은 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use aws:cloudtrail as the sourcetype.<br>
+    sourcetype aws:cloudtrail에서 조사하십시오.
 </details>
 
-223	The adversary attempts to launch an Ubuntu cloud image as the compromised IAM user. What is the codename for that operating system version in the first attempt? Answer guidance: Two words.
+전문제와 동일한 조건에서, eventName이 GetUser인 이벤트의 useragent를 파악해봅시다.
+```
+sourcetype=aws:cloudtrail *AKIAJOGCDXJ5NW5PXUPA* eventName=GetUser
+| table userAgent
+```
+
+|userAgent|
+|---|
+|ElasticWolf/5.1.6|
+
+답 : ElasticWolf/5.1.6
+
+223	The adversary attempts to launch an Ubuntu cloud image as the compromised IAM user. What is the codename for that operating system version in the first attempt? Answer guidance: Two words.  
+공격자는 손상된 IAM 사용자로 Ubuntu 클라우드 이미지를 시작하려고 시도합니다. 첫 번째 시도에서 해당 운영 체제 버전의 코드명은 무엇입니까? 답변 안내: 두 단어.
 <details>
   <summary>hint#1</summary>
-    
+    Use aws:cloudtrail as the sourcetype.<br>
+    sourcetype aws:cloudtrail에서 조사하십시오.
 </details>
 
-224	Frothly uses Amazon Route 53 for their DNS web service. What is the average length of the distinct third-level subdomains in the queries to brewertalk.com? Answer guidance: Round to two decimal places. (Example: The third-level subdomain for my.example.company.com is example.)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
+```
+sourcetype=aws:cloudtrail errorCode="Client.UnauthorizedOperation" eventName=RunInstances
+| sort _time
+```
+requestParameters.instancesSet.items{}.imageId필드의 값이 ami-41e0b93b 임을 알 수 있습니다.
+구글에 **ami-41e0b93b ubuntu**로 검색해봅니다.
+![]({{site.url}}/assets/built/images/bots/v3/2021-10-31-00-24-26.png)
 
-225	Using the payload data found in the memcached attack, what is the name of the .jpeg file that is used by Taedonggang to deface other brewery websites? Answer guidance: Include the file extension.
+Xenial이란 이름이 있는데 두단어가 아닙니다.
+**ubuntu Xenial**로 검색해봅니다. 
+
+![]({{site.url}}/assets/built/images/bots/v3/2021-10-31-00-25-21.png)
+
+두 단어 이름은 **Xenial Xerus**입니다.
+
+답 : Xenial Xerus
+
+224	Frothly uses Amazon Route 53 for their DNS web service. What is the average length of the distinct third-level subdomains in the queries to brewertalk.com? Answer guidance: Round to two decimal places. (Example: The third-level subdomain for my.example.company.com is example.)  
+Frothly는 DNS 웹 서비스에 Amazon Route 53을 사용합니다. brewertalk.com에 대한 쿼리에서 고유한 세 번째 수준 하위 도메인의 평균 길이는 얼마입니까? 답변 안내: 소수점 이하 두 자리까지 반올림합니다. (예: my.example.company.com의 세 번째 수준 하위 도메인은 example입니다.)
 <details>
   <summary>hint#1</summary>
-    
+    Use aws:cloudwatchlogs as the sourcetype for DNS queries.<br>
+    aws:cloudwatchlogs를 DNS 쿼리의 소스 유형으로 사용합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Look at the documentation for URL Toolbox (on Splunkbase) to help you parse out the subdomain substring. Use the Splunk len command to help you calculate the length or review the blog entries in https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics.html. This will teach you how to split domains with URL Toolbox.<br>
+    하위 도메인 하위 문자열을 구문 분석하는 데 도움이 되는 URL 도구 상자(Splunkbase의) 설명서를 참조하십시오. Splunk len 명령을 사용하여 길이를 계산하거나 https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics.html의 블로그 항목을 검토할 수 있습니다. 이것은 URL Toolbox를 사용하여 도메인을 분할하는 방법을 알려줍니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Make sure to include only the distinct third-level subdomain values.<br>
+    고유한 세 번째 수준 하위 도메인 값만 포함해야 합니다.
+</details>  
+
+sourcetype=aws:cloudwatchlogs brewertalk.com
+| rex field=_raw "Z149R7NEBZTKPN\s(?<query>[^\s]+)" 
+| rex field=query "\.?(?<subdomain>[^\.]+).brewertalk.com" 
+| dedup subdomain
+| table subdomain
+
+225	Using the payload data found in the memcached attack, what is the name of the .jpeg file that is used by Taedonggang to deface other brewery websites? Answer guidance: Include the file extension.  
+memcached 공격에서 발견된 페이로드 데이터를 사용하여 대동강이 다른 양조장 웹사이트를 훼손하는 데 사용하는 .jpeg 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.
+<details>
+  <summary>hint#1</summary>
+    Use stream:udp as the sourcetype to find the injected string and separate out the payload.<br>
+    sourcetype stream:udp에서 주입된 문자열을 찾고 페이로드를 분리합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Google search for the two strings with special characters.<br>
+    Google은 특수 문자가 있는 두 문자열을 검색합니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Looking at one of the websites from the Google results, inspect the source code and identify the name of the image file.<br>
+    Google 결과에서 웹사이트 중 하나를 보고 소스 코드를 검사하고 이미지 파일의 이름을 식별합니다.
 </details>
 
 300	What is the full user agent string that uploaded the malicious link file to OneDrive?
