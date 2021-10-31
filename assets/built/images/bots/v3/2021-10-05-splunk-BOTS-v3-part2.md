@@ -303,39 +303,43 @@ Frothly 메일 서버의 외부 IP 주소에서 시작되는 검색 쿼리는 �
     sourcetype o365:management:activity에서 조사하십시오.
 </details>
 
-
-
-307	What is the MD5 value of the file downloaded to Fyodor's endpoint system and used to scan Frothly's network?
+307	What is the MD5 value of the file downloaded to Fyodor's endpoint system and used to scan Frothly's network?  
+Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워크를 스캔하는 데 사용되는 파일의 MD5 값은 무엇입니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-308	Based on the information gathered for question 304, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.
+308	Based on the information gathered for question 304, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.  
+문제 304에 대해 수집된 정보에 따르면 엔드포인트가 손상된 후 이 사용자는 어떤 그룹에 할당되었습니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-309	At some point during the attack, a user's domain account is disabled. What is the email address of the user whose account gets disabled and what is the email address of the user who disabled their account? Answer guidance: Comma separated without spaces, in alphabetical order. (Example: jdoe@mycompany.com,tmiller@mycompany.com)
+309	At some point during the attack, a user's domain account is disabled. What is the email address of the user whose account gets disabled and what is the email address of the user who disabled their account? Answer guidance: Comma separated without spaces, in alphabetical order. (Example: jdoe@mycompany.com,tmiller@mycompany.com)  
+공격 중 어느 시점에서 사용자의 도메인 계정이 비활성화됩니다. 계정이 비활성화된 사용자의 이메일 주소는 무엇이며 계정을 비활성화한 사용자의 이메일 주소는 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다. (예: jdoe@mycompany.com,tmiller@mycompany.com)
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-310	Another set of phishing emails were sent to Frothly employees after the adversary gained a foothold on a Frothly computer. This malicious content was detected and left behind a digital artifact. What is the name of this file? Answer guidance: Include the file extension. (Example: badfile.docx)
+310	Another set of phishing emails were sent to Frothly employees after the adversary gained a foothold on a Frothly computer. This malicious content was detected and left behind a digital artifact. What is the name of this file? Answer guidance: Include the file extension. (Example: badfile.docx)  
+공격자가 Frothly 컴퓨터에 발판을 마련한 후 또 다른 피싱 이메일 세트가 Frothly 직원에게 전송되었습니다. 이 악성 콘텐츠는 감지되어 디지털 아티팩트를 남겼습니다. 이 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: badfile.docx)
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-311	Based on the answer to question 310, what is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension. (Example: explorer.exe)
+311	Based on the answer to question 310, what is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension. (Example: explorer.exe)  
+310번 문제에 대한 답변에 따르면 악성코드에 포함된 실행 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: explorer.exe)
 <details>
   <summary>hint#1</summary>
     
 </details>
 
 312	How many unique IP addresses "used" the malicious link file that was sent?  
+전송된 악성 링크 파일을 "사용"한 고유 IP 주소는 몇 개입니까?
 <details>
   <summary>hint#1</summary>
     
@@ -343,61 +347,71 @@ Frothly 메일 서버의 외부 IP 주소에서 시작되는 검색 쿼리는 �
 
 313문제도 없네요
 
-314	What port number did the adversary use to download their attack tools?
+314	What port number did the adversary use to download their attack tools?  
+공격자가 공격 도구를 다운로드하는 데 사용한 포트 번호는 무엇입니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-315	During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files? Answer guidance: Comma separated without spaces, in alphabetical order, include the file extension where applicable.
+315	During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files? Answer guidance: Comma separated without spaces, in alphabetical order, include the file extension where applicable.  
+공격하는 동안 공격자는 온프레미스 Linux 서버의 /tmp 디렉터리에 두 개의 파일을 원격으로 스트리밍합니다. 이 파일의 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분하고 해당되는 경우 파일 확장자를 포함합니다.
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-316	Based on the information gathered for question 314, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.
+316	Based on the information gathered for question 314, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.  
+314번 문제에 대해 수집된 정보를 바탕으로 공격 도구가 포함된 것으로 유추할 수 있는 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-317	What is the first executable uploaded to the domain admin account's compromised endpoint system? Answer guidance: Include the file extension.
+317	What is the first executable uploaded to the domain admin account's compromised endpoint system? Answer guidance: Include the file extension.  
+도메인 관리자 계정의 손상된 엔드포인트 시스템에 업로드된 첫 번째 실행 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?
+318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?  
+Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스프레이 공격이 어느 국가에서 발생합니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-319	The adversary created a BCC rule to forward Frothly's email to his personal account. What is the value of the "Name" parameter set to?
+319	The adversary created a BCC rule to forward Frothly's email to his personal account. What is the value of the "Name" parameter set to?  
+공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. "이름" 매개변수의 값은 무엇으로 설정되어 있습니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-320	What is the password for the user that was created on the compromised endpoint?
+320	What is the password for the user that was created on the compromised endpoint?  
+손상된 엔드포인트에서 생성된 사용자의 비밀번호는 무엇입니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?
+321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?  
+대동강의 적군은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
+322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)  
+명령 및 제어 서버가 액세스하는 URL의 경로는 무엇입니까? 답변 안내: 전체 경로를 제공하세요. (예: https://imgur.com/a/mAqgt4S/lasd3.jpg URL의 전체 경로는 /a/mAqgt4S/lasd3.jpg입니다.)
 <details>
   <summary>hint#1</summary>
     
 </details>
 
-323	At least two Frothly endpoints contact the adversary's command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.
+323	At least two Frothly endpoints contact the adversary's command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.  
+최소 2개의 Frothly 엔드포인트가 적의 명령 및 제어 인프라에 접속합니다. 짧은 호스트 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.
 <details>
   <summary>hint#1</summary>
     
