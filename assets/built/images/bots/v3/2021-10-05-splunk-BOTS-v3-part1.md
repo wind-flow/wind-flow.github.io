@@ -965,11 +965,29 @@ Frothly는 DNS 웹 서비스에 Amazon Route 53을 사용합니다. brewertalk.c
     고유한 세 번째 수준 하위 도메인 값만 포함해야 합니다.
 </details>  
 
+aws:cloudwatchlogs에 DNS관련 데이터가 있습니다. brewertalk.com가 있는 이벤트를 발췌해봅시다.
+
+```
+sourcetype=aws:cloudwatchlogs brewertalk.com
+```
+
+1.0 2018-08-20T15:08:11Z Z149R7NEBZTKPN hitech1.brewertalk.com A NXDOMAIN UDP NRT20 13.125.50.235 -
+와 같은 이벤트가 10만개가 넘습니다.
+
+정규표현식을 사용해 subdomain을 발췌하고, 값들의 평균을 구한 후 반올립합니다.
+
+```
 sourcetype=aws:cloudwatchlogs brewertalk.com
 | rex field=_raw "Z149R7NEBZTKPN\s(?<query>[^\s]+)" 
 | rex field=query "\.?(?<subdomain>[^\.]+).brewertalk.com" 
 | dedup subdomain
 | table subdomain
+| eval lenSubdomain = len(subdomain)
+| stats avg(lenSubdomain) as answer
+| eval answer=round(answer,2)
+```
+
+답 : 8.10
 
 225	Using the payload data found in the memcached attack, what is the name of the .jpeg file that is used by Taedonggang to deface other brewery websites? Answer guidance: Include the file extension.  
 memcached 공격에서 발견된 페이로드 데이터를 사용하여 대동강이 다른 양조장 웹사이트를 훼손하는 데 사용하는 .jpeg 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.
@@ -989,198 +1007,16 @@ memcached 공격에서 발견된 페이로드 데이터를 사용하여 대동�
     Google 결과에서 웹사이트 중 하나를 보고 소스 코드를 검사하고 이미지 파일의 이름을 식별합니다.
 </details>
 
-300	What is the full user agent string that uploaded the malicious link file to OneDrive?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
+memcached attack(https://www.cloudflare.com/ko-kr/learning/ddos/memcached-ddos-attack/)관련 내용을 참고바랍니다.
 
-301	What external client IP address is able to initiate successful logins to Frothly using an expired user account?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
+udp 11211포트를 사용한 DDoS공격입니다.
+공격을 찾아봅시다.
 
-302	According to Symantec's website, what is the discovery date of the malware identified in the macro-enabled file? Answer guidance: Provide the US date format MM/DD/YY. (Example: January 1, 2019 should be provided as 01/01/19)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
+```
+source="stream:udp" dest_port=11211
+```
 
-303	What is the password for the user that was successfully created by the user "root" on the on-premises Linux system?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
+공격자 : 13.125.33.130
 
-304	What is the name of the user that was created after the endpoint was compromised?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
 
-305	What is the process ID of the process listening on a "leet" port?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-306	A search query originating from an external IP address of Frothly's mail server yields some interesting search terms. What is the search string?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-307	What is the MD5 value of the file downloaded to Fyodor's endpoint system and used to scan Frothly's network?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-308	Based on the information gathered for question 304, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-309	At some point during the attack, a user's domain account is disabled. What is the email address of the user whose account gets disabled and what is the email address of the user who disabled their account? Answer guidance: Comma separated without spaces, in alphabetical order. (Example: jdoe@mycompany.com,tmiller@mycompany.com)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-310	Another set of phishing emails were sent to Frothly employees after the adversary gained a foothold on a Frothly computer. This malicious content was detected and left behind a digital artifact. What is the name of this file? Answer guidance: Include the file extension. (Example: badfile.docx)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-311	Based on the answer to question 310, what is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension. (Example: explorer.exe)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-312	How many unique IP addresses "used" the malicious link file that was sent?  
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-313문제도 없네요
-
-314	What port number did the adversary use to download their attack tools?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-315	During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files? Answer guidance: Comma separated without spaces, in alphabetical order, include the file extension where applicable.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-316	Based on the information gathered for question 314, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-317	What is the first executable uploaded to the domain admin account's compromised endpoint system? Answer guidance: Include the file extension.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-319	The adversary created a BCC rule to forward Frothly's email to his personal account. What is the value of the "Name" parameter set to?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-320	What is the password for the user that was created on the compromised endpoint?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-323	At least two Frothly endpoints contact the adversary's command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-324	Who is Al Bungstein's cell phone provider/carrier? Answer guidance: Two words.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-325	Microsoft cloud services often have a delay or lag between "index time" and "event creation time". For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-326	According to Mallory's advertising research, how is beer meant to be enjoyed? Answer guidance: One word.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-327도 문제 없습니다.
-
-328	What text is displayed on line 2 of the file used to escalate tomcat8's permissions to root? Answer guidance: Provide contents of the entire line.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-329	One of the files uploaded by Taedonggang contains a word that is a much larger in font size than any other in the file. What is that word?
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-332	What is the CVE of the vulnerability that escalated permissions on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
-
-333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
-<details>
-  <summary>hint#1</summary>
-    
-</details>
+답 : index1.jpeg
