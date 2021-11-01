@@ -716,37 +716,156 @@ Mallory의 광고 연구에 따르면 맥주는 어떻게 즐길 수 있습니�
 
 327도 문제 없습니다.
 
-328	What text is displayed on line 2 of the file used to escalate tomcat8's permissions to root? Answer guidance: Provide contents of the entire line.
+328	What text is displayed on line 2 of the file used to escalate tomcat8's permissions to root? Answer guidance: Provide contents of the entire line.  
+tomcat8의 권한을 루트로 에스컬레이션하는 데 사용되는 파일의 2행에 어떤 텍스트가 표시됩니까? 답변 안내: 전체 라인의 내용을 제공합니다.
 <details>
   <summary>hint#1</summary>
-    
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.<br>
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
 </details>
+<details>
+  <summary>hint#2</summary>
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+</details>
+
+osquery에 실행관련 이벤트가 있을것입니다. 어떤 계정이 어떤 명령을 실행했는지 조사해봅니다.
+
+```
+sourcetype=osquery:results tomcat8 columns.cmdline=*
+| table _time decorations.username columns.cmdline
+| reverse
+```
+
+중간에 **"chmod" "+x" "colonelnew"**, **"./colonelnew"**의 이벤트를 발견할 수 있습니다. 
+**colonelnew**은 315번문제에서 발견한 파일과 비슷합니다. sourcetype sysmon에서 cat colonel.c의 로그가 있었습니다.
+
+```
+*colonel* source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+```
+중간 **C:\windows\temp\unziped\lsof-master\iexeplorer.exe" http://192.168.9.30:8080/frothlyinventory/showcase.action "echo Ly.... &gt;&gt; /tmp/colonel**과 같은 명령어가 보입니다.
+해당 base64를 /tmp/colonel파일로 옮기는것처럼 보입니다. 해당 데이터를 base64로 디코딩해봅니다.
+
+시작 : LyoKICogVWJ1bnR1IDE2
+끝 : JldHVybiAwOwp9 &gt;&gt
+
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-22-06-41.png)
+
+답 :  * Ubuntu 16.04.4 kernel priv esc
 
 329	One of the files uploaded by Taedonggang contains a word that is a much larger in font size than any other in the file. What is that word?
+대동강이 업로드한 파일 중 하나에는 파일의 다른 어떤 것보다 훨씬 큰 글자 크기의 단어가 포함되어 있습니다. 그 단어는 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Figure out what files were uploaded, and pivot off of interesting file names found. The WinEventLog:Security sourcetype is helpful, as is the osquery:results sourcetype.<br>
+    어떤 파일이 업로드되었는지 파악하고 발견된 흥미로운 파일 이름을 중심으로 중심을 잡습니다. WinEventLog:Security 소스 유형은 osquery:results 소스 유형과 마찬가지로 유용합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    You are looking for a long string of base64 information.<br>
+    긴 base64 정보 문자열을 찾고 있습니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    You will need to find a site to decode the base64 to a viewable image. CyberChef is a good one!
+    base64를 볼 수 있는 이미지로 디코딩하려면 사이트를 찾아야 합니다. CyberChef는 좋은 사람입니다!
 </details>
 
-330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.
+지금까지 문제에서 대동강그룹이 업로드한 파일은 colonel, Frothly_GABF_Deck-2018-MK.pptx, 1534778082419.png, definitelydontinvestigatethisfile.sh로 파악했습니다.
+각 검색하여 base64 디코딩해봅시다.
+**definitelydontinvestigatethisfile.sh**를 검색해보면
+sysmon에 아래 base64 코드들이 있습니다.
+시작 : /9j/4AAQSkZJRgABAQAAAQABAAD/
+끝 : BvdGF0byBwaG9uZQo=
+
+해당 데이터를 디코드해보면 아래와 같습니다. 
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-22-21-07.png)
+
+답 : splunk
+
+330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.  
+어떤 Frothly VPN 사용자가 가장 많은 트래픽을 생성했습니까? 답변 안내: VPN 사용자 이름을 제공합니다.
 <details>
   <summary>hint#1</summary>
-    
+    Start with cisco:asa as the sourcetype.
+    sourcetype cisco:asa에서 조사하십시오.
 </details>
 
-331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR
+```
+sourcetype=cisco:asa eventtype=cisco_vpn
+| stats count by Cisco_ASA_user
+| sort -count
+```
+
+|Cisco_ASA_user|count|
+|---|---|
+|mkraeusen|38|
+|bstoll|36|
+|bgist|19|
+|fyodor|14|
+|pcerf|13|
+|ghoppy|5|
+|btun|3|
+|abungstein|2|
+
+답 : mkraeusen
+
+331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR  
+Splunk 명령만 사용하는 경우 하루 종일 Windows 호스트의 이벤트 코드 4688 수에 대한 사분위수 범위(IQR)의 상한(UF) 값은 얼마입니까? 1.5 배율을 사용하십시오. 답변 안내: UF = Q3 + 1.5 x IQR
 <details>
   <summary>hint#1</summary>
-    
+    Start with WinEventLog:Security as the sourcetype.<br>
+    sourcetype WinEventLog:Security를 조사하십시오.
 </details>
+<details>
+  <summary>hint#2</summary>
+    Splunk commands such as eventstats, perc25() and perc75() would be helpful here.<br>
+    여기에서 eventstats, perc25() 및 perc75()와 같은 Splunk 명령이 도움이 될 것입니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    If you have never used the interquartile range (IQR) to identify outliers, take a look at the documentation https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers<br>
+    사분위수 범위(IQR)를 사용하여 이상값을 식별한 적이 없는 경우 https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers 문서를 참조하십시오.
+</details>
+
+[eventcode4688](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688)
+새 process creation 이벤트 코드입니다.
+
+```
+sourcetype=wineventlog EventCode=4688
+| eventstats perc25(count) as p25, perc75(count) as p75
+| eval IQR=p75-p25
+| eval UF=p75+1.5*IQR
+```
+
+답 : 1368
 
 332	What is the CVE of the vulnerability that escalated permissions on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
+Linux 호스트 hoth에서 권한을 에스컬레이션한 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)
 <details>
   <summary>hint#1</summary>
-    
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.<br>
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Google search.
+    구글링 하세요.
 </details>
 
-333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
+328번문제에서 발견한 "* Ubuntu 16.04.4 kernel priv esc"를 구글링해봅시다.
+
+[CVE-2017-16995](https://www.exploit-db.com/exploits/44298)
+
+답 : CVE-2017-16995
+
+333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)  
+Linux 호스트 hoth에서 명령을 실행하기 위해 악용된 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)
 <details>
   <summary>hint#1</summary>
     
