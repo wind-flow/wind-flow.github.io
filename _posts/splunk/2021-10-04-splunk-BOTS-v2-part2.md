@@ -260,7 +260,7 @@ dest_content필드의 중간 내용을 보면 username과 email을 알기위해 
 
 첫번째는 eamil, 두번째는 username 조회시도를 하고있습니다. 해당 이벤트 시간을 기준으로 ±5초로 발생한 SQL문의 이벤트를 봅시다.
 
-![](2021-10-24-12-09-35.png)
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-24-12-09-35.png)
 
 ```
 sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php
