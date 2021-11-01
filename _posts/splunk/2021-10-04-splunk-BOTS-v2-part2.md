@@ -77,7 +77,7 @@ sourcetype=stream:http www.brewertalk.com
 ```
 
 
-site|	dest_ip|
+|site|dest_ip|
 |---|---|
 |www.brewertalk.com|172.31.4.249|
 |www.brewertalk.com|52.42.208.228|
