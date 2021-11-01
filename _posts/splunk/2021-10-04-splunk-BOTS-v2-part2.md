@@ -220,6 +220,7 @@ www.brewertalk.com에서 Frank Ester의 비밀번호의 salt 값은 얼마입니
 
 <details>
   <summary>hint#4</summary>
+    밑을 드래그하시면 힌트가 보입니다.
 </details>
 <span style="color:white">
     The other important piece of data in the dest_content field can be extracted with the following regular expression: '<dt>Query:</dt>\s+<dd>\s+(?<sqli_query>[^<]+)' Look for the sqli_query values that are stealing salt values.<br>
