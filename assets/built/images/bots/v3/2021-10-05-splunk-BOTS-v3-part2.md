@@ -210,7 +210,7 @@ sourcetype=ms:aad:signin "Kevin Lagerfield" 199.66.91.253
 ```
 
 그럼 19개의 이벤트가 발생하는데, stream:smtp로그가 눈에 띕니다.
-![](2021-11-01-05-33-01.png)
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-05-33-01.png)
 첨부파일 **Malware Alert Text.txt**의 base64 인코딩값을 발견할 수 있습니다. 디코딩해봅시다.
 
 ```
@@ -256,10 +256,10 @@ cmdline: "useradd" "-ou" "tomcat7" "-p" "davidverve.com" "0" "-g" "0" "-M" "-N" 
     WinEventLog:Security를 ​​소스 유형으로 사용하십시오.    
 </details>
 
-엔드포인트라고 했으니, 윈도우 시스템일것입니다. 이벤트로그에서 계정생성 이벤트를 찾아봅시다.
+엔드포인트라고 했으니, 윈도우 시스템일 것입니다. 이벤트로그에서 계정생성 이벤트를 찾아봅시다.
 구글에 검색하니 계정생성 윈도우이벤트로그 ID는 4720입니다.
 
-![](2021-11-01-06-10-48.png)
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-06-10-48.png)
 
 ```
 sourcetype=WinEventLog EventCode=4720
@@ -303,12 +303,43 @@ Frothly 메일 서버의 외부 IP 주소에서 시작되는 검색 쿼리는 �
     sourcetype o365:management:activity에서 조사하십시오.
 </details>
 
+ms office를 사용하는것을 알고있으니, Outlook 혹은 Exchange를 사용할 것입니다. o365관련 sourcetype에서 키워드 query를 조사해봅니다.
+
+```
+sourcetype=*o365* (Exchange OR Outlook) *query*
+```
+
+아래와 같은 로그를 발견할 수 있습니다.
+
+ClientIP: 104.207.83.63:21974
+user: fyodor@froth.ly
+Workload: Exchange
+UserKey: 1003BFFDA2E71FF9
+UserType: 2
+Name: SearchQuery
+Value: cromdale OR beer OR financial OR secret 
+
+답 : cromdale OR beer OR financial OR secret 
+
 307	What is the MD5 value of the file downloaded to Fyodor's endpoint system and used to scan Frothly's network?  
 Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워크를 스캔하는 데 사용되는 파일의 MD5 값은 무엇입니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
+실행파일의 hash값은 sysmon로그에 있습니다.
+sourcetype으로 제공되지않고, source로 제공합니다.
+파일이 실행됐다면 process creation이벤트가 발생했을것입니다.(EventID=1)
+어떤 파일이 실행됐는지 파악할 수 있도록 Image필드의 값을 봅시다.
+
+```
+host=FYODOR-L source="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventID=1 
+| stats count by Image
+```
+Images 중 "C:\\Windows\\Temp\\hdoor.exe"라는 특이한 실행파일이 보입니다.
+CommandLine을 보면 "C:\windows\temp\hdoor.exe" -hbs 192.168.9.1-192.168.9.50 /b /m /n 식으로 네트워크 대역관련 인자가 보입니다.
+
+답 : 586EF56F4D8963DD546163AC31C865D7
 
 308	Based on the information gathered for question 304, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.  
 문제 304에 대해 수집된 정보에 따르면 엔드포인트가 손상된 후 이 사용자는 어떤 그룹에 할당되었습니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.
@@ -317,12 +348,51 @@ Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워�
     
 </details>
 
+계정명 svcvnc의 그룹을 알아봅시다.
+
+
+[sysmon Group할당](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4732)eventID는 4732입니다.
+
+```
+svcvnc EventCode=4732
+```
+이벤트 2개가 나옵니다.
+
+답 : Administrators,Users
+
 309	At some point during the attack, a user's domain account is disabled. What is the email address of the user whose account gets disabled and what is the email address of the user who disabled their account? Answer guidance: Comma separated without spaces, in alphabetical order. (Example: jdoe@mycompany.com,tmiller@mycompany.com)  
-공격 중 어느 시점에서 사용자의 도메인 계정이 비활성화됩니다. 계정이 비활성화된 사용자의 이메일 주소는 무엇이며 계정을 비활성화한 사용자의 이메일 주소는 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다. (예: jdoe@mycompany.com,tmiller@mycompany.com)
+공격 중간에 어느 시점에서 사용자의 도메인 계정이 비활성화됩니다. 계정이 비활성화된 사용자의 이메일 주소는 무엇이며 계정을 비활성화한 사용자의 이메일 주소는 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다. (예: jdoe@mycompany.com,tmiller@mycompany.com)
 <details>
   <summary>hint#1</summary>
     
 </details>
+
+[sysmon account disable](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4725)eventID는 4725입니다.
+
+```
+EventCode=4725
+```
+
+아무이벤트도 나오지 않습니다.
+
+AD에서 찾아봅시다.
+
+```
+sourcetype=ms:aad:* *user* OR *account* OR *disable*
+```
+
+activity라는 필드에 **Disable account**가 보입니다.
+
+```
+sourcetype=ms:aad:* activity="Disable account"
+```
+
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-12-25-55.png)
+actor부분에 **fyodor@froth.ly**라는 이메일계정을 발견할 수 있습니다.
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-12-27-35.png)
+target을 보면 **bgist@froth.ly**라는 이메일계정또한 발견할 수 있습니다.
+
+답 : bgist@froth.ly,fyodor@froth.ly
 
 310	Another set of phishing emails were sent to Frothly employees after the adversary gained a foothold on a Frothly computer. This malicious content was detected and left behind a digital artifact. What is the name of this file? Answer guidance: Include the file extension. (Example: badfile.docx)  
 공격자가 Frothly 컴퓨터에 발판을 마련한 후 또 다른 피싱 이메일 세트가 Frothly 직원에게 전송되었습니다. 이 악성 콘텐츠는 감지되어 디지털 아티팩트를 남겼습니다. 이 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: badfile.docx)
@@ -331,6 +401,12 @@ Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워�
     
 </details>
 
+문제 302번에서 발견한 **Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm**파일이 생각납니다. 
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-13-15-28.png)
+해당 파일명으로 검색해보면 auto-sacning되어 지워졌음을 확인할 수 있습니다.
+
+답 : Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm
+
 311	Based on the answer to question 310, what is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension. (Example: explorer.exe)  
 310번 문제에 대한 답변에 따르면 악성코드에 포함된 실행 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: explorer.exe)
 <details>
@@ -338,12 +414,36 @@ Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워�
     
 </details>
 
+바로 다음이벤트의 Image에 exe파일이 있습니다.
+
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-13-22-46.png)
+
+답 : HxTsr.exe
+
 312	How many unique IP addresses "used" the malicious link file that was sent?  
 전송된 악성 링크 파일을 "사용"한 고유 IP 주소는 몇 개입니까?
 <details>
   <summary>hint#1</summary>
     
 </details>
+
+300번문제에서 파악한 악성 링크파일의 이름은 **BRUCE BIRTHDAY HAPPY HOUR PICS.lnk**입니다.
+
+```
+"BRUCE BIRTHDAY HAPPY HOUR PICS.lnk"
+```
+
+67개의 이벤트가 있습니다.
+그중 operation field값 중 **AnonymousLinkUsed**이 눈에 띕니다.
+
+![](2021-11-01-13-29-24.png)
+
+```
+"BRUCE BIRTHDAY HAPPY HOUR PICS.lnk"  Operation=AnonymousLinkUsed
+| stats dc(ClientIP)
+```
+
+답 : 7
 
 313문제도 없네요
 
@@ -354,12 +454,48 @@ Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워�
     
 </details>
 
+stream:tcp에서 조사해봅니다.
+well-known포트가 아닌 포트 중 한번만 다운로드 한 이벤트를 찾아봅시다.
+
+```
+sourcetype=stream:tcp
+| stats count by dest_port
+```
+45.77.53.176:3333과 192.168.8.103:50504가 count 1입니다.
+외부망 IP인 45.77.53.176이 의심스럽습니다.
+stream:http에서 확인해봅시다.
+
+**uri_path: /images/logos.png**를 발견할 수 있습니다.
+
+답 : 3333
+
 315	During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files? Answer guidance: Comma separated without spaces, in alphabetical order, include the file extension where applicable.  
 공격하는 동안 공격자는 온프레미스 Linux 서버의 /tmp 디렉터리에 두 개의 파일을 원격으로 스트리밍합니다. 이 파일의 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분하고 해당되는 경우 파일 확장자를 포함합니다.
 <details>
   <summary>hint#1</summary>
     
 </details>
+
+file upload 관련 로그는 osquery에 있을것입니다. create, upload관련 행위를 하는 데이터를 찾아봅시다.
+```
+sourcetype=osquery:results */tmp*.* "columns.action"=CREATED
+```
+create한 user 중 **tomcat8**을 발견할 수 있습니다. tomcat7이 악성행위하는 계정을 생성했으니 해당 계정도 의심스럽습니다.
+
+```
+sourcetype=osquery:results */tmp*.* "columns.action"=CREATED "decorations.username"=tomcat8
+| table columns.target_path
+```
+
+
+|columns.target_path|
+|---|
+|/tmp/ccgZ61x9.o|
+|/tmp/cclBJ1WV.s|
+|/tmp/colonel.c|
+|/tmp/definitelydontinvestigatethisfile.sh|
+
+실행파일은 colonel.c와 definitelydontinvestigatethisfile.sh입니다.
 
 316	Based on the information gathered for question 314, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.  
 314번 문제에 대해 수집된 정보를 바탕으로 공격 도구가 포함된 것으로 유추할 수 있는 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.
@@ -368,6 +504,8 @@ Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워�
     
 </details>
 
+답 : logos.png
+
 317	What is the first executable uploaded to the domain admin account's compromised endpoint system? Answer guidance: Include the file extension.  
 도메인 관리자 계정의 손상된 엔드포인트 시스템에 업로드된 첫 번째 실행 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.
 <details>
@@ -375,39 +513,147 @@ Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워�
     
 </details>
 
+domain admin의 GUI는 (**S-1-5-21*-512**)[https://docs.microsoft.com/en-US/windows/security/identity-protection/access-control/security-identifiers]과 같습니다.
+이 키워드로 검색해도 아무것도 나오지않습니다.
+
+sysmon에서 .exe확장자 파일을 검색해봅니다. 악성코드는 보통 tmp, temp파일에 업로드하니 경로조건도 추가해봅니다.
+
+```
+*.exe source="WinEventLog:Microsoft-Windows-Sysmon/Operational" Image IN(*tmp*, *temp*)
+| stats count by Image
+```
+
+
+|Image|count|
+|---|---|
+|C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe	|2|
+|C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe	|9|
+|C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe	|6|
+|C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe	|2|
+|C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe	|2|
+|C:\Windows\Temp\hdoor.exe	|20|
+|C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe	|51|
+
+**hdoor.exe**이 굉장히 의심스럽습니다.
+
+```
+*.exe source="WinEventLog:Microsoft-Windows-Sysmon/Operational" Image IN(*tmp*, *temp*)
+| dedup Image
+| table _time Image Computer User SourceIp DestinationIp
+| reverse
+```
+
+|_time|Image|Computer|User|SourceIp|DestinationIp|
+|---|---|---|---|---|---|
+|2018/08/20 09:16:50|C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe|	ABUNGST-L.froth.ly|
+|2018/08/20 10:33:27|C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe|                      BGIST-L.froth.ly|
+|2018/08/20 10:33:27|C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe|BGIST-L.froth.ly|
+|2018/08/20 10:44:05|C:\Windows\Temp\hdoor.exe|FYODOR-L.froth.ly|AzureAD\FyodorMalteskesko|192.168.8.103|192.168.9.50|
+|2018/08/20 11:34:02|C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe|FYODOR-L.froth.ly	|AzureAD\FyodorMalteskesko|192.168.8.103|192.168.9.30|
+|2018/08/20 11:34:33|C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe	|FYODOR-L.froth.ly|
+|2018/08/20 15:00:41|C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe	|PCERF-L.froth.ly|
+
+가장 먼저 업로드된 파일은 hdoor.exe입니다.
+
+답 : hdoor.exe
+
 318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?  
 Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스프레이 공격이 어느 국가에서 발생합니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use linux_secure as the sourcetype.
+    sourcetype linux_secure에서 조사하세요.
 </details>
 
+힌트에서 sourcetype linux_secure에 답이있다고 알려줍니다.
+[linux_secure](https://splunkbase.splunk.com/app/3476/)
+
+vendor_action필드에 **Invalid user**란 값이있으니 조건을 추가해봅니다.
+```
+sourcetype=linux_secure vendor_action="Invalid user"
+```
+
+해당 로그에서 발견한 IP는 **5.101.40.81**입니다.
+
+whois에 검색해봅시다.
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-15-28-35.png)
+
+해당 IP국가는 러시아입니다.
+
+답 : RUSSIA
+
 319	The adversary created a BCC rule to forward Frothly's email to his personal account. What is the value of the "Name" parameter set to?  
-공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. "이름" 매개변수의 값은 무엇으로 설정되어 있습니까?
+공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. "Name" 매개변수의 값은 무엇으로 설정되어 있습니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use ms:o365:management as the sourcetype.
+    sourcetype ms:o365:management에서 조사하세요.
 </details>
+
+[BCC룰이란?](https://bluemail.help/ko/myself-bcc-automatically/)
+BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.
+
+```
+sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
+```
+
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-16-01-27.png)
+
+공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 **New-TransportRule**룰을 생기는 이벤트입니다.
+
+답 : SOX
 
 320	What is the password for the user that was created on the compromised endpoint?  
 손상된 엔드포인트에서 생성된 사용자의 비밀번호는 무엇입니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use WinEventLog:Security as the sourcetype.
+    sourcetype WinEventLog:Security에서 조사하세요.
 </details>
+
+svcvnc를 키워드로 검색하면 아래와 같은 이벤트를 발견할 수 있습니다.
+
+Process Command Line:	C:\Windows\system32\net1 user /add svcvnc Password123!
+
+답 : Password123!
 
 321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?  
-대동강의 적군은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?
+대동강은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?
 <details>
   <summary>hint#1</summary>
-    
+    Use stream:smtp as the sourcetype.
+    sourcetype stream:smtp에서 조사하세요.
 </details>
 
-322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)  
+Grace Hoppy의 이메일주소는 **ghoppy@froth.ly**입니다.
+smtp에서 수신자 ghoppy@froth.ly인 이벤트를 찾아봅시다.
+
+```
+sourcetype=stream:smtp receiver_email{}=ghoppy@froth.ly
+```
+sender_email이 **hyunki1984@naver.com**인 이벤트가 1개있습니다.
+base64인코딩된 데이터를 디코딩해봅시다.
+
+```
+R3JhY2llLAoKICAgICAgIFdlIGJyb3VnaHQgeW91ciBkYXRhIGFuZCBpbXBvcnRlZCBpdDogaHR0
+cHM6Ly9wYXN0ZWJpbi5jb20vc2RCVWt3c0UgQWxzbywgeW91IHNob3VsZCBub3QgYmUgdG9vIGhh
+cmQgQnJ1Y2UuIEhlIGdvb2QgbWFuIAogCiAKIAogCg==
+(Decoding)→
+Gracie,
+We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you should not be too hard Bruce. He good man 
+```
+
+해당 url로 가보면 총 8명입니다.
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-16-17-11.png)
+
+답 : 8
+
+322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
 명령 및 제어 서버가 액세스하는 URL의 경로는 무엇입니까? 답변 안내: 전체 경로를 제공하세요. (예: https://imgur.com/a/mAqgt4S/lasd3.jpg URL의 전체 경로는 /a/mAqgt4S/lasd3.jpg입니다.)
 <details>
   <summary>hint#1</summary>
-    
+    Start with XmlWinEventLog:Microsoft-Windows-Sysmon/Operational as the sourcetype, or review the PowerShell logging on various Frothly laptops.
+    XmlWinEventLog:Microsoft-Windows-Sysmon/Operational을 소스 유형으로 시작하거나 다양한 Frothly 랩톱에서 PowerShell 로깅을 검토합니다.
 </details>
 
 323	At least two Frothly endpoints contact the adversary's command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.  
@@ -417,19 +663,52 @@ Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스
     
 </details>
 
-324	Who is Al Bungstein's cell phone provider/carrier? Answer guidance: Two words.
+324	Who is Al Bungstein's cell phone provider/carrier? Answer guidance: Two words.  
+324 Al Bungstein의 휴대전화 제공업체/이동통신사는 누구인가요? 답변 안내: 두 단어.
 <details>
   <summary>hint#1</summary>
-    
+    How can you find out what external IP address Al Bungstein is using?<br>
+    Al Bungstein이 사용하는 외부 IP 주소를 어떻게 알 수 있습니까?
+</details>
+<details>
+  <summary>hint#2</summary>
+    OSINT is your friend here. Pivot off of Al's external IP.<br>
+    OSINT는 여기 당신의 친구입니다. Al의 외부 IP를 피벗합니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    There is a single sourcetype in Splunk that also contains this information. It is a scripted input running on Al's machine.<br>
+    Splunk에는 이 정보도 포함하는 단일 소스 유형이 있습니다. Al의 시스템에서 실행되는 스크립트 입력입니다.
 </details>
 
-325	Microsoft cloud services often have a delay or lag between "index time" and "event creation time". For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.
+Al Bungstein의 이메일은 **abungstein@froth.ly**입니다.
+ip : 174.215.1.81
+
+해당 ip를 [whois](https://domain.whois.co.kr/whois/search.php)에 조회해보면
+
+![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-18-03-14.png)
+
+답 : Verizon Wireless
+
+325	Microsoft cloud services often have a delay or lag between "index time" and "event creation time". For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.  
+Microsoft 클라우드 서비스는 종종 "인덱스 시간"과 "이벤트 생성 시간" 사이에 지연 또는 지연이 있습니다. 전체일 중 ms:aad:signin의 최대 지연 시간(분)은 얼마입니까? 답변 안내: 측정 단위 없이 가장 가까운 분으로 반올림합니다.
 <details>
   <summary>hint#1</summary>
-    
-</details>
 
-326	According to Mallory's advertising research, how is beer meant to be enjoyed? Answer guidance: One word.
+</details>
+```
+sourcetype=ms:aad:signin  
+| eval indextime=strftime(_indextime,"%Y-%m-%d %H:%M:%S") 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S") 
+| eval indextime_epoch=strptime(indextime,"%Y-%m-%d %H:%M:%S")
+| eval time_epoch=strptime(time, "%Y-%m-%d %H:%M:%S")
+| table time, indextime, indextime_epoch, time_epoch
+| eval delta=indextime_epoch-time_epoch
+| stats max(delta) as max_lag
+| eval minutes=max_lag / 60
+```
+326	According to Mallory's advertising research, how is beer meant to be enjoyed? Answer guidance: One word.  
+Mallory의 광고 연구에 따르면 맥주는 어떻게 즐길 수 있습니까? 답변 안내: 한 마디.
 <details>
   <summary>hint#1</summary>
     

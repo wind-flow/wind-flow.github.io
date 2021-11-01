@@ -227,7 +227,6 @@ www.brewertalk.com에서 Frank Ester의 비밀번호의 salt 값은 얼마입니
     dest_content 필드의 다른 중요한 데이터는 다음 정규식으로 추출할 수 있습니다. '<dt>Query:</dt>\s+<dd>\s+(?<sqli_query>[^<]+)' 솔트 값을 훔치는 sqli_query 값.
 </span>
 
-
 문제 202번에서 사용했던 쿼리에 frank ester관련 키워드를 추가해봅시다.
 
 ```
