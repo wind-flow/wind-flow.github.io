@@ -488,8 +488,8 @@ sourcetype="stream:http" 1bc3eab741900ab25c98eee86bf20feb
 sourcetype="stream:http" beer_lulz
 ```
 
-form_data필드 값이 아래와 같습니다.
-form_data: username=kIagerfield&password=beer_lulz&do=login
+form_data필드 값이 아래와 같습니다.  
+```form_data: username=kIagerfield&password=beer_lulz&do=login```
 
 유저이름은 kIagerfield입니다.
 힌트#2에서 [동형이의어 공격](https://ko.wikiqube.net/wiki/IDN_homograph_attack)을 사용했다고 알려주었으므로, 원래 이름은 두번째글자에서 대문자 I가 아닌, 소문자 l일 가능성이 높습니다.
