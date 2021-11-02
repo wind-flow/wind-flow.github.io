@@ -86,10 +86,44 @@ invoice.zip 한가지 결과만 나옵니다.
 |2017/08/24 03:27:33.239|	Jim Smith <jsmith@urinalysis.com>|	<fyodor@froth.ly>	    | invoice.zip	| 20e368e2c9c6e91f24eeddd09369c4aa	| BY1PR18CA0020.outlook.office365.com	| 104.47.38.87
 |2017/08/24 03:27:24.557|	Jim Smith <jsmith@urinalysis.com>|	<klagerfield@froth.ly>|	invoice.zip	| 20e368e2c9c6e91f24eeddd09369c4aa	| CY4PR18CA0058.outlook.office365.com	| 104.47.42.76
 
+메일내용 중간에 보면 base64로 인코딩된 데이터가 있습니다.
+디코딩 해봅니다.
+시작 : UEsDBBQACQAIAEO
+끝   : QAAAAhAAAAAAA==
+
+![]({{site.url}}/assets/built/images/bots/v2/2021-11-02-13-50-38.png)
+zip파일의 암호는 **912345678**입니다.
+
+디코딩한 데이터를 zip파일로 저장한 후 압축해제하면 invoice.doc파일이 있습니다.
+
+```
+ivan@ubuntu:~$ unzip invoice.zip
+Archive:  invoice.zip
+[invoice.zip] invoice.doc password:
+  inflating: invoice.doc
+ivan@ubuntu:~$ strings invoice.doc | head
+bjbj
+Congrats! It looks like you have a virustotal account and chose to live on the edge. If you find this
+ turn it in for some CyberEastEgg points!!!
+[Content_Types].xml
+#!MB
+;c=1
+_rels/.rels
+theme/theme/themeManager.xml
+sQ}#
+theme/theme/theme1.xml
+ivan@ubuntu:~$ file invoice.doc
+invoice.doc: Composite Document File V2 Document, Little Endian, Os: MacOS, Version 10.3, Code page: 10000, Author: Ryan Kovar, Template: Normal.dotm, Last Saved By: Ryan Kovar, Revision Number: 3, Name of Creating Application: Microsoft Macintosh Word, Total Editing Time: 01:00, Create Time/Date: Sun Jul  9 22:07:00 2017, Last Saved Time/Date: Wed Aug  2 05:26:00 2017, Number of Pages: 1, Number of Words: 21, Number of Characters: 125, Security: 0
+```
+
+해당 파일의 내용을 파악해보았습니다.
+[virustotal link](https://www.virustotal.com/gui/file/d8834aaa5ad6d8ee5ae71e042aca5cab960e73a6827e45339620359633608cf1/detection)
+Relation탭을 보면 scan했던 IP인 **45.77.65.211**가 있습니다.
+
 답 : invoice.zip
 
 401	The Taedonggang APT group encrypts most of their traffic with SSL. What is the "SSL Issuer" that they use for the majority of their traffic? Answer guidance: Copy the field exactly, including spaces.  
-대동강 APT 그룹은 대부분의 트래픽을 SSL로 암호화합니다. 대부분의 트래픽에 사용하는 "SSL 발급자"는 무엇입니까? 답변 지침: 공백을 포함하여 필드를 정확하게 복사합니다.
+대동강 APT 그룹은 대부분의 트래픽을 SSL로 암호화합니다. 대부분의 트래픽에 사용하는 "SSL Issuer"는 무엇입니까? 답변 지침: 공백을 포함하여 필드를 정확하게 복사합니다.
 
 <details>
   <summary>hint#1</summary>
@@ -112,11 +146,15 @@ invoice.zip 한가지 결과만 나옵니다.
     대동강의 IP 주소와 ssl_issuer 필드가 있는 sourcetype=stream:tcp를 찾습니다.
 </details>
 
-SSL관련 데이터는 stream:tcp에 있을것입니다. 키워드 ssl을 넣고 검색해봅니다.
+SSL관련 데이터는 stream:tcp에 있을것입니다. 대동강 서버의 IP주소인 45.77.65.211와 키워드 ssl을 넣고 검색해봅니다.
 ```
-sourcetype=stream:tcp *ssl*
+sourcetype=stream:tcp *ssl* 45.77.65.211
 ```
 
+ssl-issuer란 필드가 있습니다.
+![]({{site.url}}/assets/built/images/bots/v2/2021-11-02-14-45-46.png)
+
+답 : C = US
 
 402	Threat indicators for a specific file triggered notable events on two distinct workstations. What IP address did both workstations have a connection with?  
 특정 파일에 대한 위협 표시기는 두 개의 개별 워크스테이션에서 주목할만한 이벤트를 트리거했습니다. 두 워크스테이션이 연결된 IP 주소는 무엇입니까?
@@ -169,10 +207,10 @@ Incident Review dashboard가 없으므로 해당문제는 풀이하지 않도록
 sourcetype=stream:dns 160.153.91.7
 ```
 
-name field의 값을 보면 2가지값이 나옵니다.
+name 필드의 값을 보면 2가지 값이 나옵니다.
 ![dns name]({{site.url}}/assets/built/images/bots/v2/2021-10-27-22-01-37.png)
 
-해당 도메인에 대한 정보를 [threatcrowd.org](https://www.threatcrowd.org/domain.php?domain=hildegardsfarm.com))에서 검색해봅니다.
+해당 도메인에 대한 정보를 [threatcrowd.org](https://www.threatcrowd.org/domain.php?domain=hildegardsfarm.com)에서 검색해봅니다.
 
 ![OSINT]({{site.url}}/assets/built/images/bots/v2/2021-10-27-22-03-23.png)
 
@@ -401,6 +439,8 @@ ssl_cert_hash_256의 값을 찾을 수 있습니다.
 
 **1ACB3A5AAA46FC13F788A448716F841168F82227**
 해당 값을 [인증서 OSINT 사이트](https://search.censys.io/)에서 검색해봅시다.
+
+현재는 crt hash값으로 관련된 사이트를 이용할 수 없습니다.
 
 답 : 
 
