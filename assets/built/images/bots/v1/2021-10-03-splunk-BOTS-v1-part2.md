@@ -46,7 +46,7 @@ In the second scenario, one of your users is greeted by this image on a Windows 
   간단하게 유지하고 질문에 제공된 호스트 이름을 검색하십시오. stats 명령을 사용하여 소스 IP 주소별로 이벤트 수를 가져와 올바른 방향으로 조사해 보세요.
 </details>
 
-hostname이 we8105desk 키워드로 어떤 sourcetype에 가장 많이 있을지 조사해본다.
+hostname이 we8105desk 키워드로 어떤 sourcetype에 가장 많이 있을지 조사해봅니다.
 
 ```
 we8105desk 
@@ -64,13 +64,13 @@ we8105desk
 |WinRegistry	|3|
 |suricata	  |2|
 
-여러 sourcetype에서 해당 호스트의 있을것으로 예상되지만, 그중 원격 접속인 smb sourcetype에 IP관련 필드가 있을것 같다.
+여러 sourcetype에서 해당 호스트의 IP가 있을것이지만, 그중 원격 접속인 smb sourcetype에 IP관련 필드에서 찾아봅니다.
 
 ```
 we8105desk   sourcetype="stream:smb"
 ```
 
-IP를 파악하기위해 smb에 눈여겨볼만한 field는 src_ip, dest_ip, path를 확인해보면 된다.
+IP를 파악하기위해 smb에 눈여겨볼만한 field는 src_ip, dest_ip, path를 확인해보면 됩니다.
 
 ```
 we8105desk sourcetype="stream:smb"
@@ -80,23 +80,23 @@ we8105desk sourcetype="stream:smb"
 
 |src_ip|dest_ip|path|
 |---|---|---|
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\IPC$
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\C$
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\c$
-|192.168.2.50 |	192.168.250.100|	\\WE8105DESK\ROOT
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\D$
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\WINNT$
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\ADMIN$
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\LOGS$
-|192.168.2.50	|192.168.250.100|	\\WE8105DESK\ARCSERVE$
-|192.168.250.100|	192.168.2.50|	\\WE8105DESK\IPC$
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\IPC$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\C$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\c$         |
+|192.168.2.50 |	192.168.250.100|	\\WE8105DESK\ROOT         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\D$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\WINNT$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\ADMIN$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\LOGS$          |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\ARCSERVE$          |
+|192.168.250.100|	192.168.2.50|	\\WE8105DESK\IPC$         |
 
-path의 host가 모두 WE8105DESK니, 해당 PC의 IP는 192.168.250.100일 가능성이 제일 높다.
+path의 host가 모두 WE8105DESK니, 해당 PC의 IP는 192.168.250.100일 가능성이 제일 높습니다.
 
 답 : 192.168.250.100
 
 201	Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)  
-Cerber 악성코드를 탐지한 Suricata 시그니처 중 가장 적게 경고한 것은? 서명 ID 값만 답변으로 제출하십시오. (구두점은 없고 7개의 정수만 있습니다.)
+Cerber 악성코드를 탐지한 Suricata 시그니처 중 가장 적게 경고한 것은? 서명 ID 값만 답변으로 제출하십시오. (문장부호는 없고 7개의 정수만 있습니다.)
 
 <details>
   <summary>hint#1</summary>
@@ -123,7 +123,7 @@ Cerber 랜섬웨어는 암호화 단계가 끝나면 어떤 FQDN(정규화된 �
 <details>
   <summary>hint#1</summary>
   Search stream:dns data for A queries coming from the infected workstation IP on the date in question.  Try and narrow your search period.<br>
-  해당 날짜에 감염된 워크스테이션 IP에서 오는 A 쿼리에 대한 검색 stream:dns 데이터. 검색 기간을 좁혀 보십시오.
+  해당 날짜에 감염된 워크스테이션 IP에서 오는 A 쿼리에 대한 검색 stream:dns에서 찾으십시오. 검색 기간을 좁혀 보십시오.
 </details>
 
 <details>
@@ -135,7 +135,7 @@ Cerber 랜섬웨어는 암호화 단계가 끝나면 어떤 FQDN(정규화된 �
 
 8/24일에 WE8105DESK(192.168.250.100)가 cerber 랜섬웨어에 걸렸으므로, 이 호스트가 DNS서버에 질의했을것 입니다.
 
-url 질의 DNS 쿼리 타입은 A타입입니다.  
+url 질의 DNS 쿼리 타입은 A타입 입니다.  
 - [DNS 쿼리 타입](https://ko.wikipedia.org/wiki/DNS_%EB%A0%88%EC%BD%94%EB%93%9C_%ED%83%80%EC%9E%85_%EB%AA%A9%EB%A1%9D)
 
 (검색 기간8/24일로 설정)
@@ -207,7 +207,7 @@ src=192.168.250.100 sourcetype="stream:http"
 |_time|url|
 |---|---|
 |2016/08/24 16:34:27.004|http://crl.microsoft.com/pki/crl/products/microsoftrootcert.crl|
-|2016/08/24 16:34:31.660|	http://crl.microsoft.com/pki/crl/products/|MicCodSigPCA_08-31-2010.crl|
+|2016/08/24 16:34:31.660|	http://crl.microsoft.com/pki/crl/products/MicCodSigPCA_08-31-2010.crl|
 |2016/08/24 16:34:36.317|	http://crl.microsoft.com/pki/crl/products/CodeSigPCA.crl|
 2016/08/24 16:34:40.943|	http://crl.microsoft.com/pki/crl/products/CodeSignPCA2.crl|
 2016/08/24 16:34:45.589|	http://crl.microsoft.com/pki/crl/products/WinPCA.crl|
@@ -244,7 +244,6 @@ host=we8105desk EventCode=1
 | table lenCl CommandLine lenPcl ParentCommandLine
 ```
 
-
 |lenCl|CommandLine|lenPcl|ParentCommandLine|
 |---|---|---|---|
 |76|	cscript.exe /nologo C:\Windows\TEMP\AE501557-78F9-4459-8FCF-315C305567CC.vbs	|73|	"C:\Program Files (x86)\Common Files\Acronis\Infrastructure\mms_mini.exe"|
@@ -258,7 +257,7 @@ host=we8105desk EventCode=1
 |102|	"C:\Windows\System32\cmd.exe" /C START "" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|93|"C:\Windows\System32\WScript.exe" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\20429.vbs"|
 |100|	"C:\Windows\System32\WScript.exe" "C:\Users\bob.smith.WAYNECORPINC\Desktop\# DECRYPT MY FILES #.vbs"	|96|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\{35ACA89F-933F-6A5D-2776-A3589FB99832}\osk.exe"|
 
-vbs가 처음 실행하는 명령어의 길이는 4490입니다.
+vbs를 처음 실행하는 명령어의 길이는 4490입니다.
 
 답 : 4490
 
