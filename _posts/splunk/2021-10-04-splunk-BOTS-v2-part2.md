@@ -465,13 +465,13 @@ sourcetype="stream:http" 1bc3eab741900ab25c98eee86bf20feb
 <details>
   <summary>hint#1</summary>
     The attacker was trying to masquerade as something that would look legitimate to a casual observer.<br>
-    공격자는 평범한 관찰자에게 합법적으로 보이는 것으로 가장하려고 했습니다.
+    공격자는 관찰자에게 그럴듯하게 보이려고 가장했습니다.
 </details>
 
 <details>
   <summary>hint#2</summary>
     The attacker stole a trick from domain squatters by using a homograph attack. More info on homograph attacks can be found on Wikipedia.<br>
-    공격자는 동형이의어(homograph) 공격을 사용하여 도메인 점거자로부터 속임수를 훔쳤습니다. 동형 이의어 공격에 대한 자세한 내용은 Wikipedia에서 찾을 수 있습니다.
+    공격자는 동형이의어(homograph) 공격을 사용하여 도메인 관리자로부터 속였습니다. 동형이의어 공격에 대한 자세한 내용은 Wikipedia에서 찾을 수 있습니다.
 </details>
 
 <details>
