@@ -19,8 +19,6 @@ In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst
 
 Hunting Scenarios:
 
-Hunting Scenarios:
-
 PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.  
 PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.  
 Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP  
@@ -82,10 +80,10 @@ Amber Turing의 IP를 파악하고, stream:http에서 해당 IP가 src인 url을
 Amber Turing
 ```
 
-src칼럼을 보면 10.0.4.4와 10.0.2.101이 가장 높습니다. 
+src칼럼을 보면 10.0.4.4와 10.0.2.101의 이벤트 수가 가장 많습니다.
 
 두가지 모두 src필드로 검색해보면, 10.0.4.4는 stream:smb에서 찾을 수 있는데, amber의 이름이 filename에 포함되어있습니다.
-한편, 10.0.2.101는 sourcetype pan:traffic에서 출발지가 frothly\amber.turing인 데이터를 보아, amber turing의 IP는 10.0.2.101 입니다.
+한편, 10.0.2.101는 sourcetype pan:traffic에서 출발지가 frothly\amber.turing인 데이터를 보아, amber turing의 IP는 10.0.2.101입니다.
 
 frothly의 경쟁회사라고 했으니, 해당 기업의 산업을 찾아봅니다.
 ![frothly]({{site.url}}/assets/built/images/bots/v2/2021-10-21-09-54-13.png)
@@ -284,7 +282,7 @@ sourcetype=stream:smtp aturing@froth.ly hbernhard@berkbeer.com
 
 둘이 나눈 마지막 content의 내용을 보면 base64코드로 보이는 내용을 발견할 수 있습니다. 이것을 decode 해보면 Amber의 개인 이메일주소를 파악할 수 있습니다.
 
-- base64 인코딩
+- base64 인코딩  
 VGhhbmtzIGZvciB0YWtpbmcgdGhlIHRpbWUgdG9kYXksIEFzIGRpc2N1c3NlZCBoZXJlIGlzIHRo
 ZSBkb2N1bWVudCBJIHdhcyByZWZlcnJpbmcgdG8uICBQcm9iYWJseSBiZXR0ZXIgdG8gdGFrZSB0
 aGlzIG9mZmxpbmUuIEVtYWlsIG1lIGZyb20gbm93IG9uIGF0IGFtYmVyc3RoZWJlc3RAeWVhc3Rp
@@ -299,24 +297,24 @@ ZW1haWwgSSBjYW4gcmVhY2ggeW91IGF0IGFzIHdlbGw/DQoNClRoYW5rIFlvdQ0KDQpIZWlueiBC
 ZXJuaGFyZA0KaGVybmhhcmRAYmVya2JlZXIuY29tPG1haWx0bzpoZXJuaGFyZEBiZXJrYmVlci5j
 b20+DQo4NjUuODg4Ljc1NjMNCg0K
 
-- base64 디코딩
-Thanks for taking the time today, As discussed here is the document I was referring to.  Probably better to take this offline. Email me from now on at ambersthebest@yeastiebeastie.com<mailto:ambersthebest@yeastiebeastie.com>
+- base64 디코딩  
+Thanks for taking the time today, As discussed here is the document I was referring to.  Probably better to take this offline. Email me from now on at ambersthebest@yeastiebeastie.com\<mailto:ambersthebest@yeastiebeastie.com\>  
 
-From: hbernhard@berkbeer.com<mailto:hbernhard@berkbeer.com> [mailto:hbernhard@berkbeer.com]
-Sent: Friday, August 11, 2017 9:08 AM
-To: Amber Turing <aturing@froth.ly<mailto:aturing@froth.ly>>
-Subject: Heinz Bernhard Contact Information
-
-Hello Amber,
-
-Great talking with you today, here is my contact information. Do you have a personal email I can reach you at as well?
-
-Thank You
-
-Heinz Bernhard
-hernhard@berkbeer.com<mailto:hernhard@berkbeer.com>
-865.888.7563
-
+From: hbernhard@berkbeer.com<mailto:hbernhard@berkbeer.com> [mailto:hbernhard@berkbeer.com]  
+Sent: Friday, August 11, 2017 9:08 AM  
+To: Amber Turing <aturing@froth.ly<mailto:aturing@froth.ly>>  
+Subject: Heinz Bernhard Contact Information  
+  
+Hello Amber,  
+  
+Great talking with you today, here is my contact information. Do you have a personal email I can reach you at as well?  
+  
+Thank You  
+  
+Heinz Bernhard  
+hernhard@berkbeer.com<mailto:hernhard@berkbeer.com>  
+865.888.7563  
+  
 디코딩 내용에 amber의 개인 이메일주소를 발견할 수 있습니다.
 
 답 : ambersthebest@yeastiebeastie.com
