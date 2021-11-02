@@ -162,9 +162,9 @@ target_path 필드에 crypt된 파일이 보입니다. 원본 파일 경로와 �
 또, 시간을 알아봐야하니 mac time 관련 데이터를 table 명령어를 사용해 파악해봅시다.
 [MAC TIME이란?](https://itwiki.kr/w/MAC_Time)
 
-\- Mtime(modified time) : 파일을 생성한 시간, 또는 가장 최근에 파일 내용을 바꾼 시간
-\- Atime(accessed time) : 가장 최근에 파일을 읽거나(Read) 실행(Execution)시킨 시간
-\- Ctime(changed time) : 가장 최근에 파일의 소유권, 그룹, 퍼미션 등 파일의 속성(inode 정보)이 변경된 시간
+\- Mtime(modified time) : 파일을 생성한 시간, 또는 가장 최근에 파일 내용을 바꾼 시간  
+\- Atime(accessed time) : 가장 최근에 파일을 읽거나(Read) 실행(Execution)시킨 시간  
+\- Ctime(changed time) : 가장 최근에 파일의 소유권, 그룹, 퍼미션 등 파일의 속성(inode 정보)이 변경된 시간  
 
 ```
 sourcetype=osquery_results columns.target_path="/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx*"
