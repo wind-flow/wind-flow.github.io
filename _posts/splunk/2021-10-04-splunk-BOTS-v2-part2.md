@@ -455,7 +455,7 @@ sourcetype="stream:http" 1bc3eab741900ab25c98eee86bf20feb
 ```
 아래와 같이 조회 됩니다.
 
-my_post_key=1bc3eab741900ab25c98eee86bf20feb&username=kIagerfield&password=beer_lulz&confirm_password=beer_lulz&email=kIagerfield@froth.ly&usergroup=4&additionalgroups[]=4&displaygroup=4
+```my_post_key=1bc3eab741900ab25c98eee86bf20feb&username=kIagerfield&password=beer_lulz&confirm_password=beer_lulz&email=kIagerfield@froth.ly&usergroup=4&additionalgroups[]=4&displaygroup=4```
 
 답 : 1bc3eab741900ab25c98eee86bf20feb
 
