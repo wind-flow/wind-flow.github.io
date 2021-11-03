@@ -4,7 +4,7 @@ current: post
 cover:  assets/built/images/bots/v3/bots-v3.jpg
 navigation: True
 title: splunk-bots-v4 결과
-date: '2021-11-03 23:28:36'
+date: '2021-11-03 23:28:36 +0900'
 tags: [splunk]
 class: post-template
 subclass: 'post tag-splunk'
