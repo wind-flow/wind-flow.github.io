@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/built/images/bots/v3/bots-v3.jpg
 navigation: True
-title: splunk-bots-v4 성적
+title: splunk-bots-v4 결과
 date: '2021-11-03 22:12:36 +0530'
 tags: [splunk]
 class: post-template
