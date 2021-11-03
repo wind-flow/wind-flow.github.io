@@ -4,7 +4,7 @@ current: post
 cover:  assets/built/images/bots/v2/bots-v2.jpg
 navigation: True
 title: splunk-bots-v2 write up(3)
-date: '2021-10-04 20:04:36 +0530'
+date: '2021-10-04 20:04:36 +0900'
 tags: [splunk]
 class: post-template
 subclass: 'post tag-splunk'
