@@ -55,7 +55,7 @@ NFT거래소를 방문합시다.
 
 # 1. 지갑만들기
 NFT를 담을 **지갑**을 만듭니다.
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-12-25-00.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-12-25-00.png)
 
 저는 가장 유명한 MetaMask를 골랐습니다.
 
@@ -68,11 +68,11 @@ NFT를 담을 **지갑**을 만듭니다.
 이 시드 구문으로 암호를 찾을 수 있으니 <span style="color:red">**절대 노출**</span>되어선 안됩니다.  
 <span style="color:red"> **계좌번호와 암호는 절대 잊어서는 안됩니다** </span>
 
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-13-10-14.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-13-10-14.png)
 
 Meta-Mask계정을 만들었으면 OpenSae에 로그인합시다.
 
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-13-22-09.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-13-22-09.png)
 
 # 2. 계좌 입금
 계좌에 자금이 있어야 NFT거래를 할 수 있습니다.
@@ -80,22 +80,22 @@ Meta-Mask계정을 만들었으면 OpenSae에 로그인합시다.
 
 # 3. NFT 구매
 탐색하기(Explore)버튼을 눌러 현재 올라와있는 자산을 살펴봅니다.
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-13-26-04.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-13-26-04.png)
 
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-14-13-12.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-14-13-12.png)
 좌측 상단을 보면 지금 **구매하기(Buy Now)**와 **경매 중(On Auction)**을 볼 수 있습니다.
 
 게시글을 클릭하면 아래와 같은 화면이 뜹니다.
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-14-15-54.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-14-15-54.png)
 
 가격은 0.03ETH, 수수료는 137.18$를 지불하면 블록체인 네트워크에 방금 수행했던 거래 기록이 남습니다.
 
 # 4. NFT 판매
 내가 만들 NFT를 올리려면 우측 상단 Create를 눌러봅시다.
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-14-14-53.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-14-14-53.png)
 
 아래와 같은 화면이 뜹니다.
-![]({{site.url}}/assets/built/images/blochain/NFT/2021-11-04-14-21-12.png)
+![]({{site.url}}/assets/built/images/blockchain/NFT/2021-11-04-14-21-12.png)
 
 여기서 내가 올릴 파일을(제한 100MB)올리고, 필요한 정보를 기입한 후 Create버튼을 누르면 NFT가 생성됩니다.
 
@@ -107,6 +107,6 @@ Meta-Mask계정을 만들었으면 OpenSae에 로그인합시다.
 ====------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 - ### 참고 
-['대세' 된 NFT, 사고파는 법 제일 쉽게 이해하기 | 이일호 기자, BloterTV](https://youtu.be/5bhLfOE2LlY)
-[손쉽게 NFT 거래하기](https://brunch.co.kr/@jellyplanet/40)
-[구현 방법](https://medium.com/gochain/how-to-create-and-deploy-an-nft-smart-contract-in-10-minutes-e0d7ef8e59fc)
+['대세' 된 NFT, 사고파는 법 제일 쉽게 이해하기 | 이일호 기자, BloterTV](https://youtu.be/5bhLfOE2LlY)  
+[손쉽게 NFT 거래하기](https://brunch.co.kr/@jellyplanet/40)  
+[구현 방법](https://medium.com/gochain/how-to-create-and-deploy-an-nft-smart-contract-in-10-minutes-e0d7ef8e59fc)  
