@@ -392,9 +392,9 @@ sourcetype=WinRegistry \\Software\\Microsoft\\Network
 
 이런식으로 나옵니다. 나머지 세개도 base64로 decode해보면
 
-/news.php - 1개
-/admin/get.php - 1개
-/login/process.php - 2개
+/news.php - 1개  
+/admin/get.php - 1개  
+/login/process.php - 2개  
 가 나옵니다.
 
 그러므로, process.php를 가장 자주 요청합니다.
@@ -442,11 +442,11 @@ ssl_cert_hash_256의 값을 찾을 수 있습니다.
 
 현재는 crt hash값으로 관련된 사이트를 이용할 수 없습니다.
 
-답 : 
+답 : 104.238.159.19
 
 409	The Taedonggang group had several issues exfiltrating data. Determine how many bytes were successfully transferred in their final, mostly successful attempt to exfiltrate files via a method using TCP, using only the data available in Splunk logs. Use 1024 for byte conversion.  
 대동강 그룹은 데이터를 빼내는 데 몇 가지 이슈가 있었습니다. Splunk 로그에서 사용할 수 있는 데이터만 사용하여 TCP를 사용하는 방법을 통해 파일을 추출하려는 대부분의 성공적인 최종 시도에서 성공적으로 전송된 바이트 수를 확인합니다. 바이트 변환에 1024를 사용합니다.
-
+                                                       
 <details>
   <summary>hint#1</summary>
     The data for this question is located in sourcetype=stream:ftp<br>
