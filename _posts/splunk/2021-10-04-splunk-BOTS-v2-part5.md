@@ -111,12 +111,17 @@ sourcetype=stream:http dberry398@mail.com
 </details>
 
 주문금액을 묻는걸 보아하니 웹관련 이벤트인 stream:http에서 해당데이터를 찾을 수 있을것으로 생각됩니다.
+
 ```
-sourcetype=stream:http dberry398@mail.com
-| rex field=dest_content "\"USD\",\"grand_total\":\"(?<gtotal>\w+).\S+\"," 
-| where gtotal >= 1000
-| rex field=cookie "; form_key=(?<sess_id>\w+); PHPSESSID=" 
+sourcetype="stream:http" grand_total
+| rex field=dest_content "\"totals\":{\"grand_total\":(?<cost>\w*),"
+| search cost=* 
+| where cost>1000
+| dedup src_ip
+| table cost
 ```
+
+답 : 7
 
 502	Which user, identified by their email address, edited their profile before placing an order over $1000 in the same clickstream? Answer guidance: Provide the user ID, not other values found from the profile edit, such as name.  
 이메일 주소로 식별되는 어떤 사용자가 동일한 클릭스트림에서 $1000 이상 주문하기 전에 프로필을 수정했습니까? 답변 안내: 이름과 같이 프로필 편집에서 찾은 다른 값이 아닌 사용자 ID를 제공합니다.

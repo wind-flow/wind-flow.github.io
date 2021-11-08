@@ -171,7 +171,7 @@ sourcetype=osquery_results columns.target_path="/Users/mallorykraeusen/Documents
 | table _time columns.target_path columns.mtime columns.atime columns.ctime columns.time unixTime
 ```
 
-[PDT(Pacific Daylight Time)란?#1](https://www.timeanddate.com/time/zones/pdt)
+[PDT(Pacific Daylight Time)란?#1](https://www.timeanddate.com/time/zones/pdt)  
 [PDT(Pacific Daylight Time)란?#2](https://luran.me/339)
 
 
@@ -185,7 +185,7 @@ sourcetype=osquery_results columns.target_path="/Users/mallorykraeusen/Documents
 |2017/08/18 21:50:43|	/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt|	1266652800|	1503093022|	1503093022|	1503093023|	1503093043|
 |2017/08/18 21:50:43|	/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx			 |  - | - | - | 1503093023|	1503093043|
 
-랜섬웨어로 파일이 변경되었으면 퍼미션이 바뀌었으므로 ctime을 기준으로 보면 될것입니다.
+랜섬웨어로 파일이 변경되었으면 권한이 바뀌었으므로 ctime을 기준으로 보면 될것입니다.
 ctime : 1503093022
 
 [유닉스 타임변환 사이트](https://time.is/ko/Unix_time_converter)
@@ -196,6 +196,8 @@ PDT는 UTC-7과 같다고 설명되어있습니다.
 
 Sat Aug 19 2017 06:50:22 UTC+0900에서 UTC-7로 환산해보면(-16시간)
 Sat Aug 18 2017 14:50:22 입니다.
+
+답 : 14:50:22
 
 306	How many seconds elapsed between the time the ransomware executable was written to disk on MACLORY-AIR13 and the first local file encryption? Answer guidance: Use the index times (_time) instead of other timestamps in the events.  
 MACLORY-AIR13의 디스크에 랜섬웨어 실행 파일이 작성된 시간과 첫 번째 로컬 파일 암호화 사이에 몇 초가 걸렸습니까? 답변 안내: 이벤트의 다른 타임스탬프 대신 인덱스 시간(_time)을 사용하세요.
@@ -227,11 +229,10 @@ sourcetype=osquery_results host=MACLORY-AIR13 columns.target_path=*.app
 | transaction maxevents=2
 | table columns.target_path duration eventcount
 ```
-※ transaction함수는 이벤트간 시간차이를 duration이라는 변수를 통해 계산해주는 함수입니다.  
-[splunk transaction함수](https://docs.splunk.com/Documentation/Splunk/8.2.2/SearchReference/Transaction)
+※ [transaction](https://docs.splunk.com/Documentation/Splunk/8.2.2/SearchReference/Transaction)함수는 이벤트간 시간차이를 duration이라는 변수를 통해 계산해주는 함수입니다.  
 
 |columns.target_path|duration|eventcount|
-|---|---|---|
+|---|:---:|:---:|
 |/Users/mallorykraeusen/Desktop/.DS_Store.crypt<br>/Users/mallorykraeusen/Downloads/Office 2016 Patcher.app|132|2|
 
 답 : 132
@@ -258,8 +259,7 @@ Kevin Lagerfield는 USB 드라이브를 사용하여 Mallory의 개인 MacBook�
     다양한 소스 유형은 실행될 때 상황이 어떻게 보이는지 알려줄 수 있습니다. kutekitten의 'ps'와 'osquery_results'를 보세요.    
 </details>
 
-해당 정보는 osquery관련 sourcetype에 있을것으로 추측됩니다. osquery는 실행중인 프로세스, 네트워크, 하드웨어 이벤트 등을 포함한 OS의 정보를 쿼리형식으로 질의하여 얻은 값을 갖고 있습니다.  
-[osquery란?](https://github.com/osquery/osquery)
+해당 정보는 osquery관련 sourcetype에 있을것으로 추측됩니다. [osquery](https://github.com/osquery/osquery)는 실행중인 프로세스, 네트워크, 하드웨어 이벤트 등을 포함한 OS의 정보를 쿼리형식으로 질의하여 얻은 값을 갖고 있습니다.  
 
 MACBook의 이름인 kutekitten, 그리고 usb를 키워드로 두고, osquery_result에서 조사해봅시다.
 
@@ -269,11 +269,11 @@ sourcetype=osquery_results *kutekitten* *usb*
 
 columns.vendor_id라는 필드를 보면 058f, 13fe라는 값이 있습니다.
 columns.vendor_id이 있고, USB를 삽입한 데이터만 보도록 합시다.
-![]{{site.url}}/assets/built/images/bots/v2/(2021-10-27-13-49-54.png)
+![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-13-49-54.png)
 
 
 ```
-sourcetype=osquery_results *kutekitten* *usb* "columns.vendor_id"=* action=added
+sourcetype=osquery_results *kutekitten* *usb* columns.vendor_id=* action=added
 ```
 
 이벤트 2개가 있습니다. 각 이벤트에 대해 탐색기간을 ±60초로 설정해두고, 어떤 파일을 반입했는지 확인해봅시다.
@@ -292,7 +292,7 @@ sha256 : befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271
 MAC BackDoor 악성코드입니다.
 ![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-40-12.png)
 
-혹시모르니 제조사 13fe의 이벤트도 찾아봅시다.
+제조사 13fe의 이벤트도 추가 조사해봅니다.
 
 columns.device의 값이 devfs인것을 보아하니, 파일이 아닌 드라이브임을 알 수 있습니다.
 ![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-47-18.png)
@@ -305,7 +305,7 @@ vendorid 058f는 **Alcor Micro Corp.** 입니다.
 답 : Alcor
 
 308	What programming language is at least part of the malware from the question above written in?  
-위의 질문에서 적어도 악성 코드의 일부인 프로그래밍 언어는 무엇입니까?
+위의 질문에서 악성 코드의 일부인 프로그래밍 언어는 무엇입니까?
 
 <details>
   <summary>hint#1</summary>
@@ -329,7 +329,7 @@ Virustotal의 Detail탭의 FileType을 보면 Perl로 작성된 언어임을 알
     Review the hints for question 307.
 </details>
 
-(추후 풀이 예정)
+접근방식을 모르겠으니, 아시는분은 제보바랍니다.
 답 : java
 
 310	The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?  
@@ -386,9 +386,22 @@ virustotal의 Realtions 탭을 보면, **eidk.duckdns.org, eidk.hopto.org** 두�
 
 
 
-313	Two .jpg-formatted photos of Mallory exist in Kevin Lagerfield's server home directory that have eight-character file names, not counting the .jpg extension. Both photos were encrypted by the ransomware. One of the photos can be downloaded at the following link, replacing 8CHARACTERS with the eight characters from the file name. https://splunk.box.com/v/8CHARACTERS After you download the file to your computer, decrypt the file using the encryption key used by the ransomware. What is the complete line of text in the photo, including any punctuation? Answer guidance: The encryption key can be found in Splunk.
+313	Two .jpg-formatted photos of Mallory exist in Kevin Lagerfield's server home directory that have eight-character file names, not counting the .jpg extension. Both photos were encrypted by the ransomware. One of the photos can be downloaded at the following link, replacing 8CHARACTERS with the eight characters from the file name. https://splunk.box.com/v/8CHARACTERS After you download the file to your computer, decrypt the file using the encryption key used by the ransomware. What is the complete line of text in the photo, including any punctuation? Answer guidance: The encryption key can be found in Splunk.  
+.jpg 형식의 Mallory 사진 두 장이 Kevin Lagerfield의 서버 홈 디렉토리에 있으며 .jpg 확장자는 제외하고 파일 이름이 8자로 되어 있습니다. 두 사진 모두 랜섬웨어에 의해 암호화되었습니다. 사진 중 하나는 다음 링크에서 다운로드할 수 있으며 8CHARACTERS를 파일 이름의 8자로 대체합니다. https://splunk.box.com/v/8CHARACTERS 파일을 컴퓨터에 다운로드한 후 랜섬웨어에서 사용하는 암호화 키를 사용하여 파일을 해독합니다. 문장부호를 포함하여 사진의 전체 텍스트 줄은 무엇입니까? 답변 안내: 암호화 키는 Splunk에서 찾을 수 있습니다.
 
 <details>
   <summary>hint#1</summary>
-
+    Understanding from OSINT how this ransomware behaves is key to the answer.<br>
+    OSINT에서 이 랜섬웨어가 어떻게 작동하는지 이해하는 것이 답의 핵심입니다.
 </details>
+<details>
+  <summary>hint#2</summary>
+    This ransomware is called 'Patcher' and it is terribly written and uses *NIX command line tools to wreak havoc.<br>
+    이 랜섬웨어는 '패처'라고 불리며 끔찍하게 작성되었으며 *NIX 명령줄 도구를 사용하여 혼란을 일으키고 있습니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Patcher uses the UNIX zip utility.<br>
+    Patcher는 UNIX zip 유틸리티를 사용합니다.
+</details>
+
