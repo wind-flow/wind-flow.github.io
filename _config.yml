@@ -136,8 +136,8 @@ asciidoctor:
   attributes:
     - idseparator=_
     - source-highlighter=coderay
-    - icons=font
-    
+    - icons=font  
+
 # exclude는 Jekyll컴파일 시 destination에 포함될 필요가
 # 없는것들을 명시한다. (node_modules와 필요없는 것들은 제외)
 exclude:
