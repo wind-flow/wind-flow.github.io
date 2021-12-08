@@ -57,6 +57,9 @@ jobs:
         run  : git config --global user.email "jnu2345@gmail.com"  
       - name : set user name
         run  : git config --global user.name "${GITHUB_ACTOR}" && git config --global push.default simple
+      - name : remove git header
+        run  : git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | \
+               xargs -L1 git config --unset-all
       - name : rake build
         run : git rm --cached . -rf && bundle exec rake site:deploy --trace
         env:
