@@ -53,7 +53,7 @@ jobs:
       - name : bundle update
         run  : bundle update --bundler
       - name : set email
-        run  : git config --global user.email "jnu2345@gmail.com"
+        run  : git config --global user.email "jnu2345@gmail.com"  
       - name : set user name
         run  : git config --global user.name "${GITHUB_ACTOR}" && git config --global push.default simple
       - name : rake build
