@@ -58,5 +58,5 @@ jobs:
         run  : git config --global user.name "${GITHUB_ACTOR}"
       - name : rake build
         run : git rm --cached . -rf && bundle exec rake site:deploy --quiet
-        with:
+        env:
           github-token: ${{secrets.GITHUB_TOKEN}}
