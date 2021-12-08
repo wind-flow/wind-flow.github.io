@@ -8,31 +8,44 @@ on:
 jobs:
   jekyll:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write 
     steps:
-    - uses: actions/checkout@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
-    # Use GitHub Actions' cache to shorten build times and decrease load on servers
-    - uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '2.6'
-        run: gem install bundler:2.2.28 | gem update --system
-    - uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
-    - name : bundle install
-      run: bundle install
-    - name : bundle update
-      run  : bundle update --bundler
-    - name : set email
-      run  : git config --global user.email "jnu2345@gmail.com"
-    - name : set user name
-      run  : git config --global user.name "wind-flow"
-    - name : rake build
-      run : git rm --cached . -rf && bundle exec rake site:deploy --quiet 
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue for commit: ${{ github.sha }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
+            }' \
+          --fail
+      - uses: actions/checkout@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
+      # Use GitHub Actions' cache to shorten build times and decrease load on servers
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+          run: gem install bundler:2.2.28 | gem update --system
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name : bundle install
+        run: bundle install
+      - name : bundle update
+        run  : bundle update --bundler
+      - name : set email
+        run  : git config --global user.email "jnu2345@gmail.com"
+      - name : set user name
+        run  : git config --global user.name "wind-flow"
+      - name : rake build
+        run : git rm --cached . -rf && bundle exec rake site:deploy --quiet 
 
 #     # Standard usage
 #     - uses:  helaili/jekyll-action@2.0.3
