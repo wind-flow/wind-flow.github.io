@@ -9,7 +9,8 @@ jobs:
   jekyll:
     runs-on: ubuntu-latest
     steps:
-    
+    - env:
+      GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
 
     - uses: actions/checkout@v2
     # Use GitHub Actions' cache to shorten build times and decrease load on servers
