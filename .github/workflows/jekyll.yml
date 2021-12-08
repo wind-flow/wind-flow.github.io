@@ -29,11 +29,10 @@ jobs:
       run  : git config --global user.email "jnu2345@gmail.com"
     - name : set user name
       run  : git config --global user.name "wind-flow"
-    - name : set env
-      env:   
-        GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
     - name : rake build
       run : git rm --cached . -rf && bundle exec rake site:deploy --quiet 
+      env:
+        GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
 
 #     # Standard usage
 #     - uses:  helaili/jekyll-action@2.0.3
