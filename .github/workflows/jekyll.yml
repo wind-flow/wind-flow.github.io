@@ -11,31 +11,31 @@ jobs:
     permissions:
       issues: write 
     steps:
-      # - name: Create issue using REST API
-      #   run: |
-      #     curl --request POST \
-      #     --url https://api.github.com/repos/${{ github.repository }}/issues \
-      #     --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-      #     --header 'content-type: application/json' \
-      #     --data '{
-      #       "title": "Automated issue for commit: ${{ github.sha }}",
-      #       "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
-      #       }' \
-      #     --fail
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue for commit: ${{ github.sha }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
+            }' \
+          --fail
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
         env:
-          GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
       # Use GitHub Actions' cache to shorten build times and decrease load on servers
-      -   name: Setup SSH Keys and known_hosts
-          env:
-              GITHUB_TOKEN: /tmp/ssh_agent.sock
-          run: |
-              mkdir ~/.ssh
-              ssh-keyscan github.com >> ~/.ssh/known_hosts
-              ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-              ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+      # -   name: Setup SSH Keys and known_hosts
+      #     env:
+      #         GITHUB_TOKEN: /tmp/ssh_agent.sock
+      #     run: |
+      #         mkdir ~/.ssh
+      #         ssh-keyscan github.com >> ~/.ssh/known_hosts
+      #         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+      #         ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: '2.6'
