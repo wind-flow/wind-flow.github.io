@@ -117,7 +117,7 @@ repo: GithubPageSourceRepo
 # repo: travis-ci와 연동하는 github의 repository이름
 # https://github.com/<username>/<repository>
 
-branch: master
+branch: main
 # 사용할 branch명
 
 relative_source:
