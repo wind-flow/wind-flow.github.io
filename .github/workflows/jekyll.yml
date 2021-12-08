@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
     # Use GitHub Actions' cache to shorten build times and decrease load on servers
     - uses: actions/setup-ruby@v1
       with:
@@ -31,8 +33,6 @@ jobs:
       run  : git config --global user.name "wind-flow"
     - name : rake build
       run : git rm --cached . -rf && bundle exec rake site:deploy --quiet 
-      env:
-        GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
 
 #     # Standard usage
 #     - uses:  helaili/jekyll-action@2.0.3
