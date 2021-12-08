@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
-          GITHUB_TOKEN: submodules
+          GITHUB_TOKEN: 'submodules'
         # env:
         #   GITHUB_TOKEN: N5yyr1tzyaBp+Yv5RnJFoy1vSZ19HwtlMNfVumUDfnCNY/OrEO64RJgjwCqEx4fZOmBgVdzMAxlIu/huMvEaDQA5Wvb7ll7ZwXeBkTOLWkN/7V9k1QnBeQXLnxHmt47Asek9ueMXpk/U/fr3y3+7Qxow7TLAZFh8mzipKh7G6QK0Oz1sEQ3Rei6weF+rmNMrFuTauZZLNIDxHSiXsAmFctoRicfISGiRZrzVufNdR+srtIQA2Mg8ou+g7QB0942KFFa8uKv9ozCnLtJ81FRft36iJbFMuthuyPwqZSWxF3tTRB1k4ZRtTF+TfLk3kPFJBsolelC2WSaQuP7FfKLzXP66uM+oP18EkfBw+5r6k07fjX8n0lMWfiy4d3LRNCqMcpLI0pi/GatT1bP300RwQVFgwZSQuhDdqJn32MQP833nT3o5po8MNr5fZfV4GdYQgFu9S2LEAMITv2sSZxwRTBPbdDF2sJxra62xbC8SWJTHWdv1em9QxvFW91f9K3rX0wJcRKTPxZ7ziwQ8pvBdDQ5bWie1u2nOcp+JRanIZRUzE0y8WjXpBngH9qIzguNjy4oFeW6n2xFtFmWfBeR8q5RnRt9UJA9x9uwaXo7aWMrsKf8PyWRsH/sKKCvv/lc7iHnJSziBdnLMJW4P1fYMO7mfiQ5bnwE5jVp13s3F2gw=
       # Use GitHub Actions' cache to shorten build times and decrease load on servers
