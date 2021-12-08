@@ -38,8 +38,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           chmod 700 ~/.ssh
-          chmod 644 ~/.ssh/id_rsa.pub  
-          chmod 644 ~/.ssh/authorized_keys
           ssh-keyscan github.com >> ~/.ssh/known_hosts  
       - uses: actions/setup-ruby@v1
         with:
