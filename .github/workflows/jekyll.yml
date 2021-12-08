@@ -8,8 +8,9 @@ on:
 jobs:
   jekyll:
     runs-on: ubuntu-latest
-    # permissions:
-    #   issues: write 
+    permissions:
+      issues: write 
+      actions: write
     steps:
       # - name: Create issue using REST API
       #   run: |
