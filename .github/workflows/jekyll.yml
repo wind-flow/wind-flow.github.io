@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   jekyll:
     runs-on: ubuntu-latest
