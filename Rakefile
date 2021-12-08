@@ -21,7 +21,7 @@ def check_destination
   unless Dir.exist? CONFIG["destination"]
     sh "echo \"hello1\""
     sh "echo \"$GITHUB_TOKEN\""  
-    sh "git clone https://$GIT_NAME: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@github.com/#{USERNAME}/#{REPO}.git #{CONFIG["destination"]}"
+    sh "git clone https://$GIT_NAME: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@github.com/#{USERNAME}/#{REPO}.git #{CONFIG["destination"]}"
   end
 end
 
