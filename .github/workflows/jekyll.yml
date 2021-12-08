@@ -58,6 +58,6 @@ jobs:
       - name : set user name
         run  : git config --global user.name "${GITHUB_ACTOR}" && git config --global push.default simple
       - name : rake build
-        run : git rm --cached . -rf && bundle exec rake site:deploy --quiet
+        run : git rm --cached . -rf && bundle exec rake site:deploy --trace
         env:
           github-token: ${{secrets.GITHUB_TOKEN}}
