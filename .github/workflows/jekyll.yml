@@ -23,6 +23,8 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+    - name : bundle install
+      run: bundle install
     - name : rake build
       run : bundle exec rake site:deploy --quiet
 #     # Standard usage
