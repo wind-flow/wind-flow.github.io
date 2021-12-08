@@ -15,13 +15,11 @@ REPO = CONFIG["repo"]
 SOURCE_BRANCH = CONFIG["branch"]
 DESTINATION_BRANCH = "main"
 
-# GITHUB_TOKEN = CONFIG["token"]
-
 def check_destination
   unless Dir.exist? CONFIG["destination"]
     sh "echo \"hello1\""
     sh "echo \"$GITHUB_TOKEN\""  
-    sh "git clone https://$GIT_NAME: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@github.com/#{USERNAME}/#{REPO}.git #{CONFIG["destination"]}"
+    sh "git clone https://$GIT_NAME:$GITHUB_TOKEN@github.com/#{USERNAME}/#{REPO}.git #{CONFIG["destination"]}"
   end
 end
 
