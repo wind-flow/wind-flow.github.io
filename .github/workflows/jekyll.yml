@@ -27,6 +27,8 @@ jobs:
       run: bundle install
     - name : bundle update
       run  : bundle update --bundler
+    - name : set email name
+      run : git config --global user.name "${GITPOD_GIT_USER_NAME}" && git config --global user.email "${GITPOD_GIT_USER_EMAIL}"
     - name : rake build
       run : bundle exec rake site:deploy --quiet
 #     # Standard usage
