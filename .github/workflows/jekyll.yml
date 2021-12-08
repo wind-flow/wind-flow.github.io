@@ -21,6 +21,8 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+    - name : gem install
+      run: gem install
     - name : bundle install
       run: bundle install
     - name : bundle update
@@ -30,7 +32,7 @@ jobs:
     - name : set user name
       run  : git config --global user.name "wind-flow"
     - name : rake build
-      run : bundle exec rake site:deploy --quiet
+      run : git rm --cached angulartest -f && bundle exec rake site:deploy --quiet 
       env:
         GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
 
