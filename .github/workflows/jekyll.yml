@@ -25,6 +25,8 @@ jobs:
           ${{ runner.os }}-gems-
     - name : bundle install
       run: bundle install
+    - name : bundle update
+      run  : bundle update --bundler
     - name : rake build
       run : bundle exec rake site:deploy --quiet
 #     # Standard usage
