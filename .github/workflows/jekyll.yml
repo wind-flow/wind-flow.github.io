@@ -1,8 +1,10 @@
 name: Jekyll CI
 
 on:
-  push
-
+  push:
+    branches:
+      - main
+      
 jobs:
   jekyll:
     runs-on: ubuntu-latest
@@ -25,8 +27,3 @@ jobs:
     - uses:  helaili/jekyll-action@2.0.3
       env:
         JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
-    # Specify the Jekyll source location as a parameter
-    - uses: helaili/jekyll-action@v2
-      with:
-        token: ${{ secrets.JEKYLL_PAT }}
-        gem_src: './'
