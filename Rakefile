@@ -18,6 +18,7 @@ DESTINATION_BRANCH = "main"
 def check_destination
   unless Dir.exist? CONFIG["destination"]
     sh "echo \"hello1\""
+    sh "echo \"$GITHUB_TOKEN\""  
     sh "git clone https://$GIT_NAME:$GITHUB_TOKEN@github.com/#{USERNAME}/#{REPO}.git #{CONFIG["destination"]}"
   end
 end
