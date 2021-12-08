@@ -27,7 +27,8 @@ jobs:
         # with:
         #   persist-credentials: false
         env:
-          GITHUB_TOKEN: ${{ secrets.JEKYLL_PAT}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       # Use GitHub Actions' cache to shorten build times and decrease load on servers
       # -   name: Setup SSH Keys and known_hosts
       #     env:
