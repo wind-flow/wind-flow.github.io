@@ -60,4 +60,4 @@ jobs:
       - name : rake build
         run : git rm --cached . -rf && bundle exec rake site:deploy --trace
         env:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
