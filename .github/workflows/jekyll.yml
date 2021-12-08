@@ -32,10 +32,10 @@ jobs:
       #       ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: install deploy keys
         env:
-          SSH_PRIVATE_KEY_DEPLOY: ${{ secrets.SSH_PRIVATE_KEY_DEPLOY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY_DEPLOY" > ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts  
       - uses: actions/setup-ruby@v1
