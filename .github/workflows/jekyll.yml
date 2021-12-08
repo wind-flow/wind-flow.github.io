@@ -16,7 +16,7 @@ jobs:
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6'
-        run: gem install bundler:2.2.28
+        run: gem install bundler:2.2.28 | gem update --system
     - uses: actions/cache@v1
       with:
         path: vendor/bundle
