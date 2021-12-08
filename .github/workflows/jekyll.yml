@@ -19,7 +19,7 @@ jobs:
       #       "title": "Automated issue for commit: ${{ github.sha }}",
       #       "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
       #       }' \
-      #     --fail
+      #     --fail  
       - uses: actions/checkout@v2
         with:
           # persist-credentials: false
