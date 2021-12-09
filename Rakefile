@@ -69,7 +69,7 @@ namespace :site do
     Dir.chdir(CONFIG["destination"]) do
       # check if there is anything to add and commit, and pushes it
       sh "git fetch --unshallow"
-      # sh "cd ./output/s"  
+      sh "cd ./output/"  
       sh "if [ -n '$(git status)' ]; then
             git add --all .;
             git commit -m 'Updating to #{USERNAME}/#{REPO}@#{sha}.';
