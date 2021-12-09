@@ -5,7 +5,7 @@ cover:  assets/built/images/blockchain/NFT/NFT.jpg
 navigation: True
 title: [Hackerrank - paris]
 date: 2021-11-04 09:22:00+0900
-tags: [blockchain, NFT]
+tags: [algorithms, python]
 class: post-template
 subclass: 'post tag-splunk'
 author: wind-flow
