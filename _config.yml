@@ -160,3 +160,4 @@ exclude:
 #   - _posts/iot
 #   - _posts/r
 #   - _posts/economy
+theme: jekyll-theme-hacker
