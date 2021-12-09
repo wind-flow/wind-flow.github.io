@@ -68,7 +68,7 @@ namespace :site do
     sha = `git log`.match(/[a-z0-9]{40}/)[0]
     Dir.chdir(CONFIG["destination"]) do
       # check if there is anything to add and commit, and pushes it
-      sh "git pull origin main"
+      sh "git fetch --unshallow"
       # sh "cd ./output/s"  
       sh "if [ -n '$(git status)' ]; then
             git add --all .;
