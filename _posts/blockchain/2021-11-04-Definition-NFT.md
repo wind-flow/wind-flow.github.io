@@ -3,14 +3,13 @@ layout: post
 current: post
 cover:  assets/built/images/blockchain/NFT/NFT.jpg
 navigation: True
-title: ddd??
+title: NFT란?
 date: 2021-11-04 09:22:00+0900
 tags: [blockchain, NFT]
 class: post-template
 subclass: 'post tag-splunk'
 author: wind-flow
 ---
-
 # NFT의 정의
 NFT는 **Non-Fungible Token**의 약자로, 한국어로는 **대체 불가능한 토큰**을 뜻합니다.  
 NFT를 이해하기위해선 **Fungible**의 뜻을 이해해야 합니다.
