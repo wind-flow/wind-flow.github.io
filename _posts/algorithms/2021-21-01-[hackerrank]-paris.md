@@ -29,7 +29,7 @@ def pairs(k, arr):
     
     return cnt
 ```
-
+   
 
 # 개선된 코드
 ``` python

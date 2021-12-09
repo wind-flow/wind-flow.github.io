@@ -61,6 +61,6 @@ jobs:
       - name : remove git header
         run  : git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
       - name : rake build
-        run : git rm --cached . -rf && bundle exec rake site:deploy --trace
+        run : git rm --cached . -rf && bundle exec rake site:deploy --quiet
         env:
           GITHUB_TOKEN: ${{secrets.JEKYLL_PAT}}
