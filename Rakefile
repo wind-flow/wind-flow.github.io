@@ -64,7 +64,7 @@ namespace :site do
     # Generate the site
     sh "bundle exec jekyll build"
     # sh "cd output"
-    sh "mv output/* ./"
+    sh "mv output/* ./ -r"
     # Commit and push to github
     sha = `git log`.match(/[a-z0-9]{40}/)[0]
     Dir.chdir(CONFIG["destination"]) do
