@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/built/images/blockchain/NFT/NFT.jpg
 navigation: True
-title: NFT란?
+title: ddd??
 date: 2021-11-04 09:22:00+0900
 tags: [blockchain, NFT]
 class: post-template
