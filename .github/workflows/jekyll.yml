@@ -12,16 +12,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          github_token: ${{ secrets.GITHUB_TOKEN }}  
-      - name: install deploy keys
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          chmod 700 ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts  
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
+      # - name: install deploy keys
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #   run: |
+      #     mkdir -p ~/.ssh/
+      #     echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     chmod 700 ~/.ssh
+      #     ssh-keyscan github.com >> ~/.ssh/known_hosts  
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: '2.6'
@@ -43,6 +43,7 @@ jobs:
       - name : remove git header
         run  : git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
       - name : rake build
-        run : git rm --cached . -rf && bundle exec rake site:deploy --quiet
+        # run : git rm --cached . -rf && bundle exec rake site:deploy --quiet
+        run : bundle exec rake site:deploy --quiet
         env:
           GITHUB_TOKEN: ${{secrets.JEKYLL_PAT}}
