@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v2/bots-v2.jpg
+cover:  assets/built/images/splunk/bots/v2/bots-v2.jpg
 navigation: True
 title: splunk-bots-v2 write up(5) - END
 date: '2021-10-04 20:04:36 +0900'
@@ -47,12 +47,12 @@ Data Staging: Adversaries will stage data prior to exfiltration to make it easie
 Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.  
 
 
-![Scenario 1]({{site.url}}/assets/built/images/bots/v2/b21.jpg)
+![Scenario 1]({{site.url}}/assets/built/images/splunk/bots/v2/b21.jpg)
 
 The data included in this app was generated in August of 2017 by members of Splunk's Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.  
 이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.
 
-![Scenario 2]({{site.url}}/assets/built/images/bots/v2/b22.jpg)
+![Scenario 2]({{site.url}}/assets/built/images/splunk/bots/v2/b22.jpg)
 
 500	Individual clicks made by a user when interacting with a website are associated with each other using session identifiers. You can find session identifiers in the stream:http sourcetype. The Frothly store website session identifier is found in one of the stream:http fields and does not change throughout the user session. What session identifier is assigned to dberry398@mail.com when visiting the Frothly store for the very first time? Answer guidance: Provide the value of the field, not the field name.  
 웹 사이트와 상호 작용할 때 사용자가 만든 개별 클릭은 세션 식별자를 사용하여 서로 연결됩니다. stream:http sourcetype에서 세션 식별자를 찾을 수 있습니다. Frothly 상점 웹사이트 세션 식별자는 stream:http 필드 중 하나에서 찾을 수 있으며 사용자 세션 전체에서 변경되지 않습니다. Frothly 스토어를 처음 방문할 때 dberry398@mail.com에 할당된 세션 식별자는 무엇입니까? 답변 안내: 필드 이름이 아닌 필드 값을 제공하십시오.

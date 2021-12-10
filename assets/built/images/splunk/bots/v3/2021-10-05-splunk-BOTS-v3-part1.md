@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v3/bots-v3.jpg
+cover:  assets/built/images/splunk/bots/v3/bots-v3.jpg
 navigation: True
 title: splunk-bots-v3 write up(1)
 date: '2021-10-05 20:04:36 +0530'
@@ -150,7 +150,7 @@ sourcetype=*aws:* *IAM*
 
 user_agent field를 보면 IAMUser란 값이 보입니다.
 
-![IAMUser]({{site.url}}/assets/built/images/bots/v3/2021-10-28-16-20-41.png)
+![IAMUser]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-28-16-20-41.png)
 
 user라는 필드가 눈에 띄니 보도록 합시다.
 
@@ -199,11 +199,11 @@ sourcetype=aws:cloudtrail *MFA*
 
 쿼리 결과를 보면 mfamfaAuthenticated라는 필드를 볼 수 있습니다.
 
-![MFA]({{site.url}}/assets/built/images/bots/v3/2021-10-28-17-05-12.png)
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-28-17-09-40.png)
+![MFA]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-28-17-05-12.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-28-17-09-40.png)
 
 AWS 공식문서에 해당 필드가 MFA 사용여부를 확인하는 필드임을 확인할 수 있습니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-28-17-10-16.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-28-17-10-16.png)
 
 답 : userIdentity.sessionContext.attributes.mfaAuthenticated
 
@@ -303,7 +303,7 @@ sourcetype=aws:cloudtrail s3
 해당키워드로 검색해봅니다.
 
 Grantee.URL을 보면 AllUsers란 게있습니다.
-![Grantee.URL]({{site.url}}/assets/built/images/bots/v3/2021-10-28-22-46-22.png)
+![Grantee.URL]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-28-22-46-22.png)
 
 ```
 sourcetype="aws:cloudtrail" eventName="PutBucketAcl"
@@ -331,11 +331,11 @@ S3 Bucket이 모든사용자에게 공개된 시간은 2018/08/20 13:01:46 ~ 201
 </details>
 
 https://docs.aws.amazon.com/awscloudtrail/latest/APIReference/API_Trail.html
-![s3bucketname]({{site.url}}/assets/built/images/bots/v3/2021-10-29-13-05-45.png)
+![s3bucketname]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-29-13-05-45.png)
 
 splunk 로그에서는 S3BucketName이 아닌, bucketName 입니다.
 203번문제에서 발생한 bucketName은 **frothlywebcode** 입니다.
-![bucketName]({{site.url}}/assets/built/images/bots/v3/2021-10-29-13-13-35.png)
+![bucketName]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-29-13-13-35.png)
 
 205	What is the name of the text file that was successfully uploaded into the S3 bucket while it was publicly accessible? Answer guidance: Provide just the file name and extension, not the full path. (Example: filename.docx instead of /mylogs/web/filename.docx)  
 공개적으로 액세스할 수 있는 동안 S3 버킷에 성공적으로 업로드된 텍스트 파일의 이름은 무엇입니까? 답변 안내: 전체 경로가 아닌 파일 이름과 확장자만 제공하세요. (예: /mylogs/web/filename.docx 대신 filename.docx)
@@ -353,7 +353,7 @@ http_status=200, REST.**PUT**.OBJECT 조건을 추가로 넣어 검색해봅니�
 sourcetype=aws:s3:accesslogs frothlywebcode http_status=200 operation="REST.PUT.OBJECT" .txt
 ```
 
-![텍스트 파일]({{site.url}}/assets/built/images/bots/v3/2021-10-29-13-52-12.png)
+![텍스트 파일]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-29-13-52-12.png)
 **OPEN_BUCKET_PLEASE_FIX.txt**라는 이름의 텍스트 파일을 발견할 수 있습니다.
 
 답 : OPEN_BUCKET_PLEASE_FIX.txt
@@ -373,20 +373,20 @@ sourcetype=aws:s3:accesslogs frothlywebcode http_status=200 operation="REST.PUT.
 
 공개된 시간은 2018/08/20 13:01:46 ~ 2018/08/20 13:57:54이므로, 해당 시간안에 .tar.gz 확장자의 파일이 업로드된 이벤트를 탐색해봅시다.
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-29-14-54-36.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-29-14-54-36.png)
 
 ```
 sourcetype=aws:s3:accesslogs frothlywebcode http_status=200 operation="REST.PUT.OBJECT" .tar.gz
 ```
 
 object_size 필드가 눈에 띕니다.
-![object_size]({{site.url}}/assets/built/images/bots/v3/2021-10-29-14-55-18.png)
+![object_size]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-29-14-55-18.png)
 해당 값을 MiB(1024)로 변환해봅시다.
 
 ※ MiB (메비바이트 : mebibyte) :  
 메비바이트는 1,024키비바이트, 220(10242 = 1,048,576)바이트를 뜻하는 정보의 단위이다.  
 
-![데이터 변환]({{site.url}}/assets/built/images/bots/v3/2021-10-29-14-55-47.png)
+![데이터 변환]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-29-14-55-47.png)
 
 답 : 2.93
 
@@ -457,7 +457,7 @@ packages와 dependent를 키워드로 두고 검색해봅니다.
 sourcetype=cloud-init* *packages* *dependent*
 ```
 
-![쿼리수행결과]({{site.url}}/assets/built/images/bots/v3/2021-10-29-16-28-10.png)
+![쿼리수행결과]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-29-16-28-10.png)
 
 로그를 확인하면 **Install  7 Packages (+13 Dependent packages)** 7개의 패키지와, 13개의 의존 패키지가 설치된 사실을 파악할 수 있습니다.
 
@@ -485,7 +485,7 @@ google에 **browser based crypto miner**를 검색해 봅시다.
 
 다음 검색결과를 얻을 수 있습니다.
 해당 사이트에서 **coinhive**와 **Cryptojacking**이 있다고 알 수 있습니다. 해당 키워드로 검색해봅니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-30-18-46-49.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-18-46-49.png)
 
 208번문제에서 BSTOLL-L
 
@@ -608,18 +608,18 @@ first 함수를 이용해 제일 처음 발견된 이벤트의 SID는 30358입�
 
 시만텍 웹사이트 OSINT에서 심각도를 찾아봅니다.
 
-![symanetc security center]({{site.url}}/assets/built/images/bots/v3/2021-10-30-19-58-57.png)
+![symanetc security center]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-19-58-57.png)
 (symantec인데 도메인이 broadcom이어서 처음에 헷갈렸습니다)
 
 Attack Signatures를 클릭합니다.
 
 해당 검색창에 212번문제에서 파악한 JSCoinminer를 검색합니다.
-![malware list]({{site.url}}/assets/built/images/bots/v3/2021-10-30-19-59-43.png)
+![malware list]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-19-59-43.png)
 
 여러개가나오는데, 그중 **Web Attack: JSCoinminer Download 8**을 클릭합니다.
 
 사이트에서 심각도는 Medium임을 알 수 있습니다. (Severity:Medium)
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-30-20-11-06.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-20-11-06.png)
 
 답 : Medium
 
@@ -725,7 +725,7 @@ source=cisconvmflowdata coinhive
 
 6개의 이벤트가 나옵니다. coinhive url요청 시작과 끝 필드를 찾아 계산해봅시다.
 공식문서에 따르면 요청시간은 fss, 종료시간은 fes입니다.
-![fss fes]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-01-41.png)
+![fss fes]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-22-01-41.png)
 
 시작시간과 끝시간을 계산해봅시다.
 
@@ -777,7 +777,7 @@ attach_filename이 image001.jpg, image002.jpg, image003.jpg이 있습니다.
  Content-Type이 Content-Type: image/jpeg; 부분의 base64코드를 찾아봅시다.
 
 content{}필드 중간에 인코딩된 base64값이 있습니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-39-14.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-22-39-14.png)
 
 image002.jpg는 **/9j/4AAQSkZJRgABAQEAjACMAAD/**부터 **rk38qKKAP//Z**입니다.
 image003.jpg은 **/9j/4AAQSkZJRgABAQEAjACMAAD/**부터 **oJoooA//2Q==**입니다.
@@ -785,12 +785,12 @@ image003.jpg은 **/9j/4AAQSkZJRgABAQEAjACMAAD/**부터 **oJoooA//2Q==**입니다
 cyberchef에서 각각 render image를 클릭하고, input을 base64변경하면 image결과가 나옵니다.
 
 - Cyberchef  
-![Cyberchef]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-47-57.png)
+![Cyberchef]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-22-47-57.png)
 
 - image002.jpg
-![line chart]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-46-14.png)
+![line chart]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-22-46-14.png)
 
 - image003.jpg
-![column chart]({{site.url}}/assets/built/images/bots/v3/2021-10-30-22-47-25.png)
+![column chart]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-30-22-47-25.png)
 
 답 : column chart

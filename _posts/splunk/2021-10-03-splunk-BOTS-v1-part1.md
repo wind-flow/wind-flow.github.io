@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v1/bots-v1.jpg
+cover:  assets/built/images/splunk/bots/v1/bots-v1.jpg
 navigation: True
 title: splunk-bots-v1 write up - part1
 date: '2021-10-03 20:04:36 +0900'
@@ -24,9 +24,9 @@ In this scenario, reports of the below graphic come in from your user community 
 \- 시나리오#1 요약  
 해킹그룹 ```P01s0n1vy```가 ```Wayne```기업를 해킹했습니다. 당신은 보안 담당자, Alice Bluebird의 입장에서 ```Lockheed Martin의 Cyberkillchain``` 모델을 이용해 침해 사고를 분석해야 합니다.
 
-![Scenario 1]({{site.url}}/assets/built/images/bots/v1/Defacement.png)
+![Scenario 1]({{site.url}}/assets/built/images/splunk/bots/v1/Defacement.png)
 
-![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/v1/cyberkillchain.jpg)  
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/splunk/bots/v1/cyberkillchain.jpg)  
 [록히드마틴 사이버킬체인 7단계]
 
 Scenario 2 (Ransomeware):
@@ -35,7 +35,7 @@ In the second scenario, one of your users is greeted by this image on a Windows 
 \- 시나리오#2 요약  
 ```Wayne```기업 직원 중 한 명이 시스템의 파일이 암호화 되었으며 파일을 복호화하려면 비용을 지불해야 하는 내용의 이미지를 보게 됩니다. 시스템이 ```Wayne```의 ```Cerber 랜섬웨어```에 감염된 것으로 보이며 귀하의 목표는 재공격을 염두에 두고 랜섬웨어를 조사하는 것입니다.
 
-![Scenario 2]({{site.url}}/assets/built/images/bots/v1/ransomewere.png)
+![Scenario 2]({{site.url}}/assets/built/images/splunk/bots/v1/ransomewere.png)
 
 101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?  
 웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까?
@@ -58,7 +58,7 @@ You'll notice that source and destination IP addresses are stored in fields call
 ```
 
 sourcetype은 아래와 같습니다.
-![sourcetype]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-38-04.png)
+![sourcetype]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-14-38-04.png)
 
 scan을 수행한 컴퓨터의 ip를 찾는거니 stream:http에 우리가 원하는 데이터가 있을것입니다.
 또, scan tool을 실행하면 http header의 user-agent에 scan tool에 대한 정보가 추가되므로 scan키워드를 추가해서 검색해봅니다.
@@ -67,7 +67,7 @@ scan을 수행한 컴퓨터의 ip를 찾는거니 stream:http에 우리가 원�
 sourcetype=stream:http imreallynotbatman.com *scan*
 ```
 
-![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
+![수행결과]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-14-49-30.png)
 
 src_header에 scan 정보를 볼 수 있다.
 추가로, imreallynotbatman.com의 ip는 192.168.250.70라는 정보도 얻을 수 있습니다.
@@ -83,10 +83,10 @@ Po1s0n1vy가 사용하는 웹 취약점 스캐너를 만든 회사는? 회사 �
   많은 상용 웹 취약점 스캐너는 HTTP 요청의 헤더에서 자신을 명확하게 식별합니다. 질문 101에서 식별된 IP의 요청에 대한 HTTP 소스 헤더(src_headers)를 검사합니다.
 </details>
 
-![수행결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-49-30.png)
+![수행결과]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-14-49-30.png)
 header정보가 "Acunetix"라는 키워드가 있다. 구글링해봅시다.
 
-![Acunetix]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-03-12.png)
+![Acunetix]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-15-03-12.png)
 구글링결과, scan tool을 제작하는 회사명이다.
 
 답 : Acunetix
@@ -101,7 +101,7 @@ imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있�
 </details>
 
 content management system가 뭔지부터 알아봅시다.
-![cms란?]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-11-21.png)
+![cms란?]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-15-11-21.png)
 저작물 관리시스템이라함은, 파일 등을 upload하는 서버일 것입니다. 
 아래 조건을 추가해 URL field를 검색해봅시다. 
 1. http status code를 200이다.
@@ -113,10 +113,10 @@ sourcetype=stream:http imreallynotbatman.com status=200 http_method=POST cs_cont
 ```
 
 결과 중 uri_path field를 보면 joomla라는 키워드를 발견할 수 있습니다.
-![uri joomla]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-18-42.png)
+![uri joomla]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-15-18-42.png)
 
 joomla를 구글링해봅시다.
-![what is joomla?]({{site.url}}/assets/built/images/bots/v1/2021-10-12-15-20-03.png)
+![what is joomla?]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-15-20-03.png)
 
 joomla는 CMS의 종류임을 알 수있습니다.
 
@@ -188,14 +188,14 @@ sourcetype=suricata src=192.168.250.70
 sourcetype=suricata src=192.168.250.70 dest_ip=23.22.63.114
 ```
 url field를 보니 의심스러운 url이 있습니다.
-![poisonivy-is-coming-for-you-batman.jpeg]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-01-19.png)
+![poisonivy-is-coming-for-you-batman.jpeg]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-17-01-19.png)
 
 확실하지 않으니, 192.168.250.70(imreallynotbatman.com)가 src인 이벤트가 얼마나 많은지 stream:http에서 찾아봅니다.
 
 ```
 index=botsv1 src_ip=192.168.250.70 sourcetype=stream:http
 ```
-![src결과]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-06-49.png)
+![src결과]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-17-06-49.png)
 suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. poisonivy-is-coming-for-you-batman.jpeg
 
 답 : poisonivy-is-coming-for-you-batman.jpeg
@@ -211,7 +211,7 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
 
 104번에서 확인한 jepg파일을 키워드로, strean:http sourcetype에서 url 필드를 확인해보면 full domain이 나올것입니다.
 
-![105url]({{site.url}}/assets/built/images/bots/v1/2021-10-12-17-52-17.png)
+![105url]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-17-52-17.png)
 
 ```
 sourcetype=stream:http src=192.168.250.70 poisonivy-is-coming-for-you-batman.jpeg
@@ -256,13 +256,13 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 robtex.com는 IP, Domain을 통해서 해당 사이트의 정보에 대해 알 수 있습니다.
 
 robtex에 prankglassinebracket.jumpingcrab.com 검색하면 아래와 같이 조회됩니다.  
-![robtex]({{site.url}}/assets/built/images/bots/v1/OSINT-robtex-domain.png)
+![robtex]({{site.url}}/assets/built/images/splunk/bots/v1/OSINT-robtex-domain.png)
 
 robtex에서 특이한 정보를 찾지 못했으니 virustotal에 검색해봅시다.
 
 domain정보에 email 정보를 발견할 수 있습니다.  
-![virustotal#1]({{site.url}}/assets/built/images/bots/v1/OSINT-virustotal-ip.png)  
-![virustotal#2]({{site.url}}/assets/built/images/bots/v1/OSINT-virustotal-domain.png)  
+![virustotal#1]({{site.url}}/assets/built/images/splunk/bots/v1/OSINT-virustotal-ip.png)  
+![virustotal#2]({{site.url}}/assets/built/images/splunk/bots/v1/OSINT-virustotal-domain.png)  
 
 답 : lillian.rose@po1s0n1vy.com
 
@@ -320,10 +320,10 @@ sourcetype=stream:http http_method=POST dest=192.168.250.70 *.exe
 ```
 
 part_filename이라는 필드에 3791.exe라는 이름의 파일이 보입니다.
-![part_filename]({{site.url}}/assets/built/images/bots/v1/2021-10-13-16-16-27.png)
+![part_filename]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-13-16-16-27.png)
 
 해당파일을 전송한 ip를 확인해보니, 101번 문제해서 scan했던 IP와 같으므로 악성파일임을 확신할 수 있습니다.
-![]({{site.url}}/assets/built/images/bots/v1/2021-10-13-16-21-24.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-13-16-21-24.png)
 
 답 : 3791.exe
 
@@ -341,7 +341,7 @@ part_filename이라는 필드에 3791.exe라는 이름의 파일이 보입니다
 </details>
 
 sourcetype Sysmon에서 3791.exe를 키워드로 이벤트를 검색합니다.
-![sourcetype]({{site.url}}/assets/built/images/bots/v1/2021-10-12-14-38-04.png)
+![sourcetype]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-12-14-38-04.png)
 
 해답은 window 이벤트 로그인 sysmon에서 찾을 수 있을 것입니다.
 [syslog란?](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon)
@@ -433,7 +433,7 @@ sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
 ```
 
 - 결과
-![passwdfield]({{site.url}}/assets/built/images/bots/v1/2021-10-13-17-35-23.png)
+![passwdfield]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-13-17-35-23.png)
 
 제일 먼저 나오는 패스워드는 12345678입니다.
 
@@ -465,7 +465,7 @@ overview에서 소개한 쿼리를 사용할 차례입니다. csv파일중 cp.cs
 ```
 | rest /servicesNS/-/-/data/lookup-table-files
 ```
-![csv파일 조회]({{site.url}}/assets/built/images/bots/overview/csvFileSearch.jpg)
+![csv파일 조회]({{site.url}}/assets/built/images/splunk/bots/overview/csvFileSearch.jpg)
 
 ```
 sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
@@ -618,6 +618,6 @@ sourcetype=stream:http
 | dedup brutePassword
 ```
 
-![password수]({{site.url}}/assets/built/images/bots/overview/2021-10-14-16-18-05.png)
+![password수]({{site.url}}/assets/built/images/splunk/bots/overview/2021-10-14-16-18-05.png)
 
 답 : 412

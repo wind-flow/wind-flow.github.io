@@ -1,9 +1,9 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v3/bots-v3.jpg
+cover:  assets/built/images/splunk/bots/v3/bots-v3.jpg
 navigation: True
-title: splunk-bots-v3 write up(3)
+title: splunk-bots-v3 write up(4) - END
 date: '2021-10-05 20:04:36 +0530'
 tags: [splunk]
 class: post-template
@@ -210,7 +210,7 @@ sourcetype=ms:aad:signin "Kevin Lagerfield" 199.66.91.253
 ```
 
 그럼 19개의 이벤트가 발생하는데, stream:smtp로그가 눈에 띕니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-05-33-01.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-05-33-01.png)
 첨부파일 **Malware Alert Text.txt**의 base64 인코딩값을 발견할 수 있습니다. 디코딩해봅시다.
 
 ```
@@ -259,7 +259,7 @@ cmdline: "useradd" "-ou" "tomcat7" "-p" "davidverve.com" "0" "-g" "0" "-M" "-N" 
 엔드포인트라고 했으니, 윈도우 시스템일 것입니다. 이벤트로그에서 계정생성 이벤트를 찾아봅시다.
 구글에 검색하니 계정생성 윈도우이벤트로그 ID는 4720입니다.
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-06-10-48.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-06-10-48.png)
 
 ```
 sourcetype=WinEventLog EventCode=4720
@@ -387,9 +387,9 @@ activity라는 필드에 **Disable account**가 보입니다.
 sourcetype=ms:aad:* activity="Disable account"
 ```
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-12-25-55.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-12-25-55.png)
 actor부분에 **fyodor@froth.ly**라는 이메일계정을 발견할 수 있습니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-12-27-35.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-12-27-35.png)
 target을 보면 **bgist@froth.ly**라는 이메일계정또한 발견할 수 있습니다.
 
 답 : bgist@froth.ly,fyodor@froth.ly
@@ -402,7 +402,7 @@ target을 보면 **bgist@froth.ly**라는 이메일계정또한 발견할 수 �
 </details>
 
 문제 302번에서 발견한 **Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm**파일이 생각납니다. 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-13-15-28.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-13-15-28.png)
 해당 파일명으로 검색해보면 auto-sacning되어 지워졌음을 확인할 수 있습니다.
 
 답 : Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm
@@ -416,7 +416,7 @@ target을 보면 **bgist@froth.ly**라는 이메일계정또한 발견할 수 �
 
 바로 다음이벤트의 Image에 exe파일이 있습니다.
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-13-22-46.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-13-22-46.png)
 
 답 : HxTsr.exe
 
@@ -576,7 +576,7 @@ sourcetype=linux_secure vendor_action="Invalid user"
 해당 로그에서 발견한 IP는 **5.101.40.81**입니다.
 
 whois에 검색해봅시다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-15-28-35.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-15-28-35.png)
 
 해당 IP국가는 러시아입니다.
 
@@ -597,7 +597,7 @@ BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.
 sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
 ```
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-16-01-27.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-16-01-27.png)
 
 공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 **New-TransportRule**룰을 생기는 이벤트입니다.
 
@@ -644,7 +644,7 @@ We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you sh
 ```
 
 해당 url로 가보면 총 8명입니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-16-17-11.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-16-17-11.png)
 
 답 : 8
 
@@ -686,7 +686,7 @@ ip : 174.215.1.81
 
 해당 ip를 [whois](https://domain.whois.co.kr/whois/search.php)에 조회해보면
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-18-03-14.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-18-03-14.png)
 
 답 : Verizon Wireless
 
@@ -749,7 +749,7 @@ sourcetype=osquery:results tomcat8 columns.cmdline=*
 시작 : LyoKICogVWJ1bnR1IDE2
 끝 : JldHVybiAwOwp9 &gt;&gt
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-22-06-41.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-22-06-41.png)
 
 답 :  * Ubuntu 16.04.4 kernel priv esc
 
@@ -779,7 +779,7 @@ sysmon에 아래 base64 코드들이 있습니다.
 끝 : BvdGF0byBwaG9uZQo=
 
 해당 데이터를 디코드해보면 아래와 같습니다. 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-22-21-07.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-22-21-07.png)
 
 답 : splunk
 

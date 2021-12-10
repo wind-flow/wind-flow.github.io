@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v2/bots-v2.jpg
+cover:  assets/built/images/splunk/bots/v2/bots-v2.jpg
 navigation: True
 title: splunk-bots-v2 write up(4)
 date: '2021-10-04 20:04:36 +0530'
@@ -47,12 +47,12 @@ Data Staging: Adversaries will stage data prior to exfiltration to make it easie
 Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.  
 
 
-![Scenario 1]({{site.url}}/assets/built/images/bots/v2/b21.jpg)
+![Scenario 1]({{site.url}}/assets/built/images/splunk/bots/v2/b21.jpg)
 
 The data included in this app was generated in August of 2017 by members of Splunk's Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.  
 이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.
 
-![Scenario 2]({{site.url}}/assets/built/images/bots/v2/b22.jpg)
+![Scenario 2]({{site.url}}/assets/built/images/splunk/bots/v2/b22.jpg)
 
 400	A Federal law enforcement agency reports that Taedonggang often spearphishes its victims with zip files that have to be opened with a password. What is the name of the attachment sent to Frothly by a malicious Taedonggang actor?  
 연방 법 집행 기관은 대동강이 종종 비밀번호로 열어야 하는 zip 파일로 피해자를 스피어피싱한다고 보고합니다. 대동강이 Frothly에게 보낸 첨부 파일 이름은 무엇입니까?
@@ -75,7 +75,7 @@ sourcetype=stream:smtp *.zip*
 ```
 
 invoice.zip 한가지 결과만 나옵니다.
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-17-24-28.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-17-24-28.png)
 
 뒷문제를 풀기위해 필요한 정보를 파악해둡니다.
 
@@ -170,11 +170,11 @@ sourcetype=stream:dns 160.153.91.7
 ```
 
 name field의 값을 보면 2가지값이 나옵니다.
-![dns name]({{site.url}}/assets/built/images/bots/v2/2021-10-27-22-01-37.png)
+![dns name]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-22-01-37.png)
 
 해당 도메인에 대한 정보를 [threatcrowd.org](https://www.threatcrowd.org/domain.php?domain=hildegardsfarm.com))에서 검색해봅니다.
 
-![OSINT]({{site.url}}/assets/built/images/bots/v2/2021-10-27-22-03-23.png)
+![OSINT]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-22-03-23.png)
 
 DNS RESOLUTIONS 항목을 보면 우리가 찾았던 IP인 160.153.91.7와 관계있다는 사실을 발견할 수 있습니다.
 
@@ -205,12 +205,12 @@ winsys32.dll이 Frothly 환경으로 다운로드하게 만드는 비정상적�
 winsys32.dll
 ```
 
-![winsys32.dll결과]({{site.url}}/assets/built/images/bots/v2/2021-10-27-22-14-00.png)
+![winsys32.dll결과]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-22-14-00.png)
 
 ftp로 파일을 옮긴것을 확인했습니다. (이벤트발생시간 17/08/24 4:16:40.000) stream:ftp에서 마저 확인해봅시다.
 ftp 로그중, 다운로드받는 이벤트를 확인해보면 될것입니다.
 
-![ftp method]({{site.url}}/assets/built/images/bots/v2/2021-10-27-22-17-07.png)
+![ftp method]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-22-17-07.png)
 ftp method중 다운로드받는 method는 **RETR** 입니다.
 
 ```
@@ -218,7 +218,7 @@ stream:ftp method=RETR
 ```
 결과 중 filename의 필드의 값을 보면 **나는_데이비드를_사랑한다.hwp (이벤트가 발생한 시간은 17/08/24 4:00:16.831)**라는 특이한 이름의 파일이 있습니다.
 
-![ftp filename]({{site.url}}/assets/built/images/bots/v2/2021-10-27-22-19-19.png)
+![ftp filename]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-22-19-19.png)
 이벤트 발생 시간을 비교해보아 해당 파일이 비정상적인 파일임을 알 수 있습니다.
 
 답 : 나는_데이비드를_사랑한다.hwp

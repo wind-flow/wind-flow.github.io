@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v1/bots-v1.jpg
+cover:  assets/built/images/splunk/bots/v1/bots-v1.jpg
 navigation: True
 title: splunk-bots-v1 write up - part2
 date: '2021-10-03 20:04:36 +0900'
@@ -24,9 +24,9 @@ In this scenario, reports of the below graphic come in from your user community 
 \- 시나리오#1 요약  
 해킹그룹 ```P01s0n1vy```가 ```Wayne```기업를 해킹했습니다. 당신은 보안 담당자, Alice Bluebird의 입장에서 ```Lockheed Martin의 Cyberkillchain``` 모델을 이용해 침해 사고를 분석해야 합니다.
 
-![Scenario 1]({{site.url}}/assets/built/images/bots/v1/Defacement.png)
+![Scenario 1]({{site.url}}/assets/built/images/splunk/bots/v1/Defacement.png)
 
-![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/bots/v1/cyberkillchain.jpg)  
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/splunk/bots/v1/cyberkillchain.jpg)  
 [록히드마틴 사이버킬체인 7단계]
 
 Scenario 2 (Ransomeware):
@@ -35,7 +35,7 @@ In the second scenario, one of your users is greeted by this image on a Windows 
 \- 시나리오#2 요약  
 ```Wayne```기업 직원 중 한 명이 시스템의 파일이 암호화 되었으며 파일을 복호화하려면 비용을 지불해야 하는 내용의 이미지를 보게 됩니다. 시스템이 ```Wayne```의 ```Cerber 랜섬웨어```에 감염된 것으로 보이며 귀하의 목표는 재공격을 염두에 두고 랜섬웨어를 조사하는 것입니다.
 
-![Scenario 2]({{site.url}}/assets/built/images/bots/v1/ransomewere.png)
+![Scenario 2]({{site.url}}/assets/built/images/splunk/bots/v1/ransomewere.png)
 
 200	What was the most likely IP address of we8105desk on 24AUG2016?  
 2016년 8월 24일 we8105desk의 가장 가능성이 높아 보이는 IP 주소는 무엇입니까?
@@ -111,7 +111,7 @@ sourcetype=suricata *cerber*
 ```
 
 alert.signature_id라는 필드가 눈에 띕니다
-![alert.signature_id]({{site.url}}/assets/built/images/bots/v1/2021-10-15-16-55-44.png)
+![alert.signature_id]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-15-16-55-44.png)
 
 가장 적은 signature id는 2816763 입니다.
 
@@ -322,7 +322,7 @@ pdf 확장자를 검색해봅니다.
 ```
 .pdf
 ```
-![pdf확장자]({{site.url}}/assets/built/images/bots/v1/2021-10-18-17-48-58.png)
+![pdf확장자]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-18-17-48-58.png)
 
 파일이 암호화되었다면 eventlog에 파일생성, 파일 변경 등의 로그가 있을것입니다.
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v3/bots-v3.jpg
+cover:  assets/built/images/splunk/bots/v3/bots-v3.jpg
 navigation: True
 title: splunk-bots-v3 write up(2)
 date: '2021-10-05 20:04:36 +0900'
@@ -272,12 +272,12 @@ sourcetype=aws:cloudtrail errorCode="Client.UnauthorizedOperation" eventName=Run
 ```
 requestParameters.instancesSet.items{}.imageId필드의 값이 ami-41e0b93b 임을 알 수 있습니다.
 구글에 **ami-41e0b93b ubuntu**로 검색해봅니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-31-00-24-26.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-31-00-24-26.png)
 
 Xenial이란 이름이 있는데 두단어가 아닙니다.
 **ubuntu Xenial**로 검색해봅니다. 
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-10-31-00-25-21.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-10-31-00-25-21.png)
 
 두 단어 이름은 **Xenial Xerus**입니다.
 

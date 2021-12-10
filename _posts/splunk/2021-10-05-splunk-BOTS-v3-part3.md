@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v3/bots-v3.jpg
+cover:  assets/built/images/splunk/bots/v3/bots-v3.jpg
 navigation: True
 title: splunk-bots-v3 write up(3)
 date: '2021-10-05 20:04:36 +0900'
@@ -210,7 +210,7 @@ sourcetype=ms:aad:signin "Kevin Lagerfield" 199.66.91.253
 ```
 
 그럼 19개의 이벤트가 발생하는데, stream:smtp로그가 눈에 띕니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-05-33-01.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-05-33-01.png)
 첨부파일 **Malware Alert Text.txt**의 base64 인코딩값을 발견할 수 있습니다. 디코딩해봅시다.
 
 ```
@@ -259,7 +259,7 @@ cmdline: "useradd" "-ou" "tomcat7" "-p" "davidverve.com" "0" "-g" "0" "-M" "-N" 
 엔드포인트라고 했으니, 윈도우 시스템일 것입니다. 이벤트로그에서 계정생성 이벤트를 찾아봅시다.
 구글에 검색하니 계정생성 윈도우이벤트로그 ID는 4720입니다.
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-06-10-48.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-06-10-48.png)
 
 ```
 sourcetype=WinEventLog EventCode=4720
@@ -387,9 +387,9 @@ activity라는 필드에 **Disable account**가 보입니다.
 sourcetype=ms:aad:* activity="Disable account"
 ```
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-12-25-55.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-12-25-55.png)
 actor부분에 **fyodor@froth.ly**라는 이메일계정을 발견할 수 있습니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-12-27-35.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-12-27-35.png)
 target을 보면 **bgist@froth.ly**라는 이메일계정또한 발견할 수 있습니다.
 
 답 : bgist@froth.ly,fyodor@froth.ly
@@ -402,7 +402,7 @@ target을 보면 **bgist@froth.ly**라는 이메일계정또한 발견할 수 �
 </details>
 
 문제 302번에서 발견한 **Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm**파일이 생각납니다. 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-13-15-28.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-13-15-28.png)
 해당 파일명으로 검색해보면 auto-sacning되어 지워졌음을 확인할 수 있습니다.
 
 답 : Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm
@@ -416,7 +416,7 @@ target을 보면 **bgist@froth.ly**라는 이메일계정또한 발견할 수 �
 
 바로 다음이벤트의 Image에 exe파일이 있습니다.
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-13-22-46.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-13-22-46.png)
 
 답 : HxTsr.exe
 

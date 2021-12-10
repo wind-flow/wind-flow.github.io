@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v2/bots-v2.jpg
+cover:  assets/built/images/splunk/bots/v2/bots-v2.jpg
 navigation: True
 title: splunk-bots-v2 write up(3)
 date: '2021-10-04 20:04:36 +0900'
@@ -47,12 +47,12 @@ Data Staging: Adversaries will stage data prior to exfiltration to make it easie
 Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.  
 
 
-![Scenario 1]({{site.url}}/assets/built/images/bots/v2/b21.jpg)
+![Scenario 1]({{site.url}}/assets/built/images/splunk/bots/v2/b21.jpg)
 
 The data included in this app was generated in August of 2017 by members of Splunk's Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.  
 이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.
 
-![Scenario 2]({{site.url}}/assets/built/images/bots/v2/b22.jpg)
+![Scenario 2]({{site.url}}/assets/built/images/splunk/bots/v2/b22.jpg)
 
 300	According to Frothly's records, what is the likely MAC address of Mallory's corporate MacBook? Answer guidance: Her corporate MacBook has the hostname MACLORY-AIR13.  
 Frothly의 기록에 따르면 Mallory의 회사 MacBook의 MAC 주소는 무엇입니까? 답변 안내: 그녀의 회사 MacBook의 호스트 이름은 MACLORY-AIR13입니다.
@@ -80,14 +80,14 @@ host=MACLORY-AIR13 "*game of thrones*" OR "got"
 ```
 
 - 결과  
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-26-15-24-33.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-26-15-24-33.png)
 
 target_path필드 값은 다음과 같습니다.  
 **/Users/mallorykraeusen/Downloads/GoT.S7E2.BOTS.BOTS.BOTS.mkv.torrent.**
 
 시즌7의 2화의 제목은 Stormborn입니다.
 
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-26-15-27-50.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-26-15-27-50.png)
 
 답 : Stormborn
 
@@ -156,7 +156,7 @@ splunk의 _time을 사용하지말라고했으니 해당 로그에 시간과 관
 *mallory* (*.ppt OR *.pptx)
 ```
 
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-26-16-48-38.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-26-16-48-38.png)
 
 target_path 필드에 crypt된 파일이 보입니다. 원본 파일 경로와 이름은 /Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx이므로, 해당 키워드로 검색해봅시다.
 또, 시간을 알아봐야하니 mac time 관련 데이터를 table 명령어를 사용해 파악해봅시다.
@@ -189,10 +189,10 @@ sourcetype=osquery_results columns.target_path="/Users/mallorykraeusen/Documents
 ctime : 1503093022
 
 [유닉스 타임변환 사이트](https://time.is/ko/Unix_time_converter)
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-26-17-28-03.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-26-17-28-03.png)
 
 PDT는 UTC-7과 같다고 설명되어있습니다.
-![PDT Time 설명]({{site.url}}/assets/built/images/bots/v2/2021-10-26-17-44-48.png)
+![PDT Time 설명]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-26-17-44-48.png)
 
 Sat Aug 19 2017 06:50:22 UTC+0900에서 UTC-7로 환산해보면(-16시간)
 Sat Aug 18 2017 14:50:22 입니다.
@@ -269,7 +269,7 @@ sourcetype=osquery_results *kutekitten* *usb*
 
 columns.vendor_id라는 필드를 보면 058f, 13fe라는 값이 있습니다.
 columns.vendor_id이 있고, USB를 삽입한 데이터만 보도록 합시다.
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-13-49-54.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-13-49-54.png)
 
 
 ```
@@ -283,23 +283,23 @@ sourcetype=osquery_results *kutekitten* *usb* columns.vendor_id=* action=added
 sourcetype=osquery_results *kutekitten*
 ```
 
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-34-51.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-14-34-51.png)
 
 columns.sha256의 hash값을 virustotal에서 조회해봅시다.
-![sha256]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-34-11.png)
+![sha256]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-14-34-11.png)
 sha256 : befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271
 
 MAC BackDoor 악성코드입니다.
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-40-12.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-14-40-12.png)
 
 제조사 13fe의 이벤트도 추가 조사해봅니다.
 
 columns.device의 값이 devfs인것을 보아하니, 파일이 아닌 드라이브임을 알 수 있습니다.
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-47-18.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-14-47-18.png)
 
 악성코드를 반입한 USB의 제조사의 ID는 058f입니다. 구글에 해당 제조사의 ID를 검색해봅니다.
 
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-14-47-46.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-14-47-46.png)
 vendorid 058f는 **Alcor Micro Corp.** 입니다.
 
 답 : Alcor
@@ -316,7 +316,7 @@ vendorid 058f는 **Alcor Micro Corp.** 입니다.
 문제 307번에서 발견한 악성코드의 sha256 해쉬값은 **befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271**입니다.
 해당 hash값으로 virustotal에서  자세한 정보를 파악해봅시다.
 
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-15-39-44.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-15-39-44.png)
 Virustotal의 Detail탭의 FileType을 보면 Perl로 작성된 언어임을 알 수 있습니다.
 
 답 : Perl
@@ -347,7 +347,7 @@ kutekitten을 감염시키는 악성코드는 설치 직후 2개의 C&C 서버�
 </details>
 
 virustotal의 Realtions 탭을 보면, **eidk.duckdns.org, eidk.hopto.org** 두개 url이 악성으로 발견되어있습니다.
-![]({{site.url}}/assets/built/images/bots/v2/2021-10-27-16-55-36.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v2/2021-10-27-16-55-36.png)
 
 철자 순서에 의해 답은 eidk.duckdns.org입니다.
 

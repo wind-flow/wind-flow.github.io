@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/bots/v3/bots-v3.jpg
+cover:  assets/built/images/splunk/bots/v3/bots-v3.jpg
 navigation: True
 title: splunk-bots-v3 write up(4) - END
 date: '2021-10-05 20:04:36+0900'
@@ -150,7 +150,7 @@ sourcetype=linux_secure vendor_action="Invalid user"
 해당 로그에서 발견한 IP는 **5.101.40.81**입니다.
 
 whois에 검색해봅시다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-15-28-35.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-15-28-35.png)
 
 해당 IP국가는 러시아입니다.
 
@@ -171,7 +171,7 @@ BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.
 sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
 ```
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-16-01-27.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-16-01-27.png)
 
 공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 **New-TransportRule**룰을 생기는 이벤트입니다.
 
@@ -218,7 +218,7 @@ We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you sh
 ```
 
 해당 url로 가보면 총 8명입니다.
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-16-17-11.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-16-17-11.png)
 
 답 : 8
 
@@ -260,7 +260,7 @@ ip : 174.215.1.81
 
 해당 ip를 [whois](https://domain.whois.co.kr/whois/search.php)에 조회해보면
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-18-03-14.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-18-03-14.png)
 
 답 : Verizon Wireless
 
@@ -323,7 +323,7 @@ sourcetype=osquery:results tomcat8 columns.cmdline=*
 시작 : LyoKICogVWJ1bnR1IDE2
 끝 : JldHVybiAwOwp9 &gt;&gt
 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-22-06-41.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-22-06-41.png)
 
 답 :  * Ubuntu 16.04.4 kernel priv esc
 
@@ -353,7 +353,7 @@ sysmon에 아래 base64 코드들이 있습니다.
 끝 : BvdGF0byBwaG9uZQo=
 
 해당 데이터를 디코드해보면 아래와 같습니다. 
-![]({{site.url}}/assets/built/images/bots/v3/2021-11-01-22-21-07.png)
+![]({{site.url}}/assets/built/images/splunk/bots/v3/2021-11-01-22-21-07.png)
 
 답 : splunk
 
