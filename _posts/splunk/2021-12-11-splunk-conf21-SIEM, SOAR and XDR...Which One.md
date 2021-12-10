@@ -1,11 +1,11 @@
 ---
 layout: post
 current: post
-cover:  assets/built/images/splunk/bots/v3/bots-v3.jpg
+cover:  assets/built/images/splunk/conf/conf21-nav-logo.svg
 navigation: True
 title: [.conf21 session 리뷰] SEC1742C - SIEM, SOAR and XDR...Which One?
-date: '2021-11-11 01:23:36 +0900'
-tags: [splunk]
+date: '2021-12-11 01:23:36 +0900'
+tags: [splunk, conf]
 class: post-template
 subclass: 'post tag-splunk'
 author: wind-flow
