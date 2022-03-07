@@ -6,10 +6,10 @@ words_per_minute: 200
 
 # MyData
 owner:
-  name:           wind-flow
-  avatar:         assets/images/profile.png
-  bio:            "Security, Analyst, Finance"
-  email:          jnu2345@gmail.com
+  name: wind-flow
+  avatar: assets/images/profile.png
+  bio: "Security, Analyst, Finance"
+  email: jnu2345@gmail.com
   # Social networking links used in footer. Update and remove as you like.
   twitter:
   facebook:
@@ -32,7 +32,7 @@ paginate: 20
 # pagination이 필요하고 몇개의 post를 하나의 page에서
 # 보여줄 건지를 설정.
 
-language: 'en-uk'
+language: "en-uk"
 # 언어 설정
 
 url: https://wind-flow.github.io
@@ -89,7 +89,6 @@ disqus_shortname: xxxxxxxx
 # disqus를 이용할 것인지 여부와 만약 사용하면
 # disqus shortname을 입력 ( disqus username이 아님 )
 
-
 # Google Analytics
 google_analytics: UA-xxxxxxxx-x # replace with your GA tracking identifier
 # Google Analytics을 사용할 경우 GA tracking identifier를 입력
@@ -103,7 +102,7 @@ permalink: /:title
 
 # gems and other configs
 plugins: [jekyll-paginate, jekyll-feed, jekyll-gist]
- 
+
 feed:
   path: feed.xml
 
@@ -136,7 +135,7 @@ destination: ./output/
 #   attributes:
 #     - idseparator=_
 #     - source-highlighter=coderay
-#     - icons=font  
+#     - icons=font
 
 # exclude는 Jekyll컴파일 시 destination에 포함될 필요가
 # 없는것들을 명시한다. (node_modules와 필요없는 것들은 제외)
@@ -160,4 +159,3 @@ exclude:
 #   - _posts/iot
 #   - _posts/r
 #   - _posts/economy
-theme: jekyll-theme-hacker
