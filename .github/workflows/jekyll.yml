@@ -1,49 +1,17 @@
-name: Jekyll CI
+name: Build and deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  jekyll:
+  github-pages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: helaili/jekyll-action@v2
         with:
-          fetch-depth: 0
-          github_token: ${{ secrets.GITHUB_TOKEN }} 
-      # - name: install deploy keys
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #   run: |
-      #     mkdir -p ~/.ssh/
-      #     echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-      #     chmod 600 ~/.ssh/id_rsa
-      #     chmod 700 ~/.ssh
-      #     ssh-keyscan github.com >> ~/.ssh/known_hosts  
-      - uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '2.6'
-          run: gem install bundler:2.2.28 | gem update --system
-      - uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name : bundle install
-        run: bundle install
-      - name : bundle update
-        run  : bundle update --bundler
-      - name : set email
-        run  : git config --global user.email "jnu2345@gmail.com"  
-      - name : set user name
-        run  : git config --global user.name "${GITHUB_ACTOR}" && git config --global push.default simple
-      - name : remove git header
-        run  : git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
-      - name : rake build
-        # run : git rm --cached . -rf && bundle exec rake site:deploy --quiet
-        run : bundle exec rake site:deploy --quiet
-        env:
-          GITHUB_TOKEN: ${{secrets.JEKYLL_PAT}}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target_branch: "gh-pages"
