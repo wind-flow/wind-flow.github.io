@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://wind-flow.github.io/author/wind-flow/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://wind-flow.github.io/" rel="alternate" type="text/html" />
-  <updated>2022-03-07T16:08:03+09:00</updated>
+  <updated>2022-03-07T17:57:14+09:00</updated>
   <id>https://wind-flow.github.io/author/wind-flow/feed.xml</id>
 
   
@@ -30,44 +30,6 @@
   
   
 
-  
-    <entry>
-      <title type="html">splunk 2021 bots 결과</title>
-      <link href="https://wind-flow.github.io/automation" rel="alternate" type="text/html" title="splunk 2021 bots 결과" />
-      <published>2022-03-07T16:06:36+09:00</published>
-      <updated>2022-03-07T16:06:36+09:00</updated>
-      <id>https://wind-flow.github.io/automation</id>
-      <content type="html" xml:base="https://wind-flow.github.io/automation">&lt;h1 id=&quot;백신&quot;&gt;백신&lt;/h1&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Kim-Gunwoo</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="python" />
-      
-        <category term="automation" />
-      
-        <category term="script" />
-      
-
-      
-        <summary type="html">백신</summary>
-      
-
-      
-      
-    </entry>
   
     <entry>
       <title type="html">NFT란?</title>
@@ -262,12 +224,12 @@ NFT를 이해하기위해선 &lt;strong&gt;Fungible&lt;/strong&gt;의 뜻을 이
     </entry>
   
     <entry>
-      <title type="html">splunk-bots-v3 write up(3)</title>
-      <link href="https://wind-flow.github.io/splunk-BOTS-v3-part3" rel="alternate" type="text/html" title="splunk-bots-v3 write up(3)" />
+      <title type="html">splunk-bots-v3 write up(4) - END</title>
+      <link href="https://wind-flow.github.io/splunk-BOTS-v3-part4" rel="alternate" type="text/html" title="splunk-bots-v3 write up(4) - END" />
       <published>2021-10-05T20:04:36+09:00</published>
       <updated>2021-10-05T20:04:36+09:00</updated>
-      <id>https://wind-flow.github.io/splunk-BOTS-v3-part3</id>
-      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v3-part3">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
+      <id>https://wind-flow.github.io/splunk-BOTS-v3-part4</id>
+      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v3-part4">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
 &lt;ul class=&quot;table-of-contents-list&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
@@ -617,514 +579,342 @@ Note: All the information you need to answer each question is present within the
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;300	What is the full user agent string that uploaded the malicious link file to OneDrive?&lt;br /&gt;
-OneDrive에 악성 링크 파일을 업로드한 전체 사용자 에이전트 문자열은 무엇입니까?&lt;/p&gt;
+&lt;p&gt;318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?&lt;br /&gt;
+Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스프레이 공격이 어느 국가에서 발생합니까?&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use ms:o365:management as the sourcetype for OneDrive activity.&lt;br /&gt;
-    OneDrive 활동의 원본 유형으로 ms:o365:management를 사용합니다.
+    Use linux_secure as the sourcetype.
+    sourcetype linux_secure에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;힌트에서 sourcetype linux_secure에 답이있다고 알려줍니다.
+&lt;a href=&quot;https://splunkbase.splunk.com/app/3476/&quot;&gt;linux_secure&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;vendor_action필드에 &lt;strong&gt;Invalid user&lt;/strong&gt;란 값이있으니 조건을 추가해봅니다.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=linux_secure vendor_action=&quot;Invalid user&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;해당 로그에서 발견한 IP는 &lt;strong&gt;5.101.40.81&lt;/strong&gt;입니다.&lt;/p&gt;
+
+&lt;p&gt;whois에 검색해봅시다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-15-28-35.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;해당 IP국가는 러시아입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : RUSSIA&lt;/p&gt;
+
+&lt;p&gt;319	The adversary created a BCC rule to forward Frothly’s email to his personal account. What is the value of the “Name” parameter set to?&lt;br /&gt;
+공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. “Name” 매개변수의 값은 무엇으로 설정되어 있습니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use ms:o365:management as the sourcetype.
+    sourcetype ms:o365:management에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://bluemail.help/ko/myself-bcc-automatically/&quot;&gt;BCC룰이란?&lt;/a&gt;
+BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-01-27.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 &lt;strong&gt;New-TransportRule&lt;/strong&gt;룰을 생기는 이벤트입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : SOX&lt;/p&gt;
+
+&lt;p&gt;320	What is the password for the user that was created on the compromised endpoint?&lt;br /&gt;
+손상된 엔드포인트에서 생성된 사용자의 비밀번호는 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use WinEventLog:Security as the sourcetype.
+    sourcetype WinEventLog:Security에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;svcvnc를 키워드로 검색하면 아래와 같은 이벤트를 발견할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;Process Command Line:	C:\Windows\system32\net1 user /add svcvnc Password123!&lt;/p&gt;
+
+&lt;p&gt;답 : Password123!&lt;/p&gt;
+
+&lt;p&gt;321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?&lt;br /&gt;
+대동강은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use stream:smtp as the sourcetype.
+    sourcetype stream:smtp에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;Grace Hoppy의 이메일주소는 &lt;strong&gt;ghoppy@froth.ly&lt;/strong&gt;입니다.
+smtp에서 수신자 ghoppy@froth.ly인 이벤트를 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp receiver_email{}=ghoppy@froth.ly
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;sender_email이 &lt;strong&gt;hyunki1984@naver.com&lt;/strong&gt;인 이벤트가 1개있습니다.
+base64인코딩된 데이터를 디코딩해봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;R3JhY2llLAoKICAgICAgIFdlIGJyb3VnaHQgeW91ciBkYXRhIGFuZCBpbXBvcnRlZCBpdDogaHR0
+cHM6Ly9wYXN0ZWJpbi5jb20vc2RCVWt3c0UgQWxzbywgeW91IHNob3VsZCBub3QgYmUgdG9vIGhh
+cmQgQnJ1Y2UuIEhlIGdvb2QgbWFuIAogCiAKIAogCg==
+(Decoding)→
+Gracie,
+We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you should not be too hard Bruce. He good man 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;해당 url로 가보면 총 8명입니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-17-11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : 8&lt;/p&gt;
+
+&lt;p&gt;322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
+명령 및 제어 서버가 액세스하는 URL의 경로는 무엇입니까? 답변 안내: 전체 경로를 제공하세요. (예: https://imgur.com/a/mAqgt4S/lasd3.jpg URL의 전체 경로는 /a/mAqgt4S/lasd3.jpg입니다.)&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with XmlWinEventLog:Microsoft-Windows-Sysmon/Operational as the sourcetype, or review the PowerShell logging on various Frothly laptops.
+    XmlWinEventLog:Microsoft-Windows-Sysmon/Operational을 소스 유형으로 시작하거나 다양한 Frothly 랩톱에서 PowerShell 로깅을 검토합니다.
+&lt;/details&gt;
+
+&lt;p&gt;323	At least two Frothly endpoints contact the adversary’s command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.&lt;br /&gt;
+최소 2개의 Frothly 엔드포인트가 적의 명령 및 제어 인프라에 접속합니다. 짧은 호스트 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;324	Who is Al Bungstein’s cell phone provider/carrier? Answer guidance: Two words.&lt;br /&gt;
+324 Al Bungstein의 휴대전화 제공업체/이동통신사는 누구인가요? 답변 안내: 두 단어.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    How can you find out what external IP address Al Bungstein is using?&lt;br /&gt;
+    Al Bungstein이 사용하는 외부 IP 주소를 어떻게 알 수 있습니까?
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#2&lt;/summary&gt;
-    A link (or .lnk) file is a shortcut file. Look for link files that are associated with OneDrive.&lt;br /&gt;
-    링크(또는 .lnk) 파일은 바로 가기 파일입니다. OneDrive와 연결된 링크 파일을 찾습니다.
+    OSINT is your friend here. Pivot off of Al's external IP.&lt;br /&gt;
+    OSINT는 여기 당신의 친구입니다. Al의 외부 IP를 피벗합니다.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#3&lt;/summary&gt;
-    Filter your search to just upload activity.&lt;br /&gt;
-    활동을 업로드하기 위해 검색을 필터링하십시오.
+    There is a single sourcetype in Splunk that also contains this information. It is a scripted input running on Al's machine.&lt;br /&gt;
+    Splunk에는 이 정보도 포함하는 단일 소스 유형이 있습니다. Al의 시스템에서 실행되는 스크립트 입력입니다.
 &lt;/details&gt;
 
-&lt;p&gt;OneDrive를 검색하니 sourcetype이 ms:o365:management, o365:management:activity 두가지가 나옵니다.
-두가지 sourcetype의 필드를 조사해보니 Operation의 필드에 FileUploaded라는 값이 있습니다.
-이 sourcetype에 UserAgent 필드가 있으므로 해당 값이 답일것입니다.&lt;/p&gt;
+&lt;p&gt;Al Bungstein의 이메일은 &lt;strong&gt;abungstein@froth.ly&lt;/strong&gt;입니다.
+ip : 174.215.1.81&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OneDrive .lnk Operation=FileUploaded
-| table UserAgent
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;해당 ip를 &lt;a href=&quot;https://domain.whois.co.kr/whois/search.php&quot;&gt;whois&lt;/a&gt;에 조회해보면&lt;/p&gt;
 
-&lt;p&gt;답 : Mozilla/5.0 (X11; U; Linux i686; ko-KP; rv: 19.1br) Gecko/20130508 Fedora/1.9.1-2.5.rs3.0 NaenaraBrowser/3.5b4&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-18-03-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;301	What external client IP address is able to initiate successful logins to Frothly using an expired user account?&lt;br /&gt;
-만료된 사용자 계정을 사용하여 Frothly에 성공적으로 로그인할 수 있는 외부 클라이언트 IP 주소는 무엇입니까?&lt;/p&gt;
+&lt;p&gt;답 : Verizon Wireless&lt;/p&gt;
+
+&lt;p&gt;325	Microsoft cloud services often have a delay or lag between “index time” and “event creation time”. For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.&lt;br /&gt;
+Microsoft 클라우드 서비스는 종종 “인덱스 시간”과 “이벤트 생성 시간” 사이에 지연 또는 지연이 있습니다. 전체일 중 ms:aad:signin의 최대 지연 시간(분)은 얼마입니까? 답변 안내: 측정 단위 없이 가장 가까운 분으로 반올림합니다.&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use ms:aad:signin as the sourcetype for Azure Active Directory sign-in activity.&lt;br /&gt;
-    Azure Active Directory 로그인 활동의 소스 유형으로 ms:aad:signin을 사용합니다.
+
+&lt;/details&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin  
+| eval indextime=strftime(_indextime,&quot;%Y-%m-%d %H:%M:%S&quot;) 
+| eval time=strftime(_time,&quot;%Y-%m-%d %H:%M:%S&quot;) 
+| eval indextime_epoch=strptime(indextime,&quot;%Y-%m-%d %H:%M:%S&quot;)
+| eval time_epoch=strptime(time, &quot;%Y-%m-%d %H:%M:%S&quot;)
+| table time, indextime, indextime_epoch, time_epoch
+| eval delta=indextime_epoch-time_epoch
+| stats max(delta) as max_lag
+| eval minutes=max_lag / 60
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;326	According to Mallory’s advertising research, how is beer meant to be enjoyed? Answer guidance: One word.&lt;br /&gt;
+Mallory의 광고 연구에 따르면 맥주는 어떻게 즐길 수 있습니까? 답변 안내: 한 마디.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
 &lt;/details&gt;
 
-&lt;p&gt;로그인관련 이벤트는 AD에있을것입니다. sourcetype에 &lt;strong&gt;ms:aad:signin&lt;/strong&gt;란 sourcetype이 있습니다.
-expired 키워드로 조사해봅니다.&lt;/p&gt;
+&lt;p&gt;327도 문제 없습니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin expired
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;ID는 Kevin Lagerfield, ip는 199.66.91.253, expired된 비밀번호로 로그인을 시도했습니다.
-해당 정보로 다시 검색해봅니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin &quot;Kevin Lagerfield&quot; 199.66.91.253
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;해당 계정으로 로그인을 성공한 이벤트를 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : 199.66.91.253&lt;/p&gt;
-
-&lt;p&gt;302	According to Symantec’s website, what is the discovery date of the malware identified in the macro-enabled file? Answer guidance: Provide the US date format MM/DD/YY. (Example: January 1, 2019 should be provided as 01/01/19)&lt;br /&gt;
-시만텍 웹사이트에 따르면 매크로 실행 파일에서 식별된 악성코드의 발견 날짜는 언제입니까? 답변 안내: 미국 날짜 형식 MM/DD/YY를 제공하십시오. (예시: 2019년 1월 1일은 01/01/19로 제공되어야 함)&lt;/p&gt;
+&lt;p&gt;328	What text is displayed on line 2 of the file used to escalate tomcat8’s permissions to root? Answer guidance: Provide contents of the entire line.&lt;br /&gt;
+tomcat8의 권한을 루트로 에스컬레이션하는 데 사용되는 파일의 2행에 어떤 텍스트가 표시됩니까? 답변 안내: 전체 라인의 내용을 제공합니다.&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use ms:aad:signin as the sourcetype for Azure Active Directory sign-in activity.
-    Azure Active Directory 로그인 활동의 소스 유형으로 ms:aad:signin을 사용합니다.
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#2&lt;/summary&gt;
-    Use WinEventLog:Application as the sourcetype to identify the security risk found.&lt;br /&gt;
-    WinEventLog:Application을 소스 유형으로 사용하여 발견된 보안 위험을 식별합니다.        
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+&lt;/details&gt;
+
+&lt;p&gt;osquery에 실행관련 이벤트가 있을것입니다. 어떤 계정이 어떤 명령을 실행했는지 조사해봅니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results tomcat8 columns.cmdline=*
+| table _time decorations.username columns.cmdline
+| reverse
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;중간에 &lt;strong&gt;“chmod” “+x” “colonelnew”&lt;/strong&gt;, &lt;strong&gt;”./colonelnew”&lt;/strong&gt;의 이벤트를 발견할 수 있습니다. 
+&lt;strong&gt;colonelnew&lt;/strong&gt;은 315번문제에서 발견한 파일과 비슷합니다. sourcetype sysmon에서 cat colonel.c의 로그가 있었습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*colonel* source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;중간 &lt;strong&gt;C:\windows\temp\unziped\lsof-master\iexeplorer.exe” http://192.168.9.30:8080/frothlyinventory/showcase.action “echo Ly…. &amp;gt;&amp;gt; /tmp/colonel&lt;/strong&gt;과 같은 명령어가 보입니다.
+해당 base64를 /tmp/colonel파일로 옮기는것처럼 보입니다. 해당 데이터를 base64로 디코딩해봅니다.&lt;/p&gt;
+
+&lt;p&gt;시작 : LyoKICogVWJ1bnR1IDE2
+끝 : JldHVybiAwOwp9 &amp;gt;&amp;amp;gt&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-06-41.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 :  * Ubuntu 16.04.4 kernel priv esc&lt;/p&gt;
+
+&lt;p&gt;329	One of the files uploaded by Taedonggang contains a word that is a much larger in font size than any other in the file. What is that word?
+대동강이 업로드한 파일 중 하나에는 파일의 다른 어떤 것보다 훨씬 큰 글자 크기의 단어가 포함되어 있습니다. 그 단어는 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Figure out what files were uploaded, and pivot off of interesting file names found. The WinEventLog:Security sourcetype is helpful, as is the osquery:results sourcetype.&lt;br /&gt;
+    어떤 파일이 업로드되었는지 파악하고 발견된 흥미로운 파일 이름을 중심으로 중심을 잡습니다. WinEventLog:Security 소스 유형은 osquery:results 소스 유형과 마찬가지로 유용합니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    You are looking for a long string of base64 information.&lt;br /&gt;
+    긴 base64 정보 문자열을 찾고 있습니다.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#3&lt;/summary&gt;
-    Google search for that risk and the term Symantec together.&lt;br /&gt;
-    Google에서 해당 위험과 Symantec이라는 용어를 함께 검색합니다.
+    You will need to find a site to decode the base64 to a viewable image. CyberChef is a good one!
+    base64를 볼 수 있는 이미지로 디코딩하려면 사이트를 찾아야 합니다. CyberChef는 좋은 사람입니다!
 &lt;/details&gt;
 
-&lt;p&gt;조사 방향을 잡기힘드니 &lt;strong&gt;macro&lt;/strong&gt;로 검색해봅니다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*macro*
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;지금까지 문제에서 대동강그룹이 업로드한 파일은 colonel, Frothly_GABF_Deck-2018-MK.pptx, 1534778082419.png, definitelydontinvestigatethisfile.sh로 파악했습니다.
+각 검색하여 base64 디코딩해봅시다.
+&lt;strong&gt;definitelydontinvestigatethisfile.sh&lt;/strong&gt;를 검색해보면
+sysmon에 아래 base64 코드들이 있습니다.
+시작 : /9j/4AAQSkZJRgABAQAAAQABAAD/
+끝 : BvdGF0byBwaG9uZQo=&lt;/p&gt;
 
-&lt;p&gt;그럼 19개의 이벤트가 발생하는데, stream:smtp로그가 눈에 띕니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-05-33-01.png&quot; alt=&quot;&quot; /&gt;
-첨부파일 &lt;strong&gt;Malware Alert Text.txt&lt;/strong&gt;의 base64 인코딩값을 발견할 수 있습니다. 디코딩해봅시다.&lt;/p&gt;
+&lt;p&gt;해당 데이터를 디코드해보면 아래와 같습니다. 
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-21-07.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Malware was detected in one or more attachments included with this email message. 
-Action: All attachments have been removed.
-Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm	 W97M.Empstage
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;답 : splunk&lt;/p&gt;
 
-&lt;p&gt;추후 마저 풀겠음&lt;/p&gt;
-
-&lt;p&gt;303	What is the password for the user that was successfully created by the user “root” on the on-premises Linux system?&lt;br /&gt;
-온프레미스 Linux 시스템에서 사용자 “루트”가 성공적으로 생성한 사용자의 비밀번호는 무엇입니까?&lt;/p&gt;
+&lt;p&gt;330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.&lt;br /&gt;
+어떤 Frothly VPN 사용자가 가장 많은 트래픽을 생성했습니까? 답변 안내: VPN 사용자 이름을 제공합니다.&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use osquery:results as the sourcetype.&lt;br /&gt;
-    sourcetype osquery:results에서 조사하세요.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Osquery is logging command executions on the Linux host hoth.&lt;br /&gt;
-    Osquery는 Linux 호스트 hoth에서 명령 실행을 기록하고 있습니다.
+    Start with cisco:asa as the sourcetype.
+    sourcetype cisco:asa에서 조사하십시오.
 &lt;/details&gt;
 
-&lt;p&gt;linux에서 사용자 추가명령어는 useradd 혹은 adduser입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results *useradd* OR *adduser*
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;이벤트2개가 뜹니다.&lt;/p&gt;
-
-&lt;p&gt;cmdline: “useradd” “-ou” “tomcat7” “-p” “ilovedavidverve” “0” “-g” “0” “-M” “-N” “-r” “-s” “/bin/bash”
-cmdline: “useradd” “-ou” “tomcat7” “-p” “davidverve.com” “0” “-g” “0” “-M” “-N” “-r” “-s” “/bin/bash”&lt;/p&gt;
-
-&lt;p&gt;이중, 실행한 uid가 0인 이벤트의 비밀번호값은 ilovedavidverve입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : ilovedavidverve&lt;/p&gt;
-
-&lt;p&gt;304	What is the name of the user that was created after the endpoint was compromised?&lt;br /&gt;
-엔드포인트가 손상된 후 생성된 사용자의 이름은 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use WinEventLog:Security as the sourcetype.&lt;br /&gt;
-    WinEventLog:Security를 ​​소스 유형으로 사용하십시오.    
-&lt;/details&gt;
-
-&lt;p&gt;엔드포인트라고 했으니, 윈도우 시스템일 것입니다. 이벤트로그에서 계정생성 이벤트를 찾아봅시다.
-구글에 검색하니 계정생성 윈도우이벤트로그 ID는 4720입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-06-10-48.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=WinEventLog EventCode=4720
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;한개의 이벤트가 나옵니다. 
-Account Name:		svcvnc&lt;/p&gt;
-
-&lt;p&gt;답 : svcvnc&lt;/p&gt;
-
-&lt;p&gt;305	What is the process ID of the process listening on a “leet” port?&lt;br /&gt;
-“leet” 포트에서 수신 대기하는 프로세스의 프로세스 ID는 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use osquery:results as the sourcetype.&lt;br /&gt;
-    osquery:results를 소스 유형으로 사용하십시오.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Osquery is logging open ports found on the Linux host hoth.&lt;br /&gt;
-    Osquery는 Linux 호스트 hoth에서 발견된 열린 포트를 기록하고 있습니다.
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Leet&quot;&gt;leet&lt;/a&gt;는 1337포트를 사용하는 서비스입니다. PID는 sourcetype ps에서 확인할 수 있을것입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1337 sourcetype=ps
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;결과
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root             14356     0      0.0      00:00:00     0.1       1732       6492   ?        S         31:58  netcat              -v_-l_-p_1337_-e_/bin/bash
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;pid는 14356임을 알 수 있습니다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;답 : 14356&lt;/p&gt;
-
-&lt;p&gt;306	A search query originating from an external IP address of Frothly’s mail server yields some interesting search terms. What is the search string?
-Frothly 메일 서버의 외부 IP 주소에서 시작되는 검색 쿼리는 몇 가지 흥미로운 검색어를 생성합니다. 검색 문자열은 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use o365:management:activity as the sourcetype.
-    sourcetype o365:management:activity에서 조사하십시오.
-&lt;/details&gt;
-
-&lt;p&gt;ms office를 사용하는것을 알고있으니, Outlook 혹은 Exchange를 사용할 것입니다. o365관련 sourcetype에서 키워드 query를 조사해봅니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=*o365* (Exchange OR Outlook) *query*
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아래와 같은 로그를 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;ClientIP: 104.207.83.63:21974
-user: fyodor@froth.ly
-Workload: Exchange
-UserKey: 1003BFFDA2E71FF9
-UserType: 2
-Name: SearchQuery
-Value: cromdale OR beer OR financial OR secret&lt;/p&gt;
-
-&lt;p&gt;답 : cromdale OR beer OR financial OR secret&lt;/p&gt;
-
-&lt;p&gt;307	What is the MD5 value of the file downloaded to Fyodor’s endpoint system and used to scan Frothly’s network?&lt;br /&gt;
-Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워크를 스캔하는 데 사용되는 파일의 MD5 값은 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-&lt;p&gt;실행파일의 hash값은 sysmon로그에 있습니다.
-sourcetype으로 제공되지않고, source로 제공합니다.
-파일이 실행됐다면 process creation이벤트가 발생했을것입니다.(EventID=1)
-어떤 파일이 실행됐는지 파악할 수 있도록 Image필드의 값을 봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;host=FYODOR-L source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot; EventID=1 
-| stats count by Image
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Images 중 “C:\Windows\Temp\hdoor.exe”라는 특이한 실행파일이 보입니다.
-CommandLine을 보면 “C:\windows\temp\hdoor.exe” -hbs 192.168.9.1-192.168.9.50 /b /m /n 식으로 네트워크 대역관련 인자가 보입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : 586EF56F4D8963DD546163AC31C865D7&lt;/p&gt;
-
-&lt;p&gt;308	Based on the information gathered for question 304, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.&lt;br /&gt;
-문제 304에 대해 수집된 정보에 따르면 엔드포인트가 손상된 후 이 사용자는 어떤 그룹에 할당되었습니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;계정명 svcvnc의 그룹을 알아봅시다.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4732&quot;&gt;sysmon Group할당&lt;/a&gt;eventID는 4732입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svcvnc EventCode=4732
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;이벤트 2개가 나옵니다.&lt;/p&gt;
-
-&lt;p&gt;답 : Administrators,Users&lt;/p&gt;
-
-&lt;p&gt;309	At some point during the attack, a user’s domain account is disabled. What is the email address of the user whose account gets disabled and what is the email address of the user who disabled their account? Answer guidance: Comma separated without spaces, in alphabetical order. (Example: jdoe@mycompany.com,tmiller@mycompany.com)&lt;br /&gt;
-공격 중간에 어느 시점에서 사용자의 도메인 계정이 비활성화됩니다. 계정이 비활성화된 사용자의 이메일 주소는 무엇이며 계정을 비활성화한 사용자의 이메일 주소는 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다. (예: jdoe@mycompany.com,tmiller@mycompany.com)&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4725&quot;&gt;sysmon account disable&lt;/a&gt;eventID는 4725입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;EventCode=4725
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아무이벤트도 나오지 않습니다.&lt;/p&gt;
-
-&lt;p&gt;AD에서 찾아봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:* *user* OR *account* OR *disable*
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;activity라는 필드에 &lt;strong&gt;Disable account&lt;/strong&gt;가 보입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:* activity=&quot;Disable account&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-12-25-55.png&quot; alt=&quot;&quot; /&gt;
-actor부분에 &lt;strong&gt;fyodor@froth.ly&lt;/strong&gt;라는 이메일계정을 발견할 수 있습니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-12-27-35.png&quot; alt=&quot;&quot; /&gt;
-target을 보면 &lt;strong&gt;bgist@froth.ly&lt;/strong&gt;라는 이메일계정또한 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : bgist@froth.ly,fyodor@froth.ly&lt;/p&gt;
-
-&lt;p&gt;310	Another set of phishing emails were sent to Frothly employees after the adversary gained a foothold on a Frothly computer. This malicious content was detected and left behind a digital artifact. What is the name of this file? Answer guidance: Include the file extension. (Example: badfile.docx)&lt;br /&gt;
-공격자가 Frothly 컴퓨터에 발판을 마련한 후 또 다른 피싱 이메일 세트가 Frothly 직원에게 전송되었습니다. 이 악성 콘텐츠는 감지되어 디지털 아티팩트를 남겼습니다. 이 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: badfile.docx)&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;문제 302번에서 발견한 &lt;strong&gt;Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm&lt;/strong&gt;파일이 생각납니다. 
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-13-15-28.png&quot; alt=&quot;&quot; /&gt;
-해당 파일명으로 검색해보면 auto-sacning되어 지워졌음을 확인할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm&lt;/p&gt;
-
-&lt;p&gt;311	Based on the answer to question 310, what is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension. (Example: explorer.exe)&lt;br /&gt;
-310번 문제에 대한 답변에 따르면 악성코드에 포함된 실행 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: explorer.exe)&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;바로 다음이벤트의 Image에 exe파일이 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-13-22-46.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;답 : HxTsr.exe&lt;/p&gt;
-
-&lt;p&gt;312	How many unique IP addresses “used” the malicious link file that was sent?&lt;br /&gt;
-전송된 악성 링크 파일을 “사용”한 고유 IP 주소는 몇 개입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;300번문제에서 파악한 악성 링크파일의 이름은 &lt;strong&gt;BRUCE BIRTHDAY HAPPY HOUR PICS.lnk&lt;/strong&gt;입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;BRUCE BIRTHDAY HAPPY HOUR PICS.lnk&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;67개의 이벤트가 있습니다.
-그중 operation field값 중 &lt;strong&gt;AnonymousLinkUsed&lt;/strong&gt;이 눈에 띕니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;2021-11-01-13-29-24.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;BRUCE BIRTHDAY HAPPY HOUR PICS.lnk&quot;  Operation=AnonymousLinkUsed
-| stats dc(ClientIP)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;답 : 7&lt;/p&gt;
-
-&lt;p&gt;313문제도 없네요&lt;/p&gt;
-
-&lt;p&gt;314	What port number did the adversary use to download their attack tools?&lt;br /&gt;
-공격자가 공격 도구를 다운로드하는 데 사용한 포트 번호는 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;stream:tcp에서 조사해봅니다.
-well-known포트가 아닌 포트 중 한번만 다운로드 한 이벤트를 찾아봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:tcp
-| stats count by dest_port
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;45.77.53.176:3333과 192.168.8.103:50504가 count 1입니다.
-외부망 IP인 45.77.53.176이 의심스럽습니다.
-stream:http에서 확인해봅시다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;uri_path: /images/logos.png&lt;/strong&gt;를 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : 3333&lt;/p&gt;
-
-&lt;p&gt;315	During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files? Answer guidance: Comma separated without spaces, in alphabetical order, include the file extension where applicable.&lt;br /&gt;
-공격하는 동안 공격자는 온프레미스 Linux 서버의 /tmp 디렉터리에 두 개의 파일을 원격으로 스트리밍합니다. 이 파일의 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분하고 해당되는 경우 파일 확장자를 포함합니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;file upload 관련 로그는 osquery에 있을것입니다. create, upload관련 행위를 하는 데이터를 찾아봅시다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results */tmp*.* &quot;columns.action&quot;=CREATED
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;create한 user 중 &lt;strong&gt;tomcat8&lt;/strong&gt;을 발견할 수 있습니다. tomcat7이 악성행위하는 계정을 생성했으니 해당 계정도 의심스럽습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results */tmp*.* &quot;columns.action&quot;=CREATED &quot;decorations.username&quot;=tomcat8
-| table columns.target_path
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=cisco:asa eventtype=cisco_vpn
+| stats count by Cisco_ASA_user
+| sort -count
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;columns.target_path&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;/tmp/ccgZ61x9.o&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;/tmp/cclBJ1WV.s&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;/tmp/colonel.c&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;/tmp/definitelydontinvestigatethisfile.sh&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;실행파일은 colonel.c와 definitelydontinvestigatethisfile.sh입니다.&lt;/p&gt;
-
-&lt;p&gt;316	Based on the information gathered for question 314, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.&lt;br /&gt;
-314번 문제에 대해 수집된 정보를 바탕으로 공격 도구가 포함된 것으로 유추할 수 있는 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;답 : logos.png&lt;/p&gt;
-
-&lt;p&gt;317	What is the first executable uploaded to the domain admin account’s compromised endpoint system? Answer guidance: Include the file extension.&lt;br /&gt;
-도메인 관리자 계정의 손상된 엔드포인트 시스템에 업로드된 첫 번째 실행 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;domain admin의 GUI는 (&lt;strong&gt;S-1-5-21*-512&lt;/strong&gt;)[https://docs.microsoft.com/en-US/windows/security/identity-protection/access-control/security-identifiers]과 같습니다.
-이 키워드로 검색해도 아무것도 나오지않습니다.&lt;/p&gt;
-
-&lt;p&gt;sysmon에서 .exe확장자 파일을 검색해봅니다. 악성코드는 보통 tmp, temp파일에 업로드하니 경로조건도 추가해봅니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*.exe source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot; Image IN(*tmp*, *temp*)
-| stats count by Image
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Image&lt;/th&gt;
+      &lt;th&gt;Cisco_ASA_user&lt;/th&gt;
       &lt;th&gt;count&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe&lt;/td&gt;
+      &lt;td&gt;mkraeusen&lt;/td&gt;
+      &lt;td&gt;38&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bstoll&lt;/td&gt;
+      &lt;td&gt;36&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bgist&lt;/td&gt;
+      &lt;td&gt;19&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;fyodor&lt;/td&gt;
+      &lt;td&gt;14&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;pcerf&lt;/td&gt;
+      &lt;td&gt;13&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ghoppy&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;btun&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;abungstein&lt;/td&gt;
       &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;C:\Windows\Temp\hdoor.exe&lt;/td&gt;
-      &lt;td&gt;20&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe&lt;/td&gt;
-      &lt;td&gt;51&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;strong&gt;hdoor.exe&lt;/strong&gt;이 굉장히 의심스럽습니다.&lt;/p&gt;
+&lt;p&gt;답 : mkraeusen&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*.exe source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot; Image IN(*tmp*, *temp*)
-| dedup Image
-| table _time Image Computer User SourceIp DestinationIp
-| reverse
+&lt;p&gt;331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR&lt;br /&gt;
+Splunk 명령만 사용하는 경우 하루 종일 Windows 호스트의 이벤트 코드 4688 수에 대한 사분위수 범위(IQR)의 상한(UF) 값은 얼마입니까? 1.5 배율을 사용하십시오. 답변 안내: UF = Q3 + 1.5 x IQR&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with WinEventLog:Security as the sourcetype.&lt;br /&gt;
+    sourcetype WinEventLog:Security를 조사하십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Splunk commands such as eventstats, perc25() and perc75() would be helpful here.&lt;br /&gt;
+    여기에서 eventstats, perc25() 및 perc75()와 같은 Splunk 명령이 도움이 될 것입니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    If you have never used the interquartile range (IQR) to identify outliers, take a look at the documentation https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers&lt;br /&gt;
+    사분위수 범위(IQR)를 사용하여 이상값을 식별한 적이 없는 경우 https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers 문서를 참조하십시오.
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688&quot;&gt;eventcode4688&lt;/a&gt;
+새 process creation 이벤트 코드입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=wineventlog EventCode=4688
+| eventstats perc25(count) as p25, perc75(count) as p75
+| eval IQR=p75-p25
+| eval UF=p75+1.5*IQR
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;_time&lt;/th&gt;
-      &lt;th&gt;Image&lt;/th&gt;
-      &lt;th&gt;Computer&lt;/th&gt;
-      &lt;th&gt;User&lt;/th&gt;
-      &lt;th&gt;SourceIp&lt;/th&gt;
-      &lt;th&gt;DestinationIp&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2018/08/20 09:16:50&lt;/td&gt;
-      &lt;td&gt;C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe&lt;/td&gt;
-      &lt;td&gt;ABUNGST-L.froth.ly&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2018/08/20 10:33:27&lt;/td&gt;
-      &lt;td&gt;C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe&lt;/td&gt;
-      &lt;td&gt;BGIST-L.froth.ly&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2018/08/20 10:33:27&lt;/td&gt;
-      &lt;td&gt;C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe&lt;/td&gt;
-      &lt;td&gt;BGIST-L.froth.ly&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2018/08/20 10:44:05&lt;/td&gt;
-      &lt;td&gt;C:\Windows\Temp\hdoor.exe&lt;/td&gt;
-      &lt;td&gt;FYODOR-L.froth.ly&lt;/td&gt;
-      &lt;td&gt;AzureAD\FyodorMalteskesko&lt;/td&gt;
-      &lt;td&gt;192.168.8.103&lt;/td&gt;
-      &lt;td&gt;192.168.9.50&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2018/08/20 11:34:02&lt;/td&gt;
-      &lt;td&gt;C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe&lt;/td&gt;
-      &lt;td&gt;FYODOR-L.froth.ly&lt;/td&gt;
-      &lt;td&gt;AzureAD\FyodorMalteskesko&lt;/td&gt;
-      &lt;td&gt;192.168.8.103&lt;/td&gt;
-      &lt;td&gt;192.168.9.30&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2018/08/20 11:34:33&lt;/td&gt;
-      &lt;td&gt;C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe&lt;/td&gt;
-      &lt;td&gt;FYODOR-L.froth.ly&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2018/08/20 15:00:41&lt;/td&gt;
-      &lt;td&gt;C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe&lt;/td&gt;
-      &lt;td&gt;PCERF-L.froth.ly&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;답 : 1368&lt;/p&gt;
 
-&lt;p&gt;가장 먼저 업로드된 파일은 hdoor.exe입니다.&lt;/p&gt;
+&lt;p&gt;332	What is the CVE of the vulnerability that escalated permissions on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
+Linux 호스트 hoth에서 권한을 에스컬레이션한 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Google search.
+    구글링 하세요.
+&lt;/details&gt;
 
-&lt;p&gt;답 : hdoor.exe&lt;/p&gt;</content>
+&lt;p&gt;328번문제에서 발견한 “* Ubuntu 16.04.4 kernel priv esc”를 구글링해봅시다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.exploit-db.com/exploits/44298&quot;&gt;CVE-2017-16995&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : CVE-2017-16995&lt;/p&gt;
+
+&lt;p&gt;333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)&lt;br /&gt;
+Linux 호스트 hoth에서 명령을 실행하기 위해 악용된 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;</content>
 
       
       
@@ -2981,12 +2771,12 @@ cyberchef에서 각각 render image를 클릭하고, input을 base64변경하면
     </entry>
   
     <entry>
-      <title type="html">splunk-bots-v3 write up(4) - END</title>
-      <link href="https://wind-flow.github.io/splunk-BOTS-v3-part4" rel="alternate" type="text/html" title="splunk-bots-v3 write up(4) - END" />
+      <title type="html">splunk-bots-v3 write up(3)</title>
+      <link href="https://wind-flow.github.io/splunk-BOTS-v3-part3" rel="alternate" type="text/html" title="splunk-bots-v3 write up(3)" />
       <published>2021-10-05T20:04:36+09:00</published>
       <updated>2021-10-05T20:04:36+09:00</updated>
-      <id>https://wind-flow.github.io/splunk-BOTS-v3-part4</id>
-      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v3-part4">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
+      <id>https://wind-flow.github.io/splunk-BOTS-v3-part3</id>
+      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v3-part3">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
 &lt;ul class=&quot;table-of-contents-list&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
@@ -3336,342 +3126,514 @@ Note: All the information you need to answer each question is present within the
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?&lt;br /&gt;
-Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스프레이 공격이 어느 국가에서 발생합니까?&lt;/p&gt;
+&lt;p&gt;300	What is the full user agent string that uploaded the malicious link file to OneDrive?&lt;br /&gt;
+OneDrive에 악성 링크 파일을 업로드한 전체 사용자 에이전트 문자열은 무엇입니까?&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use linux_secure as the sourcetype.
-    sourcetype linux_secure에서 조사하세요.
+    Use ms:o365:management as the sourcetype for OneDrive activity.&lt;br /&gt;
+    OneDrive 활동의 원본 유형으로 ms:o365:management를 사용합니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    A link (or .lnk) file is a shortcut file. Look for link files that are associated with OneDrive.&lt;br /&gt;
+    링크(또는 .lnk) 파일은 바로 가기 파일입니다. OneDrive와 연결된 링크 파일을 찾습니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Filter your search to just upload activity.&lt;br /&gt;
+    활동을 업로드하기 위해 검색을 필터링하십시오.
 &lt;/details&gt;
 
-&lt;p&gt;힌트에서 sourcetype linux_secure에 답이있다고 알려줍니다.
-&lt;a href=&quot;https://splunkbase.splunk.com/app/3476/&quot;&gt;linux_secure&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;OneDrive를 검색하니 sourcetype이 ms:o365:management, o365:management:activity 두가지가 나옵니다.
+두가지 sourcetype의 필드를 조사해보니 Operation의 필드에 FileUploaded라는 값이 있습니다.
+이 sourcetype에 UserAgent 필드가 있으므로 해당 값이 답일것입니다.&lt;/p&gt;
 
-&lt;p&gt;vendor_action필드에 &lt;strong&gt;Invalid user&lt;/strong&gt;란 값이있으니 조건을 추가해봅니다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=linux_secure vendor_action=&quot;Invalid user&quot;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OneDrive .lnk Operation=FileUploaded
+| table UserAgent
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;해당 로그에서 발견한 IP는 &lt;strong&gt;5.101.40.81&lt;/strong&gt;입니다.&lt;/p&gt;
+&lt;p&gt;답 : Mozilla/5.0 (X11; U; Linux i686; ko-KP; rv: 19.1br) Gecko/20130508 Fedora/1.9.1-2.5.rs3.0 NaenaraBrowser/3.5b4&lt;/p&gt;
 
-&lt;p&gt;whois에 검색해봅시다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-15-28-35.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;해당 IP국가는 러시아입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : RUSSIA&lt;/p&gt;
-
-&lt;p&gt;319	The adversary created a BCC rule to forward Frothly’s email to his personal account. What is the value of the “Name” parameter set to?&lt;br /&gt;
-공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. “Name” 매개변수의 값은 무엇으로 설정되어 있습니까?&lt;/p&gt;
+&lt;p&gt;301	What external client IP address is able to initiate successful logins to Frothly using an expired user account?&lt;br /&gt;
+만료된 사용자 계정을 사용하여 Frothly에 성공적으로 로그인할 수 있는 외부 클라이언트 IP 주소는 무엇입니까?&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use ms:o365:management as the sourcetype.
-    sourcetype ms:o365:management에서 조사하세요.
+    Use ms:aad:signin as the sourcetype for Azure Active Directory sign-in activity.&lt;br /&gt;
+    Azure Active Directory 로그인 활동의 소스 유형으로 ms:aad:signin을 사용합니다.
 &lt;/details&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://bluemail.help/ko/myself-bcc-automatically/&quot;&gt;BCC룰이란?&lt;/a&gt;
-BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.&lt;/p&gt;
+&lt;p&gt;로그인관련 이벤트는 AD에있을것입니다. sourcetype에 &lt;strong&gt;ms:aad:signin&lt;/strong&gt;란 sourcetype이 있습니다.
+expired 키워드로 조사해봅니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin expired
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-01-27.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;ID는 Kevin Lagerfield, ip는 199.66.91.253, expired된 비밀번호로 로그인을 시도했습니다.
+해당 정보로 다시 검색해봅니다.&lt;/p&gt;
 
-&lt;p&gt;공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 &lt;strong&gt;New-TransportRule&lt;/strong&gt;룰을 생기는 이벤트입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : SOX&lt;/p&gt;
-
-&lt;p&gt;320	What is the password for the user that was created on the compromised endpoint?&lt;br /&gt;
-손상된 엔드포인트에서 생성된 사용자의 비밀번호는 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use WinEventLog:Security as the sourcetype.
-    sourcetype WinEventLog:Security에서 조사하세요.
-&lt;/details&gt;
-
-&lt;p&gt;svcvnc를 키워드로 검색하면 아래와 같은 이벤트를 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;Process Command Line:	C:\Windows\system32\net1 user /add svcvnc Password123!&lt;/p&gt;
-
-&lt;p&gt;답 : Password123!&lt;/p&gt;
-
-&lt;p&gt;321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?&lt;br /&gt;
-대동강은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use stream:smtp as the sourcetype.
-    sourcetype stream:smtp에서 조사하세요.
-&lt;/details&gt;
-
-&lt;p&gt;Grace Hoppy의 이메일주소는 &lt;strong&gt;ghoppy@froth.ly&lt;/strong&gt;입니다.
-smtp에서 수신자 ghoppy@froth.ly인 이벤트를 찾아봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp receiver_email{}=ghoppy@froth.ly
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;sender_email이 &lt;strong&gt;hyunki1984@naver.com&lt;/strong&gt;인 이벤트가 1개있습니다.
-base64인코딩된 데이터를 디코딩해봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;R3JhY2llLAoKICAgICAgIFdlIGJyb3VnaHQgeW91ciBkYXRhIGFuZCBpbXBvcnRlZCBpdDogaHR0
-cHM6Ly9wYXN0ZWJpbi5jb20vc2RCVWt3c0UgQWxzbywgeW91IHNob3VsZCBub3QgYmUgdG9vIGhh
-cmQgQnJ1Y2UuIEhlIGdvb2QgbWFuIAogCiAKIAogCg==
-(Decoding)→
-Gracie,
-We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you should not be too hard Bruce. He good man 
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin &quot;Kevin Lagerfield&quot; 199.66.91.253
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;해당 url로 가보면 총 8명입니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-17-11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;해당 계정으로 로그인을 성공한 이벤트를 발견할 수 있습니다.&lt;/p&gt;
 
-&lt;p&gt;답 : 8&lt;/p&gt;
+&lt;p&gt;답 : 199.66.91.253&lt;/p&gt;
 
-&lt;p&gt;322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
-명령 및 제어 서버가 액세스하는 URL의 경로는 무엇입니까? 답변 안내: 전체 경로를 제공하세요. (예: https://imgur.com/a/mAqgt4S/lasd3.jpg URL의 전체 경로는 /a/mAqgt4S/lasd3.jpg입니다.)&lt;/p&gt;
+&lt;p&gt;302	According to Symantec’s website, what is the discovery date of the malware identified in the macro-enabled file? Answer guidance: Provide the US date format MM/DD/YY. (Example: January 1, 2019 should be provided as 01/01/19)&lt;br /&gt;
+시만텍 웹사이트에 따르면 매크로 실행 파일에서 식별된 악성코드의 발견 날짜는 언제입니까? 답변 안내: 미국 날짜 형식 MM/DD/YY를 제공하십시오. (예시: 2019년 1월 1일은 01/01/19로 제공되어야 함)&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with XmlWinEventLog:Microsoft-Windows-Sysmon/Operational as the sourcetype, or review the PowerShell logging on various Frothly laptops.
-    XmlWinEventLog:Microsoft-Windows-Sysmon/Operational을 소스 유형으로 시작하거나 다양한 Frothly 랩톱에서 PowerShell 로깅을 검토합니다.
+    Use ms:aad:signin as the sourcetype for Azure Active Directory sign-in activity.
+    Azure Active Directory 로그인 활동의 소스 유형으로 ms:aad:signin을 사용합니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Use WinEventLog:Application as the sourcetype to identify the security risk found.&lt;br /&gt;
+    WinEventLog:Application을 소스 유형으로 사용하여 발견된 보안 위험을 식별합니다.        
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Google search for that risk and the term Symantec together.&lt;br /&gt;
+    Google에서 해당 위험과 Symantec이라는 용어를 함께 검색합니다.
 &lt;/details&gt;
 
-&lt;p&gt;323	At least two Frothly endpoints contact the adversary’s command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.&lt;br /&gt;
-최소 2개의 Frothly 엔드포인트가 적의 명령 및 제어 인프라에 접속합니다. 짧은 호스트 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.&lt;/p&gt;
+&lt;p&gt;조사 방향을 잡기힘드니 &lt;strong&gt;macro&lt;/strong&gt;로 검색해봅니다.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*macro*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;그럼 19개의 이벤트가 발생하는데, stream:smtp로그가 눈에 띕니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-05-33-01.png&quot; alt=&quot;&quot; /&gt;
+첨부파일 &lt;strong&gt;Malware Alert Text.txt&lt;/strong&gt;의 base64 인코딩값을 발견할 수 있습니다. 디코딩해봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Malware was detected in one or more attachments included with this email message. 
+Action: All attachments have been removed.
+Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm	 W97M.Empstage
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;추후 마저 풀겠음&lt;/p&gt;
+
+&lt;p&gt;303	What is the password for the user that was successfully created by the user “root” on the on-premises Linux system?&lt;br /&gt;
+온프레미스 Linux 시스템에서 사용자 “루트”가 성공적으로 생성한 사용자의 비밀번호는 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use osquery:results as the sourcetype.&lt;br /&gt;
+    sourcetype osquery:results에서 조사하세요.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Osquery is logging command executions on the Linux host hoth.&lt;br /&gt;
+    Osquery는 Linux 호스트 hoth에서 명령 실행을 기록하고 있습니다.
+&lt;/details&gt;
+
+&lt;p&gt;linux에서 사용자 추가명령어는 useradd 혹은 adduser입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results *useradd* OR *adduser*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;이벤트2개가 뜹니다.&lt;/p&gt;
+
+&lt;p&gt;cmdline: “useradd” “-ou” “tomcat7” “-p” “ilovedavidverve” “0” “-g” “0” “-M” “-N” “-r” “-s” “/bin/bash”
+cmdline: “useradd” “-ou” “tomcat7” “-p” “davidverve.com” “0” “-g” “0” “-M” “-N” “-r” “-s” “/bin/bash”&lt;/p&gt;
+
+&lt;p&gt;이중, 실행한 uid가 0인 이벤트의 비밀번호값은 ilovedavidverve입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : ilovedavidverve&lt;/p&gt;
+
+&lt;p&gt;304	What is the name of the user that was created after the endpoint was compromised?&lt;br /&gt;
+엔드포인트가 손상된 후 생성된 사용자의 이름은 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use WinEventLog:Security as the sourcetype.&lt;br /&gt;
+    WinEventLog:Security를 ​​소스 유형으로 사용하십시오.    
+&lt;/details&gt;
+
+&lt;p&gt;엔드포인트라고 했으니, 윈도우 시스템일 것입니다. 이벤트로그에서 계정생성 이벤트를 찾아봅시다.
+구글에 검색하니 계정생성 윈도우이벤트로그 ID는 4720입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-06-10-48.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=WinEventLog EventCode=4720
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;한개의 이벤트가 나옵니다. 
+Account Name:		svcvnc&lt;/p&gt;
+
+&lt;p&gt;답 : svcvnc&lt;/p&gt;
+
+&lt;p&gt;305	What is the process ID of the process listening on a “leet” port?&lt;br /&gt;
+“leet” 포트에서 수신 대기하는 프로세스의 프로세스 ID는 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use osquery:results as the sourcetype.&lt;br /&gt;
+    osquery:results를 소스 유형으로 사용하십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Osquery is logging open ports found on the Linux host hoth.&lt;br /&gt;
+    Osquery는 Linux 호스트 hoth에서 발견된 열린 포트를 기록하고 있습니다.
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Leet&quot;&gt;leet&lt;/a&gt;는 1337포트를 사용하는 서비스입니다. PID는 sourcetype ps에서 확인할 수 있을것입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1337 sourcetype=ps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;결과
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root             14356     0      0.0      00:00:00     0.1       1732       6492   ?        S         31:58  netcat              -v_-l_-p_1337_-e_/bin/bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;pid는 14356임을 알 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;답 : 14356&lt;/p&gt;
+
+&lt;p&gt;306	A search query originating from an external IP address of Frothly’s mail server yields some interesting search terms. What is the search string?
+Frothly 메일 서버의 외부 IP 주소에서 시작되는 검색 쿼리는 몇 가지 흥미로운 검색어를 생성합니다. 검색 문자열은 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use o365:management:activity as the sourcetype.
+    sourcetype o365:management:activity에서 조사하십시오.
+&lt;/details&gt;
+
+&lt;p&gt;ms office를 사용하는것을 알고있으니, Outlook 혹은 Exchange를 사용할 것입니다. o365관련 sourcetype에서 키워드 query를 조사해봅니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=*o365* (Exchange OR Outlook) *query*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래와 같은 로그를 발견할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;ClientIP: 104.207.83.63:21974
+user: fyodor@froth.ly
+Workload: Exchange
+UserKey: 1003BFFDA2E71FF9
+UserType: 2
+Name: SearchQuery
+Value: cromdale OR beer OR financial OR secret&lt;/p&gt;
+
+&lt;p&gt;답 : cromdale OR beer OR financial OR secret&lt;/p&gt;
+
+&lt;p&gt;307	What is the MD5 value of the file downloaded to Fyodor’s endpoint system and used to scan Frothly’s network?&lt;br /&gt;
+Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워크를 스캔하는 데 사용되는 파일의 MD5 값은 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+&lt;p&gt;실행파일의 hash값은 sysmon로그에 있습니다.
+sourcetype으로 제공되지않고, source로 제공합니다.
+파일이 실행됐다면 process creation이벤트가 발생했을것입니다.(EventID=1)
+어떤 파일이 실행됐는지 파악할 수 있도록 Image필드의 값을 봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;host=FYODOR-L source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot; EventID=1 
+| stats count by Image
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Images 중 “C:\Windows\Temp\hdoor.exe”라는 특이한 실행파일이 보입니다.
+CommandLine을 보면 “C:\windows\temp\hdoor.exe” -hbs 192.168.9.1-192.168.9.50 /b /m /n 식으로 네트워크 대역관련 인자가 보입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : 586EF56F4D8963DD546163AC31C865D7&lt;/p&gt;
+
+&lt;p&gt;308	Based on the information gathered for question 304, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.&lt;br /&gt;
+문제 304에 대해 수집된 정보에 따르면 엔드포인트가 손상된 후 이 사용자는 어떤 그룹에 할당되었습니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
     
 &lt;/details&gt;
 
-&lt;p&gt;324	Who is Al Bungstein’s cell phone provider/carrier? Answer guidance: Two words.&lt;br /&gt;
-324 Al Bungstein의 휴대전화 제공업체/이동통신사는 누구인가요? 답변 안내: 두 단어.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    How can you find out what external IP address Al Bungstein is using?&lt;br /&gt;
-    Al Bungstein이 사용하는 외부 IP 주소를 어떻게 알 수 있습니까?
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    OSINT is your friend here. Pivot off of Al's external IP.&lt;br /&gt;
-    OSINT는 여기 당신의 친구입니다. Al의 외부 IP를 피벗합니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    There is a single sourcetype in Splunk that also contains this information. It is a scripted input running on Al's machine.&lt;br /&gt;
-    Splunk에는 이 정보도 포함하는 단일 소스 유형이 있습니다. Al의 시스템에서 실행되는 스크립트 입력입니다.
-&lt;/details&gt;
+&lt;p&gt;계정명 svcvnc의 그룹을 알아봅시다.&lt;/p&gt;
 
-&lt;p&gt;Al Bungstein의 이메일은 &lt;strong&gt;abungstein@froth.ly&lt;/strong&gt;입니다.
-ip : 174.215.1.81&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4732&quot;&gt;sysmon Group할당&lt;/a&gt;eventID는 4732입니다.&lt;/p&gt;
 
-&lt;p&gt;해당 ip를 &lt;a href=&quot;https://domain.whois.co.kr/whois/search.php&quot;&gt;whois&lt;/a&gt;에 조회해보면&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-18-03-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;답 : Verizon Wireless&lt;/p&gt;
-
-&lt;p&gt;325	Microsoft cloud services often have a delay or lag between “index time” and “event creation time”. For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.&lt;br /&gt;
-Microsoft 클라우드 서비스는 종종 “인덱스 시간”과 “이벤트 생성 시간” 사이에 지연 또는 지연이 있습니다. 전체일 중 ms:aad:signin의 최대 지연 시간(분)은 얼마입니까? 답변 안내: 측정 단위 없이 가장 가까운 분으로 반올림합니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-
-&lt;/details&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin  
-| eval indextime=strftime(_indextime,&quot;%Y-%m-%d %H:%M:%S&quot;) 
-| eval time=strftime(_time,&quot;%Y-%m-%d %H:%M:%S&quot;) 
-| eval indextime_epoch=strptime(indextime,&quot;%Y-%m-%d %H:%M:%S&quot;)
-| eval time_epoch=strptime(time, &quot;%Y-%m-%d %H:%M:%S&quot;)
-| table time, indextime, indextime_epoch, time_epoch
-| eval delta=indextime_epoch-time_epoch
-| stats max(delta) as max_lag
-| eval minutes=max_lag / 60
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svcvnc EventCode=4732
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;326	According to Mallory’s advertising research, how is beer meant to be enjoyed? Answer guidance: One word.&lt;br /&gt;
-Mallory의 광고 연구에 따르면 맥주는 어떻게 즐길 수 있습니까? 답변 안내: 한 마디.&lt;/p&gt;
+&lt;p&gt;이벤트 2개가 나옵니다.&lt;/p&gt;
+
+&lt;p&gt;답 : Administrators,Users&lt;/p&gt;
+
+&lt;p&gt;309	At some point during the attack, a user’s domain account is disabled. What is the email address of the user whose account gets disabled and what is the email address of the user who disabled their account? Answer guidance: Comma separated without spaces, in alphabetical order. (Example: jdoe@mycompany.com,tmiller@mycompany.com)&lt;br /&gt;
+공격 중간에 어느 시점에서 사용자의 도메인 계정이 비활성화됩니다. 계정이 비활성화된 사용자의 이메일 주소는 무엇이며 계정을 비활성화한 사용자의 이메일 주소는 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다. (예: jdoe@mycompany.com,tmiller@mycompany.com)&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
     
 &lt;/details&gt;
 
-&lt;p&gt;327도 문제 없습니다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4725&quot;&gt;sysmon account disable&lt;/a&gt;eventID는 4725입니다.&lt;/p&gt;
 
-&lt;p&gt;328	What text is displayed on line 2 of the file used to escalate tomcat8’s permissions to root? Answer guidance: Provide contents of the entire line.&lt;br /&gt;
-tomcat8의 권한을 루트로 에스컬레이션하는 데 사용되는 파일의 2행에 어떤 텍스트가 표시됩니까? 답변 안내: 전체 라인의 내용을 제공합니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
-    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    You are looking for a long string of base64 information.
-    긴 base64 정보 문자열을 찾고 있습니다.
-&lt;/details&gt;
-
-&lt;p&gt;osquery에 실행관련 이벤트가 있을것입니다. 어떤 계정이 어떤 명령을 실행했는지 조사해봅니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results tomcat8 columns.cmdline=*
-| table _time decorations.username columns.cmdline
-| reverse
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;EventCode=4725
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;중간에 &lt;strong&gt;“chmod” “+x” “colonelnew”&lt;/strong&gt;, &lt;strong&gt;”./colonelnew”&lt;/strong&gt;의 이벤트를 발견할 수 있습니다. 
-&lt;strong&gt;colonelnew&lt;/strong&gt;은 315번문제에서 발견한 파일과 비슷합니다. sourcetype sysmon에서 cat colonel.c의 로그가 있었습니다.&lt;/p&gt;
+&lt;p&gt;아무이벤트도 나오지 않습니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*colonel* source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot;
+&lt;p&gt;AD에서 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:* *user* OR *account* OR *disable*
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;중간 &lt;strong&gt;C:\windows\temp\unziped\lsof-master\iexeplorer.exe” http://192.168.9.30:8080/frothlyinventory/showcase.action “echo Ly…. &amp;gt;&amp;gt; /tmp/colonel&lt;/strong&gt;과 같은 명령어가 보입니다.
-해당 base64를 /tmp/colonel파일로 옮기는것처럼 보입니다. 해당 데이터를 base64로 디코딩해봅니다.&lt;/p&gt;
 
-&lt;p&gt;시작 : LyoKICogVWJ1bnR1IDE2
-끝 : JldHVybiAwOwp9 &amp;gt;&amp;amp;gt&lt;/p&gt;
+&lt;p&gt;activity라는 필드에 &lt;strong&gt;Disable account&lt;/strong&gt;가 보입니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-06-41.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:* activity=&quot;Disable account&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;답 :  * Ubuntu 16.04.4 kernel priv esc&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-12-25-55.png&quot; alt=&quot;&quot; /&gt;
+actor부분에 &lt;strong&gt;fyodor@froth.ly&lt;/strong&gt;라는 이메일계정을 발견할 수 있습니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-12-27-35.png&quot; alt=&quot;&quot; /&gt;
+target을 보면 &lt;strong&gt;bgist@froth.ly&lt;/strong&gt;라는 이메일계정또한 발견할 수 있습니다.&lt;/p&gt;
 
-&lt;p&gt;329	One of the files uploaded by Taedonggang contains a word that is a much larger in font size than any other in the file. What is that word?
-대동강이 업로드한 파일 중 하나에는 파일의 다른 어떤 것보다 훨씬 큰 글자 크기의 단어가 포함되어 있습니다. 그 단어는 무엇입니까?&lt;/p&gt;
+&lt;p&gt;답 : bgist@froth.ly,fyodor@froth.ly&lt;/p&gt;
+
+&lt;p&gt;310	Another set of phishing emails were sent to Frothly employees after the adversary gained a foothold on a Frothly computer. This malicious content was detected and left behind a digital artifact. What is the name of this file? Answer guidance: Include the file extension. (Example: badfile.docx)&lt;br /&gt;
+공격자가 Frothly 컴퓨터에 발판을 마련한 후 또 다른 피싱 이메일 세트가 Frothly 직원에게 전송되었습니다. 이 악성 콘텐츠는 감지되어 디지털 아티팩트를 남겼습니다. 이 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: badfile.docx)&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Figure out what files were uploaded, and pivot off of interesting file names found. The WinEventLog:Security sourcetype is helpful, as is the osquery:results sourcetype.&lt;br /&gt;
-    어떤 파일이 업로드되었는지 파악하고 발견된 흥미로운 파일 이름을 중심으로 중심을 잡습니다. WinEventLog:Security 소스 유형은 osquery:results 소스 유형과 마찬가지로 유용합니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    You are looking for a long string of base64 information.&lt;br /&gt;
-    긴 base64 정보 문자열을 찾고 있습니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    You will need to find a site to decode the base64 to a viewable image. CyberChef is a good one!
-    base64를 볼 수 있는 이미지로 디코딩하려면 사이트를 찾아야 합니다. CyberChef는 좋은 사람입니다!
+    
 &lt;/details&gt;
 
-&lt;p&gt;지금까지 문제에서 대동강그룹이 업로드한 파일은 colonel, Frothly_GABF_Deck-2018-MK.pptx, 1534778082419.png, definitelydontinvestigatethisfile.sh로 파악했습니다.
-각 검색하여 base64 디코딩해봅시다.
-&lt;strong&gt;definitelydontinvestigatethisfile.sh&lt;/strong&gt;를 검색해보면
-sysmon에 아래 base64 코드들이 있습니다.
-시작 : /9j/4AAQSkZJRgABAQAAAQABAAD/
-끝 : BvdGF0byBwaG9uZQo=&lt;/p&gt;
+&lt;p&gt;문제 302번에서 발견한 &lt;strong&gt;Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm&lt;/strong&gt;파일이 생각납니다. 
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-13-15-28.png&quot; alt=&quot;&quot; /&gt;
+해당 파일명으로 검색해보면 auto-sacning되어 지워졌음을 확인할 수 있습니다.&lt;/p&gt;
 
-&lt;p&gt;해당 데이터를 디코드해보면 아래와 같습니다. 
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-21-07.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;답 : Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm&lt;/p&gt;
 
-&lt;p&gt;답 : splunk&lt;/p&gt;
-
-&lt;p&gt;330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.&lt;br /&gt;
-어떤 Frothly VPN 사용자가 가장 많은 트래픽을 생성했습니까? 답변 안내: VPN 사용자 이름을 제공합니다.&lt;/p&gt;
+&lt;p&gt;311	Based on the answer to question 310, what is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension. (Example: explorer.exe)&lt;br /&gt;
+310번 문제에 대한 답변에 따르면 악성코드에 포함된 실행 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: explorer.exe)&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with cisco:asa as the sourcetype.
-    sourcetype cisco:asa에서 조사하십시오.
+    
 &lt;/details&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=cisco:asa eventtype=cisco_vpn
-| stats count by Cisco_ASA_user
-| sort -count
+&lt;p&gt;바로 다음이벤트의 Image에 exe파일이 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-13-22-46.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : HxTsr.exe&lt;/p&gt;
+
+&lt;p&gt;312	How many unique IP addresses “used” the malicious link file that was sent?&lt;br /&gt;
+전송된 악성 링크 파일을 “사용”한 고유 IP 주소는 몇 개입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;300번문제에서 파악한 악성 링크파일의 이름은 &lt;strong&gt;BRUCE BIRTHDAY HAPPY HOUR PICS.lnk&lt;/strong&gt;입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;BRUCE BIRTHDAY HAPPY HOUR PICS.lnk&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;67개의 이벤트가 있습니다.
+그중 operation field값 중 &lt;strong&gt;AnonymousLinkUsed&lt;/strong&gt;이 눈에 띕니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;2021-11-01-13-29-24.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;BRUCE BIRTHDAY HAPPY HOUR PICS.lnk&quot;  Operation=AnonymousLinkUsed
+| stats dc(ClientIP)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;답 : 7&lt;/p&gt;
+
+&lt;p&gt;313문제도 없네요&lt;/p&gt;
+
+&lt;p&gt;314	What port number did the adversary use to download their attack tools?&lt;br /&gt;
+공격자가 공격 도구를 다운로드하는 데 사용한 포트 번호는 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;stream:tcp에서 조사해봅니다.
+well-known포트가 아닌 포트 중 한번만 다운로드 한 이벤트를 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:tcp
+| stats count by dest_port
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;45.77.53.176:3333과 192.168.8.103:50504가 count 1입니다.
+외부망 IP인 45.77.53.176이 의심스럽습니다.
+stream:http에서 확인해봅시다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;uri_path: /images/logos.png&lt;/strong&gt;를 발견할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;답 : 3333&lt;/p&gt;
+
+&lt;p&gt;315	During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files? Answer guidance: Comma separated without spaces, in alphabetical order, include the file extension where applicable.&lt;br /&gt;
+공격하는 동안 공격자는 온프레미스 Linux 서버의 /tmp 디렉터리에 두 개의 파일을 원격으로 스트리밍합니다. 이 파일의 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분하고 해당되는 경우 파일 확장자를 포함합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;file upload 관련 로그는 osquery에 있을것입니다. create, upload관련 행위를 하는 데이터를 찾아봅시다.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results */tmp*.* &quot;columns.action&quot;=CREATED
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;create한 user 중 &lt;strong&gt;tomcat8&lt;/strong&gt;을 발견할 수 있습니다. tomcat7이 악성행위하는 계정을 생성했으니 해당 계정도 의심스럽습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results */tmp*.* &quot;columns.action&quot;=CREATED &quot;decorations.username&quot;=tomcat8
+| table columns.target_path
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;Cisco_ASA_user&lt;/th&gt;
+      &lt;th&gt;columns.target_path&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/tmp/ccgZ61x9.o&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/tmp/cclBJ1WV.s&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/tmp/colonel.c&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/tmp/definitelydontinvestigatethisfile.sh&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;실행파일은 colonel.c와 definitelydontinvestigatethisfile.sh입니다.&lt;/p&gt;
+
+&lt;p&gt;316	Based on the information gathered for question 314, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.&lt;br /&gt;
+314번 문제에 대해 수집된 정보를 바탕으로 공격 도구가 포함된 것으로 유추할 수 있는 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;답 : logos.png&lt;/p&gt;
+
+&lt;p&gt;317	What is the first executable uploaded to the domain admin account’s compromised endpoint system? Answer guidance: Include the file extension.&lt;br /&gt;
+도메인 관리자 계정의 손상된 엔드포인트 시스템에 업로드된 첫 번째 실행 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;domain admin의 GUI는 (&lt;strong&gt;S-1-5-21*-512&lt;/strong&gt;)[https://docs.microsoft.com/en-US/windows/security/identity-protection/access-control/security-identifiers]과 같습니다.
+이 키워드로 검색해도 아무것도 나오지않습니다.&lt;/p&gt;
+
+&lt;p&gt;sysmon에서 .exe확장자 파일을 검색해봅니다. 악성코드는 보통 tmp, temp파일에 업로드하니 경로조건도 추가해봅니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*.exe source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot; Image IN(*tmp*, *temp*)
+| stats count by Image
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Image&lt;/th&gt;
       &lt;th&gt;count&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;mkraeusen&lt;/td&gt;
-      &lt;td&gt;38&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bstoll&lt;/td&gt;
-      &lt;td&gt;36&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bgist&lt;/td&gt;
-      &lt;td&gt;19&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;fyodor&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;pcerf&lt;/td&gt;
-      &lt;td&gt;13&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ghoppy&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;btun&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;abungstein&lt;/td&gt;
+      &lt;td&gt;C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe&lt;/td&gt;
       &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe&lt;/td&gt;
+      &lt;td&gt;9&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C:\Windows\Temp\hdoor.exe&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe&lt;/td&gt;
+      &lt;td&gt;51&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;답 : mkraeusen&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;hdoor.exe&lt;/strong&gt;이 굉장히 의심스럽습니다.&lt;/p&gt;
 
-&lt;p&gt;331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR&lt;br /&gt;
-Splunk 명령만 사용하는 경우 하루 종일 Windows 호스트의 이벤트 코드 4688 수에 대한 사분위수 범위(IQR)의 상한(UF) 값은 얼마입니까? 1.5 배율을 사용하십시오. 답변 안내: UF = Q3 + 1.5 x IQR&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with WinEventLog:Security as the sourcetype.&lt;br /&gt;
-    sourcetype WinEventLog:Security를 조사하십시오.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Splunk commands such as eventstats, perc25() and perc75() would be helpful here.&lt;br /&gt;
-    여기에서 eventstats, perc25() 및 perc75()와 같은 Splunk 명령이 도움이 될 것입니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    If you have never used the interquartile range (IQR) to identify outliers, take a look at the documentation https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers&lt;br /&gt;
-    사분위수 범위(IQR)를 사용하여 이상값을 식별한 적이 없는 경우 https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers 문서를 참조하십시오.
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688&quot;&gt;eventcode4688&lt;/a&gt;
-새 process creation 이벤트 코드입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=wineventlog EventCode=4688
-| eventstats perc25(count) as p25, perc75(count) as p75
-| eval IQR=p75-p25
-| eval UF=p75+1.5*IQR
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*.exe source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot; Image IN(*tmp*, *temp*)
+| dedup Image
+| table _time Image Computer User SourceIp DestinationIp
+| reverse
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;답 : 1368&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;_time&lt;/th&gt;
+      &lt;th&gt;Image&lt;/th&gt;
+      &lt;th&gt;Computer&lt;/th&gt;
+      &lt;th&gt;User&lt;/th&gt;
+      &lt;th&gt;SourceIp&lt;/th&gt;
+      &lt;th&gt;DestinationIp&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2018/08/20 09:16:50&lt;/td&gt;
+      &lt;td&gt;C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe&lt;/td&gt;
+      &lt;td&gt;ABUNGST-L.froth.ly&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2018/08/20 10:33:27&lt;/td&gt;
+      &lt;td&gt;C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe&lt;/td&gt;
+      &lt;td&gt;BGIST-L.froth.ly&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2018/08/20 10:33:27&lt;/td&gt;
+      &lt;td&gt;C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe&lt;/td&gt;
+      &lt;td&gt;BGIST-L.froth.ly&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2018/08/20 10:44:05&lt;/td&gt;
+      &lt;td&gt;C:\Windows\Temp\hdoor.exe&lt;/td&gt;
+      &lt;td&gt;FYODOR-L.froth.ly&lt;/td&gt;
+      &lt;td&gt;AzureAD\FyodorMalteskesko&lt;/td&gt;
+      &lt;td&gt;192.168.8.103&lt;/td&gt;
+      &lt;td&gt;192.168.9.50&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2018/08/20 11:34:02&lt;/td&gt;
+      &lt;td&gt;C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe&lt;/td&gt;
+      &lt;td&gt;FYODOR-L.froth.ly&lt;/td&gt;
+      &lt;td&gt;AzureAD\FyodorMalteskesko&lt;/td&gt;
+      &lt;td&gt;192.168.8.103&lt;/td&gt;
+      &lt;td&gt;192.168.9.30&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2018/08/20 11:34:33&lt;/td&gt;
+      &lt;td&gt;C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe&lt;/td&gt;
+      &lt;td&gt;FYODOR-L.froth.ly&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2018/08/20 15:00:41&lt;/td&gt;
+      &lt;td&gt;C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe&lt;/td&gt;
+      &lt;td&gt;PCERF-L.froth.ly&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-&lt;p&gt;332	What is the CVE of the vulnerability that escalated permissions on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
-Linux 호스트 hoth에서 권한을 에스컬레이션한 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
-    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    You are looking for a long string of base64 information.
-    긴 base64 정보 문자열을 찾고 있습니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    Google search.
-    구글링 하세요.
-&lt;/details&gt;
+&lt;p&gt;가장 먼저 업로드된 파일은 hdoor.exe입니다.&lt;/p&gt;
 
-&lt;p&gt;328번문제에서 발견한 “* Ubuntu 16.04.4 kernel priv esc”를 구글링해봅시다.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.exploit-db.com/exploits/44298&quot;&gt;CVE-2017-16995&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;답 : CVE-2017-16995&lt;/p&gt;
-
-&lt;p&gt;333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)&lt;br /&gt;
-Linux 호스트 hoth에서 명령을 실행하기 위해 악용된 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;</content>
+&lt;p&gt;답 : hdoor.exe&lt;/p&gt;</content>
 
       
       
@@ -3700,12 +3662,12 @@ Linux 호스트 hoth에서 명령을 실행하기 위해 악용된 취약점의 
     </entry>
   
     <entry>
-      <title type="html">splunk-bots-v2 write up(3)</title>
-      <link href="https://wind-flow.github.io/splunk-BOTS-v2-part3" rel="alternate" type="text/html" title="splunk-bots-v2 write up(3)" />
+      <title type="html">splunk-bots-v2 write up(5) - END</title>
+      <link href="https://wind-flow.github.io/splunk-BOTS-v2-part5" rel="alternate" type="text/html" title="splunk-bots-v2 write up(5) - END" />
       <published>2021-10-04T20:04:36+09:00</published>
       <updated>2021-10-04T20:04:36+09:00</updated>
-      <id>https://wind-flow.github.io/splunk-BOTS-v2-part3</id>
-      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v2-part3">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
+      <id>https://wind-flow.github.io/splunk-BOTS-v2-part5</id>
+      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v2-part5">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
 &lt;ul class=&quot;table-of-contents-list&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
@@ -3763,417 +3725,137 @@ Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원
 
 &lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b22.jpg&quot; alt=&quot;Scenario 2&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;300	According to Frothly’s records, what is the likely MAC address of Mallory’s corporate MacBook? Answer guidance: Her corporate MacBook has the hostname MACLORY-AIR13.&lt;br /&gt;
-Frothly의 기록에 따르면 Mallory의 회사 MacBook의 MAC 주소는 무엇입니까? 답변 안내: 그녀의 회사 MacBook의 호스트 이름은 MACLORY-AIR13입니다.&lt;/p&gt;
+&lt;p&gt;500	Individual clicks made by a user when interacting with a website are associated with each other using session identifiers. You can find session identifiers in the stream:http sourcetype. The Frothly store website session identifier is found in one of the stream:http fields and does not change throughout the user session. What session identifier is assigned to dberry398@mail.com when visiting the Frothly store for the very first time? Answer guidance: Provide the value of the field, not the field name.&lt;br /&gt;
+웹 사이트와 상호 작용할 때 사용자가 만든 개별 클릭은 세션 식별자를 사용하여 서로 연결됩니다. stream:http sourcetype에서 세션 식별자를 찾을 수 있습니다. Frothly 상점 웹사이트 세션 식별자는 stream:http 필드 중 하나에서 찾을 수 있으며 사용자 세션 전체에서 변경되지 않습니다. Frothly 스토어를 처음 방문할 때 dberry398@mail.com에 할당된 세션 식별자는 무엇입니까? 답변 안내: 필드 이름이 아닌 필드 값을 제공하십시오.&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use Asset Center in ES.&lt;br /&gt;
+    Find the source IP address that our user of interest is using, then broaden your search such that you can view all events specific to the user's src ip address.&lt;br /&gt;
+    관심 사용자가 사용하고 있는 소스 IP 주소를 찾은 다음 사용자의 src IP 주소와 관련된 모든 이벤트를 볼 수 있도록 검색을 확장하십시오.
 &lt;/details&gt;
-
-&lt;p&gt;해당 문제는 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.&lt;/p&gt;
-
-&lt;p&gt;301	What episode of Game of Thrones is Mallory excited to watch? Answer guidance: Submit the HBO title of the episode.
-말로리는 왕좌의 게임의 어떤 에피소드를 보고 싶어 할까요? 답변 안내: 에피소드의 HBO 제목을 제출하세요.&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Look for video files downloaded to MACLORY-AIR13.&lt;br /&gt;
-    MACLORY-AIR13에 다운로드된 비디오 파일을 찾습니다.
-&lt;/details&gt;
-
-&lt;p&gt;host가 MACLORY-AIR13인 데이터 중에서 game of thrones, got 등의 키워드로 찾아봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;host=MACLORY-AIR13 &quot;*game of thrones*&quot; OR &quot;got&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;결과&lt;br /&gt;
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-15-24-33.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;target_path필드 값은 다음과 같습니다.&lt;br /&gt;
-&lt;strong&gt;/Users/mallorykraeusen/Downloads/GoT.S7E2.BOTS.BOTS.BOTS.mkv.torrent.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;시즌7의 2화의 제목은 Stormborn입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-15-27-50.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;답 : Stormborn&lt;/p&gt;
-
-&lt;p&gt;302	What is Mallory Krauesen’s phone number? Answer guidance: ddd-ddd-dddd where d=[0-9]. No country code.&lt;br /&gt;
-Mallory Krauesen의 전화번호는 무엇입니까? 답변 안내: ddd-ddd-dddd 여기서 d=[0-9]. 국가 코드가 없습니다.&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use Identity Center in ES.  
-&lt;/details&gt;
-
-&lt;p&gt;해당 문제는 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.&lt;/p&gt;
-
-&lt;p&gt;303	Enterprise Security contains a threat list notable event for MACLORY-AIR13 and suspect IP address 5.39.93.112. What is the name of the threatlist (i.e. Threat Group) that is triggering the notable?&lt;br /&gt;
-Enterprise Security에는 MACLORY-AIR13 및 의심되는 IP 주소 5.39.93.112에 대한 주요 이벤트 목록이 포함되어 있습니다. 주목할 만한 것을 유발하는 위협 목록(예: 위협 그룹)의 이름은 무엇입니까?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Look for threat activity from Mallory's MacBook in the Incident Review dashboard.&lt;br /&gt;
-    Incident Review 대시보드에서 Mallory의 MacBook에서 위협 활동을 찾습니다.
-&lt;/details&gt;
-
-&lt;p&gt;해당 문제는 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.&lt;/p&gt;
-
-&lt;p&gt;304	Considering the threatlist you found in the question above, and related data, what protocol often used for file transfer is actually responsible for the generated traffic?&lt;br /&gt;
-위의 질문에서 찾은 위협 목록과 관련 데이터를 고려할 때 파일 전송에 자주 사용되는 프로토콜이 실제로 생성된 트래픽을 담당합니까?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Do you see MACLORY-AIR13 communicating with known Tor addresses? That's misleading.&lt;br /&gt;
-    알려진 Tor 주소와 통신하는 MACLORY-AIR13이 보입니까? 오해의 소지가 있습니다.
-&lt;/details&gt;
-
-&lt;p&gt;위 IP에서 특이한 로그가 있는지 살펴봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;5.39.93.112
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;sourcetype은 &lt;a href=&quot;https://docs.paloaltonetworks.com/pan-os/8-1/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions/traffic-log-fields&quot;&gt;pan:traffic&lt;/a&gt; 한가지만 있고,
-app field에 bittorrent를 찾을 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : bittorrent&lt;/p&gt;
-
-&lt;p&gt;305	Mallory’s critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. At what hour, minute, and second does this actually happen? Answer guidance: Provide the time in PDT. Use the 24h format HH:MM:SS, using leading zeroes if needed. Do not use Splunk’s _time (index time).&lt;br /&gt;
-Mallory Macbook에 있는 중요한 PowerPoint파일이 8월 18일 랜섬웨어에 의해 암호화되었습니다. 몇 시, 분, 초에 발생했습니까 ? 답변 안내: PDT로 시간을 제공합니다. 필요한 경우 선행 0을 사용하여 24시간 형식 HH:MM:SS를 사용합니다. Splunk의 _time(index time)을 사용하지 마십시오.&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    People that work on PowerPoint presentations generally save them in their Documents folder.&lt;br /&gt;
-    PowerPoint 작업을 하는 사람들은 일반적으로 문서 폴더에 프레젠테이션을 저장합니다.
-&lt;/details&gt;
-
 &lt;details&gt;
   &lt;summary&gt;hint#2&lt;/summary&gt;
-    The time that Splunk indexed this information might not be the time the file was modified.&lt;br /&gt;
-    Splunk가 이 정보를 인덱싱한 시간은 파일이 수정된 시간이 아닐 수 있습니다.
+    HTTP cookies often contain information specific to a user session, including session identifiers.&lt;br /&gt;
+    HTTP 쿠키는 종종 세션 식별자를 포함하여 사용자 세션에 특정한 정보를 포함합니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    After you get the events specific to the user's src ip address, you can append a '| reverse |table cookie' to get a better view of the cookies that the user clicked.&lt;br /&gt;
+    사용자의 src IP 주소와 관련된 이벤트를 얻은 후 '|reverse |table cookie'를 사용하여 사용자가 클릭한 쿠키를 더 잘 볼 수 있습니다.
 &lt;/details&gt;
 
-&lt;p&gt;splunk의 _time을 사용하지말라고했으니 해당 로그에 시간과 관련된 필드가 있을것입니다.&lt;/p&gt;
+&lt;p&gt;보통 seesion정보는 cookie필드에 있으므로, decode해서 해당 값을 봅시다.&lt;/p&gt;
 
-&lt;p&gt;우선 탐색 시간을 2017/08/18 00 ~ 2018/08/19 00시로 설정하고, 키워드를 다음과 같이 설정하고 조사해봅니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*mallory* (*.ppt OR *.pptx)
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http dberry398@mail.com
+| eval decoded=urldecode(cookie)
+| table decoded
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-16-48-38.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;target_path 필드에 crypt된 파일이 보입니다. 원본 파일 경로와 이름은 /Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx이므로, 해당 키워드로 검색해봅시다.
-또, 시간을 알아봐야하니 mac time 관련 데이터를 table 명령어를 사용해 파악해봅시다.
-&lt;a href=&quot;https://itwiki.kr/w/MAC_Time&quot;&gt;MAC TIME이란?&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;- Mtime(modified time) : 파일을 생성한 시간, 또는 가장 최근에 파일 내용을 바꾼 시간&lt;br /&gt;
-- Atime(accessed time) : 가장 최근에 파일을 읽거나(Read) 실행(Execution)시킨 시간&lt;br /&gt;
-- Ctime(changed time) : 가장 최근에 파일의 소유권, 그룹, 퍼미션 등 파일의 속성(inode 정보)이 변경된 시간&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results columns.target_path=&quot;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx*&quot;
-| table _time columns.target_path columns.mtime columns.atime columns.ctime columns.time unixTime
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.timeanddate.com/time/zones/pdt&quot;&gt;PDT(Pacific Daylight Time)란?#1&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://luran.me/339&quot;&gt;PDT(Pacific Daylight Time)란?#2&lt;/a&gt;&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;_time&lt;/th&gt;
-      &lt;th&gt;columns.target_path&lt;/th&gt;
-      &lt;th&gt;columns.mtime&lt;/th&gt;
-      &lt;th&gt;columns.atime&lt;/th&gt;
-      &lt;th&gt;columns.ctime&lt;/th&gt;
-      &lt;th&gt;columns.time&lt;/th&gt;
-      &lt;th&gt;unixTime&lt;/th&gt;
+      &lt;th&gt;decoded&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
-      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
-      &lt;td&gt;1266652800&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093022&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093043&lt;/td&gt;
+      &lt;td&gt;store=default; mage-translation-storage={}; mage-translation-file-version={}; form_key=lwh9Ql7oUbnJUqxR; PHPSESSID=o6fc5a2rdoufmb8en8bqvfbav2; mage-cache-storage={}; mage-cache-storage-section-invalidation={}; recently_viewed_product={}; recently_viewed_product_previous={}; recently_compared_product={}; recently_compared_product_previous={}; product_data_storage={}; section_data_ids={“cart”:1502757091,”customer”:null,”messages”:null,”compare-products”:null,”product_data_storage”:null}; private_content_version=837d56d7fe0264712bb5f12adacd2dc5; mage-messages=[{“type”:”success”,”text”:”Thank you for registering with Main Website Store.”}]; X-Magento-Vary=20b556236a9f73d55ee9ffb5a21ffc45a5f6d878&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
-      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
-      &lt;td&gt;1266652800&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093022&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093043&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
-      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
-      &lt;td&gt;1266652800&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093022&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093043&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
-      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
-      &lt;td&gt;1266652800&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093022&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093043&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
-      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
-      &lt;td&gt;1266652800&lt;/td&gt;
-      &lt;td&gt;1503093022&lt;/td&gt;
-      &lt;td&gt;1503093022&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093043&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
-      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx&lt;/td&gt;
-      &lt;td&gt;-&lt;/td&gt;
-      &lt;td&gt;-&lt;/td&gt;
-      &lt;td&gt;-&lt;/td&gt;
-      &lt;td&gt;1503093023&lt;/td&gt;
-      &lt;td&gt;1503093043&lt;/td&gt;
+      &lt;td&gt;store=default; mage-translation-storage={}; mage-translation-file-version={}; PHPSESSID=mlhg4l49hi8hn93b2abtr75j42; form_key=lwh9Ql7oUbnJUqxR; mage-cache-storage={}; mage-cache-storage-section-invalidation={}; recently_viewed_product={}; recently_viewed_product_previous={}; recently_compared_product={}; recently_compared_product_previous={}; product_data_storage={}; mage-cache-sessid=true; mage-messages=; private_content_version=becda8344cf560edfa267a78a663f962; X-Magento-Vary=9bf9a599123e6402b85cde67144717a08b817412; section_data_ids={“cart”:1502756249,”customer”:1502756125,”compare-products”:1502756125,”product_data_storage”:1502756125,”last-ordered-items”:1502756125,”directory-data”:1502756126,”review”:1502756125,”wishlist”:1502756125,”recently_viewed_product”:1502756125,”recently_compared_product”:1502756125,”paypal-billing-agreement”:1502756125}&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;랜섬웨어로 파일이 변경되었으면 권한이 바뀌었으므로 ctime을 기준으로 보면 될것입니다.
-ctime : 1503093022&lt;/p&gt;
+&lt;p&gt;두개 이벤트 중 값이 같고, session값으로 보이는 항목은 &lt;strong&gt;form_key&lt;/strong&gt;입니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://time.is/ko/Unix_time_converter&quot;&gt;유닉스 타임변환 사이트&lt;/a&gt;
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-17-28-03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;답 : lwh9Ql7oUbnJUqxR&lt;/p&gt;
 
-&lt;p&gt;PDT는 UTC-7과 같다고 설명되어있습니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-17-44-48.png&quot; alt=&quot;PDT Time 설명&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Sat Aug 19 2017 06:50:22 UTC+0900에서 UTC-7로 환산해보면(-16시간)
-Sat Aug 18 2017 14:50:22 입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : 14:50:22&lt;/p&gt;
-
-&lt;p&gt;306	How many seconds elapsed between the time the ransomware executable was written to disk on MACLORY-AIR13 and the first local file encryption? Answer guidance: Use the index times (_time) instead of other timestamps in the events.&lt;br /&gt;
-MACLORY-AIR13의 디스크에 랜섬웨어 실행 파일이 작성된 시간과 첫 번째 로컬 파일 암호화 사이에 몇 초가 걸렸습니까? 답변 안내: 이벤트의 다른 타임스탬프 대신 인덱스 시간(_time)을 사용하세요.&lt;/p&gt;
+&lt;p&gt;501	How many unique user ids are associated with a grand total order of $1000 or more?&lt;br /&gt;
+총 주문 금액이 $1000 이상인 고유 사용자 ID는 몇 개입니까?&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    What time did the 'Office 2016 Patcher.app' get added to MACLORY-AIR13's filesystem?&lt;br /&gt;
-    MACLORY-AIR13의 파일 시스템에 'Office 2016 Patcher.app'이 몇시에 추가되었나요?
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    What time was the first file with *.crypt added to MACLORY-AIR13's filesystem?&lt;br /&gt;
-    MACLORY-AIR13의 파일 시스템에 *.crypt가 추가된 첫 번째 파일은 언제였습니까?
-&lt;/details&gt;
-
-&lt;p&gt;.crypt가 처음붙은 파일과 MAC의 실행파일 확장자인 .app간 _time의 차를 구해봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results host=MACLORY-AIR13 columns.target_path=*.app
-| reverse
-| table _time columns.target_path
-| head 1 ```로컬실행파일
-| append 
-    [ search sourcetype=osquery_results host=MACLORY-AIR13 columns.target_path=*.crypt
-| reverse
-| table _time columns.target_path
-| head 1```첫 암호화된 로컬 파일]
-| transaction maxevents=2
-| table columns.target_path duration eventcount
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;※ &lt;a href=&quot;https://docs.splunk.com/Documentation/Splunk/8.2.2/SearchReference/Transaction&quot;&gt;transaction&lt;/a&gt;함수는 이벤트간 시간차이를 duration이라는 변수를 통해 계산해주는 함수입니다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;columns.target_path&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;duration&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;eventcount&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;/Users/mallorykraeusen/Desktop/.DS_Store.crypt&lt;br /&gt;/Users/mallorykraeusen/Downloads/Office 2016 Patcher.app&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;132&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;답 : 132&lt;/p&gt;
-
-&lt;p&gt;307	Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory’s personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.&lt;br /&gt;
-Kevin Lagerfield는 USB 드라이브를 사용하여 Mallory의 개인 MacBook인 kutekitten에 멀웨어를 옮겼습니다. 그녀는 실행 중에 스스로를 난독화하는 맬웨어를 실행했습니다. Kevin이 사용했을 가능성이 있는 USB 드라이브의 공급업체 이름을 제공합니다. 답변 지침: 시간 상관 관계를 사용하여 USB 드라이브를 식별합니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    osquery_results is a great sourcetype to review.&lt;br /&gt;
-    osquery_results에서 찾아보세요.
+    When a user fills out a web form passing information such as username, password, credit card numbers, etc., it's passed via a standard http field (form_data) which is captured by stream:http. Extract the username from that field and store it in a new field.&lt;br /&gt;
+    사용자가 사용자 이름, 암호, 신용 카드 번호 등과 같은 정보를 전달하는 웹 양식을 작성하면 stream:http에 의해 캡처되는 표준 http 필드(form_data)를 통해 전달됩니다. 해당 필드에서 사용자 이름을 추출하고 새 필드에 저장합니다.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#2&lt;/summary&gt;
-    Look for unusual files in a place that Mallory would come across them.&lt;br /&gt;
-    Mallory가 발견할 수 있는 장소에서 특이한 파일을 찾으십시오.
+    You're going to need to look deeper into the packet at a field called dest_content to extract the grand order total. Look for the following string and use it in a regular expression to capture the value: 'grand_total'.&lt;br /&gt;
+    총 주문량을 추출하려면 dest_content라는 필드에서 패킷을 더 깊이 조사해야 합니다. 다음 문자열을 찾아 정규식에서 사용하여 값을 캡처합니다. 'grand_total'.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#3&lt;/summary&gt;
-    If you can figure out what kind of malware this is, do some open source intelligence research to determine how it behaves. Find an online database of USB vendors.&lt;br /&gt;이것이 어떤 종류의 맬웨어인지 알아낼 수 있다면 오픈 소스 인텔리전스 연구를 수행하여 작동 방식을 확인하십시오. USB 공급업체의 온라인 데이터베이스를 찾으십시오.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#4&lt;/summary&gt;
-    Various sourcetypes can tell you how things look when the run. Look at 'ps' and look at 'osquery_results' from kutekitten.&lt;br /&gt;
-    다양한 소스 유형은 실행될 때 상황이 어떻게 보이는지 알려줄 수 있습니다. kutekitten의 'ps'와 'osquery_results'를 보세요.    
+    The 'stats' command is useful for helping you to link several pieces of context together that occur within a single clickstream.&lt;br /&gt;
+    'stats' 명령은 단일 클릭스트림 내에서 발생하는 여러 컨텍스트를 함께 연결하는 데 유용합니다.
 &lt;/details&gt;
 
-&lt;p&gt;해당 정보는 osquery관련 sourcetype에 있을것으로 추측됩니다. &lt;a href=&quot;https://github.com/osquery/osquery&quot;&gt;osquery&lt;/a&gt;는 실행중인 프로세스, 네트워크, 하드웨어 이벤트 등을 포함한 OS의 정보를 쿼리형식으로 질의하여 얻은 값을 갖고 있습니다.&lt;/p&gt;
+&lt;p&gt;주문금액을 묻는걸 보아하니 웹관련 이벤트인 stream:http에서 해당데이터를 찾을 수 있을것으로 생각됩니다.&lt;/p&gt;
 
-&lt;p&gt;MACBook의 이름인 kutekitten, 그리고 usb를 키워드로 두고, osquery_result에서 조사해봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results *kutekitten* *usb*
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=&quot;stream:http&quot; grand_total
+| rex field=dest_content &quot;\&quot;totals\&quot;:{\&quot;grand_total\&quot;:(?&amp;lt;cost&amp;gt;\w*),&quot;
+| search cost=* 
+| where cost&amp;gt;1000
+| dedup src_ip
+| table cost
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;columns.vendor_id라는 필드를 보면 058f, 13fe라는 값이 있습니다.
-columns.vendor_id이 있고, USB를 삽입한 데이터만 보도록 합시다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-13-49-54.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;답 : 7&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results *kutekitten* *usb* columns.vendor_id=* action=added
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;502	Which user, identified by their email address, edited their profile before placing an order over $1000 in the same clickstream? Answer guidance: Provide the user ID, not other values found from the profile edit, such as name.&lt;br /&gt;
+이메일 주소로 식별되는 어떤 사용자가 동일한 클릭스트림에서 $1000 이상 주문하기 전에 프로필을 수정했습니까? 답변 안내: 이름과 같이 프로필 편집에서 찾은 다른 값이 아닌 사용자 ID를 제공합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
 
-&lt;p&gt;이벤트 2개가 있습니다. 각 이벤트에 대해 탐색기간을 ±60초로 설정해두고, 어떤 파일을 반입했는지 확인해봅시다.
-첫번째로 vendor_id가 058f인 이벤트의 ±60초로 두고 반입된 파일의 hash값을 찾아봅시다.&lt;/p&gt;
+&lt;/details&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results *kutekitten*
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-34-51.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;columns.sha256의 hash값을 virustotal에서 조회해봅시다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-34-11.png&quot; alt=&quot;sha256&quot; /&gt;
-sha256 : befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271&lt;/p&gt;
-
-&lt;p&gt;MAC BackDoor 악성코드입니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-40-12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;제조사 13fe의 이벤트도 추가 조사해봅니다.&lt;/p&gt;
-
-&lt;p&gt;columns.device의 값이 devfs인것을 보아하니, 파일이 아닌 드라이브임을 알 수 있습니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-47-18.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;악성코드를 반입한 USB의 제조사의 ID는 058f입니다. 구글에 해당 제조사의 ID를 검색해봅니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-47-46.png&quot; alt=&quot;&quot; /&gt;
-vendorid 058f는 &lt;strong&gt;Alcor Micro Corp.&lt;/strong&gt; 입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : Alcor&lt;/p&gt;
-
-&lt;p&gt;308	What programming language is at least part of the malware from the question above written in?&lt;br /&gt;
-위의 질문에서 악성 코드의 일부인 프로그래밍 언어는 무엇입니까?&lt;/p&gt;
+&lt;p&gt;503	What street address was used most often as the shipping address across multiple accounts, when the billing address does not match the shipping address? Answer example: 123 Sesame St&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Review the hints for question 307.&lt;br /&gt;
-    문제 307에 대한 힌트를 검토하세요.
+
 &lt;/details&gt;
 
-&lt;p&gt;문제 307번에서 발견한 악성코드의 sha256 해쉬값은 &lt;strong&gt;befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271&lt;/strong&gt;입니다.
-해당 hash값으로 virustotal에서  자세한 정보를 파악해봅시다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-15-39-44.png&quot; alt=&quot;&quot; /&gt;
-Virustotal의 Detail탭의 FileType을 보면 Perl로 작성된 언어임을 알 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : Perl&lt;/p&gt;
-
-&lt;p&gt;309	The malware from the two questions above appears as a specific process name in the process table when it is running. What is it?&lt;br /&gt;
-위의 두 질문에 대한 맬웨어는 실행 중일 때 프로세스 테이블에 특정 프로세스 이름으로 나타납니다. 그것은 무엇입니까?&lt;/p&gt;
+&lt;p&gt;504	What is the domain name used in email addresses by someone creating multiple accounts on the Frothly store website (http://store.froth.ly) that appear to have machine-generated usernames?&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Review the hints for question 307.
+
 &lt;/details&gt;
 
-&lt;p&gt;접근방식을 모르겠으니, 아시는분은 제보바랍니다.
-답 : java&lt;/p&gt;
-
-&lt;p&gt;310	The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&amp;amp;C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?&lt;br /&gt;
-kutekitten을 감염시키는 악성코드는 설치 직후 2개의 C&amp;amp;C 서버와 통신하기 위해 동적 DNS 대상을 사용합니다. 이러한 대상 중 첫 번째(알파벳 순)의 정규화된 도메인 이름(FQDN)은 무엇입니까?&lt;/p&gt;
+&lt;p&gt;505	Which user ID experienced the most logins to their account from different IP address and user agent combinations? Answer guidance: The user ID is an email address.&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Have a look at the stream:dns sourcetype and observe queries from kutekitten.&lt;br /&gt;
-    stream:dns와 kutekitten이 요청한 쿼리를 보세요.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    You need a lookup. Find one, and also review this: https://www.splunk.com/blog/2015/08/04/detecting-dynamic-dns-domains-in-splunk.html&lt;br /&gt;
-    lookup이 필요합니다. https://www.splunk.com/blog/2015/08/04/detecting-dynamic-dns-domains-in-splunk.html를 참고하세요
+
 &lt;/details&gt;
 
-&lt;p&gt;virustotal의 Realtions 탭을 보면, &lt;strong&gt;eidk.duckdns.org, eidk.hopto.org&lt;/strong&gt; 두개 url이 악성으로 발견되어있습니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-16-55-36.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;철자 순서에 의해 답은 eidk.duckdns.org입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : eidk.duckdns.org&lt;/p&gt;
-
-&lt;p&gt;311	From the question above, what is the fully-qualified domain name (FQDN) of the second (alphabetically) contacted C&amp;amp;C server?&lt;br /&gt;
-위의 질문에서 두 번째(알파벳순)로 연결된 C&amp;amp;C 서버의 FQDN(정규화된 도메인 이름)은 무엇입니까?&lt;/p&gt;
+&lt;p&gt;506	What is the most popular coupon code being used successfully on the site?&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Review the hints for question 310.
-    문제 310에 대한 힌트를 검토하세요.
+
 &lt;/details&gt;
 
-&lt;p&gt;답은 eidk.hopto.org 입니다.&lt;/p&gt;
-
-&lt;p&gt;답 :  eidk.hopto.org&lt;/p&gt;
-
-&lt;p&gt;312	What is the average Alexa 1M rank of the domains between August 18 and August 19 that MACLORY-AIR13 tries to resolve while connected via VPN to the corporate network? Answer guidance: Round to two decimal places. Remember to include domains with no rank in your average! Answer example: 3.23 or 223234.91&lt;br /&gt;
-8월 18일부터 8월 19일 사이에 MACLORY-AIR13이 VPN을 통해 기업 네트워크에 연결되어 있는 동안 해결하려고 하는 도메인의 평균 Alexa 1M 순위는 얼마입니까? 답변 안내: 소수점 이하 두 자리까지 반올림합니다. 평균에 순위가 없는 도메인을 포함하는 것을 잊지 마십시오! 답변 예: 3.23 또는 223234.91&lt;/p&gt;
+&lt;p&gt;507	Several user accounts sharing a common password is usually a precursor to undesirable scenario orchestrated by a fraudster. Which password is being seen most often across users logging into http://store.froth.ly.&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    You're going to need a lookup. Are there any loaded in the system that might help you?&lt;br /&gt;
-    조회가 필요합니다. 당신을 도울 수 있는 시스템에 로드된 것이 있습니까?
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    We want the average of ranks. Not the average of hits to the domains.&lt;br /&gt;
-    우리는 순위의 평균을 원합니다. 도메인에 대한 평균 조회수가 아닙니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    https://www.splunk.com/blog/2016/03/22/splunking-1-million-urls.html
+
 &lt;/details&gt;
 
-&lt;p&gt;313	Two .jpg-formatted photos of Mallory exist in Kevin Lagerfield’s server home directory that have eight-character file names, not counting the .jpg extension. Both photos were encrypted by the ransomware. One of the photos can be downloaded at the following link, replacing 8CHARACTERS with the eight characters from the file name. https://splunk.box.com/v/8CHARACTERS After you download the file to your computer, decrypt the file using the encryption key used by the ransomware. What is the complete line of text in the photo, including any punctuation? Answer guidance: The encryption key can be found in Splunk.&lt;br /&gt;
-.jpg 형식의 Mallory 사진 두 장이 Kevin Lagerfield의 서버 홈 디렉토리에 있으며 .jpg 확장자는 제외하고 파일 이름이 8자로 되어 있습니다. 두 사진 모두 랜섬웨어에 의해 암호화되었습니다. 사진 중 하나는 다음 링크에서 다운로드할 수 있으며 8CHARACTERS를 파일 이름의 8자로 대체합니다. https://splunk.box.com/v/8CHARACTERS 파일을 컴퓨터에 다운로드한 후 랜섬웨어에서 사용하는 암호화 키를 사용하여 파일을 해독합니다. 문장부호를 포함하여 사진의 전체 텍스트 줄은 무엇입니까? 답변 안내: 암호화 키는 Splunk에서 찾을 수 있습니다.&lt;/p&gt;
+&lt;p&gt;508	Which HTML page was most clicked by users before landing on http://store.froth.ly/magento2/checkout/ on August 19th? Answer guidance: Use earliest=1503126000 and latest=1503212400 to identify August 19th. Answer example: http://store.froth.ly/magento2/bigbrew.html&lt;/p&gt;
 
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Understanding from OSINT how this ransomware behaves is key to the answer.&lt;br /&gt;
-    OSINT에서 이 랜섬웨어가 어떻게 작동하는지 이해하는 것이 답의 핵심입니다.
+
 &lt;/details&gt;
+
+&lt;p&gt;509	Which HTTP user agent is associated with a fraudster who appears to be gaming the site by unsuccessfully testing multiple coupon codes?&lt;/p&gt;
+
 &lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    This ransomware is called 'Patcher' and it is terribly written and uses *NIX command line tools to wreak havoc.&lt;br /&gt;
-    이 랜섬웨어는 '패처'라고 불리며 끔찍하게 작성되었으며 *NIX 명령줄 도구를 사용하여 혼란을 일으키고 있습니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    Patcher uses the UNIX zip utility.&lt;br /&gt;
-    Patcher는 UNIX zip 유틸리티를 사용합니다.
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+
 &lt;/details&gt;</content>
 
       
@@ -5193,6 +4875,509 @@ keyword를 amber와 tor를 두고 검색해 봅시다.
 C:\Users\amber.turing\Downloads\torbrowser-install-7.0.4_en-US.exe&lt;/p&gt;
 
 &lt;p&gt;답 : 7.0.4&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Kim-Gunwoo</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="splunk" />
+      
+
+      
+        <summary type="html">Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS v3 Write up(4) - END BOTS v4 결과</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">splunk-bots-v2 write up(3)</title>
+      <link href="https://wind-flow.github.io/splunk-BOTS-v2-part3" rel="alternate" type="text/html" title="splunk-bots-v2 write up(3)" />
+      <published>2021-10-04T20:04:36+09:00</published>
+      <updated>2021-10-04T20:04:36+09:00</updated>
+      <id>https://wind-flow.github.io/splunk-BOTS-v2-part3</id>
+      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v2-part3">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
+&lt;ul class=&quot;table-of-contents-list&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part2&quot;&gt;BOTS v1 Write up(2) - END&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part1&quot;&gt;BOTS v2 Write up(1) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part2&quot;&gt;BOTS v2 Write up(2) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part3&quot;&gt;BOTS v2 Write up(3) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part4&quot;&gt;BOTS v2 Write up(4) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part5&quot;&gt;BOTS v2 Write up(5) - END&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part1&quot;&gt;BOTS v3 Write up(1)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part2&quot;&gt;BOTS v3 Write up(2)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part3&quot;&gt;BOTS v3 Write up(3)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part4&quot;&gt;BOTS v3 Write up(4) - END&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-2021-BOTS-END&quot;&gt;BOTS v4 결과&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;APT Scenarios:&lt;/p&gt;
+
+&lt;p&gt;In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.&lt;br /&gt;
+이 실습에서는 Wayne Enterprises를 성공적으로 지원하고 Frothly의 Grace Hoppy에게 최근 문제를 지원하도록 추천된 분석가 Alice Bluebird의 페르소나를 가정합니다.&lt;/p&gt;
+
+&lt;p&gt;Hunting Scenarios:&lt;/p&gt;
+
+&lt;p&gt;PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.&lt;br /&gt;
+PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.&lt;br /&gt;
+Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP&lt;br /&gt;
+Exfiltration Over Alternative Protocol - FTP: 데이터 유출은 주로 FTP와 같은 일반적인 네트워크 프로토콜을 사용하여 발생할 수 있습니다.&lt;br /&gt;
+Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS&lt;br /&gt;
+Exfiltration Over Alternative Protocol - DNS: 데이터 유출은 일반적인 네트워크 프로토콜, 특히 DNS를 사용하여 발생할 수 있습니다.&lt;br /&gt;
+Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.&lt;br /&gt;
+Adversary Infrastructure: 적군은 우리가 이미 밝혀낸 것 이상의 기반 시설의 여러 구성 요소를 구축했습니다.&lt;br /&gt;
+Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.&lt;br /&gt;
+Spearphishing Attachment: 적들은 피싱을 사용하여 Froth.ly 내에 거점을 구축하려고 시도합니다.&lt;br /&gt;
+User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.&lt;br /&gt;
+User Execution: 공격자는 사용자가 파일에 대해 작업을 실행하도록 유인하여 Froth.ly 내에서 거점을 설정하려고 시도합니다.&lt;br /&gt;
+Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.&lt;br /&gt;
+Persistence - Create Account: 공격자는 사용자 계정을 생성하여 기업 전체에서 지속성을 유지하려고 합니다.&lt;br /&gt;
+Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.&lt;br /&gt;
+Persistence - Scheduled Task: 공격자는 작업 스케줄러를 사용하여 재부팅 시 지속성을 유지하려고 합니다.&lt;br /&gt;
+Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.&lt;br /&gt;
+Indicator Removal On Host: 감사/이벤트 로그를 지우면 공격자가 자신의 흔적을 덮으려는 것을 나타낼 수 있습니다.&lt;br /&gt;
+Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.&lt;br /&gt;
+Reconaissance: 사용자 에이전트 문자열은 의도하지 않은 적에 대한 통찰력을 제공할 수 있습니다.
+OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.&lt;br /&gt;
+OSINT: 공개적으로 사용 가능한 회사 정보와 해당 정보에 액세스하는 사람을 식별하면 적에 대한 통찰력을 제공할 수 있습니다.&lt;br /&gt;
+Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).&lt;br /&gt;
+Lateral Movement: 공격자는 WMI(Windows Management Instrumentation)를 사용하여 측면으로 다른 시스템으로 이동합니다.&lt;br /&gt;
+Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.&lt;br /&gt;
+Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b21.jpg&quot; alt=&quot;Scenario 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The data included in this app was generated in August of 2017 by members of Splunk’s Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.&lt;br /&gt;
+이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b22.jpg&quot; alt=&quot;Scenario 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;300	According to Frothly’s records, what is the likely MAC address of Mallory’s corporate MacBook? Answer guidance: Her corporate MacBook has the hostname MACLORY-AIR13.&lt;br /&gt;
+Frothly의 기록에 따르면 Mallory의 회사 MacBook의 MAC 주소는 무엇입니까? 답변 안내: 그녀의 회사 MacBook의 호스트 이름은 MACLORY-AIR13입니다.&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use Asset Center in ES.&lt;br /&gt;
+&lt;/details&gt;
+
+&lt;p&gt;해당 문제는 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.&lt;/p&gt;
+
+&lt;p&gt;301	What episode of Game of Thrones is Mallory excited to watch? Answer guidance: Submit the HBO title of the episode.
+말로리는 왕좌의 게임의 어떤 에피소드를 보고 싶어 할까요? 답변 안내: 에피소드의 HBO 제목을 제출하세요.&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Look for video files downloaded to MACLORY-AIR13.&lt;br /&gt;
+    MACLORY-AIR13에 다운로드된 비디오 파일을 찾습니다.
+&lt;/details&gt;
+
+&lt;p&gt;host가 MACLORY-AIR13인 데이터 중에서 game of thrones, got 등의 키워드로 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;host=MACLORY-AIR13 &quot;*game of thrones*&quot; OR &quot;got&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;결과&lt;br /&gt;
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-15-24-33.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;target_path필드 값은 다음과 같습니다.&lt;br /&gt;
+&lt;strong&gt;/Users/mallorykraeusen/Downloads/GoT.S7E2.BOTS.BOTS.BOTS.mkv.torrent.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;시즌7의 2화의 제목은 Stormborn입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-15-27-50.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : Stormborn&lt;/p&gt;
+
+&lt;p&gt;302	What is Mallory Krauesen’s phone number? Answer guidance: ddd-ddd-dddd where d=[0-9]. No country code.&lt;br /&gt;
+Mallory Krauesen의 전화번호는 무엇입니까? 답변 안내: ddd-ddd-dddd 여기서 d=[0-9]. 국가 코드가 없습니다.&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use Identity Center in ES.  
+&lt;/details&gt;
+
+&lt;p&gt;해당 문제는 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.&lt;/p&gt;
+
+&lt;p&gt;303	Enterprise Security contains a threat list notable event for MACLORY-AIR13 and suspect IP address 5.39.93.112. What is the name of the threatlist (i.e. Threat Group) that is triggering the notable?&lt;br /&gt;
+Enterprise Security에는 MACLORY-AIR13 및 의심되는 IP 주소 5.39.93.112에 대한 주요 이벤트 목록이 포함되어 있습니다. 주목할 만한 것을 유발하는 위협 목록(예: 위협 그룹)의 이름은 무엇입니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Look for threat activity from Mallory's MacBook in the Incident Review dashboard.&lt;br /&gt;
+    Incident Review 대시보드에서 Mallory의 MacBook에서 위협 활동을 찾습니다.
+&lt;/details&gt;
+
+&lt;p&gt;해당 문제는 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.&lt;/p&gt;
+
+&lt;p&gt;304	Considering the threatlist you found in the question above, and related data, what protocol often used for file transfer is actually responsible for the generated traffic?&lt;br /&gt;
+위의 질문에서 찾은 위협 목록과 관련 데이터를 고려할 때 파일 전송에 자주 사용되는 프로토콜이 실제로 생성된 트래픽을 담당합니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Do you see MACLORY-AIR13 communicating with known Tor addresses? That's misleading.&lt;br /&gt;
+    알려진 Tor 주소와 통신하는 MACLORY-AIR13이 보입니까? 오해의 소지가 있습니다.
+&lt;/details&gt;
+
+&lt;p&gt;위 IP에서 특이한 로그가 있는지 살펴봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;5.39.93.112
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;sourcetype은 &lt;a href=&quot;https://docs.paloaltonetworks.com/pan-os/8-1/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions/traffic-log-fields&quot;&gt;pan:traffic&lt;/a&gt; 한가지만 있고,
+app field에 bittorrent를 찾을 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;답 : bittorrent&lt;/p&gt;
+
+&lt;p&gt;305	Mallory’s critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. At what hour, minute, and second does this actually happen? Answer guidance: Provide the time in PDT. Use the 24h format HH:MM:SS, using leading zeroes if needed. Do not use Splunk’s _time (index time).&lt;br /&gt;
+Mallory Macbook에 있는 중요한 PowerPoint파일이 8월 18일 랜섬웨어에 의해 암호화되었습니다. 몇 시, 분, 초에 발생했습니까 ? 답변 안내: PDT로 시간을 제공합니다. 필요한 경우 선행 0을 사용하여 24시간 형식 HH:MM:SS를 사용합니다. Splunk의 _time(index time)을 사용하지 마십시오.&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    People that work on PowerPoint presentations generally save them in their Documents folder.&lt;br /&gt;
+    PowerPoint 작업을 하는 사람들은 일반적으로 문서 폴더에 프레젠테이션을 저장합니다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    The time that Splunk indexed this information might not be the time the file was modified.&lt;br /&gt;
+    Splunk가 이 정보를 인덱싱한 시간은 파일이 수정된 시간이 아닐 수 있습니다.
+&lt;/details&gt;
+
+&lt;p&gt;splunk의 _time을 사용하지말라고했으니 해당 로그에 시간과 관련된 필드가 있을것입니다.&lt;/p&gt;
+
+&lt;p&gt;우선 탐색 시간을 2017/08/18 00 ~ 2018/08/19 00시로 설정하고, 키워드를 다음과 같이 설정하고 조사해봅니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*mallory* (*.ppt OR *.pptx)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-16-48-38.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;target_path 필드에 crypt된 파일이 보입니다. 원본 파일 경로와 이름은 /Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx이므로, 해당 키워드로 검색해봅시다.
+또, 시간을 알아봐야하니 mac time 관련 데이터를 table 명령어를 사용해 파악해봅시다.
+&lt;a href=&quot;https://itwiki.kr/w/MAC_Time&quot;&gt;MAC TIME이란?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;- Mtime(modified time) : 파일을 생성한 시간, 또는 가장 최근에 파일 내용을 바꾼 시간&lt;br /&gt;
+- Atime(accessed time) : 가장 최근에 파일을 읽거나(Read) 실행(Execution)시킨 시간&lt;br /&gt;
+- Ctime(changed time) : 가장 최근에 파일의 소유권, 그룹, 퍼미션 등 파일의 속성(inode 정보)이 변경된 시간&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results columns.target_path=&quot;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx*&quot;
+| table _time columns.target_path columns.mtime columns.atime columns.ctime columns.time unixTime
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.timeanddate.com/time/zones/pdt&quot;&gt;PDT(Pacific Daylight Time)란?#1&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://luran.me/339&quot;&gt;PDT(Pacific Daylight Time)란?#2&lt;/a&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;_time&lt;/th&gt;
+      &lt;th&gt;columns.target_path&lt;/th&gt;
+      &lt;th&gt;columns.mtime&lt;/th&gt;
+      &lt;th&gt;columns.atime&lt;/th&gt;
+      &lt;th&gt;columns.ctime&lt;/th&gt;
+      &lt;th&gt;columns.time&lt;/th&gt;
+      &lt;th&gt;unixTime&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
+      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
+      &lt;td&gt;1266652800&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093022&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093043&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
+      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
+      &lt;td&gt;1266652800&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093022&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093043&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
+      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
+      &lt;td&gt;1266652800&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093022&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093043&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
+      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
+      &lt;td&gt;1266652800&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093022&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093043&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
+      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx.crypt&lt;/td&gt;
+      &lt;td&gt;1266652800&lt;/td&gt;
+      &lt;td&gt;1503093022&lt;/td&gt;
+      &lt;td&gt;1503093022&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093043&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/18 21:50:43&lt;/td&gt;
+      &lt;td&gt;/Users/mallorykraeusen/Documents/Frothly_marketing_campaign_Q317.pptx&lt;/td&gt;
+      &lt;td&gt;-&lt;/td&gt;
+      &lt;td&gt;-&lt;/td&gt;
+      &lt;td&gt;-&lt;/td&gt;
+      &lt;td&gt;1503093023&lt;/td&gt;
+      &lt;td&gt;1503093043&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;랜섬웨어로 파일이 변경되었으면 권한이 바뀌었으므로 ctime을 기준으로 보면 될것입니다.
+ctime : 1503093022&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://time.is/ko/Unix_time_converter&quot;&gt;유닉스 타임변환 사이트&lt;/a&gt;
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-17-28-03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;PDT는 UTC-7과 같다고 설명되어있습니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-26-17-44-48.png&quot; alt=&quot;PDT Time 설명&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Sat Aug 19 2017 06:50:22 UTC+0900에서 UTC-7로 환산해보면(-16시간)
+Sat Aug 18 2017 14:50:22 입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : 14:50:22&lt;/p&gt;
+
+&lt;p&gt;306	How many seconds elapsed between the time the ransomware executable was written to disk on MACLORY-AIR13 and the first local file encryption? Answer guidance: Use the index times (_time) instead of other timestamps in the events.&lt;br /&gt;
+MACLORY-AIR13의 디스크에 랜섬웨어 실행 파일이 작성된 시간과 첫 번째 로컬 파일 암호화 사이에 몇 초가 걸렸습니까? 답변 안내: 이벤트의 다른 타임스탬프 대신 인덱스 시간(_time)을 사용하세요.&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    What time did the 'Office 2016 Patcher.app' get added to MACLORY-AIR13's filesystem?&lt;br /&gt;
+    MACLORY-AIR13의 파일 시스템에 'Office 2016 Patcher.app'이 몇시에 추가되었나요?
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    What time was the first file with *.crypt added to MACLORY-AIR13's filesystem?&lt;br /&gt;
+    MACLORY-AIR13의 파일 시스템에 *.crypt가 추가된 첫 번째 파일은 언제였습니까?
+&lt;/details&gt;
+
+&lt;p&gt;.crypt가 처음붙은 파일과 MAC의 실행파일 확장자인 .app간 _time의 차를 구해봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results host=MACLORY-AIR13 columns.target_path=*.app
+| reverse
+| table _time columns.target_path
+| head 1 ```로컬실행파일
+| append 
+    [ search sourcetype=osquery_results host=MACLORY-AIR13 columns.target_path=*.crypt
+| reverse
+| table _time columns.target_path
+| head 1```첫 암호화된 로컬 파일]
+| transaction maxevents=2
+| table columns.target_path duration eventcount
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;※ &lt;a href=&quot;https://docs.splunk.com/Documentation/Splunk/8.2.2/SearchReference/Transaction&quot;&gt;transaction&lt;/a&gt;함수는 이벤트간 시간차이를 duration이라는 변수를 통해 계산해주는 함수입니다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;columns.target_path&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;duration&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;eventcount&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/Users/mallorykraeusen/Desktop/.DS_Store.crypt&lt;br /&gt;/Users/mallorykraeusen/Downloads/Office 2016 Patcher.app&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;132&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;답 : 132&lt;/p&gt;
+
+&lt;p&gt;307	Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory’s personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.&lt;br /&gt;
+Kevin Lagerfield는 USB 드라이브를 사용하여 Mallory의 개인 MacBook인 kutekitten에 멀웨어를 옮겼습니다. 그녀는 실행 중에 스스로를 난독화하는 맬웨어를 실행했습니다. Kevin이 사용했을 가능성이 있는 USB 드라이브의 공급업체 이름을 제공합니다. 답변 지침: 시간 상관 관계를 사용하여 USB 드라이브를 식별합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    osquery_results is a great sourcetype to review.&lt;br /&gt;
+    osquery_results에서 찾아보세요.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Look for unusual files in a place that Mallory would come across them.&lt;br /&gt;
+    Mallory가 발견할 수 있는 장소에서 특이한 파일을 찾으십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    If you can figure out what kind of malware this is, do some open source intelligence research to determine how it behaves. Find an online database of USB vendors.&lt;br /&gt;이것이 어떤 종류의 맬웨어인지 알아낼 수 있다면 오픈 소스 인텔리전스 연구를 수행하여 작동 방식을 확인하십시오. USB 공급업체의 온라인 데이터베이스를 찾으십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#4&lt;/summary&gt;
+    Various sourcetypes can tell you how things look when the run. Look at 'ps' and look at 'osquery_results' from kutekitten.&lt;br /&gt;
+    다양한 소스 유형은 실행될 때 상황이 어떻게 보이는지 알려줄 수 있습니다. kutekitten의 'ps'와 'osquery_results'를 보세요.    
+&lt;/details&gt;
+
+&lt;p&gt;해당 정보는 osquery관련 sourcetype에 있을것으로 추측됩니다. &lt;a href=&quot;https://github.com/osquery/osquery&quot;&gt;osquery&lt;/a&gt;는 실행중인 프로세스, 네트워크, 하드웨어 이벤트 등을 포함한 OS의 정보를 쿼리형식으로 질의하여 얻은 값을 갖고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;MACBook의 이름인 kutekitten, 그리고 usb를 키워드로 두고, osquery_result에서 조사해봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results *kutekitten* *usb*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;columns.vendor_id라는 필드를 보면 058f, 13fe라는 값이 있습니다.
+columns.vendor_id이 있고, USB를 삽입한 데이터만 보도록 합시다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-13-49-54.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results *kutekitten* *usb* columns.vendor_id=* action=added
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이벤트 2개가 있습니다. 각 이벤트에 대해 탐색기간을 ±60초로 설정해두고, 어떤 파일을 반입했는지 확인해봅시다.
+첫번째로 vendor_id가 058f인 이벤트의 ±60초로 두고 반입된 파일의 hash값을 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery_results *kutekitten*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-34-51.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;columns.sha256의 hash값을 virustotal에서 조회해봅시다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-34-11.png&quot; alt=&quot;sha256&quot; /&gt;
+sha256 : befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271&lt;/p&gt;
+
+&lt;p&gt;MAC BackDoor 악성코드입니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-40-12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;제조사 13fe의 이벤트도 추가 조사해봅니다.&lt;/p&gt;
+
+&lt;p&gt;columns.device의 값이 devfs인것을 보아하니, 파일이 아닌 드라이브임을 알 수 있습니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-47-18.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;악성코드를 반입한 USB의 제조사의 ID는 058f입니다. 구글에 해당 제조사의 ID를 검색해봅니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-14-47-46.png&quot; alt=&quot;&quot; /&gt;
+vendorid 058f는 &lt;strong&gt;Alcor Micro Corp.&lt;/strong&gt; 입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : Alcor&lt;/p&gt;
+
+&lt;p&gt;308	What programming language is at least part of the malware from the question above written in?&lt;br /&gt;
+위의 질문에서 악성 코드의 일부인 프로그래밍 언어는 무엇입니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Review the hints for question 307.&lt;br /&gt;
+    문제 307에 대한 힌트를 검토하세요.
+&lt;/details&gt;
+
+&lt;p&gt;문제 307번에서 발견한 악성코드의 sha256 해쉬값은 &lt;strong&gt;befa9bfe488244c64db096522b4fad73fc01ea8c4cd0323f1cbdee81ba008271&lt;/strong&gt;입니다.
+해당 hash값으로 virustotal에서  자세한 정보를 파악해봅시다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-15-39-44.png&quot; alt=&quot;&quot; /&gt;
+Virustotal의 Detail탭의 FileType을 보면 Perl로 작성된 언어임을 알 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;답 : Perl&lt;/p&gt;
+
+&lt;p&gt;309	The malware from the two questions above appears as a specific process name in the process table when it is running. What is it?&lt;br /&gt;
+위의 두 질문에 대한 맬웨어는 실행 중일 때 프로세스 테이블에 특정 프로세스 이름으로 나타납니다. 그것은 무엇입니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Review the hints for question 307.
+&lt;/details&gt;
+
+&lt;p&gt;접근방식을 모르겠으니, 아시는분은 제보바랍니다.
+답 : java&lt;/p&gt;
+
+&lt;p&gt;310	The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&amp;amp;C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?&lt;br /&gt;
+kutekitten을 감염시키는 악성코드는 설치 직후 2개의 C&amp;amp;C 서버와 통신하기 위해 동적 DNS 대상을 사용합니다. 이러한 대상 중 첫 번째(알파벳 순)의 정규화된 도메인 이름(FQDN)은 무엇입니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Have a look at the stream:dns sourcetype and observe queries from kutekitten.&lt;br /&gt;
+    stream:dns와 kutekitten이 요청한 쿼리를 보세요.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    You need a lookup. Find one, and also review this: https://www.splunk.com/blog/2015/08/04/detecting-dynamic-dns-domains-in-splunk.html&lt;br /&gt;
+    lookup이 필요합니다. https://www.splunk.com/blog/2015/08/04/detecting-dynamic-dns-domains-in-splunk.html를 참고하세요
+&lt;/details&gt;
+
+&lt;p&gt;virustotal의 Realtions 탭을 보면, &lt;strong&gt;eidk.duckdns.org, eidk.hopto.org&lt;/strong&gt; 두개 url이 악성으로 발견되어있습니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-16-55-36.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;철자 순서에 의해 답은 eidk.duckdns.org입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : eidk.duckdns.org&lt;/p&gt;
+
+&lt;p&gt;311	From the question above, what is the fully-qualified domain name (FQDN) of the second (alphabetically) contacted C&amp;amp;C server?&lt;br /&gt;
+위의 질문에서 두 번째(알파벳순)로 연결된 C&amp;amp;C 서버의 FQDN(정규화된 도메인 이름)은 무엇입니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Review the hints for question 310.
+    문제 310에 대한 힌트를 검토하세요.
+&lt;/details&gt;
+
+&lt;p&gt;답은 eidk.hopto.org 입니다.&lt;/p&gt;
+
+&lt;p&gt;답 :  eidk.hopto.org&lt;/p&gt;
+
+&lt;p&gt;312	What is the average Alexa 1M rank of the domains between August 18 and August 19 that MACLORY-AIR13 tries to resolve while connected via VPN to the corporate network? Answer guidance: Round to two decimal places. Remember to include domains with no rank in your average! Answer example: 3.23 or 223234.91&lt;br /&gt;
+8월 18일부터 8월 19일 사이에 MACLORY-AIR13이 VPN을 통해 기업 네트워크에 연결되어 있는 동안 해결하려고 하는 도메인의 평균 Alexa 1M 순위는 얼마입니까? 답변 안내: 소수점 이하 두 자리까지 반올림합니다. 평균에 순위가 없는 도메인을 포함하는 것을 잊지 마십시오! 답변 예: 3.23 또는 223234.91&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    You're going to need a lookup. Are there any loaded in the system that might help you?&lt;br /&gt;
+    조회가 필요합니다. 당신을 도울 수 있는 시스템에 로드된 것이 있습니까?
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    We want the average of ranks. Not the average of hits to the domains.&lt;br /&gt;
+    우리는 순위의 평균을 원합니다. 도메인에 대한 평균 조회수가 아닙니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    https://www.splunk.com/blog/2016/03/22/splunking-1-million-urls.html
+&lt;/details&gt;
+
+&lt;p&gt;313	Two .jpg-formatted photos of Mallory exist in Kevin Lagerfield’s server home directory that have eight-character file names, not counting the .jpg extension. Both photos were encrypted by the ransomware. One of the photos can be downloaded at the following link, replacing 8CHARACTERS with the eight characters from the file name. https://splunk.box.com/v/8CHARACTERS After you download the file to your computer, decrypt the file using the encryption key used by the ransomware. What is the complete line of text in the photo, including any punctuation? Answer guidance: The encryption key can be found in Splunk.&lt;br /&gt;
+.jpg 형식의 Mallory 사진 두 장이 Kevin Lagerfield의 서버 홈 디렉토리에 있으며 .jpg 확장자는 제외하고 파일 이름이 8자로 되어 있습니다. 두 사진 모두 랜섬웨어에 의해 암호화되었습니다. 사진 중 하나는 다음 링크에서 다운로드할 수 있으며 8CHARACTERS를 파일 이름의 8자로 대체합니다. https://splunk.box.com/v/8CHARACTERS 파일을 컴퓨터에 다운로드한 후 랜섬웨어에서 사용하는 암호화 키를 사용하여 파일을 해독합니다. 문장부호를 포함하여 사진의 전체 텍스트 줄은 무엇입니까? 답변 안내: 암호화 키는 Splunk에서 찾을 수 있습니다.&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Understanding from OSINT how this ransomware behaves is key to the answer.&lt;br /&gt;
+    OSINT에서 이 랜섬웨어가 어떻게 작동하는지 이해하는 것이 답의 핵심입니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    This ransomware is called 'Patcher' and it is terribly written and uses *NIX command line tools to wreak havoc.&lt;br /&gt;
+    이 랜섬웨어는 '패처'라고 불리며 끔찍하게 작성되었으며 *NIX 명령줄 도구를 사용하여 혼란을 일으키고 있습니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Patcher uses the UNIX zip utility.&lt;br /&gt;
+    Patcher는 UNIX zip 유틸리티를 사용합니다.
+&lt;/details&gt;</content>
 
       
       
