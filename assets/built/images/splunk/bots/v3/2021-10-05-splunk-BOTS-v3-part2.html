@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>splunk-bots-v3 write up(2)</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+
+    <!-- custom.css -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/custom.css" />
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- awesome icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="wind-flow Tech Blog" />
+    <link rel="shortcut icon" href="https://wind-flow.github.io/assets/built/images/wind-flow.png" type="image/png" />
+    <link rel="canonical" href="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part2" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="wind-flow Tech Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="splunk-bots-v3 write up(2)" />
+    <meta property="og:description" content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한" />
+    <meta property="og:url" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part2" />
+    <meta property="og:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-10-05T23:34:36+09:00" />
+    <meta property="article:modified_time" content="2021-10-05T23:34:36+09:00" />
+    <meta property="article:tag" content="Splunk" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="splunk-bots-v3 write up(2)" />
+    <meta name="twitter:description" content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한" />
+    <meta name="twitter:url" content="https://wind-flow.github.io/" />
+    <meta name="twitter:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="wind-flow Tech Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Splunk" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "wind-flow Tech Blog",
+        "logo": "https://wind-flow.github.io/"
+    },
+    "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part2",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part2"
+    },
+    "description": "{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="splunk-bots-v3 write up(2)" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://wind-flow.github.io/">wind-flow Tech Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+  <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+  <li class="nav-about" role="menuitem">
+    <a href="/about/">About</a>
+  </li>
+  <li class="nav-splunk" role="menuitem">
+    <a href="/tag/splunk/">splunk</a>
+  </li>
+  <!-- <li class="nav-python" role="menuitem"><a href="/tag/python/">Python</a></li> -->
+  <li class="nav-archive" role="menuitem">
+    <a href="/archive.html">All Posts</a>
+  </li>
+  <li class="nav-archive" role="menuitem">
+    <a href="/author_archive.html">Tag별 Posts</a>
+  </li>
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-splunk post tag-splunk ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 5 October 2021"> 5 October 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/splunk/'>SPLUNK</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">splunk-bots-v3 write up(2)</h1>
+            </header>
+
+            <!-- 
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/splunk/bots/v3/bots-v3.jpg)">
+            </figure>
+             -->
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Splunk BOTS의 데이터셋은 3개입니다.</span></p>
+<ul class="table-of-contents-list">
+  <li><a href="./splunk-BOTS-overview">BOTS란? </a></li>
+  <li><a href="./splunk-BOTS-v1-part1">BOTS v1 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v1-part2">BOTS v1 Write up(2) - END</a></li>
+  <li><a href="./splunk-BOTS-v2-part1">BOTS v2 Write up(1) </a></li>
+  <li><a href="./splunk-BOTS-v2-part2">BOTS v2 Write up(2) </a></li>
+  <li><a href="./splunk-BOTS-v2-part3">BOTS v2 Write up(3) </a></li>
+  <li><a href="./splunk-BOTS-v2-part4">BOTS v2 Write up(4) </a></li>
+  <li><a href="./splunk-BOTS-v2-part5">BOTS v2 Write up(5) - END</a></li>
+  <li><a href="./splunk-BOTS-v3-part1">BOTS v3 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v3-part2">BOTS v3 Write up(2)</a></li>
+  <li><a href="./splunk-BOTS-v3-part3">BOTS v3 Write up(3)</a></li>
+  <li><a href="./splunk-BOTS-v3-part4">BOTS v3 Write up(4) - END</a></li>
+  <li><a href="./splunk-2021-BOTS-END">BOTS v4 결과</a></li>
+</ul>
+
+<ul>
+  <li>secnario #1<br />
+Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want.<br />
+각 질문에 답하는 데 필요한 모든 정보는 질문 자체에 있습니다. 원하는 정보를 얻을 수 있는 적절한 splunk 검색 쿼리를 생성하는 방법을 알아내기만 하면 됩니다.</li>
+</ul>
+
+<p>BOTS-V3</p>
+
+<p>index=botsv3의 sourcetype은 아래와 같습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| metadata type=sourcetypes index=botsv3
+| stats values(sourcetype)
+</code></pre></div></div>
+<ul>
+  <li>sourcetype 목록</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>values(sourcetype)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PerfmonMk:Process</td>
+    </tr>
+    <tr>
+      <td>Script:GetEndpointInfo</td>
+    </tr>
+    <tr>
+      <td>Script:InstalledApps</td>
+    </tr>
+    <tr>
+      <td>Script:ListeningPorts</td>
+    </tr>
+    <tr>
+      <td>Unix:ListeningPorts</td>
+    </tr>
+    <tr>
+      <td>Unix:SSHDConfig</td>
+    </tr>
+    <tr>
+      <td>Unix:Service</td>
+    </tr>
+    <tr>
+      <td>Unix:Update</td>
+    </tr>
+    <tr>
+      <td>Unix:Uptime</td>
+    </tr>
+    <tr>
+      <td>Unix:UserAccounts</td>
+    </tr>
+    <tr>
+      <td>Unix:Version</td>
+    </tr>
+    <tr>
+      <td>WinHostMon</td>
+    </tr>
+    <tr>
+      <td>access_combined</td>
+    </tr>
+    <tr>
+      <td>alternatives</td>
+    </tr>
+    <tr>
+      <td>amazon-ssm-agent</td>
+    </tr>
+    <tr>
+      <td>amazon-ssm-agent-too_small</td>
+    </tr>
+    <tr>
+      <td>apache_error</td>
+    </tr>
+    <tr>
+      <td>aws:cloudtrail</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatch</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatch:guardduty</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatchlogs</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatchlogs:vpcflow</td>
+    </tr>
+    <tr>
+      <td>aws:config:rule</td>
+    </tr>
+    <tr>
+      <td>aws:description</td>
+    </tr>
+    <tr>
+      <td>aws:elb:accesslogs</td>
+    </tr>
+    <tr>
+      <td>aws:rds:audit</td>
+    </tr>
+    <tr>
+      <td>aws:rds:error</td>
+    </tr>
+    <tr>
+      <td>aws:s3:accesslogs</td>
+    </tr>
+    <tr>
+      <td>bandwidth</td>
+    </tr>
+    <tr>
+      <td>bash_history</td>
+    </tr>
+    <tr>
+      <td>bootstrap</td>
+    </tr>
+    <tr>
+      <td>cisco:asa</td>
+    </tr>
+    <tr>
+      <td>cloud-init</td>
+    </tr>
+    <tr>
+      <td>cloud-init-output</td>
+    </tr>
+    <tr>
+      <td>code42:api</td>
+    </tr>
+    <tr>
+      <td>code42:computer</td>
+    </tr>
+    <tr>
+      <td>code42:org</td>
+    </tr>
+    <tr>
+      <td>code42:security</td>
+    </tr>
+    <tr>
+      <td>code42:user</td>
+    </tr>
+    <tr>
+      <td>config_file</td>
+    </tr>
+    <tr>
+      <td>cpu</td>
+    </tr>
+    <tr>
+      <td>cron-too_small</td>
+    </tr>
+    <tr>
+      <td>df</td>
+    </tr>
+    <tr>
+      <td>dmesg</td>
+    </tr>
+    <tr>
+      <td>dpkg</td>
+    </tr>
+    <tr>
+      <td>error-too_small</td>
+    </tr>
+    <tr>
+      <td>errors</td>
+    </tr>
+    <tr>
+      <td>errors-too_small</td>
+    </tr>
+    <tr>
+      <td>ess_content_importer</td>
+    </tr>
+    <tr>
+      <td>hardware</td>
+    </tr>
+    <tr>
+      <td>history-2</td>
+    </tr>
+    <tr>
+      <td>interfaces</td>
+    </tr>
+    <tr>
+      <td>iostat</td>
+    </tr>
+    <tr>
+      <td>lastlog</td>
+    </tr>
+    <tr>
+      <td>linux_audit</td>
+    </tr>
+    <tr>
+      <td>linux_secure</td>
+    </tr>
+    <tr>
+      <td>localhost-5</td>
+    </tr>
+    <tr>
+      <td>lsof</td>
+    </tr>
+    <tr>
+      <td>maillog-too_small</td>
+    </tr>
+    <tr>
+      <td>ms:aad:audit</td>
+    </tr>
+    <tr>
+      <td>ms:aad:signin</td>
+    </tr>
+    <tr>
+      <td>ms:o365:management</td>
+    </tr>
+    <tr>
+      <td>ms:o365:reporting:messagetrace</td>
+    </tr>
+    <tr>
+      <td>netstat</td>
+    </tr>
+    <tr>
+      <td>o365:management:activity</td>
+    </tr>
+    <tr>
+      <td>openPorts</td>
+    </tr>
+    <tr>
+      <td>osquery:info</td>
+    </tr>
+    <tr>
+      <td>osquery:results</td>
+    </tr>
+    <tr>
+      <td>osquery:warning</td>
+    </tr>
+    <tr>
+      <td>out-3</td>
+    </tr>
+    <tr>
+      <td>package</td>
+    </tr>
+    <tr>
+      <td>protocol</td>
+    </tr>
+    <tr>
+      <td>ps</td>
+    </tr>
+    <tr>
+      <td>stream:arp</td>
+    </tr>
+    <tr>
+      <td>stream:dhcp</td>
+    </tr>
+    <tr>
+      <td>stream:dns</td>
+    </tr>
+    <tr>
+      <td>stream:http</td>
+    </tr>
+    <tr>
+      <td>stream:icmp</td>
+    </tr>
+    <tr>
+      <td>stream:igmp</td>
+    </tr>
+    <tr>
+      <td>stream:ip</td>
+    </tr>
+    <tr>
+      <td>stream:mysql</td>
+    </tr>
+    <tr>
+      <td>stream:smb</td>
+    </tr>
+    <tr>
+      <td>stream:smtp</td>
+    </tr>
+    <tr>
+      <td>stream:tcp</td>
+    </tr>
+    <tr>
+      <td>stream:udp</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:agent:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:agt_system:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:behavior:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:packet:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:risk:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:scm_system:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:security:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:traffic:file</td>
+    </tr>
+    <tr>
+      <td>syslog</td>
+    </tr>
+    <tr>
+      <td>time</td>
+    </tr>
+    <tr>
+      <td>top</td>
+    </tr>
+    <tr>
+      <td>usersWithLoginPrivs</td>
+    </tr>
+    <tr>
+      <td>vmstat</td>
+    </tr>
+    <tr>
+      <td>who</td>
+    </tr>
+    <tr>
+      <td>wineventlog</td>
+    </tr>
+    <tr>
+      <td>xmlwineventlog</td>
+    </tr>
+    <tr>
+      <td>yum-too_small</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>218	What IAM user access key generates the most distinct errors when attempting to access IAM resources?<br />
+IAM 리소스에 액세스하려고 할 때 가장 뚜렷한 오류를 생성하는 IAM 사용자 액세스 키는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use aws:cloudtrail as the sourcetype.<br />
+    sourcetype aws:cloudtrail에서 조사하세요.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Make sure to include all the error codes, such as AccessDenied and NoSuchEntityException.<br />
+    AccessDenied 및 NoSuchEntityException과 같은 모든 오류 코드를 포함해야 합니다.
+</details>
+
+<p>액세스 오류관련 로그는 cloudtrail에 있을것입니다. aws 공식문서에서 찾아봅니다.</p>
+
+<p><strong>오류 코드 및 메시지 로그의 예</strong><a href="https://docs.aws.amazon.com/ko_kr/awscloudtrail/latest/userguide/cloudtrail-log-file-examples.html">AWS cloudtrail 문서</a>
+errorCode 및 errorMessage 요소에 이 오류를 표시합니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudtrail errorCode=*access*
+| dedup errorCode errorMessage
+| table errorCode errorMessage
+</code></pre></div></div>
+
+<p>errorcode필드에서 <strong>AccessDenied</strong>값을 발견할 수 있습니다. 이 키워드를 중심으로 검색해봅니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudtrail errorCode=AccessDenied
+</code></pre></div></div>
+<p>6개의 이벤트가 있고, userIdentity.accessKeyId필드 <strong>AKIAJOGCDXJ5NW5PXUPA</strong>와 <strong>ASIAZB6TMXZ7LL6JBJQA</strong>를 발견할 수 있습니다.</p>
+
+<p>key가 AKIAJOGCDXJ5NW5PXUPA인 이벤트의 errorMessage를 보면 <strong>User: arn:aws:iam::622676721278:user/web_admin is not authorized to perform: iam:GetUser on resource: user web_admin</strong> 이므로, IAM리스소에 접속하는 이벤트의 액세스키는 AKIAJOGCDXJ5NW5PXUPA입니다.
+(ASIAZB6TMXZ7LL6JBJQA는 bucketlist에 접속하는 이벤트입니다)</p>
+
+<p>답 : AKIAJOGCDXJ5NW5PXUPA</p>
+
+<p>219	Bud accidentally commits AWS access keys to an external code repository. Shortly after, he receives a notification from AWS that the account had been compromised. What is the support case ID that Amazon opens on his behalf?<br />
+Bud가 실수로 AWS 액세스 키를 외부 코드 리포지토리에 커밋합니다. 얼마 후 그는 AWS로부터 계정이 손상되었다는 알림을 받습니다. Amazon이 그의 행동으로 여는 case ID는 무엇입니까?</p>
+
+<details>
+  <summary>hint#1</summary>
+    Use stream:smtp as the sourcetype.<br />
+    sourcetype stream:smtp에서 조사하십시오.
+</details>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws support case
+</code></pre></div></div>
+<p>위와 같이 검색하면 sourcetype stream:smtp의 subject필드에 support case ID정보를 발견할 수 있습니다.
+<strong>subject: Amazon Web Services: New Support case: 5244329601</strong></p>
+
+<p>답 : 5244329601</p>
+
+<p>220	AWS access keys consist of two parts: an access key ID (e.g., AKIAIOSFODNN7EXAMPLE) and a secret access key (e.g., wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY). What is the secret access key of the key that was leaked to the external code repository?<br />
+AWS 액세스 키는 액세스 키 ID(예: AKIAIOSFODNN7EXAMPLE)와 보안 액세스 키(예: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY)의 두 부분으로 구성됩니다. 외부 코드 저장소로 유출된 키의 비밀 접근 키는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use stream:smtp as the sourcetype.<br />
+    sourcetype stream:smtp에서 조사하십시오.
+</details>
+
+<p>219문제에서 발견한 email의 content내용을 보면 아래와 같습니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Your security is important to us. We have become aware that the AWS Access Key AKIAJOGCDXJ5NW5PXUPA (belonging to IAM user "web_admin") along with the corresponding Secret Key is publicly available online at https://github.com/FrothlyBeers/BrewingIOT/blob/e4a98cc997de12bb7a59f18aea207a28bcec566c/MyDocuments/aws_credentials.bak.
+</code></pre></div></div>
+<p>해당 github page로 가면 secret key를 발견할 수 있습니다.<br />
+https://github.com/FrothlyBeers/BrewingIOT/blob/e4a98cc997de12bb7a59f18aea207a28bcec566c/MyDocuments/aws_credentials.bak</p>
+
+<p>답 : Bx8/gTsYC98T0oWiFhpmdROqhELPtXJSR9vFPNGk</p>
+
+<p>221	Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource? Answer guidance: One word.
+유출된 키를 사용하여 공격자는 승인되지 않은 특정 리소스에 대한 키 생성을 시도합니다. 그 자원의 이름은 무엇입니까? 답변 안내: 한 단어.</p>
+<details>
+  <summary>hint#1</summary>
+    Use aws:cloudtrail as the sourcetype.<br />
+    sourcetype aws:cloudtrail에서 조사하십시오.
+</details>
+
+<p>계정생성관련 이벤트는 cloudtrail에 있으므로, 위에서 파악한 키를 키워드로 <strong>키 생성</strong>같은 이벤트를 찾아봅니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudtrail *AKIAJOGCDXJ5NW5PXUPA*
+| table eventName
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>eventName</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>UpdateAccessKey</td>
+    </tr>
+    <tr>
+      <td>GetUser</td>
+    </tr>
+    <tr>
+      <td>DescribeAccountAttributes</td>
+    </tr>
+    <tr>
+      <td>ListAccessKeys</td>
+    </tr>
+    <tr>
+      <td>GetSessionToken</td>
+    </tr>
+    <tr>
+      <td>CreateAccessKey</td>
+    </tr>
+    <tr>
+      <td>DeleteAccessKey</td>
+    </tr>
+    <tr>
+      <td>CreateUser</td>
+    </tr>
+    <tr>
+      <td>ListAccessKeys</td>
+    </tr>
+    <tr>
+      <td>GetCallerIdentity</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>eventName이 CreateAccessKey인 이벤트를 살펴봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudtrail *AKIAJOGCDXJ5NW5PXUPA* eventName=CreateAccessKey
+</code></pre></div></div>
+<p>error message 필드를 보면 <strong>User: arn:aws:iam::622676721278:user/web_admin is not authorized to perform: iam:CreateAccessKey on resource: user nullweb_admin</strong>
+자원이름은 nullweb_admin입니다.</p>
+
+<p>답 : nullweb_admin</p>
+
+<p>222	Using the leaked key, the adversary makes an unauthorized attempt to describe an account. What is the full user agent string of the application that originated the request?<br />
+유출된 키를 사용하여 공격자는 계정을 알아내기 위해 무단으로 시도합니다. 요청을 시작한 애플리케이션의 전체 사용자 에이전트 문자열은 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use aws:cloudtrail as the sourcetype.<br />
+    sourcetype aws:cloudtrail에서 조사하십시오.
+</details>
+
+<p>전문제와 동일한 조건에서, eventName이 GetUser인 이벤트의 useragent를 파악해봅시다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudtrail *AKIAJOGCDXJ5NW5PXUPA* eventName=GetUser
+| table userAgent
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>userAgent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ElasticWolf/5.1.6</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>답 : ElasticWolf/5.1.6</p>
+
+<p>223	The adversary attempts to launch an Ubuntu cloud image as the compromised IAM user. What is the codename for that operating system version in the first attempt? Answer guidance: Two words.<br />
+공격자는 손상된 IAM 사용자로 Ubuntu 클라우드 이미지를 시작하려고 시도합니다. 첫 번째 시도에서 해당 운영 체제 버전의 코드명은 무엇입니까? 답변 안내: 두 단어.</p>
+<details>
+  <summary>hint#1</summary>
+    Use aws:cloudtrail as the sourcetype.<br />
+    sourcetype aws:cloudtrail에서 조사하십시오.
+</details>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudtrail errorCode="Client.UnauthorizedOperation" eventName=RunInstances
+| sort _time
+</code></pre></div></div>
+<p>requestParameters.instancesSet.items{}.imageId필드의 값이 ami-41e0b93b 임을 알 수 있습니다.
+구글에 <strong>ami-41e0b93b ubuntu</strong>로 검색해봅니다.
+<img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-31-00-24-26.png" alt="" /></p>
+
+<p>Xenial이란 이름이 있는데 두단어가 아닙니다.
+<strong>ubuntu Xenial</strong>로 검색해봅니다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-31-00-25-21.png" alt="" /></p>
+
+<p>두 단어 이름은 <strong>Xenial Xerus</strong>입니다.</p>
+
+<p>답 : Xenial Xerus</p>
+
+<p>224	Frothly uses Amazon Route 53 for their DNS web service. What is the average length of the distinct third-level subdomains in the queries to brewertalk.com? Answer guidance: Round to two decimal places. (Example: The third-level subdomain for my.example.company.com is example.)<br />
+Frothly는 DNS 웹 서비스에 Amazon Route 53을 사용합니다. brewertalk.com에 대한 쿼리에서 고유한 세 번째 수준 하위 도메인의 평균 길이는 얼마입니까? 답변 안내: 소수점 이하 두 자리까지 반올림합니다. (예: my.example.company.com의 세 번째 수준 하위 도메인은 example입니다.)</p>
+<details>
+  <summary>hint#1</summary>
+    Use aws:cloudwatchlogs as the sourcetype for DNS queries.<br />
+    aws:cloudwatchlogs를 DNS 쿼리의 소스 유형으로 사용합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Look at the documentation for URL Toolbox (on Splunkbase) to help you parse out the subdomain substring. Use the Splunk len command to help you calculate the length or review the blog entries in https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics.html. This will teach you how to split domains with URL Toolbox.<br />
+    하위 도메인 하위 문자열을 구문 분석하는 데 도움이 되는 URL 도구 상자(Splunkbase의) 설명서를 참조하십시오. Splunk len 명령을 사용하여 길이를 계산하거나 https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics.html의 블로그 항목을 검토할 수 있습니다. 이것은 URL Toolbox를 사용하여 도메인을 분할하는 방법을 알려줍니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Make sure to include only the distinct third-level subdomain values.<br />
+    고유한 세 번째 수준 하위 도메인 값만 포함해야 합니다.
+</details>
+
+<p>aws:cloudwatchlogs에 DNS관련 데이터가 있습니다. brewertalk.com가 있는 이벤트를 발췌해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudwatchlogs brewertalk.com
+</code></pre></div></div>
+
+<p>1.0 2018-08-20T15:08:11Z Z149R7NEBZTKPN hitech1.brewertalk.com A NXDOMAIN UDP NRT20 13.125.50.235 -
+와 같은 이벤트가 10만개가 넘습니다.</p>
+
+<p>정규표현식을 사용해 subdomain을 발췌하고, 값들의 평균을 구한 후 반올립합니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=aws:cloudwatchlogs brewertalk.com
+| rex field=_raw "Z149R7NEBZTKPN\s(?&lt;query&gt;[^\s]+)" 
+| rex field=query "\.?(?&lt;subdomain&gt;[^\.]+).brewertalk.com" 
+| dedup subdomain
+| table subdomain
+| eval lenSubdomain = len(subdomain)
+| stats avg(lenSubdomain) as answer
+| eval answer=round(answer,2)
+</code></pre></div></div>
+
+<p>답 : 8.10</p>
+
+<p>225	Using the payload data found in the memcached attack, what is the name of the .jpeg file that is used by Taedonggang to deface other brewery websites? Answer guidance: Include the file extension.<br />
+memcached 공격에서 발견된 페이로드 데이터를 사용하여 대동강이 다른 양조장 웹사이트를 훼손하는 데 사용하는 .jpeg 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.</p>
+<details>
+  <summary>hint#1</summary>
+    Use stream:udp as the sourcetype to find the injected string and separate out the payload.<br />
+    sourcetype stream:udp에서 주입된 문자열을 찾고 페이로드를 분리합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Google search for the two strings with special characters.<br />
+    Google은 특수 문자가 있는 두 문자열을 검색합니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Looking at one of the websites from the Google results, inspect the source code and identify the name of the image file.<br />
+    Google 결과에서 웹사이트 중 하나를 보고 소스 코드를 검사하고 이미지 파일의 이름을 식별합니다.
+</details>
+
+<p>memcached attack(https://www.cloudflare.com/ko-kr/learning/ddos/memcached-ddos-attack/)관련 내용을 참고바랍니다.</p>
+
+<p>udp 11211포트를 사용한 DDoS공격입니다.
+공격을 찾아봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source="stream:udp" dest_port=11211
+</code></pre></div></div>
+
+<p>공격자 : 13.125.33.130</p>
+
+<p>답 : index1.jpeg</p>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to wind-flow Tech Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+                </section>
+             -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/profile.png" alt="wind-flow" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/wind-flow">Kim-Gunwoo</a></h4>
+                                
+                                    <p>Finance Security IT Analyst</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/wind-flow">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+                <section class="post-full-comments">
+                    <div id="disqus_thread"></div>
+                    <script>
+                        var disqus_config = function () {
+                            var this_page_url = 'https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part2';
+                            var this_page_identifier = '';
+                            var this_page_title = 'splunk-bots-v3 write up(2)';
+                        };
+                        (function() {
+                            var d = document, s = d.createElement('script');
+                            s.src = 'https://xxxxxxxx.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                </section>
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/images/sevenpuzzle.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; wind-flow Tech Blog &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/splunk/">Splunk</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-2021-BOTS-END">splunk 2021 bots 결과</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part4">splunk-bots-v3 write up(4) - END</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part3">splunk-bots-v3 write up(3)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/splunk/">
+                                
+                                    See all 12 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://wind-flow.github.io/">
+            
+            <span>wind-flow Tech Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">splunk-bots-v3 write up(2)</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=splunk-bots-v3+write+up%282%29&amp;url=https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part2"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part2"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://wind-flow.github.io/">wind-flow Tech Blog</a> &copy; 2022</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+    <div id="subscribe" class="subscribe-overlay">
+        <a class="subscribe-overlay-close" href="#"></a>
+        <div class="subscribe-overlay-content">
+            
+            <h1 class="subscribe-overlay-title">Search wind-flow Tech Blog</h1>
+            <p class="subscribe-overlay-description">
+            lunr.js를 이용한 posts 검색 </p>
+            <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+        </div>
+    </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-xxxxxxxx-x', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
