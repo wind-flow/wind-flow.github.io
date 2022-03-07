@@ -116,7 +116,7 @@ repo: wind-flow.github.io
 # repo: travis-ci와 연동하는 github의 repository이름
 # https://github.com/<username>/<repository>
 
-branch: gh-pages
+branch: main
 # 사용할 branch명
 
 relative_source: ./output/
