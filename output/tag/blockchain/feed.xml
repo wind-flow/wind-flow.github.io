@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
+  <link href="https://wind-flow.github.io/tag/blockchain/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://wind-flow.github.io/" rel="alternate" type="text/html" />
+  <updated>2022-03-07T12:53:27+09:00</updated>
+  <id>https://wind-flow.github.io/tag/blockchain/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">wind-flow Tech Blog | </title>
+  
+
+  
+    <subtitle>wind-flow Tech Blog</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">NFT란?</title>
+      <link href="https://wind-flow.github.io/Definition-NFT" rel="alternate" type="text/html" title="NFT란?" />
+      <published>2021-11-04T09:22:00+09:00</published>
+      <updated>2021-11-04T09:22:00+09:00</updated>
+      <id>https://wind-flow.github.io/Definition-NFT</id>
+      <content type="html" xml:base="https://wind-flow.github.io/Definition-NFT">&lt;h1 id=&quot;nft의-정의&quot;&gt;NFT의 정의&lt;/h1&gt;
+&lt;p&gt;NFT는 &lt;strong&gt;Non-Fungible Token&lt;/strong&gt;의 약자로, 한국어로는 &lt;strong&gt;대체 불가능한 토큰&lt;/strong&gt;을 뜻합니다.&lt;br /&gt;
+NFT를 이해하기위해선 &lt;strong&gt;Fungible&lt;/strong&gt;의 뜻을 이해해야 합니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;nft의-개념&quot;&gt;NFT의 개념&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fungible : &amp;lt;재화가&amp;gt; 대체(代替) 가능의, (딴것으로) 대신할 수 있는&lt;/code&gt;의 의미를 갖고 있습니다.&lt;br /&gt;
+만원을 예를 들면 제가 갖고있던, 누군가 갖고있던, 반으로 접히던, 일련번호가 다르던 &lt;strong&gt;만원의 가치&lt;/strong&gt;를 갖고 있습니다.&lt;br /&gt;
+하지만 1998년에 발행된 500원짜리가 100만원에 거래 되었습니다. &lt;a href=&quot;https://www.idaegu.com/newsView/idg202103260001&quot;&gt;“500원 동전 100만 원에 삽니다” 중고거래 ‘금값’된 희귀 화폐, 대구일보&lt;/a&gt;&lt;br /&gt;
+이 사례의 500원 주화는 더이상 화폐의 의미보단 대체할 수 없는(=희소성이 있는) 자산으로 볼 수 있습니다.&lt;br /&gt;
+이를 디지털화 시키고, 동일한 자산을 만들 수 없는 자산을 &lt;strong&gt;Non-Fungible&lt;/strong&gt;한 속성을 가졌다고 말할 수 있습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;nft의-원리-및-특징&quot;&gt;NFT의 원리 및 특징&lt;/h1&gt;
+&lt;p&gt;NFT를 알기위해 이더리움의 &lt;strong&gt;스마트 컨트랙트&lt;/strong&gt; 기능을 알아야합니다.&lt;/p&gt;
+
+&lt;p&gt;기존 계약 이행의 주체는 &lt;strong&gt;당사자&lt;/strong&gt;이지만, 스마트 컨트랙트는 계약서에 명시된 &lt;strong&gt;조건(스크립트)&lt;/strong&gt;이 충족될때 대가가 지불됩니다.&lt;/p&gt;
+
+&lt;p&gt;스마트 컨트랙트 기능을 이용해 비용(이더리움)이 지급 시 대가(사진, 동영상, 음성 등을 지칭한 파일 등을 포함)를 해당 자산의 일련번호를 채번하여 토큰 형태로 발행해 주는데, 이때 발행된 토큰이 NFT입니다.&lt;/p&gt;
+
+&lt;p&gt;NFT의 특징은 다음과 같습니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;희소성
+만든 자산에 일련번호를 채번해 복제와 위조가 거의 불가능하기 때문에 희소성이 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;추적하기 쉬움
+블록체인 기반의 기술이므로 출처, 발행 시간, 거래 내역, 소유자 등을 확인하기 쉽습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;소유권 인정
+공유 네트워크에 블록체인 방식으로 저장하기 때문에 소유권을 증명할 수 있습니다. 토큰을 이용해 소유권을 분할할 수도 있습니다.
+또한 거래를 자유롭게 할 수 있습니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;요약하자면, NFT는 온라인에서 &lt;strong&gt;재산권&lt;/strong&gt;을 주장할 수 있는 기술입니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;nft의-응용-사례&quot;&gt;NFT의 응용 사례&lt;/h1&gt;
+&lt;p&gt;NFT는 &lt;strong&gt;재산권&lt;/strong&gt;을 증명하는데 쓰입니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.hankyung.com/it/article/202103236447g&quot;&gt;트위터 NFT 구매&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.bloter.net/newsView/blt202110260069&quot;&gt;간송미술관 NFT&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.tokenpost.kr/article-67807&quot;&gt;엑시 인피니티(Axie Infinity)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;nft-거래-방법&quot;&gt;NFT 거래 방법&lt;/h1&gt;
+&lt;p&gt;NFT거래소를 방문합시다.
+&lt;a href=&quot;https://opensea.io/&quot;&gt;OpenSea&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;1-지갑만들기&quot;&gt;1. 지갑만들기&lt;/h1&gt;
+&lt;p&gt;NFT를 담을 &lt;strong&gt;지갑&lt;/strong&gt;을 만듭니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-12-25-00.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;저는 가장 유명한 MetaMask를 골랐습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-12-27-40.png&quot; alt=&quot;&quot; /&gt;
+생성하면 이와같이나오는데, &lt;strong&gt;지갑생성&lt;/strong&gt;을 클릭합니다.&lt;/p&gt;
+
+&lt;p&gt;그 후 사용자 동의하고 암호를 설정합니다.&lt;/p&gt;
+
+&lt;p&gt;암호를 설정하면 암호를 잊어버렸을 시 찾을 수 있는 &lt;strong&gt;시드구문&lt;/strong&gt;을 조회할 수 있는 페이지가 나옵니다.
+이 시드 구문으로 암호를 찾을 수 있으니 &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;절대 노출&lt;/strong&gt;&lt;/span&gt;되어선 안됩니다.&lt;br /&gt;
+&lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;계좌번호와 암호는 절대 잊어서는 안됩니다&lt;/strong&gt; &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-13-10-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Meta-Mask계정을 만들었으면 OpenSae에 로그인합시다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-13-22-09.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;2-계좌-입금&quot;&gt;2. 계좌 입금&lt;/h1&gt;
+&lt;p&gt;계좌에 자금이 있어야 NFT거래를 할 수 있습니다.
+다른 암호화폐 거래소에서 이체하는 방법과 블록체인기반 국제송금업체인 &lt;strong&gt;와이어&lt;/strong&gt;를 통해 현금으로 이더리움을 구매할 수 있습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;3-1-nft-구매&quot;&gt;3-1. NFT 구매&lt;/h1&gt;
+&lt;p&gt;탐색하기(Explore)버튼을 눌러 현재 올라와있는 자산을 살펴봅니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-13-26-04.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-14-13-12.png&quot; alt=&quot;&quot; /&gt;
+좌측 상단을 보면 지금 &lt;strong&gt;구매하기(Buy Now)&lt;/strong&gt;와 &lt;strong&gt;경매 중(On Auction)&lt;/strong&gt;을 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;게시글을 클릭하면 아래와 같은 화면이 뜹니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-14-15-54.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;가격은 0.03ETH, 수수료는 137.18$를 지불하면 블록체인 네트워크에 방금 수행했던 거래 기록이 남습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;3-2-nft-판매&quot;&gt;3-2. NFT 판매&lt;/h1&gt;
+&lt;p&gt;내가 만들 NFT를 올리려면 우측 상단 Create를 눌러봅시다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-14-14-53.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;아래와 같은 화면이 뜹니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/blochain/NFT/2021-11-04-14-21-12.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 내가 올릴 파일을(제한 100MB)올리고, 필요한 정보를 기입한 후 Create버튼을 누르면 NFT가 생성됩니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;참고&quot;&gt;참고&lt;/h3&gt;
+    &lt;p&gt;&lt;a href=&quot;https://youtu.be/THPGWXbeM3k&quot;&gt;게임아이템과 NFT의 차이? 전당포 가보면 알 수 있죠&lt;/a&gt;
+&lt;a href=&quot;https://youtu.be/5bhLfOE2LlY&quot;&gt;‘대세’ 된 NFT, 사고파는 법 제일 쉽게 이해하기 | 이일호 기자, BloterTV&lt;/a&gt;
+&lt;a href=&quot;https://brunch.co.kr/@jellyplanet/40&quot;&gt;손쉽게 NFT 거래하기&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Kim-Gunwoo</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="blockchain" />
+      
+        <category term="NFT" />
+      
+
+      
+        <summary type="html">NFT의 정의 NFT는 Non-Fungible Token의 약자로, 한국어로는 대체 불가능한 토큰을 뜻합니다. NFT를 이해하기위해선 Fungible의 뜻을 이해해야 합니다.</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>

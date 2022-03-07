@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>splunk-bots-v3 write up(3)</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+
+    <!-- custom.css -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/custom.css" />
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- awesome icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="wind-flow Tech Blog" />
+    <link rel="shortcut icon" href="https://wind-flow.github.io/assets/built/images/wind-flow.png" type="image/png" />
+    <link rel="canonical" href="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="wind-flow Tech Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="splunk-bots-v3 write up(3)" />
+    <meta property="og:description" content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한" />
+    <meta property="og:url" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3" />
+    <meta property="og:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-10-05T23:34:36+09:00" />
+    <meta property="article:modified_time" content="2021-10-05T23:34:36+09:00" />
+    <meta property="article:tag" content="Splunk" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="splunk-bots-v3 write up(3)" />
+    <meta name="twitter:description" content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한" />
+    <meta name="twitter:url" content="https://wind-flow.github.io/" />
+    <meta name="twitter:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="wind-flow Tech Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Splunk" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "wind-flow Tech Blog",
+        "logo": "https://wind-flow.github.io/"
+    },
+    "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3"
+    },
+    "description": "{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="splunk-bots-v3 write up(3)" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://wind-flow.github.io/">wind-flow Tech Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+  <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+  <li class="nav-about" role="menuitem">
+    <a href="/about/">About</a>
+  </li>
+  <li class="nav-splunk" role="menuitem">
+    <a href="/tag/splunk/">splunk</a>
+  </li>
+  <!-- <li class="nav-python" role="menuitem"><a href="/tag/python/">Python</a></li> -->
+  <li class="nav-archive" role="menuitem">
+    <a href="/archive.html">All Posts</a>
+  </li>
+  <li class="nav-archive" role="menuitem">
+    <a href="/author_archive.html">Tag별 Posts</a>
+  </li>
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-splunk post tag-splunk ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 5 October 2021"> 5 October 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/splunk/'>SPLUNK</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">splunk-bots-v3 write up(3)</h1>
+            </header>
+
+            <!-- 
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/splunk/bots/v3/bots-v3.jpg)">
+            </figure>
+             -->
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Splunk BOTS의 데이터셋은 3개입니다.</span></p>
+<ul class="table-of-contents-list">
+  <li><a href="./splunk-BOTS-overview">BOTS란? </a></li>
+  <li><a href="./splunk-BOTS-v1-part1">BOTS v1 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v1-part2">BOTS v1 Write up(2) - END</a></li>
+  <li><a href="./splunk-BOTS-v2-part1">BOTS v2 Write up(1) </a></li>
+  <li><a href="./splunk-BOTS-v2-part2">BOTS v2 Write up(2) </a></li>
+  <li><a href="./splunk-BOTS-v2-part3">BOTS v2 Write up(3) </a></li>
+  <li><a href="./splunk-BOTS-v2-part4">BOTS v2 Write up(4) </a></li>
+  <li><a href="./splunk-BOTS-v2-part5">BOTS v2 Write up(5) - END</a></li>
+  <li><a href="./splunk-BOTS-v3-part1">BOTS v3 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v3-part2">BOTS v3 Write up(2)</a></li>
+  <li><a href="./splunk-BOTS-v3-part3">BOTS v3 Write up(3)</a></li>
+  <li><a href="./splunk-BOTS-v3-part4">BOTS v3 Write up(4) - END</a></li>
+  <li><a href="./splunk-2021-BOTS-END">BOTS v4 결과</a></li>
+</ul>
+
+<ul>
+  <li>secnario #1<br />
+Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want.<br />
+각 질문에 답하는 데 필요한 모든 정보는 질문 자체에 있습니다. 원하는 정보를 얻을 수 있는 적절한 splunk 검색 쿼리를 생성하는 방법을 알아내기만 하면 됩니다.</li>
+</ul>
+
+<p>BOTS-V3</p>
+
+<p>index=botsv3의 sourcetype은 아래와 같습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| metadata type=sourcetypes index=botsv3
+| stats values(sourcetype)
+</code></pre></div></div>
+<ul>
+  <li>sourcetype 목록</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>values(sourcetype)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PerfmonMk:Process</td>
+    </tr>
+    <tr>
+      <td>Script:GetEndpointInfo</td>
+    </tr>
+    <tr>
+      <td>Script:InstalledApps</td>
+    </tr>
+    <tr>
+      <td>Script:ListeningPorts</td>
+    </tr>
+    <tr>
+      <td>Unix:ListeningPorts</td>
+    </tr>
+    <tr>
+      <td>Unix:SSHDConfig</td>
+    </tr>
+    <tr>
+      <td>Unix:Service</td>
+    </tr>
+    <tr>
+      <td>Unix:Update</td>
+    </tr>
+    <tr>
+      <td>Unix:Uptime</td>
+    </tr>
+    <tr>
+      <td>Unix:UserAccounts</td>
+    </tr>
+    <tr>
+      <td>Unix:Version</td>
+    </tr>
+    <tr>
+      <td>WinHostMon</td>
+    </tr>
+    <tr>
+      <td>access_combined</td>
+    </tr>
+    <tr>
+      <td>alternatives</td>
+    </tr>
+    <tr>
+      <td>amazon-ssm-agent</td>
+    </tr>
+    <tr>
+      <td>amazon-ssm-agent-too_small</td>
+    </tr>
+    <tr>
+      <td>apache_error</td>
+    </tr>
+    <tr>
+      <td>aws:cloudtrail</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatch</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatch:guardduty</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatchlogs</td>
+    </tr>
+    <tr>
+      <td>aws:cloudwatchlogs:vpcflow</td>
+    </tr>
+    <tr>
+      <td>aws:config:rule</td>
+    </tr>
+    <tr>
+      <td>aws:description</td>
+    </tr>
+    <tr>
+      <td>aws:elb:accesslogs</td>
+    </tr>
+    <tr>
+      <td>aws:rds:audit</td>
+    </tr>
+    <tr>
+      <td>aws:rds:error</td>
+    </tr>
+    <tr>
+      <td>aws:s3:accesslogs</td>
+    </tr>
+    <tr>
+      <td>bandwidth</td>
+    </tr>
+    <tr>
+      <td>bash_history</td>
+    </tr>
+    <tr>
+      <td>bootstrap</td>
+    </tr>
+    <tr>
+      <td>cisco:asa</td>
+    </tr>
+    <tr>
+      <td>cloud-init</td>
+    </tr>
+    <tr>
+      <td>cloud-init-output</td>
+    </tr>
+    <tr>
+      <td>code42:api</td>
+    </tr>
+    <tr>
+      <td>code42:computer</td>
+    </tr>
+    <tr>
+      <td>code42:org</td>
+    </tr>
+    <tr>
+      <td>code42:security</td>
+    </tr>
+    <tr>
+      <td>code42:user</td>
+    </tr>
+    <tr>
+      <td>config_file</td>
+    </tr>
+    <tr>
+      <td>cpu</td>
+    </tr>
+    <tr>
+      <td>cron-too_small</td>
+    </tr>
+    <tr>
+      <td>df</td>
+    </tr>
+    <tr>
+      <td>dmesg</td>
+    </tr>
+    <tr>
+      <td>dpkg</td>
+    </tr>
+    <tr>
+      <td>error-too_small</td>
+    </tr>
+    <tr>
+      <td>errors</td>
+    </tr>
+    <tr>
+      <td>errors-too_small</td>
+    </tr>
+    <tr>
+      <td>ess_content_importer</td>
+    </tr>
+    <tr>
+      <td>hardware</td>
+    </tr>
+    <tr>
+      <td>history-2</td>
+    </tr>
+    <tr>
+      <td>interfaces</td>
+    </tr>
+    <tr>
+      <td>iostat</td>
+    </tr>
+    <tr>
+      <td>lastlog</td>
+    </tr>
+    <tr>
+      <td>linux_audit</td>
+    </tr>
+    <tr>
+      <td>linux_secure</td>
+    </tr>
+    <tr>
+      <td>localhost-5</td>
+    </tr>
+    <tr>
+      <td>lsof</td>
+    </tr>
+    <tr>
+      <td>maillog-too_small</td>
+    </tr>
+    <tr>
+      <td>ms:aad:audit</td>
+    </tr>
+    <tr>
+      <td>ms:aad:signin</td>
+    </tr>
+    <tr>
+      <td>ms:o365:management</td>
+    </tr>
+    <tr>
+      <td>ms:o365:reporting:messagetrace</td>
+    </tr>
+    <tr>
+      <td>netstat</td>
+    </tr>
+    <tr>
+      <td>o365:management:activity</td>
+    </tr>
+    <tr>
+      <td>openPorts</td>
+    </tr>
+    <tr>
+      <td>osquery:info</td>
+    </tr>
+    <tr>
+      <td>osquery:results</td>
+    </tr>
+    <tr>
+      <td>osquery:warning</td>
+    </tr>
+    <tr>
+      <td>out-3</td>
+    </tr>
+    <tr>
+      <td>package</td>
+    </tr>
+    <tr>
+      <td>protocol</td>
+    </tr>
+    <tr>
+      <td>ps</td>
+    </tr>
+    <tr>
+      <td>stream:arp</td>
+    </tr>
+    <tr>
+      <td>stream:dhcp</td>
+    </tr>
+    <tr>
+      <td>stream:dns</td>
+    </tr>
+    <tr>
+      <td>stream:http</td>
+    </tr>
+    <tr>
+      <td>stream:icmp</td>
+    </tr>
+    <tr>
+      <td>stream:igmp</td>
+    </tr>
+    <tr>
+      <td>stream:ip</td>
+    </tr>
+    <tr>
+      <td>stream:mysql</td>
+    </tr>
+    <tr>
+      <td>stream:smb</td>
+    </tr>
+    <tr>
+      <td>stream:smtp</td>
+    </tr>
+    <tr>
+      <td>stream:tcp</td>
+    </tr>
+    <tr>
+      <td>stream:udp</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:agent:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:agt_system:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:behavior:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:packet:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:risk:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:scm_system:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:security:file</td>
+    </tr>
+    <tr>
+      <td>symantec:ep:traffic:file</td>
+    </tr>
+    <tr>
+      <td>syslog</td>
+    </tr>
+    <tr>
+      <td>time</td>
+    </tr>
+    <tr>
+      <td>top</td>
+    </tr>
+    <tr>
+      <td>usersWithLoginPrivs</td>
+    </tr>
+    <tr>
+      <td>vmstat</td>
+    </tr>
+    <tr>
+      <td>who</td>
+    </tr>
+    <tr>
+      <td>wineventlog</td>
+    </tr>
+    <tr>
+      <td>xmlwineventlog</td>
+    </tr>
+    <tr>
+      <td>yum-too_small</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>300	What is the full user agent string that uploaded the malicious link file to OneDrive?<br />
+OneDrive에 악성 링크 파일을 업로드한 전체 사용자 에이전트 문자열은 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use ms:o365:management as the sourcetype for OneDrive activity.<br />
+    OneDrive 활동의 원본 유형으로 ms:o365:management를 사용합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    A link (or .lnk) file is a shortcut file. Look for link files that are associated with OneDrive.<br />
+    링크(또는 .lnk) 파일은 바로 가기 파일입니다. OneDrive와 연결된 링크 파일을 찾습니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Filter your search to just upload activity.<br />
+    활동을 업로드하기 위해 검색을 필터링하십시오.
+</details>
+
+<p>OneDrive를 검색하니 sourcetype이 ms:o365:management, o365:management:activity 두가지가 나옵니다.
+두가지 sourcetype의 필드를 조사해보니 Operation의 필드에 FileUploaded라는 값이 있습니다.
+이 sourcetype에 UserAgent 필드가 있으므로 해당 값이 답일것입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OneDrive .lnk Operation=FileUploaded
+| table UserAgent
+</code></pre></div></div>
+
+<p>답 : Mozilla/5.0 (X11; U; Linux i686; ko-KP; rv: 19.1br) Gecko/20130508 Fedora/1.9.1-2.5.rs3.0 NaenaraBrowser/3.5b4</p>
+
+<p>301	What external client IP address is able to initiate successful logins to Frothly using an expired user account?<br />
+만료된 사용자 계정을 사용하여 Frothly에 성공적으로 로그인할 수 있는 외부 클라이언트 IP 주소는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use ms:aad:signin as the sourcetype for Azure Active Directory sign-in activity.<br />
+    Azure Active Directory 로그인 활동의 소스 유형으로 ms:aad:signin을 사용합니다.
+</details>
+
+<p>로그인관련 이벤트는 AD에있을것입니다. sourcetype에 <strong>ms:aad:signin</strong>란 sourcetype이 있습니다.
+expired 키워드로 조사해봅니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=ms:aad:signin expired
+</code></pre></div></div>
+
+<p>ID는 Kevin Lagerfield, ip는 199.66.91.253, expired된 비밀번호로 로그인을 시도했습니다.
+해당 정보로 다시 검색해봅니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=ms:aad:signin "Kevin Lagerfield" 199.66.91.253
+</code></pre></div></div>
+
+<p>해당 계정으로 로그인을 성공한 이벤트를 발견할 수 있습니다.</p>
+
+<p>답 : 199.66.91.253</p>
+
+<p>302	According to Symantec’s website, what is the discovery date of the malware identified in the macro-enabled file? Answer guidance: Provide the US date format MM/DD/YY. (Example: January 1, 2019 should be provided as 01/01/19)<br />
+시만텍 웹사이트에 따르면 매크로 실행 파일에서 식별된 악성코드의 발견 날짜는 언제입니까? 답변 안내: 미국 날짜 형식 MM/DD/YY를 제공하십시오. (예시: 2019년 1월 1일은 01/01/19로 제공되어야 함)</p>
+<details>
+  <summary>hint#1</summary>
+    Use ms:aad:signin as the sourcetype for Azure Active Directory sign-in activity.
+    Azure Active Directory 로그인 활동의 소스 유형으로 ms:aad:signin을 사용합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Use WinEventLog:Application as the sourcetype to identify the security risk found.<br />
+    WinEventLog:Application을 소스 유형으로 사용하여 발견된 보안 위험을 식별합니다.        
+</details>
+<details>
+  <summary>hint#3</summary>
+    Google search for that risk and the term Symantec together.<br />
+    Google에서 해당 위험과 Symantec이라는 용어를 함께 검색합니다.
+</details>
+
+<p>조사 방향을 잡기힘드니 <strong>macro</strong>로 검색해봅니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*macro*
+</code></pre></div></div>
+
+<p>그럼 19개의 이벤트가 발생하는데, stream:smtp로그가 눈에 띕니다.
+<img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-05-33-01.png" alt="" />
+첨부파일 <strong>Malware Alert Text.txt</strong>의 base64 인코딩값을 발견할 수 있습니다. 디코딩해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Malware was detected in one or more attachments included with this email message. 
+Action: All attachments have been removed.
+Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm	 W97M.Empstage
+</code></pre></div></div>
+
+<p>추후 마저 풀겠음</p>
+
+<p>303	What is the password for the user that was successfully created by the user “root” on the on-premises Linux system?<br />
+온프레미스 Linux 시스템에서 사용자 “루트”가 성공적으로 생성한 사용자의 비밀번호는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use osquery:results as the sourcetype.<br />
+    sourcetype osquery:results에서 조사하세요.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Osquery is logging command executions on the Linux host hoth.<br />
+    Osquery는 Linux 호스트 hoth에서 명령 실행을 기록하고 있습니다.
+</details>
+
+<p>linux에서 사용자 추가명령어는 useradd 혹은 adduser입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=osquery:results *useradd* OR *adduser*
+</code></pre></div></div>
+<p>이벤트2개가 뜹니다.</p>
+
+<p>cmdline: “useradd” “-ou” “tomcat7” “-p” “ilovedavidverve” “0” “-g” “0” “-M” “-N” “-r” “-s” “/bin/bash”
+cmdline: “useradd” “-ou” “tomcat7” “-p” “davidverve.com” “0” “-g” “0” “-M” “-N” “-r” “-s” “/bin/bash”</p>
+
+<p>이중, 실행한 uid가 0인 이벤트의 비밀번호값은 ilovedavidverve입니다.</p>
+
+<p>답 : ilovedavidverve</p>
+
+<p>304	What is the name of the user that was created after the endpoint was compromised?<br />
+엔드포인트가 손상된 후 생성된 사용자의 이름은 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use WinEventLog:Security as the sourcetype.<br />
+    WinEventLog:Security를 ​​소스 유형으로 사용하십시오.    
+</details>
+
+<p>엔드포인트라고 했으니, 윈도우 시스템일 것입니다. 이벤트로그에서 계정생성 이벤트를 찾아봅시다.
+구글에 검색하니 계정생성 윈도우이벤트로그 ID는 4720입니다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-06-10-48.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=WinEventLog EventCode=4720
+</code></pre></div></div>
+<p>한개의 이벤트가 나옵니다. 
+Account Name:		svcvnc</p>
+
+<p>답 : svcvnc</p>
+
+<p>305	What is the process ID of the process listening on a “leet” port?<br />
+“leet” 포트에서 수신 대기하는 프로세스의 프로세스 ID는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use osquery:results as the sourcetype.<br />
+    osquery:results를 소스 유형으로 사용하십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Osquery is logging open ports found on the Linux host hoth.<br />
+    Osquery는 Linux 호스트 hoth에서 발견된 열린 포트를 기록하고 있습니다.
+</details>
+
+<p><a href="https://en.wikipedia.org/wiki/Leet">leet</a>는 1337포트를 사용하는 서비스입니다. PID는 sourcetype ps에서 확인할 수 있을것입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1337 sourcetype=ps
+</code></pre></div></div>
+<ul>
+  <li>결과
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root             14356     0      0.0      00:00:00     0.1       1732       6492   ?        S         31:58  netcat              -v_-l_-p_1337_-e_/bin/bash
+</code></pre></div>    </div>
+    <p>pid는 14356임을 알 수 있습니다.</p>
+  </li>
+</ul>
+
+<p>답 : 14356</p>
+
+<p>306	A search query originating from an external IP address of Frothly’s mail server yields some interesting search terms. What is the search string?
+Frothly 메일 서버의 외부 IP 주소에서 시작되는 검색 쿼리는 몇 가지 흥미로운 검색어를 생성합니다. 검색 문자열은 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use o365:management:activity as the sourcetype.
+    sourcetype o365:management:activity에서 조사하십시오.
+</details>
+
+<p>ms office를 사용하는것을 알고있으니, Outlook 혹은 Exchange를 사용할 것입니다. o365관련 sourcetype에서 키워드 query를 조사해봅니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=*o365* (Exchange OR Outlook) *query*
+</code></pre></div></div>
+
+<p>아래와 같은 로그를 발견할 수 있습니다.</p>
+
+<p>ClientIP: 104.207.83.63:21974
+user: fyodor@froth.ly
+Workload: Exchange
+UserKey: 1003BFFDA2E71FF9
+UserType: 2
+Name: SearchQuery
+Value: cromdale OR beer OR financial OR secret</p>
+
+<p>답 : cromdale OR beer OR financial OR secret</p>
+
+<p>307	What is the MD5 value of the file downloaded to Fyodor’s endpoint system and used to scan Frothly’s network?<br />
+Fyodor의 엔드포인트 시스템에 다운로드되어 Frothly의 네트워크를 스캔하는 데 사용되는 파일의 MD5 값은 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+<p>실행파일의 hash값은 sysmon로그에 있습니다.
+sourcetype으로 제공되지않고, source로 제공합니다.
+파일이 실행됐다면 process creation이벤트가 발생했을것입니다.(EventID=1)
+어떤 파일이 실행됐는지 파악할 수 있도록 Image필드의 값을 봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>host=FYODOR-L source="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventID=1 
+| stats count by Image
+</code></pre></div></div>
+<p>Images 중 “C:\Windows\Temp\hdoor.exe”라는 특이한 실행파일이 보입니다.
+CommandLine을 보면 “C:\windows\temp\hdoor.exe” -hbs 192.168.9.1-192.168.9.50 /b /m /n 식으로 네트워크 대역관련 인자가 보입니다.</p>
+
+<p>답 : 586EF56F4D8963DD546163AC31C865D7</p>
+
+<p>308	Based on the information gathered for question 304, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.<br />
+문제 304에 대해 수집된 정보에 따르면 엔드포인트가 손상된 후 이 사용자는 어떤 그룹에 할당되었습니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>계정명 svcvnc의 그룹을 알아봅시다.</p>
+
+<p><a href="https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4732">sysmon Group할당</a>eventID는 4732입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svcvnc EventCode=4732
+</code></pre></div></div>
+<p>이벤트 2개가 나옵니다.</p>
+
+<p>답 : Administrators,Users</p>
+
+<p>309	At some point during the attack, a user’s domain account is disabled. What is the email address of the user whose account gets disabled and what is the email address of the user who disabled their account? Answer guidance: Comma separated without spaces, in alphabetical order. (Example: jdoe@mycompany.com,tmiller@mycompany.com)<br />
+공격 중간에 어느 시점에서 사용자의 도메인 계정이 비활성화됩니다. 계정이 비활성화된 사용자의 이메일 주소는 무엇이며 계정을 비활성화한 사용자의 이메일 주소는 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다. (예: jdoe@mycompany.com,tmiller@mycompany.com)</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p><a href="https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4725">sysmon account disable</a>eventID는 4725입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EventCode=4725
+</code></pre></div></div>
+
+<p>아무이벤트도 나오지 않습니다.</p>
+
+<p>AD에서 찾아봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=ms:aad:* *user* OR *account* OR *disable*
+</code></pre></div></div>
+
+<p>activity라는 필드에 <strong>Disable account</strong>가 보입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=ms:aad:* activity="Disable account"
+</code></pre></div></div>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-12-25-55.png" alt="" />
+actor부분에 <strong>fyodor@froth.ly</strong>라는 이메일계정을 발견할 수 있습니다.
+<img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-12-27-35.png" alt="" />
+target을 보면 <strong>bgist@froth.ly</strong>라는 이메일계정또한 발견할 수 있습니다.</p>
+
+<p>답 : bgist@froth.ly,fyodor@froth.ly</p>
+
+<p>310	Another set of phishing emails were sent to Frothly employees after the adversary gained a foothold on a Frothly computer. This malicious content was detected and left behind a digital artifact. What is the name of this file? Answer guidance: Include the file extension. (Example: badfile.docx)<br />
+공격자가 Frothly 컴퓨터에 발판을 마련한 후 또 다른 피싱 이메일 세트가 Frothly 직원에게 전송되었습니다. 이 악성 콘텐츠는 감지되어 디지털 아티팩트를 남겼습니다. 이 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: badfile.docx)</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>문제 302번에서 발견한 <strong>Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm</strong>파일이 생각납니다. 
+<img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-13-15-28.png" alt="" />
+해당 파일명으로 검색해보면 auto-sacning되어 지워졌음을 확인할 수 있습니다.</p>
+
+<p>답 : Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm</p>
+
+<p>311	Based on the answer to question 310, what is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension. (Example: explorer.exe)<br />
+310번 문제에 대한 답변에 따르면 악성코드에 포함된 실행 파일의 이름은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다. (예: explorer.exe)</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>바로 다음이벤트의 Image에 exe파일이 있습니다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-13-22-46.png" alt="" /></p>
+
+<p>답 : HxTsr.exe</p>
+
+<p>312	How many unique IP addresses “used” the malicious link file that was sent?<br />
+전송된 악성 링크 파일을 “사용”한 고유 IP 주소는 몇 개입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>300번문제에서 파악한 악성 링크파일의 이름은 <strong>BRUCE BIRTHDAY HAPPY HOUR PICS.lnk</strong>입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"BRUCE BIRTHDAY HAPPY HOUR PICS.lnk"
+</code></pre></div></div>
+
+<p>67개의 이벤트가 있습니다.
+그중 operation field값 중 <strong>AnonymousLinkUsed</strong>이 눈에 띕니다.</p>
+
+<p><img src="2021-11-01-13-29-24.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"BRUCE BIRTHDAY HAPPY HOUR PICS.lnk"  Operation=AnonymousLinkUsed
+| stats dc(ClientIP)
+</code></pre></div></div>
+
+<p>답 : 7</p>
+
+<p>313문제도 없네요</p>
+
+<p>314	What port number did the adversary use to download their attack tools?<br />
+공격자가 공격 도구를 다운로드하는 데 사용한 포트 번호는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>stream:tcp에서 조사해봅니다.
+well-known포트가 아닌 포트 중 한번만 다운로드 한 이벤트를 찾아봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:tcp
+| stats count by dest_port
+</code></pre></div></div>
+<p>45.77.53.176:3333과 192.168.8.103:50504가 count 1입니다.
+외부망 IP인 45.77.53.176이 의심스럽습니다.
+stream:http에서 확인해봅시다.</p>
+
+<p><strong>uri_path: /images/logos.png</strong>를 발견할 수 있습니다.</p>
+
+<p>답 : 3333</p>
+
+<p>315	During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files? Answer guidance: Comma separated without spaces, in alphabetical order, include the file extension where applicable.<br />
+공격하는 동안 공격자는 온프레미스 Linux 서버의 /tmp 디렉터리에 두 개의 파일을 원격으로 스트리밍합니다. 이 파일의 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분하고 해당되는 경우 파일 확장자를 포함합니다.</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>file upload 관련 로그는 osquery에 있을것입니다. create, upload관련 행위를 하는 데이터를 찾아봅시다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=osquery:results */tmp*.* "columns.action"=CREATED
+</code></pre></div></div>
+<p>create한 user 중 <strong>tomcat8</strong>을 발견할 수 있습니다. tomcat7이 악성행위하는 계정을 생성했으니 해당 계정도 의심스럽습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=osquery:results */tmp*.* "columns.action"=CREATED "decorations.username"=tomcat8
+| table columns.target_path
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>columns.target_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/tmp/ccgZ61x9.o</td>
+    </tr>
+    <tr>
+      <td>/tmp/cclBJ1WV.s</td>
+    </tr>
+    <tr>
+      <td>/tmp/colonel.c</td>
+    </tr>
+    <tr>
+      <td>/tmp/definitelydontinvestigatethisfile.sh</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>실행파일은 colonel.c와 definitelydontinvestigatethisfile.sh입니다.</p>
+
+<p>316	Based on the information gathered for question 314, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.<br />
+314번 문제에 대해 수집된 정보를 바탕으로 공격 도구가 포함된 것으로 유추할 수 있는 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>답 : logos.png</p>
+
+<p>317	What is the first executable uploaded to the domain admin account’s compromised endpoint system? Answer guidance: Include the file extension.<br />
+도메인 관리자 계정의 손상된 엔드포인트 시스템에 업로드된 첫 번째 실행 파일은 무엇입니까? 답변 지침: 파일 확장자를 포함합니다.</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>domain admin의 GUI는 (<strong>S-1-5-21*-512</strong>)[https://docs.microsoft.com/en-US/windows/security/identity-protection/access-control/security-identifiers]과 같습니다.
+이 키워드로 검색해도 아무것도 나오지않습니다.</p>
+
+<p>sysmon에서 .exe확장자 파일을 검색해봅니다. 악성코드는 보통 tmp, temp파일에 업로드하니 경로조건도 추가해봅니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*.exe source="WinEventLog:Microsoft-Windows-Sysmon/Operational" Image IN(*tmp*, *temp*)
+| stats count by Image
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <td>C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>C:\Windows\Temp\hdoor.exe</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td>C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe</td>
+      <td>51</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>hdoor.exe</strong>이 굉장히 의심스럽습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*.exe source="WinEventLog:Microsoft-Windows-Sysmon/Operational" Image IN(*tmp*, *temp*)
+| dedup Image
+| table _time Image Computer User SourceIp DestinationIp
+| reverse
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>_time</th>
+      <th>Image</th>
+      <th>Computer</th>
+      <th>User</th>
+      <th>SourceIp</th>
+      <th>DestinationIp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018/08/20 09:16:50</td>
+      <td>C:\Users\ALBUNG~1\AppData\Local\Temp\632F4847-CD24-4609-823F-C2C020FD03EB\DismHost.exe</td>
+      <td>ABUNGST-L.froth.ly</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2018/08/20 10:33:27</td>
+      <td>C:\Users\BRUCEG~1\AppData\Local\Temp\GUM4F89.tmp\DropboxUpdate.exe</td>
+      <td>BGIST-L.froth.ly</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2018/08/20 10:33:27</td>
+      <td>C:\Users\BruceGist\AppData\Local\Packages\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\TempState\Downloads\DropboxInstaller.exe</td>
+      <td>BGIST-L.froth.ly</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2018/08/20 10:44:05</td>
+      <td>C:\Windows\Temp\hdoor.exe</td>
+      <td>FYODOR-L.froth.ly</td>
+      <td>AzureAD\FyodorMalteskesko</td>
+      <td>192.168.8.103</td>
+      <td>192.168.9.50</td>
+    </tr>
+    <tr>
+      <td>2018/08/20 11:34:02</td>
+      <td>C:\Windows\Temp\unziped\lsof-master\iexeplorer.exe</td>
+      <td>FYODOR-L.froth.ly</td>
+      <td>AzureAD\FyodorMalteskesko</td>
+      <td>192.168.8.103</td>
+      <td>192.168.9.30</td>
+    </tr>
+    <tr>
+      <td>2018/08/20 11:34:33</td>
+      <td>C:\Users\FYODOR~1\AppData\Local\Temp\3F5D15FE-AD68-4E1F-B3C4-90E199AF3640\DismHost.exe</td>
+      <td>FYODOR-L.froth.ly</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2018/08/20 15:00:41</td>
+      <td>C:\Users\PeatCerf\AppData\Local\Temp\9027560D-FED5-45FC-A0CC-89A7591BC00E\DismHost.exe</td>
+      <td>PCERF-L.froth.ly</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>가장 먼저 업로드된 파일은 hdoor.exe입니다.</p>
+
+<p>답 : hdoor.exe</p>
+
+<p>318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?<br />
+Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스프레이 공격이 어느 국가에서 발생합니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use linux_secure as the sourcetype.
+    sourcetype linux_secure에서 조사하세요.
+</details>
+
+<p>힌트에서 sourcetype linux_secure에 답이있다고 알려줍니다.
+<a href="https://splunkbase.splunk.com/app/3476/">linux_secure</a></p>
+
+<p>vendor_action필드에 <strong>Invalid user</strong>란 값이있으니 조건을 추가해봅니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=linux_secure vendor_action="Invalid user"
+</code></pre></div></div>
+
+<p>해당 로그에서 발견한 IP는 <strong>5.101.40.81</strong>입니다.</p>
+
+<p>whois에 검색해봅시다.
+<img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-15-28-35.png" alt="" /></p>
+
+<p>해당 IP국가는 러시아입니다.</p>
+
+<p>답 : RUSSIA</p>
+
+<p>319	The adversary created a BCC rule to forward Frothly’s email to his personal account. What is the value of the “Name” parameter set to?<br />
+공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. “Name” 매개변수의 값은 무엇으로 설정되어 있습니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use ms:o365:management as the sourcetype.
+    sourcetype ms:o365:management에서 조사하세요.
+</details>
+
+<p><a href="https://bluemail.help/ko/myself-bcc-automatically/">BCC룰이란?</a>
+BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
+</code></pre></div></div>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-01-27.png" alt="" /></p>
+
+<p>공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 <strong>New-TransportRule</strong>룰을 생기는 이벤트입니다.</p>
+
+<p>답 : SOX</p>
+
+<p>320	What is the password for the user that was created on the compromised endpoint?<br />
+손상된 엔드포인트에서 생성된 사용자의 비밀번호는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use WinEventLog:Security as the sourcetype.
+    sourcetype WinEventLog:Security에서 조사하세요.
+</details>
+
+<p>svcvnc를 키워드로 검색하면 아래와 같은 이벤트를 발견할 수 있습니다.</p>
+
+<p>Process Command Line:	C:\Windows\system32\net1 user /add svcvnc Password123!</p>
+
+<p>답 : Password123!</p>
+
+<p>321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?<br />
+대동강은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Use stream:smtp as the sourcetype.
+    sourcetype stream:smtp에서 조사하세요.
+</details>
+
+<p>Grace Hoppy의 이메일주소는 <strong>ghoppy@froth.ly</strong>입니다.
+smtp에서 수신자 ghoppy@froth.ly인 이벤트를 찾아봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:smtp receiver_email{}=ghoppy@froth.ly
+</code></pre></div></div>
+<p>sender_email이 <strong>hyunki1984@naver.com</strong>인 이벤트가 1개있습니다.
+base64인코딩된 데이터를 디코딩해봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>R3JhY2llLAoKICAgICAgIFdlIGJyb3VnaHQgeW91ciBkYXRhIGFuZCBpbXBvcnRlZCBpdDogaHR0
+cHM6Ly9wYXN0ZWJpbi5jb20vc2RCVWt3c0UgQWxzbywgeW91IHNob3VsZCBub3QgYmUgdG9vIGhh
+cmQgQnJ1Y2UuIEhlIGdvb2QgbWFuIAogCiAKIAogCg==
+(Decoding)→
+Gracie,
+We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you should not be too hard Bruce. He good man 
+</code></pre></div></div>
+
+<p>해당 url로 가보면 총 8명입니다.
+<img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-17-11.png" alt="" /></p>
+
+<p>답 : 8</p>
+
+<p>322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
+명령 및 제어 서버가 액세스하는 URL의 경로는 무엇입니까? 답변 안내: 전체 경로를 제공하세요. (예: https://imgur.com/a/mAqgt4S/lasd3.jpg URL의 전체 경로는 /a/mAqgt4S/lasd3.jpg입니다.)</p>
+<details>
+  <summary>hint#1</summary>
+    Start with XmlWinEventLog:Microsoft-Windows-Sysmon/Operational as the sourcetype, or review the PowerShell logging on various Frothly laptops.
+    XmlWinEventLog:Microsoft-Windows-Sysmon/Operational을 소스 유형으로 시작하거나 다양한 Frothly 랩톱에서 PowerShell 로깅을 검토합니다.
+</details>
+
+<p>323	At least two Frothly endpoints contact the adversary’s command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.<br />
+최소 2개의 Frothly 엔드포인트가 적의 명령 및 제어 인프라에 접속합니다. 짧은 호스트 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>324	Who is Al Bungstein’s cell phone provider/carrier? Answer guidance: Two words.<br />
+324 Al Bungstein의 휴대전화 제공업체/이동통신사는 누구인가요? 답변 안내: 두 단어.</p>
+<details>
+  <summary>hint#1</summary>
+    How can you find out what external IP address Al Bungstein is using?<br />
+    Al Bungstein이 사용하는 외부 IP 주소를 어떻게 알 수 있습니까?
+</details>
+<details>
+  <summary>hint#2</summary>
+    OSINT is your friend here. Pivot off of Al's external IP.<br />
+    OSINT는 여기 당신의 친구입니다. Al의 외부 IP를 피벗합니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    There is a single sourcetype in Splunk that also contains this information. It is a scripted input running on Al's machine.<br />
+    Splunk에는 이 정보도 포함하는 단일 소스 유형이 있습니다. Al의 시스템에서 실행되는 스크립트 입력입니다.
+</details>
+
+<p>Al Bungstein의 이메일은 <strong>abungstein@froth.ly</strong>입니다.
+ip : 174.215.1.81</p>
+
+<p>해당 ip를 <a href="https://domain.whois.co.kr/whois/search.php">whois</a>에 조회해보면</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-18-03-14.png" alt="" /></p>
+
+<p>답 : Verizon Wireless</p>
+
+<p>325	Microsoft cloud services often have a delay or lag between “index time” and “event creation time”. For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.<br />
+Microsoft 클라우드 서비스는 종종 “인덱스 시간”과 “이벤트 생성 시간” 사이에 지연 또는 지연이 있습니다. 전체일 중 ms:aad:signin의 최대 지연 시간(분)은 얼마입니까? 답변 안내: 측정 단위 없이 가장 가까운 분으로 반올림합니다.</p>
+<details>
+  <summary>hint#1</summary>
+
+</details>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=ms:aad:signin  
+| eval indextime=strftime(_indextime,"%Y-%m-%d %H:%M:%S") 
+| eval time=strftime(_time,"%Y-%m-%d %H:%M:%S") 
+| eval indextime_epoch=strptime(indextime,"%Y-%m-%d %H:%M:%S")
+| eval time_epoch=strptime(time, "%Y-%m-%d %H:%M:%S")
+| table time, indextime, indextime_epoch, time_epoch
+| eval delta=indextime_epoch-time_epoch
+| stats max(delta) as max_lag
+| eval minutes=max_lag / 60
+</code></pre></div></div>
+<p>326	According to Mallory’s advertising research, how is beer meant to be enjoyed? Answer guidance: One word.<br />
+Mallory의 광고 연구에 따르면 맥주는 어떻게 즐길 수 있습니까? 답변 안내: 한 마디.</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+<p>327도 문제 없습니다.</p>
+
+<p>328	What text is displayed on line 2 of the file used to escalate tomcat8’s permissions to root? Answer guidance: Provide contents of the entire line.<br />
+tomcat8의 권한을 루트로 에스컬레이션하는 데 사용되는 파일의 2행에 어떤 텍스트가 표시됩니까? 답변 안내: 전체 라인의 내용을 제공합니다.</p>
+<details>
+  <summary>hint#1</summary>
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.<br />
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+</details>
+
+<p>osquery에 실행관련 이벤트가 있을것입니다. 어떤 계정이 어떤 명령을 실행했는지 조사해봅니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=osquery:results tomcat8 columns.cmdline=*
+| table _time decorations.username columns.cmdline
+| reverse
+</code></pre></div></div>
+
+<p>중간에 <strong>“chmod” “+x” “colonelnew”</strong>, <strong>”./colonelnew”</strong>의 이벤트를 발견할 수 있습니다. 
+<strong>colonelnew</strong>은 315번문제에서 발견한 파일과 비슷합니다. sourcetype sysmon에서 cat colonel.c의 로그가 있었습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*colonel* source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+</code></pre></div></div>
+<p>중간 <strong>C:\windows\temp\unziped\lsof-master\iexeplorer.exe” http://192.168.9.30:8080/frothlyinventory/showcase.action “echo Ly…. &gt;&gt; /tmp/colonel</strong>과 같은 명령어가 보입니다.
+해당 base64를 /tmp/colonel파일로 옮기는것처럼 보입니다. 해당 데이터를 base64로 디코딩해봅니다.</p>
+
+<p>시작 : LyoKICogVWJ1bnR1IDE2
+끝 : JldHVybiAwOwp9 &gt;&amp;gt</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-06-41.png" alt="" /></p>
+
+<p>답 :  * Ubuntu 16.04.4 kernel priv esc</p>
+
+<p>329	One of the files uploaded by Taedonggang contains a word that is a much larger in font size than any other in the file. What is that word?
+대동강이 업로드한 파일 중 하나에는 파일의 다른 어떤 것보다 훨씬 큰 글자 크기의 단어가 포함되어 있습니다. 그 단어는 무엇입니까?</p>
+<details>
+  <summary>hint#1</summary>
+    Figure out what files were uploaded, and pivot off of interesting file names found. The WinEventLog:Security sourcetype is helpful, as is the osquery:results sourcetype.<br />
+    어떤 파일이 업로드되었는지 파악하고 발견된 흥미로운 파일 이름을 중심으로 중심을 잡습니다. WinEventLog:Security 소스 유형은 osquery:results 소스 유형과 마찬가지로 유용합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    You are looking for a long string of base64 information.<br />
+    긴 base64 정보 문자열을 찾고 있습니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    You will need to find a site to decode the base64 to a viewable image. CyberChef is a good one!
+    base64를 볼 수 있는 이미지로 디코딩하려면 사이트를 찾아야 합니다. CyberChef는 좋은 사람입니다!
+</details>
+
+<p>지금까지 문제에서 대동강그룹이 업로드한 파일은 colonel, Frothly_GABF_Deck-2018-MK.pptx, 1534778082419.png, definitelydontinvestigatethisfile.sh로 파악했습니다.
+각 검색하여 base64 디코딩해봅시다.
+<strong>definitelydontinvestigatethisfile.sh</strong>를 검색해보면
+sysmon에 아래 base64 코드들이 있습니다.
+시작 : /9j/4AAQSkZJRgABAQAAAQABAAD/
+끝 : BvdGF0byBwaG9uZQo=</p>
+
+<p>해당 데이터를 디코드해보면 아래와 같습니다. 
+<img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-21-07.png" alt="" /></p>
+
+<p>답 : splunk</p>
+
+<p>330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.<br />
+어떤 Frothly VPN 사용자가 가장 많은 트래픽을 생성했습니까? 답변 안내: VPN 사용자 이름을 제공합니다.</p>
+<details>
+  <summary>hint#1</summary>
+    Start with cisco:asa as the sourcetype.
+    sourcetype cisco:asa에서 조사하십시오.
+</details>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=cisco:asa eventtype=cisco_vpn
+| stats count by Cisco_ASA_user
+| sort -count
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Cisco_ASA_user</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>mkraeusen</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <td>bstoll</td>
+      <td>36</td>
+    </tr>
+    <tr>
+      <td>bgist</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <td>fyodor</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td>pcerf</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <td>ghoppy</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>btun</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>abungstein</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>답 : mkraeusen</p>
+
+<p>331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR<br />
+Splunk 명령만 사용하는 경우 하루 종일 Windows 호스트의 이벤트 코드 4688 수에 대한 사분위수 범위(IQR)의 상한(UF) 값은 얼마입니까? 1.5 배율을 사용하십시오. 답변 안내: UF = Q3 + 1.5 x IQR</p>
+<details>
+  <summary>hint#1</summary>
+    Start with WinEventLog:Security as the sourcetype.<br />
+    sourcetype WinEventLog:Security를 조사하십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+    Splunk commands such as eventstats, perc25() and perc75() would be helpful here.<br />
+    여기에서 eventstats, perc25() 및 perc75()와 같은 Splunk 명령이 도움이 될 것입니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    If you have never used the interquartile range (IQR) to identify outliers, take a look at the documentation https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers<br />
+    사분위수 범위(IQR)를 사용하여 이상값을 식별한 적이 없는 경우 https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers 문서를 참조하십시오.
+</details>
+
+<p><a href="https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688">eventcode4688</a>
+새 process creation 이벤트 코드입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=wineventlog EventCode=4688
+| eventstats perc25(count) as p25, perc75(count) as p75
+| eval IQR=p75-p25
+| eval UF=p75+1.5*IQR
+</code></pre></div></div>
+
+<p>답 : 1368</p>
+
+<p>332	What is the CVE of the vulnerability that escalated permissions on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
+Linux 호스트 hoth에서 권한을 에스컬레이션한 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)</p>
+<details>
+  <summary>hint#1</summary>
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.<br />
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    Google search.
+    구글링 하세요.
+</details>
+
+<p>328번문제에서 발견한 “* Ubuntu 16.04.4 kernel priv esc”를 구글링해봅시다.</p>
+
+<p><a href="https://www.exploit-db.com/exploits/44298">CVE-2017-16995</a></p>
+
+<p>답 : CVE-2017-16995</p>
+
+<p>333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)<br />
+Linux 호스트 hoth에서 명령을 실행하기 위해 악용된 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)</p>
+<details>
+  <summary>hint#1</summary>
+    
+</details>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to wind-flow Tech Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+                </section>
+             -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/profile.png" alt="wind-flow" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/wind-flow">Kim-Gunwoo</a></h4>
+                                
+                                    <p>Finance Security IT Analyst</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/wind-flow">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+                <section class="post-full-comments">
+                    <div id="disqus_thread"></div>
+                    <script>
+                        var disqus_config = function () {
+                            var this_page_url = 'https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3';
+                            var this_page_identifier = '';
+                            var this_page_title = 'splunk-bots-v3 write up(3)';
+                        };
+                        (function() {
+                            var d = document, s = d.createElement('script');
+                            s.src = 'https://xxxxxxxx.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                </section>
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/images/sevenpuzzle.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; wind-flow Tech Blog &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/splunk/">Splunk</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-2021-BOTS-END">splunk 2021 bots 결과</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part4">splunk-bots-v3 write up(4) - END</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part2">splunk-bots-v3 write up(2)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/splunk/">
+                                
+                                    See all 12 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://wind-flow.github.io/">
+            
+            <span>wind-flow Tech Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">splunk-bots-v3 write up(3)</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=splunk-bots-v3+write+up%283%29&amp;url=https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://wind-flow.github.io/">wind-flow Tech Blog</a> &copy; 2022</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+    <div id="subscribe" class="subscribe-overlay">
+        <a class="subscribe-overlay-close" href="#"></a>
+        <div class="subscribe-overlay-content">
+            
+            <h1 class="subscribe-overlay-title">Search wind-flow Tech Blog</h1>
+            <p class="subscribe-overlay-description">
+            lunr.js를 이용한 posts 검색 </p>
+            <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+        </div>
+    </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-xxxxxxxx-x', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
