@@ -13,18 +13,16 @@ author: wind-flow
 
 # 2021 BOTS 결과
 
-    　
-    　
-    　
-    　
+### 신청정보
 
-신청정보
 ![temInfo]({{site.url}}/assets/built/images/splunk/bots/v4/teamInfo.png)
 
-팀 6등(34개팀)
+### 팀 6등(34개팀)
+
 ![팀랭킹]({{site.url}}/assets/built/images/splunk/bots/v4/teamRanking.png)
 
-개인 9등(52명)
+### 개인 9등(52명)
+
 ![개인랭킹]({{site.url}}/assets/built/images/splunk/bots/v4/individualRanking.png)
 
 2022년에는 1등을 목표로..!
