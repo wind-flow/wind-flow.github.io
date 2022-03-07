@@ -119,8 +119,6 @@ repo: wind-flow.github.io
 branch: main
 # 사용할 branch명
 
-relative_source: ./output/
-
 destination: ./output/
 # compile된 결과가 생성되는 폴더
 # 이 폴더안의 내용이 우리가 운영하는 블로그 내용이 컴파일되서 들어간다.
