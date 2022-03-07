@@ -1,8 +1,12 @@
-splunk :
+splunk:
   name: splunk
   description: Splunk에 대한 정보
   cover: assets/images/splunk.jpg
-blockchain : 
+blockchain:
   name: blockchain
   description: blockchain에 대한 정보
+  cover: assets/built/images/blockchain/blockchain.png
+automation:
+  name: automation
+  description: 작업 자동화
   cover: assets/built/images/blockchain/blockchain.png
