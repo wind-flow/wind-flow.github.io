@@ -3,7 +3,7 @@ markdown: kramdown #rdiscount, redcarpet, kramdown
 # kramdown : markdown의 개조판.
 # markdown에서 불편한 사항을 개선한 형태.
 words_per_minute: 200
-username: wind-flow
+
 # MyData
 owner:
   name: wind-flow
@@ -111,7 +111,7 @@ safe: False
 lsi: False
 
 username: wind-flow
-repo: GithubPageSourceRepo
+repo: main
 # username : travis-ci와 연동하는 github의 username
 # repo: travis-ci와 연동하는 github의 repository이름
 # https://github.com/<username>/<repository>
@@ -119,7 +119,7 @@ repo: GithubPageSourceRepo
 branch: main
 # 사용할 branch명
 
-relative_source:
+relative_source: ./output/
 
 destination: ./output/
 # compile된 결과가 생성되는 폴더
