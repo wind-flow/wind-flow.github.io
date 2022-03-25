@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>파일 다운로드 및 수정 자동화</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+
+    <!-- custom.css -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/custom.css" />
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- awesome icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="wind-flow Tech Blog" />
+    <link rel="shortcut icon" href="https://wind-flow.github.io/assets/built/images/wind-flow.png" type="image/png" />
+    <link rel="canonical" href="https://wind-flow.github.io/automation" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="wind-flow Tech Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="파일 다운로드 및 수정 자동화" />
+    <meta property="og:description" content="개론 「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다. 보통의 PC는 인터넷이 연결되어있기 때문에 백신 엔진 패턴이 자동으로 업데이트 되지만, 금융권은 망분리 규정으로인해 인터넷이 불가하기때문에 백신 공식 홈페이지에서 패턴 파일을 직접 다운받아 내부망으로 이동시킨 후 수동으로 업데이트작업을 해줘야합니다. 매일 하기엔 공수가 많이들어 자동으로 파일을 다운로드 받고, 업로드할 수 있는" />
+    <meta property="og:url" content="https://wind-flow.github.io/automation" />
+    <meta property="og:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2022-03-07T16:06:36+09:00" />
+    <meta property="article:modified_time" content="2022-03-07T16:06:36+09:00" />
+    <meta property="article:tag" content="Python" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="파일 다운로드 및 수정 자동화" />
+    <meta name="twitter:description" content="개론 「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다. 보통의 PC는 인터넷이 연결되어있기 때문에 백신 엔진 패턴이 자동으로 업데이트 되지만, 금융권은 망분리 규정으로인해 인터넷이 불가하기때문에 백신 공식 홈페이지에서 패턴 파일을 직접 다운받아 내부망으로 이동시킨 후 수동으로 업데이트작업을 해줘야합니다. 매일 하기엔 공수가 많이들어 자동으로 파일을 다운로드 받고, 업로드할 수 있는" />
+    <meta name="twitter:url" content="https://wind-flow.github.io/" />
+    <meta name="twitter:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="wind-flow Tech Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Python" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "wind-flow Tech Blog",
+        "logo": "https://wind-flow.github.io/"
+    },
+    "url": "https://wind-flow.github.io/automation",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://wind-flow.github.io/automation"
+    },
+    "description": "개론 「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다. 보통의 PC는 인터넷이 연결되어있기 때문에 백신 엔진 패턴이 자동으로 업데이트 되지만, 금융권은 망분리 규정으로인해 인터넷이 불가하기때문에 백신 공식 홈페이지에서 패턴 파일을 직접 다운받아 내부망으로 이동시킨 후 수동으로 업데이트작업을 해줘야합니다. 매일 하기엔 공수가 많이들어 자동으로 파일을 다운로드 받고, 업로드할 수 있는"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="파일 다운로드 및 수정 자동화" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://wind-flow.github.io/">wind-flow Tech Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+  <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+  <li class="nav-about" role="menuitem">
+    <a href="/about/">About</a>
+  </li>
+  <li class="nav-splunk" role="menuitem">
+    <a href="/tag/splunk/">splunk</a>
+  </li>
+  <!-- <li class="nav-python" role="menuitem"><a href="/tag/python/">Python</a></li> -->
+  <li class="nav-archive" role="menuitem">
+    <a href="/archive.html">All Posts</a>
+  </li>
+  <li class="nav-archive" role="menuitem">
+    <a href="/author_archive.html">Tag별 Posts</a>
+  </li>
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-python tag-automation tag-script post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 7 March 2022"> 7 March 2022</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/python/'>PYTHON</a>,
+                            
+                        
+                            
+                               <a href='/tag/automation/'>AUTOMATION</a>,
+                            
+                        
+                            
+                               <a href='/tag/script/'>SCRIPT</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">파일 다운로드 및 수정 자동화</h1>
+            </header>
+
+            <!-- 
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/splunk/bots/v3/bots-v3.jpg)">
+            </figure>
+             -->
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <h1 id="개론">개론</h1>
+
+<p>「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다.
+<img src="2022-03-07-16-19-56.png" alt="" /></p>
+
+<p>보통의 PC는 인터넷이 연결되어있기 때문에 백신 엔진 패턴이 자동으로 업데이트 되지만, 금융권은 망분리 규정으로인해 인터넷이 불가하기때문에 백신 공식 홈페이지에서 패턴 파일을 직접 다운받아 내부망으로 이동시킨 후 수동으로 업데이트작업을 해줘야합니다.</p>
+
+<p>매일 하기엔 공수가 많이들어 자동으로 파일을 다운로드 받고, 업로드할 수 있는 자동화 스크립트를 작성해보겠습니다.</p>
+
+<h1 id="업무설명">업무설명</h1>
+
+<ol>
+  <li>안랩 공식홈페이지에 로그인한다.</li>
+  <li>패턴 파일을 다운로드 한다.</li>
+  <li>다운로드 받은 파일이 이상없는지 무결성 검사를 한다.(hash값 비교)</li>
+  <li>업로드 형식게 맞게 파일을 구성한다.</li>
+  <li>USB로 옮긴다.</li>
+</ol>
+
+<h1 id="구현-전략">구현 전략</h1>
+
+<p>크롬을 자동으로 띄우고, 로그인 후 다운로드를 받는 기능을 구현해야합니다.
+위의 기능을 구현하기위해서는 크롬을 동적으로 다룰 수 있는 <strong>셀레니움</strong>과 <strong>Chrome driver</strong>를 사용합니다.</p>
+
+<h2 id="셀레니움-">셀레니움 ?</h2>
+
+<p>셀레니움은 웹 애플리케이션 테스트를 위한 프레임워크입니다. 웹 UI, 기능 테스트 뿐 아니라 크롤링에도 많이 사용됩니다.</p>
+
+<h2 id="크롬-드라이버-">크롬 드라이버 ?</h2>
+
+<p>크롬 드라이버는 크롬브라우저를 컨트롤 할 수 있게 해주는 파일입니다. 셀레니움으로 크롬 드라이버 기능을 사용하여 크롬 브라우저를 조작할 예정입니다.</p>
+
+<h1 id="구현">구현</h1>
+
+<p>우선 크롬 드라이버를 다운받습니다. 설치된 크롬 버전에 맞는 드라이버를 다운받아야합니다.</p>
+
+<h3 id="크롬-버전-확인하기">크롬 버전 확인하기</h3>
+
+<p>※ 해당 코드는 아래 포스트를 참고하여 작성하였습니다.
+[Python] 크롤링으로 업무 자동화 [https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1/]</p>
+
+<ol>
+  <li>우측상단 더보기 아이콘 클릭 후 설정
+<img src="2022-03-07-17-36-00.png" alt="" /></li>
+  <li>크롬 버전정보
+<img src="2022-03-07-17-28-56.png" alt="" /></li>
+</ol>
+
+<p>버전은 98.0.4758.102이므로, 해당버전을 다운받습니다.
+<img src="2022-03-07-17-32-39.png" alt="" />
+https://chromedriver.chromium.org/downloads</p>
+
+<h3 id="셀레니움-사용하기">셀레니움 사용하기</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pip</span> <span class="n">install</span> <span class="n">selenum</span>
+</code></pre></div></div>
+
+<p><strong>chromedirver.py</strong> 파일을 생성하고, 셀레니움 webdriver를 import 합니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from selenium import webdriver
+</code></pre></div></div>
+
+<h3 id="크롬-조작-인스턴스-정의">크롬 조작 인스턴스 정의</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from selenium import webdriver
+
+def generate_chrome(
+    driver_path: str,
+    download_path: str,
+    headless: bool=False
+    ) -&gt; webdriver:
+    """
+    크롭 웹드라이버 인스턴스 생성
+
+    :param driver_path: 드라이버 경로
+    :param download_path: 파일 다운로드 경로
+    :param headless: headless 옵션 설정 플래그
+
+    :return webdriver: 크롬 드라이버 인스턴스
+    """
+</code></pre></div></div>
+
+<h3 id="크롬-브라우저-옵션-세팅">크롬 브라우저 옵션 세팅</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from selenium import webdriver
+
+def generate_chrome(
+    driver_path: str,
+    download_path: str,
+    headless: bool=False
+    ) -&gt; webdriver:
+    """
+    크롭 웹드라이버 인스턴스 생성
+
+    :param driver_path: 드라이버 경로
+    :param download_path: 파일 다운로드 경로
+    :param headless: headless 옵션 설정 플래그
+    :return webdriver: 크롬 드라이버 인스턴스
+    """
+
+    options = webdriver.ChromeOptions()
+    if headless:
+        options.add_argument('headless')
+        options.add_argument('--disable-gpu')
+    options.add_experimental_option('prefs', {
+        'download.default_directory': download_path,
+        'download.prompt_for_download': False,
+        "profile.default_content_settings.popups": 0,
+        "safebrowsing.enabled": True
+    })
+
+    chrome = webdriver.Chrome(executable_path=driver_path, options=options)
+
+    if headless:
+        _enable_download_in_headless_chrome(chrome, download_path)
+
+    atexit.register(_close_chrome(chrome))       # 스크립트 종료전 무조건 크롬 종료
+
+    return chrome
+</code></pre></div></div>
+
+<p><strong>headless</strong> : 브라우저 창을 띄우지않고 프로세스를 실행합니다.</p>
+
+<p><strong>–disable-gpu</strong> : 브라우저가 CPU의 부담을 줄이고자 렌더링 시 GPU를 사용하여 그래픽 가속을 하는데, GPU 버그가 일어날 수 있기때문에 GPU 사용을 disable 시킵니다.</p>
+
+<p><strong>download.default_directory: download_path</strong> : 다운로드 경로를 download_path로 설정합니다.
+<strong>download.prompt_for_download: False</strong> :
+<strong>profile.default_content_settings.popups: 0</strong> : 팝업을 금지합니다.
+<strong>safebrowsing.enabled: True</strong> : 세이프 브라우징모드를 킵니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def _enable_download_in_headless_chrome(driver: webdriver, download_dir: str):
+        """
+        headless does not allow file download: https://bugs.chromium.org/p/chromium/issues/detail?id=696481
+        크롬 드라이버는 크롤링을 이용한 해킹을 예방하기 위해 기본적으로 headless 모드에서 다운로드를 지원하지 않는다.
+        전문을 먼저 보내야 사용이 가능. 자세한 내용 위 링크 참조
+        :param driver: 크롬 드라이버 인스턴스
+        :param download_dir: 파일 다운로드 경로
+        """
+        driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
+
+        params = {
+            'cmd': 'Page.setDownloadBehavior',
+            'params': {
+                'behavior': 'allow',
+                'downloadPath': download_dir
+            }
+        }
+        driver.execute("send_command", params)
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def _close_chrome(chrome: webdriver):
+    """
+    크롬 종료
+    :param chrome: 크롬 드라이버 인스턴스
+    """
+    def close():
+        chrome.close()
+    return close
+</code></pre></div></div>
+
+<p>github 주소 (https://github.com/wind-flow/avdownload)</p>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to wind-flow Tech Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+                </section>
+             -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/profile.png" alt="wind-flow" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/wind-flow">Kim-Gunwoo</a></h4>
+                                
+                                    <p>Finance Security IT Analyst</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/wind-flow">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+                <section class="post-full-comments">
+                    <div id="disqus_thread"></div>
+                    <script>
+                        var disqus_config = function () {
+                            var this_page_url = 'https://wind-flow.github.io/automation';
+                            var this_page_identifier = '/automation';
+                            var this_page_title = '파일 다운로드 및 수정 자동화';
+                        };
+                        (function() {
+                            var d = document, s = d.createElement('script');
+                            s.src = 'https://xxxxxxxx.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                </section>
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/Definition-NFT">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/blockchain/NFT/NFT.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/Definition-NFT">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Blockchain</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Nft</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">NFT란?</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>NFT의 정의
+NFT는 Non-Fungible Token의 약자로, 한국어로는 대체 불가능한 토큰을 뜻합니다.
+NFT를 이해하기위해선 Fungible의 뜻을 이해해야 합니다.
+
+</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/profile.png" alt="Kim-Gunwoo" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/wind-flow/">Kim-Gunwoo</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://wind-flow.github.io/">
+            
+            <span>wind-flow Tech Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">파일 다운로드 및 수정 자동화</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=%ED%8C%8C%EC%9D%BC+%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C+%EB%B0%8F+%EC%88%98%EC%A0%95+%EC%9E%90%EB%8F%99%ED%99%94&amp;url=https://wind-flow.github.io/automation"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://wind-flow.github.io/automation"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://wind-flow.github.io/">wind-flow Tech Blog</a> &copy; 2022</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+    <div id="subscribe" class="subscribe-overlay">
+        <a class="subscribe-overlay-close" href="#"></a>
+        <div class="subscribe-overlay-content">
+            
+            <h1 class="subscribe-overlay-title">Search wind-flow Tech Blog</h1>
+            <p class="subscribe-overlay-description">
+            lunr.js를 이용한 posts 검색 </p>
+            <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+        </div>
+    </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-xxxxxxxx-x', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

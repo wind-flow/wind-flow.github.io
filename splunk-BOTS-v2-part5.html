@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>splunk-bots-v2 write up(5) - END</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+
+    <!-- custom.css -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/custom.css" />
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- awesome icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="wind-flow Tech Blog" />
+    <link rel="shortcut icon" href="https://wind-flow.github.io/assets/built/images/wind-flow.png" type="image/png" />
+    <link rel="canonical" href="https://wind-flow.github.io/splunk-BOTS-v2-part5" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="wind-flow Tech Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="splunk-bots-v2 write up(5) - END" />
+    <meta property="og:description" content="Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS" />
+    <meta property="og:url" content="https://wind-flow.github.io/splunk-BOTS-v2-part5" />
+    <meta property="og:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/bots-v2.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-10-04T20:04:36+09:00" />
+    <meta property="article:modified_time" content="2021-10-04T20:04:36+09:00" />
+    <meta property="article:tag" content="Splunk" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="splunk-bots-v2 write up(5) - END" />
+    <meta name="twitter:description" content="Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS" />
+    <meta name="twitter:url" content="https://wind-flow.github.io/" />
+    <meta name="twitter:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/bots-v2.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="wind-flow Tech Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Splunk" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "wind-flow Tech Blog",
+        "logo": "https://wind-flow.github.io/"
+    },
+    "url": "https://wind-flow.github.io/splunk-BOTS-v2-part5",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v2/bots-v2.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://wind-flow.github.io/splunk-BOTS-v2-part5"
+    },
+    "description": "Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="splunk-bots-v2 write up(5) - END" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://wind-flow.github.io/">wind-flow Tech Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+  <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+  <li class="nav-about" role="menuitem">
+    <a href="/about/">About</a>
+  </li>
+  <li class="nav-splunk" role="menuitem">
+    <a href="/tag/splunk/">splunk</a>
+  </li>
+  <!-- <li class="nav-python" role="menuitem"><a href="/tag/python/">Python</a></li> -->
+  <li class="nav-archive" role="menuitem">
+    <a href="/archive.html">All Posts</a>
+  </li>
+  <li class="nav-archive" role="menuitem">
+    <a href="/author_archive.html">Tag별 Posts</a>
+  </li>
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-splunk post tag-splunk ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 4 October 2021"> 4 October 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/splunk/'>SPLUNK</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">splunk-bots-v2 write up(5) - END</h1>
+            </header>
+
+            <!-- 
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/splunk/bots/v2/bots-v2.jpg)">
+            </figure>
+             -->
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Splunk BOTS의 데이터셋은 3개입니다.</span></p>
+<ul class="table-of-contents-list">
+  <li><a href="./splunk-BOTS-overview">BOTS란? </a></li>
+  <li><a href="./splunk-BOTS-v1-part1">BOTS v1 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v1-part2">BOTS v1 Write up(2) - END</a></li>
+  <li><a href="./splunk-BOTS-v2-part1">BOTS v2 Write up(1) </a></li>
+  <li><a href="./splunk-BOTS-v2-part2">BOTS v2 Write up(2) </a></li>
+  <li><a href="./splunk-BOTS-v2-part3">BOTS v2 Write up(3) </a></li>
+  <li><a href="./splunk-BOTS-v2-part4">BOTS v2 Write up(4) </a></li>
+  <li><a href="./splunk-BOTS-v2-part5">BOTS v2 Write up(5) - END</a></li>
+  <li><a href="./splunk-BOTS-v3-part1">BOTS v3 Write up(1)</a></li>
+  <li><a href="./splunk-BOTS-v3-part2">BOTS v3 Write up(2)</a></li>
+  <li><a href="./splunk-BOTS-v3-part3">BOTS v3 Write up(3)</a></li>
+  <li><a href="./splunk-BOTS-v3-part4">BOTS v3 Write up(4) - END</a></li>
+  <li><a href="./splunk-2021-BOTS-END">BOTS v4 결과</a></li>
+</ul>
+
+<p>APT Scenarios:</p>
+
+<p>In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.<br />
+이 실습에서는 Wayne Enterprises를 성공적으로 지원하고 Frothly의 Grace Hoppy에게 최근 문제를 지원하도록 추천된 분석가 Alice Bluebird의 페르소나를 가정합니다.</p>
+
+<p>Hunting Scenarios:</p>
+
+<p>PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.<br />
+PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.<br />
+Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP<br />
+Exfiltration Over Alternative Protocol - FTP: 데이터 유출은 주로 FTP와 같은 일반적인 네트워크 프로토콜을 사용하여 발생할 수 있습니다.<br />
+Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS<br />
+Exfiltration Over Alternative Protocol - DNS: 데이터 유출은 일반적인 네트워크 프로토콜, 특히 DNS를 사용하여 발생할 수 있습니다.<br />
+Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.<br />
+Adversary Infrastructure: 적군은 우리가 이미 밝혀낸 것 이상의 기반 시설의 여러 구성 요소를 구축했습니다.<br />
+Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.<br />
+Spearphishing Attachment: 적들은 피싱을 사용하여 Froth.ly 내에 거점을 구축하려고 시도합니다.<br />
+User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.<br />
+User Execution: 공격자는 사용자가 파일에 대해 작업을 실행하도록 유인하여 Froth.ly 내에서 거점을 설정하려고 시도합니다.<br />
+Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.<br />
+Persistence - Create Account: 공격자는 사용자 계정을 생성하여 기업 전체에서 지속성을 유지하려고 합니다.<br />
+Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.<br />
+Persistence - Scheduled Task: 공격자는 작업 스케줄러를 사용하여 재부팅 시 지속성을 유지하려고 합니다.<br />
+Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.<br />
+Indicator Removal On Host: 감사/이벤트 로그를 지우면 공격자가 자신의 흔적을 덮으려는 것을 나타낼 수 있습니다.<br />
+Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.<br />
+Reconaissance: 사용자 에이전트 문자열은 의도하지 않은 적에 대한 통찰력을 제공할 수 있습니다.
+OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.<br />
+OSINT: 공개적으로 사용 가능한 회사 정보와 해당 정보에 액세스하는 사람을 식별하면 적에 대한 통찰력을 제공할 수 있습니다.<br />
+Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).<br />
+Lateral Movement: 공격자는 WMI(Windows Management Instrumentation)를 사용하여 측면으로 다른 시스템으로 이동합니다.<br />
+Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.<br />
+Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b21.jpg" alt="Scenario 1" /></p>
+
+<p>The data included in this app was generated in August of 2017 by members of Splunk’s Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.<br />
+이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.</p>
+
+<p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b22.jpg" alt="Scenario 2" /></p>
+
+<p>500	Individual clicks made by a user when interacting with a website are associated with each other using session identifiers. You can find session identifiers in the stream:http sourcetype. The Frothly store website session identifier is found in one of the stream:http fields and does not change throughout the user session. What session identifier is assigned to dberry398@mail.com when visiting the Frothly store for the very first time? Answer guidance: Provide the value of the field, not the field name.<br />
+웹 사이트와 상호 작용할 때 사용자가 만든 개별 클릭은 세션 식별자를 사용하여 서로 연결됩니다. stream:http sourcetype에서 세션 식별자를 찾을 수 있습니다. Frothly 상점 웹사이트 세션 식별자는 stream:http 필드 중 하나에서 찾을 수 있으며 사용자 세션 전체에서 변경되지 않습니다. Frothly 스토어를 처음 방문할 때 dberry398@mail.com에 할당된 세션 식별자는 무엇입니까? 답변 안내: 필드 이름이 아닌 필드 값을 제공하십시오.</p>
+
+<details>
+  <summary>hint#1</summary>
+    Find the source IP address that our user of interest is using, then broaden your search such that you can view all events specific to the user's src ip address.<br />
+    관심 사용자가 사용하고 있는 소스 IP 주소를 찾은 다음 사용자의 src IP 주소와 관련된 모든 이벤트를 볼 수 있도록 검색을 확장하십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+    HTTP cookies often contain information specific to a user session, including session identifiers.<br />
+    HTTP 쿠키는 종종 세션 식별자를 포함하여 사용자 세션에 특정한 정보를 포함합니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+    After you get the events specific to the user's src ip address, you can append a '| reverse |table cookie' to get a better view of the cookies that the user clicked.<br />
+    사용자의 src IP 주소와 관련된 이벤트를 얻은 후 '|reverse |table cookie'를 사용하여 사용자가 클릭한 쿠키를 더 잘 볼 수 있습니다.
+</details>
+
+<p>보통 seesion정보는 cookie필드에 있으므로, decode해서 해당 값을 봅시다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http dberry398@mail.com
+| eval decoded=urldecode(cookie)
+| table decoded
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>decoded</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>store=default; mage-translation-storage={}; mage-translation-file-version={}; form_key=lwh9Ql7oUbnJUqxR; PHPSESSID=o6fc5a2rdoufmb8en8bqvfbav2; mage-cache-storage={}; mage-cache-storage-section-invalidation={}; recently_viewed_product={}; recently_viewed_product_previous={}; recently_compared_product={}; recently_compared_product_previous={}; product_data_storage={}; section_data_ids={“cart”:1502757091,”customer”:null,”messages”:null,”compare-products”:null,”product_data_storage”:null}; private_content_version=837d56d7fe0264712bb5f12adacd2dc5; mage-messages=[{“type”:”success”,”text”:”Thank you for registering with Main Website Store.”}]; X-Magento-Vary=20b556236a9f73d55ee9ffb5a21ffc45a5f6d878</td>
+    </tr>
+    <tr>
+      <td>store=default; mage-translation-storage={}; mage-translation-file-version={}; PHPSESSID=mlhg4l49hi8hn93b2abtr75j42; form_key=lwh9Ql7oUbnJUqxR; mage-cache-storage={}; mage-cache-storage-section-invalidation={}; recently_viewed_product={}; recently_viewed_product_previous={}; recently_compared_product={}; recently_compared_product_previous={}; product_data_storage={}; mage-cache-sessid=true; mage-messages=; private_content_version=becda8344cf560edfa267a78a663f962; X-Magento-Vary=9bf9a599123e6402b85cde67144717a08b817412; section_data_ids={“cart”:1502756249,”customer”:1502756125,”compare-products”:1502756125,”product_data_storage”:1502756125,”last-ordered-items”:1502756125,”directory-data”:1502756126,”review”:1502756125,”wishlist”:1502756125,”recently_viewed_product”:1502756125,”recently_compared_product”:1502756125,”paypal-billing-agreement”:1502756125}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>두개 이벤트 중 값이 같고, session값으로 보이는 항목은 <strong>form_key</strong>입니다.</p>
+
+<p>답 : lwh9Ql7oUbnJUqxR</p>
+
+<p>501	How many unique user ids are associated with a grand total order of $1000 or more?<br />
+총 주문 금액이 $1000 이상인 고유 사용자 ID는 몇 개입니까?</p>
+
+<details>
+  <summary>hint#1</summary>
+    When a user fills out a web form passing information such as username, password, credit card numbers, etc., it's passed via a standard http field (form_data) which is captured by stream:http. Extract the username from that field and store it in a new field.<br />
+    사용자가 사용자 이름, 암호, 신용 카드 번호 등과 같은 정보를 전달하는 웹 양식을 작성하면 stream:http에 의해 캡처되는 표준 http 필드(form_data)를 통해 전달됩니다. 해당 필드에서 사용자 이름을 추출하고 새 필드에 저장합니다.
+</details>
+<details>
+  <summary>hint#2</summary>
+    You're going to need to look deeper into the packet at a field called dest_content to extract the grand order total. Look for the following string and use it in a regular expression to capture the value: 'grand_total'.<br />
+    총 주문량을 추출하려면 dest_content라는 필드에서 패킷을 더 깊이 조사해야 합니다. 다음 문자열을 찾아 정규식에서 사용하여 값을 캡처합니다. 'grand_total'.
+</details>
+<details>
+  <summary>hint#3</summary>
+    The 'stats' command is useful for helping you to link several pieces of context together that occur within a single clickstream.<br />
+    'stats' 명령은 단일 클릭스트림 내에서 발생하는 여러 컨텍스트를 함께 연결하는 데 유용합니다.
+</details>
+
+<p>주문금액을 묻는걸 보아하니 웹관련 이벤트인 stream:http에서 해당데이터를 찾을 수 있을것으로 생각됩니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype="stream:http" grand_total
+| rex field=dest_content "\"totals\":{\"grand_total\":(?&lt;cost&gt;\w*),"
+| search cost=* 
+| where cost&gt;1000
+| dedup src_ip
+| table cost
+</code></pre></div></div>
+
+<p>답 : 7</p>
+
+<p>502	Which user, identified by their email address, edited their profile before placing an order over $1000 in the same clickstream? Answer guidance: Provide the user ID, not other values found from the profile edit, such as name.<br />
+이메일 주소로 식별되는 어떤 사용자가 동일한 클릭스트림에서 $1000 이상 주문하기 전에 프로필을 수정했습니까? 답변 안내: 이름과 같이 프로필 편집에서 찾은 다른 값이 아닌 사용자 ID를 제공합니다.</p>
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+<p>503	What street address was used most often as the shipping address across multiple accounts, when the billing address does not match the shipping address? Answer example: 123 Sesame St</p>
+
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+<p>504	What is the domain name used in email addresses by someone creating multiple accounts on the Frothly store website (http://store.froth.ly) that appear to have machine-generated usernames?</p>
+
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+<p>505	Which user ID experienced the most logins to their account from different IP address and user agent combinations? Answer guidance: The user ID is an email address.</p>
+
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+<p>506	What is the most popular coupon code being used successfully on the site?</p>
+
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+<p>507	Several user accounts sharing a common password is usually a precursor to undesirable scenario orchestrated by a fraudster. Which password is being seen most often across users logging into http://store.froth.ly.</p>
+
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+<p>508	Which HTML page was most clicked by users before landing on http://store.froth.ly/magento2/checkout/ on August 19th? Answer guidance: Use earliest=1503126000 and latest=1503212400 to identify August 19th. Answer example: http://store.froth.ly/magento2/bigbrew.html</p>
+
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+<p>509	Which HTTP user agent is associated with a fraudster who appears to be gaming the site by unsuccessfully testing multiple coupon codes?</p>
+
+<details>
+  <summary>hint#1</summary>
+
+</details>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to wind-flow Tech Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+                </section>
+             -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/profile.png" alt="wind-flow" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/wind-flow">Kim-Gunwoo</a></h4>
+                                
+                                    <p>Finance Security IT Analyst</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/wind-flow">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+                <section class="post-full-comments">
+                    <div id="disqus_thread"></div>
+                    <script>
+                        var disqus_config = function () {
+                            var this_page_url = 'https://wind-flow.github.io/splunk-BOTS-v2-part5';
+                            var this_page_identifier = '/splunk-BOTS-v2-part5';
+                            var this_page_title = 'splunk-bots-v2 write up(5) - END';
+                        };
+                        (function() {
+                            var d = document, s = d.createElement('script');
+                            s.src = 'https://xxxxxxxx.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                </section>
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/images/sevenpuzzle.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; wind-flow Tech Blog &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/splunk/">Splunk</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-2021-BOTS-END">splunk 2021 bots 결과</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part4">splunk-bots-v3 write up(4) - END</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/splunk-BOTS-v3-part3">splunk-bots-v3 write up(3)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/splunk/">
+                                
+                                    See all 12 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/splunk-BOTS-v3-part1">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/splunk/bots/v3/bots-v3.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/splunk-BOTS-v3-part1">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Splunk</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">splunk-bots-v3 write up(1)</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/profile.png" alt="Kim-Gunwoo" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/wind-flow/">Kim-Gunwoo</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      14 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/splunk-BOTS-v2-part4">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/splunk/bots/v2/bots-v2.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/splunk-BOTS-v2-part4">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Splunk</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">splunk-bots-v2 write up(4)</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/profile.png" alt="Kim-Gunwoo" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/wind-flow/">Kim-Gunwoo</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      16 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://wind-flow.github.io/">
+            
+            <span>wind-flow Tech Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">splunk-bots-v2 write up(5) - END</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=splunk-bots-v2+write+up%285%29+-+END&amp;url=https://wind-flow.github.io/splunk-BOTS-v2-part5"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://wind-flow.github.io/splunk-BOTS-v2-part5"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://wind-flow.github.io/">wind-flow Tech Blog</a> &copy; 2022</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+    <div id="subscribe" class="subscribe-overlay">
+        <a class="subscribe-overlay-close" href="#"></a>
+        <div class="subscribe-overlay-content">
+            
+            <h1 class="subscribe-overlay-title">Search wind-flow Tech Blog</h1>
+            <p class="subscribe-overlay-description">
+            lunr.js를 이용한 posts 검색 </p>
+            <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  />
+    <input class="location" type="hidden" name="location"  />
+    <input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" 
+               id="searchtext" type="text" name="searchtext"  
+               placeholder="Search..." />
+    </div>
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+</span>
+        </div>
+    </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-xxxxxxxx-x', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

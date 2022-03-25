@@ -1,0 +1,183 @@
+[
+  
+    {
+      "title"    : "파일 다운로드 및 수정 자동화",
+      "title-lower"    : "파일 다운로드 및 수정 자동화",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "python, automation, script",
+      "url"      : "//automation",
+      "date"     : "2022-03-07 16:06:36 +0900",
+      "content"     : "개론「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다.보통의 PC는 인터넷이 연결되어있기 때문에 백신 엔진 패턴이 자동으로 업데이트 되지만, 금융권은 망분리 규정으로인해 인터넷이 불가하기때문에 백신 공식 홈페이지에서 패턴 파일을 직접 다운받아 내부망으로 이동시킨 후 수동으로 업데이트작업을 해줘야합니다.매일 하기엔 공수가 많이..."
+    } ,
+  
+    {
+      "title"    : "NFT란?",
+      "title-lower"    : "nft란?",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "blockchain, NFT",
+      "url"      : "//Definition-NFT",
+      "date"     : "2021-11-04 09:22:00 +0900",
+      "content"     : "NFT의 정의NFT는 Non-Fungible Token의 약자로, 한국어로는 대체 불가능한 토큰을 뜻합니다.NFT를 이해하기위해선 Fungible의 뜻을 이해해야 합니다.NFT의 개념Fungible : &amp;lt;재화가&amp;gt; 대체(代替) 가능의, (딴것으로) 대신할 수 있는의 의미를 갖고 있습니다.만원을 예를 들면 제가 갖고있던, 누군가 ..."
+    } ,
+  
+    {
+      "title"    : "splunk 2021 bots 결과",
+      "title-lower"    : "splunk 2021 bots 결과",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk, bots, soc",
+      "url"      : "//splunk-2021-BOTS-END",
+      "date"     : "2021-11-03 23:28:36 +0900",
+      "content"     : "2021 BOTS 결과신청정보팀 6등(34개팀)개인 9등(52명)2022년에는 1등을 목표로..!"
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v3 write up(4) - END",
+      "title-lower"    : "splunk-bots-v3 write up(4) - end",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v3-part4",
+      "date"     : "2021-10-05 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v3 write up(3)",
+      "title-lower"    : "splunk-bots-v3 write up(3)",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v3-part3",
+      "date"     : "2021-10-05 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v3 write up(2)",
+      "title-lower"    : "splunk-bots-v3 write up(2)",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v3-part2",
+      "date"     : "2021-10-05 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v3 write up(1)",
+      "title-lower"    : "splunk-bots-v3 write up(1)",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v3-part1",
+      "date"     : "2021-10-05 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v2 write up(5) - END",
+      "title-lower"    : "splunk-bots-v2 write up(5) - end",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v2-part5",
+      "date"     : "2021-10-04 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v2 write up(4)",
+      "title-lower"    : "splunk-bots-v2 write up(4)",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v2-part4",
+      "date"     : "2021-10-04 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v2 write up(3)",
+      "title-lower"    : "splunk-bots-v2 write up(3)",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v2-part3",
+      "date"     : "2021-10-04 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v2 write up(2)",
+      "title-lower"    : "splunk-bots-v2 write up(2)",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v2-part2",
+      "date"     : "2021-10-04 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v2 write up(1)",
+      "title-lower"    : "splunk-bots-v2 write up(1)",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v2-part1",
+      "date"     : "2021-10-04 20:04:36 +0900",
+      "content"     : "Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Write up(4)   BOTS v2 Write up(5) - END..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v1 write up - part2",
+      "title-lower"    : "splunk-bots-v1 write up - part2",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v1-part2",
+      "date"     : "2021-10-03 20:04:36 +0900",
+      "content"     : "Splunk SOC 대회인 BOSS OF THE SOC(BOTS) Write upSplunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BO..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots-v1 write up - part1",
+      "title-lower"    : "splunk-bots-v1 write up - part1",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-v1-part1",
+      "date"     : "2021-10-03 20:04:36 +0900",
+      "content"     : "Splunk SOC 대회인 BOSS OF THE SOC(BOTS) Write upSplunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BO..."
+    } ,
+  
+    {
+      "title"    : "splunk-bots 개론",
+      "title-lower"    : "splunk-bots 개론",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk",
+      "url"      : "//splunk-BOTS-overview",
+      "date"     : "2021-10-02 23:34:36 +0900",
+      "content"     : "Splunk SOC 대회인 BOSS OF THE SOC(BOTS)Splunk BOTS의 데이터셋은 3개입니다.  BOTS란?   BOTS v1 Write up(1)  BOTS v1 Write up(2) - END  BOTS v2 Write up(1)   BOTS v2 Write up(2)   BOTS v2 Write up(3)   BOTS v2 Wri..."
+    } 
+  
+]
