@@ -116,11 +116,12 @@ repo: wind-flow.github.io
 # repo: travis-ci와 연동하는 github의 repository이름
 # https://github.com/<username>/<repository>
 # repo: jasper2
-relative_source: ./_site/
-destination: ./_site/
+relative_source: ../jasper2-pages/
+destination: ../jasper2-pages/
 branch: main
 # 사용할 branch명
 
+# destination: ./output/
 # compile된 결과가 생성되는 폴더
 # 이 폴더안의 내용이 우리가 운영하는 블로그 내용이 컴파일되서 들어간다.
 # 이 폴더안의 내용을 github repository(https://username.github.io)에 push
@@ -143,8 +144,17 @@ exclude:
   # - Rakefile
   # - changelog.md
   # - "*.Rmd"
+  # - .travis.yml
   # - assets/css
   # - assets/images
+  #   - _posts/angular
+  #   - _posts/et-cetera
+  #   - _posts/python
+  #   - _posts/typescript
+  #   - _posts/jekyll
+  #   - _posts/iot
+  #   - _posts/r
+  #   - _posts/economy
   - Gemfile
   - Gemfile.lock
   - node_modules
@@ -152,4 +162,3 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
-  - .travis.yml
