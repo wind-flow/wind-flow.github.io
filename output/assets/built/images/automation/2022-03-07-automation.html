@@ -309,9 +309,6 @@ def generate_chrome(
     return chrome
 </code></pre></div></div>
 
-<p><strong>headless</strong>는 브라우저 창이 띄워지지 않고 기능을 수행합니다.
-다운로드</p>
-
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def _enable_download_in_headless_chrome(driver: webdriver, download_dir: str):
         """
         headless does not allow file download: https://bugs.chromium.org/p/chromium/issues/detail?id=696481

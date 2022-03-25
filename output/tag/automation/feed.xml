@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://wind-flow.github.io/tag/automation/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://wind-flow.github.io/" rel="alternate" type="text/html" />
-  <updated>2022-03-08T09:29:52+09:00</updated>
+  <updated>2022-03-25T09:44:34+09:00</updated>
   <id>https://wind-flow.github.io/tag/automation/feed.xml</id>
 
   
@@ -37,9 +37,7 @@
       <published>2022-03-07T16:06:36+09:00</published>
       <updated>2022-03-07T16:06:36+09:00</updated>
       <id>https://wind-flow.github.io/automation</id>
-      <content type="html" xml:base="https://wind-flow.github.io/automation">&lt;h1 id=&quot;백신&quot;&gt;백신&lt;/h1&gt;
-
-&lt;h2 id=&quot;개론&quot;&gt;개론&lt;/h2&gt;
+      <content type="html" xml:base="https://wind-flow.github.io/automation">&lt;h1 id=&quot;개론&quot;&gt;개론&lt;/h1&gt;
 
 &lt;p&gt;「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다.
 &lt;img src=&quot;2022-03-07-16-19-56.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -48,7 +46,7 @@
 
 &lt;p&gt;매일 하기엔 공수가 많이들어 자동으로 파일을 다운로드 받고, 업로드할 수 있는 자동화 스크립트를 작성해보겠습니다.&lt;/p&gt;
 
-&lt;h2 id=&quot;업무설명&quot;&gt;업무설명&lt;/h2&gt;
+&lt;h1 id=&quot;업무설명&quot;&gt;업무설명&lt;/h1&gt;
 
 &lt;ol&gt;
   &lt;li&gt;안랩 공식홈페이지에 로그인한다.&lt;/li&gt;
@@ -58,24 +56,24 @@
   &lt;li&gt;USB로 옮긴다.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;구현-전략&quot;&gt;구현 전략&lt;/h2&gt;
+&lt;h1 id=&quot;구현-전략&quot;&gt;구현 전략&lt;/h1&gt;
 
 &lt;p&gt;크롬을 자동으로 띄우고, 로그인 후 다운로드를 받는 기능을 구현해야합니다.
 위의 기능을 구현하기위해서는 크롬을 동적으로 다룰 수 있는 &lt;strong&gt;셀레니움&lt;/strong&gt;과 &lt;strong&gt;Chrome driver&lt;/strong&gt;를 사용합니다.&lt;/p&gt;
 
-&lt;h3 id=&quot;셀레니움-&quot;&gt;셀레니움 ?&lt;/h3&gt;
+&lt;h2 id=&quot;셀레니움-&quot;&gt;셀레니움 ?&lt;/h2&gt;
 
 &lt;p&gt;셀레니움은 웹 애플리케이션 테스트를 위한 프레임워크입니다. 웹 UI, 기능 테스트 뿐 아니라 크롤링에도 많이 사용됩니다.&lt;/p&gt;
 
-&lt;h3 id=&quot;크롬-드라이버-&quot;&gt;크롬 드라이버 ?&lt;/h3&gt;
+&lt;h2 id=&quot;크롬-드라이버-&quot;&gt;크롬 드라이버 ?&lt;/h2&gt;
 
 &lt;p&gt;크롬 드라이버는 크롬브라우저를 컨트롤 할 수 있게 해주는 파일입니다. 셀레니움으로 크롬 드라이버 기능을 사용하여 크롬 브라우저를 조작할 예정입니다.&lt;/p&gt;
 
-&lt;h2 id=&quot;구현&quot;&gt;구현&lt;/h2&gt;
+&lt;h1 id=&quot;구현&quot;&gt;구현&lt;/h1&gt;
 
 &lt;p&gt;우선 크롬 드라이버를 다운받습니다. 설치된 크롬 버전에 맞는 드라이버를 다운받아야합니다.&lt;/p&gt;
 
-&lt;h5 id=&quot;크롬-버전-확인하기&quot;&gt;크롬 버전 확인하기&lt;/h5&gt;
+&lt;h3 id=&quot;크롬-버전-확인하기&quot;&gt;크롬 버전 확인하기&lt;/h3&gt;
 
 &lt;p&gt;※ 해당 코드는 아래 포스트를 참고하여 작성하였습니다.
 [Python] 크롤링으로 업무 자동화 [https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1/]&lt;/p&gt;
@@ -91,7 +89,7 @@
 &lt;img src=&quot;2022-03-07-17-32-39.png&quot; alt=&quot;&quot; /&gt;
 https://chromedriver.chromium.org/downloads&lt;/p&gt;
 
-&lt;h4 id=&quot;셀레니움-사용하기&quot;&gt;셀레니움 사용하기&lt;/h4&gt;
+&lt;h3 id=&quot;셀레니움-사용하기&quot;&gt;셀레니움 사용하기&lt;/h3&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;selenum&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -101,7 +99,27 @@ https://chromedriver.chromium.org/downloads&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h4 id=&quot;크롬-조작-인스턴스-정의&quot;&gt;크롬 조작 인스턴스 정의&lt;/h4&gt;
+&lt;h3 id=&quot;크롬-조작-인스턴스-정의&quot;&gt;크롬 조작 인스턴스 정의&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
+
+def generate_chrome(
+    driver_path: str,
+    download_path: str,
+    headless: bool=False
+    ) -&amp;gt; webdriver:
+    &quot;&quot;&quot;
+    크롭 웹드라이버 인스턴스 생성
+
+    :param driver_path: 드라이버 경로
+    :param download_path: 파일 다운로드 경로
+    :param headless: headless 옵션 설정 플래그
+
+    :return webdriver: 크롬 드라이버 인스턴스
+    &quot;&quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;크롬-브라우저-옵션-세팅&quot;&gt;크롬 브라우저 옵션 세팅&lt;/h3&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
 
@@ -140,8 +158,14 @@ def generate_chrome(
     return chrome
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;headless&lt;/strong&gt;는 브라우저 창이 띄워지지 않고 기능을 수행합니다.
-다운로드&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;headless&lt;/strong&gt; : 브라우저 창을 띄우지않고 프로세스를 실행합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;–disable-gpu&lt;/strong&gt; : 브라우저가 CPU의 부담을 줄이고자 렌더링 시 GPU를 사용하여 그래픽 가속을 하는데, GPU 버그가 일어날 수 있기때문에 GPU 사용을 disable 시킵니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;download.default_directory: download_path&lt;/strong&gt; : 다운로드 경로를 download_path로 설정합니다.
+&lt;strong&gt;download.prompt_for_download: False&lt;/strong&gt; :
+&lt;strong&gt;profile.default_content_settings.popups: 0&lt;/strong&gt; : 팝업을 금지합니다.
+&lt;strong&gt;safebrowsing.enabled: True&lt;/strong&gt; : 세이프 브라우징모드를 킵니다.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def _enable_download_in_headless_chrome(driver: webdriver, download_dir: str):
         &quot;&quot;&quot;
@@ -173,7 +197,7 @@ def generate_chrome(
     return close
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;github 주소 → [https://github.com/wind-flow/avdownload]&lt;/p&gt;</content>
+&lt;p&gt;github 주소 (https://github.com/wind-flow/avdownload)&lt;/p&gt;</content>
 
       
       
@@ -198,7 +222,7 @@ def generate_chrome(
       
 
       
-        <summary type="html">백신</summary>
+        <summary type="html">개론</summary>
       
 
       

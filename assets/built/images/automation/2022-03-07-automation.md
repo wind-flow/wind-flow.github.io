@@ -113,9 +113,6 @@ def generate_chrome(
     return chrome
 ```
 
-**headless**는 브라우저 창이 띄워지지 않고 기능을 수행합니다.
-다운로드
-
 ```
 def _enable_download_in_headless_chrome(driver: webdriver, download_dir: str):
         """
