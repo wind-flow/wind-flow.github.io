@@ -140,20 +140,23 @@ destination: ./output/
 exclude:
   # - README.md
   # - Rakefile
-  - Gemfile
-  - Gemfile.lock
   # - changelog.md
   # - "*.Rmd"
-  - vendor
   # - .travis.yml
-  - node_modules
   # - assets/css
   # - assets/images
-#   - _posts/angular
-#   - _posts/et-cetera
-#   - _posts/python
-#   - _posts/typescript
-#   - _posts/jekyll
-#   - _posts/iot
-#   - _posts/r
-#   - _posts/economy
+  #   - _posts/angular
+  #   - _posts/et-cetera
+  #   - _posts/python
+  #   - _posts/typescript
+  #   - _posts/jekyll
+  #   - _posts/iot
+  #   - _posts/r
+  #   - _posts/economy
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
