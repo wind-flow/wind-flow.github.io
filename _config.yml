@@ -115,11 +115,13 @@ repo: wind-flow.github.io
 # username : travis-ci와 연동하는 github의 username
 # repo: travis-ci와 연동하는 github의 repository이름
 # https://github.com/<username>/<repository>
-
+repo: jasper2
+relative_source: ../jasper2/
+destination: ../jasper2-pages/
 branch: main
 # 사용할 branch명
 
-destination: ./output/
+# destination: ./output/
 # compile된 결과가 생성되는 폴더
 # 이 폴더안의 내용이 우리가 운영하는 블로그 내용이 컴파일되서 들어간다.
 # 이 폴더안의 내용을 github repository(https://username.github.io)에 push
