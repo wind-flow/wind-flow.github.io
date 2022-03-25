@@ -140,11 +140,11 @@ destination: ./output/
 exclude:
   # - README.md
   # - Rakefile
-  # - Gemfile
-  # - Gemfile.lock
+  - Gemfile
+  - Gemfile.lock
   # - changelog.md
   # - "*.Rmd"
-  # - vendor
+  - vendor
   # - .travis.yml
   - node_modules
   # - assets/css
