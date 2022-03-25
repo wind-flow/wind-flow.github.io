@@ -116,7 +116,7 @@ repo: wind-flow.github.io
 # repo: travis-ci와 연동하는 github의 repository이름
 # https://github.com/<username>/<repository>
 # repo: jasper2
-relative_source: ../jasper2/
+relative_source: ../jasper2-pages/
 destination: ../jasper2-pages/
 branch: main
 # 사용할 branch명
