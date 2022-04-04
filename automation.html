@@ -209,7 +209,7 @@ into the {body} of the default.hbs template -->
                     <h1 id="개론">개론</h1>
 
 <p>「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다.
-<img src="2022-03-07-16-19-56.png" alt="" /></p>
+<img src="https://wind-flow.github.io/assets/built/images/automation/2022-03-07-16-19-56.png" alt="" /></p>
 
 <p>보통의 PC는 인터넷이 연결되어있기 때문에 백신 엔진 패턴이 자동으로 업데이트 되지만, 금융권은 망분리 규정으로인해 인터넷이 불가하기때문에 백신 공식 홈페이지에서 패턴 파일을 직접 다운받아 내부망으로 이동시킨 후 수동으로 업데이트를 해야합니다.</p>
 
@@ -219,7 +219,7 @@ into the {body} of the default.hbs template -->
 
 <ol>
   <li>안랩 공식홈페이지에 로그인한다.</li>
-  <li>패턴 파일을 다운로드 한다.</li>
+  <li>패턴 파일을 다운로드 한다.(zip, ahc, exe파일)</li>
   <li>다운로드 받은 파일이 이상없는지 무결성 검사를 한다.(hash값 비교)
 <img src="https://wind-flow.github.io/assets/built/images/automation/AVPatternDownload.gif" alt="" /></li>
   <li>USB로 옮긴다.
@@ -246,7 +246,7 @@ into the {body} of the default.hbs template -->
 <h3 id="크롬-버전-확인하기">크롬 버전 확인하기</h3>
 
 <p>※ 해당 코드는 아래 포스트를 참고하여 작성하였습니다.
-[Python] (크롤링으로 업무 자동화)[https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1/]</p>
+<a href="https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1">크롤링으로 업무 자동화</a></p>
 
 <ol>
   <li>우측상단 더보기 아이콘 클릭 후 설정
@@ -257,7 +257,7 @@ into the {body} of the default.hbs template -->
 
 <p>버전은 98.0.4758.102이므로, 해당버전을 다운받습니다.
 <img src="https://wind-flow.github.io/assets/built/images/automation/2022-03-07-17-32-39.png" alt="" />
-https://chromedriver.chromium.org/downloads</p>
+<a href="https://chromedriver.chromium.org/downloads">크롬 다운로드 홈페이지</a></p>
 
 <h3 id="셀레니움-사용하기">셀레니움 사용하기</h3>
 
@@ -333,7 +333,7 @@ https://chromedriver.chromium.org/downloads</p>
 
 <p><strong>download.default_directory: download_path</strong> : 다운로드 경로를 download_path로 설정합니다.<br />
 <strong>profile.default_content_settings.popups: 0</strong> : 팝업을 금지합니다.<br />
-<strong>safebrowsing.enabled: True</strong> : 세이프 브라우징모드를 킵니다. 이 값이 없다면, exe파일 다운로드받을 때 경고창이 울려 자동으로 다운로드받지 못합니다.</p>
+<strong>safebrowsing.enabled: True</strong> : 세이프 브라우징모드를 킵니다. 이 설정을 하지 않는다면, exe파일 다운로드 받을 때 경고창이 울려 자동으로 다운로드받지 못합니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">_enable_download_in_headless_chrome</span><span class="p">(</span><span class="n">driver</span><span class="p">:</span> <span class="n">webdriver</span><span class="p">,</span> <span class="n">download_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="s">"""
@@ -371,73 +371,73 @@ https://chromedriver.chromium.org/downloads</p>
 
 <h3 id="최종적인-chromedriver-코드">최종적인 chromedriver 코드</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">atexit</span>
-<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<noscript><pre>import atexit
+from selenium import webdriver
 
-<span class="k">def</span> <span class="nf">_enable_download_in_headless_chrome</span><span class="p">(</span><span class="n">driver</span><span class="p">:</span> <span class="n">webdriver</span><span class="p">,</span> <span class="n">download_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="s">"""
+def _enable_download_in_headless_chrome(driver: webdriver, download_dir: str):
+        &quot;&quot;&quot;
         headless does not allow file download: https://bugs.chromium.org/p/chromium/issues/detail?id=696481
         크롬 드라이버는 크롤링을 이용한 해킹을 예방하기 위해 기본적으로 headless 모드에서 다운로드를 지원하지 않는다.
         전문을 먼저 보내야 사용이 가능. 자세한 내용 위 링크 참조
         :param driver: 크롬 드라이버 인스턴스
         :param download_dir: 파일 다운로드 경로
-        """</span>
-        <span class="n">driver</span><span class="p">.</span><span class="n">command_executor</span><span class="p">.</span><span class="n">_commands</span><span class="p">[</span><span class="s">"send_command"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="s">'/session/$sessionId/chromium/send_command'</span><span class="p">)</span>
+        &quot;&quot;&quot;
+        driver.command_executor._commands[&quot;send_command&quot;] = (&quot;POST&quot;, &#39;/session/$sessionId/chromium/send_command&#39;)
 
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">'cmd'</span><span class="p">:</span> <span class="s">'Page.setDownloadBehavior'</span><span class="p">,</span>
-            <span class="s">'params'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">'behavior'</span><span class="p">:</span> <span class="s">'allow'</span><span class="p">,</span>
-                <span class="s">'downloadPath'</span><span class="p">:</span> <span class="n">download_dir</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="n">driver</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"send_command"</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        params = {
+            &#39;cmd&#39;: &#39;Page.setDownloadBehavior&#39;,
+            &#39;params&#39;: { 
+                &#39;behavior&#39;: &#39;allow&#39;,
+                &#39;downloadPath&#39;: download_dir
+            }
+        }
+        driver.execute(&quot;send_command&quot;, params)
 
 
-<span class="k">def</span> <span class="nf">_close_chrome</span><span class="p">(</span><span class="n">chrome</span><span class="p">:</span> <span class="n">webdriver</span><span class="p">):</span>
-    <span class="s">"""
+def _close_chrome(chrome: webdriver):
+    &quot;&quot;&quot;
     크롬 종료
     :param chrome: 크롬 드라이버 인스턴스
-    """</span>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">():</span>
-        <span class="n">chrome</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">close</span>
+    &quot;&quot;&quot;
+    def close():
+        chrome.close()
+    return close
 
 
-<span class="k">def</span> <span class="nf">generate_chrome</span><span class="p">(</span>
-    <span class="n">driver_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">download_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="bp">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">webdriver</span><span class="p">:</span>
-    <span class="s">"""
+def generate_chrome(
+    driver_path: str,
+    download_path: str,
+    headless: bool=False
+    ) -&gt; webdriver:
+    &quot;&quot;&quot;
     크롭 웹드라이버 인스턴스 생성
-
+    
     :param driver_path: 드라이버 경로
     :param download_path: 파일 다운로드 경로
     :param headless: headless 옵션 설정 플래그
     :return webdriver: 크롬 드라이버 인스턴스
-    """</span>
+    &quot;&quot;&quot;
 
-    <span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">headless</span><span class="p">:</span>
-        <span class="n">options</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'headless'</span><span class="p">)</span>
-        <span class="n">options</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'--disable-gpu'</span><span class="p">)</span>
-    <span class="n">options</span><span class="p">.</span><span class="n">add_experimental_option</span><span class="p">(</span><span class="s">'prefs'</span><span class="p">,</span> <span class="p">{</span>
-        <span class="s">'download.default_directory'</span><span class="p">:</span> <span class="n">download_path</span><span class="p">,</span>
-        <span class="s">'download.prompt_for_download'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-        <span class="s">"profile.default_content_settings.popups"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s">"safebrowsing.enabled"</span><span class="p">:</span> <span class="bp">True</span>
-    <span class="p">})</span>
+    options = webdriver.ChromeOptions()
+    if headless:
+        options.add_argument(&#39;headless&#39;)
+        options.add_argument(&#39;--disable-gpu&#39;)
+    options.add_experimental_option(&#39;prefs&#39;, {
+        &#39;download.default_directory&#39;: download_path,
+        &#39;download.prompt_for_download&#39;: False,
+        &quot;profile.default_content_settings.popups&quot;: 0,
+        &quot;safebrowsing.enabled&quot;: True
+    })
+    
+    chrome = webdriver.Chrome(executable_path=driver_path, options=options)
 
-    <span class="n">chrome</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="n">driver_path</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+    if headless:
+        _enable_download_in_headless_chrome(chrome, download_path)
 
-    <span class="k">if</span> <span class="n">headless</span><span class="p">:</span>
-        <span class="n">_enable_download_in_headless_chrome</span><span class="p">(</span><span class="n">chrome</span><span class="p">,</span> <span class="n">download_path</span><span class="p">)</span>
+    atexit.register(_close_chrome(chrome))       # 스크립트 종료전 무조건 크롬 종료
 
-    <span class="n">atexit</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">_close_chrome</span><span class="p">(</span><span class="n">chrome</span><span class="p">))</span>       <span class="c1"># 스크립트 종료전 무조건 크롬 종료
-</span>
-    <span class="k">return</span> <span class="n">chrome</span>
-</code></pre></div></div>
+    return chrome</pre></noscript>
+<script src="https://gist.github.com/wind-flow/9cf8aa4532f23ff586ca508156b0e9f8.js"> </script>
 
 <h3 id="인스턴스-생성">인스턴스 생성</h3>
 
@@ -493,9 +493,12 @@ https://chromedriver.chromium.org/downloads</p>
 
 <p>구현하려면 셀레니움의 <strong>메소드 동작방식</strong>과 <strong>XPath</strong>에 대해서 알아야합니다.</p>
 
-<p>위 작업을 자동화 하려면 특정 엘리먼트들(버튼, input 등)을 <strong>①선택</strong>하고 <strong>②입력</strong>하고 <strong>③클릭</strong>하는 기능을 python으로 구현해야합니다.</p>
+<p>위 작업을 자동화 하려면 특정 엘리먼트들(버튼, input 등)을 <strong>선택</strong>하고 <strong>입력</strong>하고 <strong>클릭</strong>하는 기능을 python으로 구현해야합니다.</p>
 
-<p>셀레니움으로 엘리먼트를 선택하는 문법은 아래와 같습니다.</p>
+<p>셀레니움으로 엘리먼트를 선택하는 문법은 두가지 입니다.
+하나는 엘리먼트의 attr(id)로 선택하는 방법과 XPath로 선택하는 방법입니다.</p>
+
+<p>attr로 선택하는 방법은 보편적이니 따로 설정하지않고, XPath로 선택하는 방법을 소개하겠습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'XPath'</span><span class="p">)</span>
 </code></pre></div></div>
@@ -505,13 +508,305 @@ https://chromedriver.chromium.org/downloads</p>
 
 <p><img src="https://wind-flow.github.io/assets/built/images/automation/2022-04-01-11-22-58.png" alt="XPath" /></p>
 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="root"]/div/div[2]/div[1]/div[1]/button[1]/span[1]'</span><span class="p">)</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">'사용할 ID'</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">'password'</span><span class="p">)</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">'사용할 PW'</span><span class="p">)</span>
+
+<span class="n">elm</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">ENTER</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>click() : 선택한 엘리먼트를 클릭합니다.</li>
+  <li>send_keys(a) : 선택한 엘리먼트에 a값을 넣습니다.</li>
+</ul>
+
+<p>크롬 인스턴스의 find_element_by_XX 메소드를 이용해 선택할 엘리먼트의 id를 넣고, send_keys 메소드를 이용해 값을 넣어 <strong>업무설명</strong>에서 소개한 진행절차대로 작업을 수행해줍니다.</p>
+
+<p>※ 작업 중간마다 sleep함수를 넣은 이유는, 작업 완료 전에 다음 작업을 수행할 수 있기 때문입니다.</p>
+
+<p><strong>파일 다운로드 버튼</strong>을 클릭하려면 특정 엘리먼트를 클릭해야 버튼 엘리먼트가 생기는 경우가 있습니다.
+<img src="https://wind-flow.github.io/assets/built/images/automation/disappearElement.gif" alt="" /></p>
+
+<p>코드는 아래와 같습니다.</p>
+
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># login ~ enter download page
 </span><span class="n">url</span> <span class="o">=</span> <span class="s">'https://mycompany.ahnlab.com/'</span>
 <span class="n">chrome</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="root"]/div/div[2]/div[1]/div[1]/button[1]/span[1]'</span><span class="p">)</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">'[사용할 ID]'</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">'password'</span><span class="p">)</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">'[사용할 PW]'</span><span class="p">)</span>
+
+<span class="n">elm</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">ENTER</span><span class="p">)</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://mycompany.ahnlab.com/download'</span>
+<span class="n">chrome</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/span'</span><span class="p">)</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="k-panelbar-item-default-.0"]/div/div/div/div/table/tbody/tr[1]/td[1]/span[3]'</span><span class="p">)</span>
+<span class="n">enginedate</span> <span class="o">=</span> <span class="n">elm</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'.'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">enginedate</span><span class="p">)</span>
+
+<span class="c1">#exe, zip, ahc file download
+</span><span class="k">print</span><span class="p">(</span><span class="s">"open zip ahc"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/span/p'</span><span class="p">)</span> <span class="c1"># zip ahc open
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"download zip file"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/div/div/div/div/table/tbody/tr[1]/td[2]/a[1]/button'</span><span class="p">)</span> <span class="c1"># zip down
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"download ahc file"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/div/div/div/div/table/tbody/tr[1]/td[2]/a[2]/button'</span><span class="p">)</span> <span class="c1"># ahc down
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"open hash"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/div/div/div/div/table/tbody/tr[1]/td[2]/button'</span><span class="p">)</span> <span class="c1"># ahc
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">ahnlab_ziphash</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[5]/div[2]/div[2]/table/tbody/tr[2]/td'</span><span class="p">).</span><span class="n">text</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"hash close"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[5]/div[2]/div[3]/button'</span><span class="p">)</span> <span class="c1"># hash close
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"open exe"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[2]/span/p'</span><span class="p">)</span> <span class="c1"># exe open
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"download exe file"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[2]/div/div/div/div/table/tbody/tr[1]/td[2]/a/button'</span><span class="p">)</span> <span class="c1"># exe
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"open hash"</span><span class="p">)</span>
+<span class="n">elm</span> <span class="o">=</span> <span class="n">chrome</span><span class="p">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[2]/div/div/div/div/table/tbody/tr[1]/td[2]/button'</span><span class="p">)</span> <span class="c1"># hash click
+</span><span class="n">elm</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+<span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>github 주소 (https://github.com/wind-flow/avdownload)</p>
+<p>파일의 무결성을 검증하기위해 백신업체에서 제공하는 파일의 hash값을 검증하는 과정이 필요합니다. 파일의 hash값을 추출하기위해 <strong>sigcheck</strong>를 이용하겠습니다.</p>
+
+<p>※ <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sigcheck">sigcheck란?</a></p>
+
+<p>python의 subprocess를 이용해 sigcheck.exe파일을 수행하겠습니다.</p>
+
+<p>완료된 파일의 경로를 설정해주고, 10초마다 해당 경로에 파일이 있는지 검사합니다.
+파일명이 있으면 다운로드 완료된것으로 간주합니다.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># download and check file download complete.
+</span><span class="n">exepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">PROJECT_DIR</span><span class="si">}</span><span class="s">\download</span><span class="se">\\</span><span class="s">ahnlabengine_setup.exe'</span>
+<span class="n">apcpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">PROJECT_DIR</span><span class="si">}</span><span class="s">\download</span><span class="se">\\</span><span class="s">ahnlabengine_apc.zip'</span>
+<span class="n">ahcpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">PROJECT_DIR</span><span class="si">}</span><span class="s">\download</span><span class="se">\\</span><span class="s">ahnlabengine_apc.zip.ahc'</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"download process...."</span><span class="p">)</span>
+<span class="k">while</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">exepath</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">apcpath</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ahcpath</span><span class="p">):</span>
+        <span class="k">break</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>subprocess를 통해 sigcheck를 실행하고, 다운로드 받은 파일의 hash(SHA256)값을 비교해봅니다.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># check hash SHA256
+</span><span class="n">sig_exehash</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">check_output</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">PROJECT_DIR</span><span class="si">}</span><span class="s">\download\sigcheck64.exe'</span> <span class="o">+</span> <span class="s">" -h "</span> <span class="o">+</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">PROJECT_DIR</span><span class="si">}</span><span class="s">\download</span><span class="se">\\</span><span class="s">ahnlabengine_setup.exe | find </span><span class="se">\"</span><span class="s">SHA256</span><span class="se">\"</span><span class="s">'</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">sig_apchash</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">check_output</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">PROJECT_DIR</span><span class="si">}</span><span class="s">\download\sigcheck64.exe'</span> <span class="o">+</span> <span class="s">" -h "</span> <span class="o">+</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">PROJECT_DIR</span><span class="si">}</span><span class="s">\download</span><span class="se">\\</span><span class="s">ahnlabengine_apc.zip | find </span><span class="se">\"</span><span class="s">SHA256</span><span class="se">\"</span><span class="s">'</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"ahnlabZIPHash : "</span> <span class="o">+</span> <span class="p">(</span><span class="n">sig_apchash</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)[</span><span class="mi">8</span><span class="p">:]).</span><span class="n">capitalize</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"ZIPfileHash   : "</span> <span class="o">+</span> <span class="p">(</span><span class="n">ahnlab_ziphash</span><span class="p">).</span><span class="n">capitalize</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"ahnlabEXEHash : "</span> <span class="o">+</span> <span class="p">(</span><span class="n">sig_exehash</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)[</span><span class="mi">8</span><span class="p">:]).</span><span class="n">capitalize</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"EXEfileHash   : "</span> <span class="o">+</span> <span class="p">(</span><span class="n">ahnlab_exehash</span><span class="p">).</span><span class="n">capitalize</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>다운로드 받은 파일을 usb에 엔진날짜명의 폴더(ex, 220401)를 생성해 이동시킵니다.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># file move to USB
+</span><span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">usb_drive</span> <span class="o">+</span> <span class="n">enginedate</span><span class="p">)</span>
+<span class="n">shutil</span><span class="p">.</span><span class="n">move</span><span class="p">(</span><span class="n">ahcpath</span><span class="p">,</span> <span class="n">usb_drive</span> <span class="o">+</span> <span class="n">enginedate</span><span class="p">)</span>
+<span class="n">shutil</span><span class="p">.</span><span class="n">move</span><span class="p">(</span><span class="n">exepath</span><span class="p">,</span> <span class="n">usb_drive</span> <span class="o">+</span> <span class="n">enginedate</span><span class="p">)</span>
+<span class="n">shutil</span><span class="p">.</span><span class="n">move</span><span class="p">(</span><span class="n">apcpath</span><span class="p">,</span> <span class="n">usb_drive</span> <span class="o">+</span> <span class="n">enginedate</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>전체 코드는 아래와 같습니다.</p>
+<noscript><pre>#!/usr/bin/python
+# main.py
+
+import sys
+import os
+import time
+import subprocess
+import shutil
+
+from chromedriver import generate_chrome
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
+PROJECT_DIR = str(os.path.dirname(os.path.abspath(__file__)))
+DOWNLOAD_DIR = f&#39;{PROJECT_DIR}\download&#39;
+driver_path = f&#39;{PROJECT_DIR}/lib/webDriver/&#39;
+
+usb_drive = &#39;E:\\&#39;
+
+platform = sys.platform
+if platform == &#39;darwin&#39;:
+    print(&#39;System platform : Darwin&#39;)
+    driver_path += &#39;chromedriverMac&#39;
+elif platform == &#39;linux&#39;:
+    print(&#39;System platform : Linux&#39;)
+    driver_path += &#39;chromedriverLinux&#39;
+elif platform == &#39;win32&#39;:
+    print(&#39;System platform : Window&#39;)
+    driver_path += &#39;chromedriverWindow&#39;
+else:
+    print(f&#39;[{sys.platform}] not supported. Check your system platform.&#39;)
+    raise Exception()
+
+# 크롬 드라이버 인스턴스 생성    
+chrome = generate_chrome(
+    driver_path=driver_path,
+    headless=False,
+    download_path=DOWNLOAD_DIR)
+
+# login ~ enter download page
+url = &#39;https://mycompany.ahnlab.com/&#39;
+chrome.get(url)
+time.sleep(1.5) 
+
+elm = chrome.find_element_by_xpath(&#39;//*[@id=&quot;root&quot;]/div/div[2]/div[1]/div[1]/button[1]/span[1]&#39;)
+elm.click()
+time.sleep(1)
+
+elm = chrome.find_element_by_id(&#39;id&#39;)
+elm.send_keys(&#39;[your ID]&#39;) 
+elm = chrome.find_element_by_id(&#39;password&#39;)
+elm.send_keys(&#39;[your PW]&#39;) 
+
+elm.send_keys(Keys.ENTER)
+time.sleep(1)
+
+url = &#39;https://mycompany.ahnlab.com/download&#39;
+chrome.get(url)
+time.sleep(1) 
+
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/span&#39;)
+elm.click()
+
+time.sleep(1) 
+
+elm = chrome.find_element_by_xpath(&#39;//*[@id=&quot;k-panelbar-item-default-.0&quot;]/div/div/div/div/table/tbody/tr[1]/td[1]/span[3]&#39;)
+enginedate = elm.text.replace(&#39;.&#39;, &#39;&#39;)
+
+print(enginedate)
+
+#exe, zip, ahc file download
+print(&quot;open zip ahc&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/span/p&#39;) # zip ahc open
+elm.click()
+elm.click()
+time.sleep(0.5)
+
+print(&quot;download zip file&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/div/div/div/div/table/tbody/tr[1]/td[2]/a[1]/button&#39;) # zip down
+elm.click()
+time.sleep(0.5)
+
+print(&quot;download ahc file&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/div/div/div/div/table/tbody/tr[1]/td[2]/a[2]/button&#39;) # ahc down
+elm.click()
+time.sleep(0.5)
+
+print(&quot;open hash&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[1]/div/div/div/div/table/tbody/tr[1]/td[2]/button&#39;) # ahc
+elm.click()
+time.sleep(0.5)
+
+ahnlab_ziphash = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[5]/div[2]/div[2]/table/tbody/tr[2]/td&#39;).text
+time.sleep(0.5)
+
+print(&quot;hash close&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[5]/div[2]/div[3]/button&#39;) # hash close
+elm.click()
+time.sleep(0.5)
+
+print(&quot;open exe&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[2]/span/p&#39;) # exe open
+elm.click()
+time.sleep(0.5)
+
+print(&quot;download exe file&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[2]/div/div/div/div/table/tbody/tr[1]/td[2]/a/button&#39;) # exe
+elm.click()
+time.sleep(0.5)
+
+print(&quot;open hash&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[4]/div[2]/div/div/div/div/table/tbody/tr[1]/td[2]/button&#39;) # hash click
+elm.click()
+time.sleep(0.5)
+
+ahnlab_exehash = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[5]/div[2]/div[2]/table/tbody/tr[2]/td&#39;).text
+
+print(  &#39;zip SHA256: &#39; + ahnlab_ziphash, 
+        &#39;exe SHA256: &#39; + ahnlab_exehash)
+
+print(&quot;hash close&quot;)
+elm = chrome.find_element_by_xpath(&#39;/html/body/div/div/div/div[3]/div[2]/div/div[5]/div[2]/div[3]/button&#39;) # hash close
+elm.click()
+time.sleep(1)
+
+# download and check file download complete.
+exepath = f&#39;{PROJECT_DIR}\download\\ahnlabengine_setup.exe&#39;
+apcpath = f&#39;{PROJECT_DIR}\download\\ahnlabengine_apc.zip&#39;
+ahcpath = f&#39;{PROJECT_DIR}\download\\ahnlabengine_apc.zip.ahc&#39;
+
+print(&quot;download process....&quot;)    
+while(True) :
+    if os.path.exists(exepath) and os.path.exists(apcpath) and os.path.exists(ahcpath):
+        break
+    time.sleep(10)
+
+# check hash SHA256
+sig_exehash = subprocess.check_output(f&#39;{PROJECT_DIR}\download\sigcheck64.exe&#39; + &quot; -h &quot; + f&#39;{PROJECT_DIR}\download\\ahnlabengine_setup.exe | find \&quot;SHA256\&quot;&#39;, shell=True).strip()
+sig_apchash = subprocess.check_output(f&#39;{PROJECT_DIR}\download\sigcheck64.exe&#39; + &quot; -h &quot; + f&#39;{PROJECT_DIR}\download\\ahnlabengine_apc.zip | find \&quot;SHA256\&quot;&#39;, shell=True).strip()
+
+print(&quot;ahnlabZIPHash : &quot; + (sig_apchash.decode(&#39;utf-8&#39;)[8:]).capitalize())
+print(&quot;ZIPfileHash   : &quot; + (ahnlab_ziphash).capitalize())
+print(&quot;ahnlabEXEHash : &quot; + (sig_exehash.decode(&#39;utf-8&#39;)[8:]).capitalize())
+print(&quot;EXEfileHash   : &quot; + (ahnlab_exehash).capitalize())
+
+# file move to USB
+os.makedirs(usb_drive + enginedate)
+shutil.move(ahcpath, usb_drive + enginedate)
+shutil.move(exepath, usb_drive + enginedate)
+shutil.move(apcpath, usb_drive + enginedate)</pre></noscript>
+<script src="https://gist.github.com/wind-flow/d649da7940c14cd8f22987fce1bed927.js"> </script>
+
+<p><a href="https://github.com/wind-flow/avdownload">github 주소(https://github.com/wind-flow/avdownload)</a></p>
 
                 </div>
             </section>
