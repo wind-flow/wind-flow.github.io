@@ -235,16 +235,17 @@ In this scenario, reports of the below graphic come in from your user community 
 In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack.</p>
 
 <p>- 시나리오#2 요약<br />
-<code class="language-plaintext highlighter-rouge">Wayne</code>기업 직원 중 한 명이 시스템의 파일이 암호화 되었으며 파일을 복호화하려면 비용을 지불해야 하는 내용의 이미지를 보게 됩니다. 시스템이 <code class="language-plaintext highlighter-rouge">Wayne</code>의 <code class="language-plaintext highlighter-rouge">Cerber 랜섬웨어</code>에 감염된 것으로 보이며 귀하의 목표는 재공격을 염두에 두고 랜섬웨어를 조사하는 것입니다.</p>
+<code class="language-plaintext highlighter-rouge">Wayne</code>기업 직원 중 한 명이 시스템의 파일이 암호화 되었으며 파일을 복호화하려면 비용을 지불해야 하는 내용의 이미지를 보게 됩니다. 시스템이 <code class="language-plaintext highlighter-rouge">Wayne</code>의 <code class="language-plaintext highlighter-rouge">Cerber 랜섬웨어</code>에 감염된 것으로 보이며 목표는 재공격 가능성을 염두해 두고 랜섬웨어를 조사하는 것입니다.</p>
 
 <p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/ransomewere.png" alt="Scenario 2" /></p>
 
-<p>101	What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?<br />
-웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 누군가의 가능한 IP 주소는 무엇입니까?</p>
+<p>101 What is the likely IP address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?<br />
+웹 애플리케이션 취약점에 대해 imreallynotbatman.com을 스캔하는 Po1s0n1vy 그룹의 IP 주소는 무엇입니까?</p>
+
 <details>
   <summary alignment="left">hint#1</summary>
 Start your search with "sourcetype=stream:http" and review the rich data captured in these events.<br />
-sourcetype=stream:http로 검색을 시작하고 이러한 이벤트에서 캡처된 풍부한 데이터를 검토하십시오.
+sourcetype=stream:http로 검색을 시작하고 이러한 이벤트에서 데이터를 검토하십시오.
 </details>
 
 <details>
@@ -253,7 +254,8 @@ You'll notice that source and destination IP addresses are stored in fields call
 출발지 및 대상 IP 주소가 각각 src_ip 및 dest_ip라는 필드에 저장되어 있습니다. 조합하여 가장 많은 HTTP이벤트를 조사합니다.
 </details>
 
-<p>원하는 데이터는 IP입니다. 어떤 sourcetype에 있을지 찾아봅니다.</p>
+<p>찾고자 하는 데이터는 IP입니다. 어떤 sourcetype에 있을지 찾아봅니다.</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| metadata type=sourcetypes index=botsv1
 | stats values(sourcetype)
 </code></pre></div></div>
@@ -261,7 +263,7 @@ You'll notice that source and destination IP addresses are stored in fields call
 <p>sourcetype은 아래와 같습니다.
 <img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-14-38-04.png" alt="sourcetype" /></p>
 
-<p>scan을 수행한 컴퓨터의 ip를 찾는거니 stream:http에 우리가 원하는 데이터가 있을것입니다.
+<p>scan을 수행한 컴퓨터의 ip를 찾는거니 stream:http에 우리가 원하는 데이터가 있을 것입니다.
 또, scan tool을 실행하면 http header의 user-agent에 scan tool에 대한 정보가 추가되므로 scan키워드를 추가해서 검색해봅니다.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http imreallynotbatman.com *scan*
@@ -269,13 +271,13 @@ You'll notice that source and destination IP addresses are stored in fields call
 
 <p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-14-49-30.png" alt="수행결과" /></p>
 
-<p>src_header에 scan 정보를 볼 수 있다.
+<p>src_header에 scan 정보를 발견할 수 있습니다.
 추가로, imreallynotbatman.com의 ip는 192.168.250.70라는 정보도 얻을 수 있습니다.</p>
 
 <p>답 : 40.80.148.42</p>
 
 <p>102 What company created the web vulnerability scanner used by Po1s0n1vy? Type the company name. (For example “Microsoft” or “Oracle”)<br />
-Po1s0n1vy가 사용하는 웹 취약점 스캐너를 만든 회사는? 회사 이름을 입력합니다. (예: “Microsoft” 또는 “Oracle”)</p>
+Po1s0n1vy가 사용하는 웹 취약점 스캐너를 만든 회사는 무엇입니까? 회사 이름을 입력합니다. (예: “Microsoft” 또는 “Oracle”)</p>
 
 <details>
   <summary>hint#1</summary>
@@ -284,14 +286,14 @@ Po1s0n1vy가 사용하는 웹 취약점 스캐너를 만든 회사는? 회사 �
 </details>
 
 <p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-14-49-30.png" alt="수행결과" />
-header정보가 “Acunetix”라는 키워드가 있다. 구글링해봅시다.</p>
+header정보가 “Acunetix”라는 키워드가 있습니다. 구글링 해봅시다.</p>
 
 <p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-15-03-12.png" alt="Acunetix" />
-구글링결과, scan tool을 제작하는 회사명이다.</p>
+구글링 결과, scan tool을 제작하는 회사명입니다.</p>
 
 <p>답 : Acunetix</p>
 
-<p>103	What content management system is imreallynotbatman.com likely using?(Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)<br />
+<p>103 What content management system is imreallynotbatman.com likely using?(Please do not include punctuation such as . , ! ? in your answer. We are looking for alpha characters only.)<br />
 imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있습니까?(답변에 . , ! ?와 같은 문장부호를 포함하지 마십시오. 우리는 알파 문자만 찾고 있습니다.)</p>
 
 <details>
@@ -300,14 +302,15 @@ imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있�
   스캐닝 IP 주소(이전에 식별)에서 성공적인(http 상태 코드 200) GET 요청을 찾고 사용 중인 CMS에 대한 단서가 있는지 URL/URI와 관련된 필드를 검사합니다.
 </details>
 
-<p>content management system가 뭔지부터 알아봅시다.
+<p>content management system가 무엇인지부터 알아봅시다.
 <img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-15-11-21.png" alt="cms란?" />
-저작물 관리시스템이라함은, 파일 등을 upload하는 서버일 것입니다. 
+저작물 관리시스템이라함은, 파일 등을 upload하는 서버일 것입니다.
 아래 조건을 추가해 URL field를 검색해봅시다.</p>
+
 <ol>
-  <li>http status code를 200이다.</li>
-  <li>HTTP요청은 POST일것 이다.(upload)</li>
-  <li>upload할떄 content-type은 <code class="language-plaintext highlighter-rouge">application/x-www-form-urlencoded</code>일것이다.</li>
+  <li>http status code는 200 일것.</li>
+  <li>HTTP요청은 POST일것(upload)</li>
+  <li>upload할떄 content-type은 <code class="language-plaintext highlighter-rouge">application/x-www-form-urlencoded</code>일 것</li>
 </ol>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http imreallynotbatman.com status=200 http_method=POST cs_content_type=application/x-www-form-urlencoded
@@ -319,11 +322,11 @@ imreallynotbatman.com은 어떤 콘텐츠 관리 시스템을 사용하고 있�
 <p>joomla를 구글링해봅시다.
 <img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-15-20-03.png" alt="what is joomla?" /></p>
 
-<p>joomla는 CMS의 종류임을 알 수있습니다.</p>
+<p>joomla는 CMS의 종류임을 알 수 있습니다.</p>
 
 <p>답 : joomla</p>
 
-<p>104	What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension (For example “notepad.exe” or “favicon.ico”)<br />
+<p>104 What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension (For example “notepad.exe” or “favicon.ico”)<br />
 imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니까? 확장자가 있는 파일 이름만 제출하십시오(예: “notepad.exe” 또는 “favicon.ico”).</p>
 
 <details>
@@ -344,29 +347,45 @@ imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니
   여기서 핵심은 웹 서버의 IP 주소가 소스인 이벤트를 검색하는 것입니다. 웹 서버이기 때문에 우리는 목적지로 가장 많이 보지만 이 경우에는 침입자가 서버를 제어하고 인터넷 사이트에서 변조 파일을 가져왔습니다.
 </details>
 
-<p>우선 101질문에서 보았듯이, imreallynotbatman.com의 IP는 192.168.250.70입니다. suricata에서 특이한 이벤트가 있는지 찾아봅니다.
-※ suricata는 오픈소스 IDS입니다. 패턴에 의해 악성패킷을 차단하는 이벤트가 있을것으로 예상합니다.</p>
+<p>우선 101질문에서 보았듯이, imreallynotbatman.com의 IP는 192.168.250.70입니다. suricata에서 특이한 이벤트가 있는지 찾아봅니다.<br />
+※ suricata는 오픈소스 IDS입니다. 패턴에 의해 악성패킷을 차단하는 이벤트가 있을 것으로 예상합니다.</p>
+
 <ul>
   <li><a href="https://bricata.com/blog/what-is-suricata-ids/">suricata란?</a></li>
 </ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=suricata dest=192.168.250.70 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=suricata dest=192.168.250.70
 | stats count by src
 </code></pre></div></div>
-<p>|src|count|
-|—|—|
-|192.168.2.50|211
-|192.168.250.70|210|</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>src</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>192.168.2.50</td>
+      <td>211</td>
+    </tr>
+    <tr>
+      <td>192.168.250.70</td>
+      <td>210</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>별 특이점은 없어보입니다. 리버스 커넥션의 경우도 있을 수 있으니 해당 ip를 src로 두어 다시 검색해봅니다.<br />
-리버스 커넥션은 inbound가 아닌 outbound로 CnC서버(악성서버)에 접속하는 기법을 말합니다.
+리버스 커넥션은 inbound가 아닌 outbound로 CnC서버(악성서버)에 접속하는 기법을 말합니다.<br />
 자세한 내용은 아래사이트 참고해주세요.</p>
 
 <ul>
   <li><a href="https://oggwa.tistory.com/62">reverse connection이란?</a></li>
 </ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=suricata src=192.168.250.70 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=suricata src=192.168.250.70
 | stats count by dest_ip
 | sort -count
 </code></pre></div></div>
@@ -419,8 +438,10 @@ imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니
 40.80.148.42은 101번 문제에서 풀었던 scan pc의 IP입니다.</p>
 
 <p>해당 통신 중 특이한 점이 있는지 찾아봅니다.</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=suricata src=192.168.250.70 dest_ip=23.22.63.114
 </code></pre></div></div>
+
 <p>url field를 보니 의심스러운 url이 있습니다.
 <img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-17-01-19.png" alt="poisonivy-is-coming-for-you-batman.jpeg" /></p>
 
@@ -428,12 +449,13 @@ imreallynotbatman.com 웹사이트를 침해한 파일의 이름은 무엇입니
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>index=botsv1 src_ip=192.168.250.70 sourcetype=stream:http
 </code></pre></div></div>
+
 <p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/v1/2021-10-12-17-06-49.png" alt="src결과" />
-suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. poisonivy-is-coming-for-you-batman.jpeg</p>
+suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다.</p>
 
 <p>답 : poisonivy-is-coming-for-you-batman.jpeg</p>
 
-<p>105	This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
+<p>105 This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
 이 공격은 동적 DNS를 사용하여 악성 IP를 확인합니다. 이 공격과 관련된 FQDN(도메인 이름)은 무엇입니까?</p>
 
 <details>
@@ -451,7 +473,7 @@ suricata와 stream:http 모두 해당 uri에 접근한 이력이 있습니다. p
 
 <p>답 : prankglassinebracket.jumpingcrab.com</p>
 
-<p>106	What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?<br />
+<p>106 What IP address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?<br />
 Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인에 연결된 IP 주소는 무엇입니까?</p>
 
 <details>
@@ -464,24 +486,27 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 
 <p>답 : 23.22.63.114</p>
 
-<p>107	Based on the data gathered from this attack and common open source intelligence sources for domain names, what is the email address that is most likely associated with Po1s0n1vy APT group? <br />
+<p>107 Based on the data gathered from this attack and common open source intelligence sources for domain names, what is the email address that is most likely associated with Po1s0n1vy APT group?<br />
 이 공격에서 수집한 데이터와 도메인 이름에 대한 일반적인 오픈 소스 인텔리전스 소스를 기반으로 할 때 Po1s0n1vy APT 그룹과 가장 관련이 있는 이메일 주소는 무엇입니까?</p>
 
 <details>
   <summary>hint#1</summary>
   Malicious IP addresses, like the one in the last question are examples of attacker infrastructure. Infrastructure is often reused by the same group. Use a service like www.robtex.com to determine other domains that are or have been associated with this attacker infrastructure (IP address).  <br />
 
-  마지막 질문과 같은 악성 IP 주소는 공격자 인프라의 예시입니다. 인프라는 동일한 그룹에서 재사용되는 경우가 많습니다. www.robtex.com과 같은 서비스를 사용하여 이 공격자 인프라(IP 주소)와 관련되어 있거나 연결된 다른 도메인을 확인합니다.
+마지막 질문과 같은 악성 IP 주소는 공격자 인프라의 예시입니다. 인프라는 동일한 그룹에서 재사용되는 경우가 많습니다. www.robtex.com과 같은 서비스를 사용하여 이 공격자 인프라(IP 주소)와 관련되어 있거나 연결된 다른 도메인을 확인합니다.
+
 </details>
 
 <details>
   <summary>hint#2</summary>
   Use the whois lookup on domaintools.com to iterate through domains associated with this IP and visually search for suspicious email addresses. Your knowledge of Batman will help you here!  <br />
 
-  domaintools.com에서 whois 조회를 사용하여 이 IP와 연결된 도메인을 반복하고 의심스러운 이메일 주소를 시각적으로 검색합니다.   
+domaintools.com에서 whois 조회를 사용하여 이 IP와 연결된 도메인을 반복하고 의심스러운 이메일 주소를 시각적으로 검색합니다.
+
 </details>
 
 <p>이 문제는 OSINT(공개된 출처에서 얻은 정보)를 사용해야합니다. 현재는 OSINT의 해당정보가 변경되어 과거 자료를 인용해서 해결하겠습니다.</p>
+
 <ul>
   <li><a href="https://ko.wikipedia.org/wiki/%EC%98%A4%EC%8B%A0%ED%8A%B8">OSINT란?</a></li>
   <li><a href="https://www.splunk.com/en_us/blog/tips-and-tricks/work-flow-ing-your-osint.html">splunk OSINT 관련 포스팅</a></li>
@@ -500,7 +525,7 @@ Po1s0n1vy가 Wayne Enterprises를 공격하기 위해 사전 준비된 도메인
 
 <p>답 : lillian.rose@po1s0n1vy.com</p>
 
-<p>108	What IP address is likely attempting a brute force password attack against imreallynotbatman.com?<br />
+<p>108 What IP address is likely attempting a brute force password attack against imreallynotbatman.com?<br />
 imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가능성이 있는 IP 주소는 무엇입니까?</p>
 
 <details>
@@ -514,6 +539,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 </ul>
 
 <p>login 관련 데이터는 stream:http에 있을 것입니다. 아래 기준에 맞춰 쿼리를 작성해보겠습니다.</p>
+
 <ol>
   <li>method는 post일것.</li>
   <li>login 데이터는 form_data 태그에 있을 것.</li>
@@ -524,6 +550,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http http_method=POST form_data=*passwd* OR form_data=*password* OR form_data=*admin* dest=192.168.250.70
 | stats count by src
 </code></pre></div></div>
+
 <ul>
   <li>쿼리 결과</li>
 </ul>
@@ -552,7 +579,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 
 <p>답 : 23.22.63.114</p>
 
-<p>109	What is the name of the executable uploaded by Po1s0n1vy? Please include file extension. (For example, “notepad.exe” or “favicon.ico”)</p>
+<p>109 What is the name of the executable uploaded by Po1s0n1vy? Please include file extension. (For example, “notepad.exe” or “favicon.ico”)</p>
 
 <details>
   <summary>hint#1</summary>
@@ -581,7 +608,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 
 <p>답 : 3791.exe</p>
 
-<p>110	What is the MD5 hash of the executable uploaded?</p>
+<p>110 What is the MD5 hash of the executable uploaded?</p>
 
 <details>
   <summary>hint#1</summary>
@@ -602,7 +629,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 
 <p>3791.exe파일을 실행하는 event값에 hash 정보가 포함되어있을 것입니다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational 3791.exe 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational 3791.exe
 | where isnotnull(ParentCommandLine) and isnotnull(CommandLine)
 | table EventDescription CommandLine ParentCommandLine MD5
 </code></pre></div></div>
@@ -652,7 +679,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 
 <p>3791.exe를 실행한</p>
 
-<p>111	GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.</p>
+<p>111 GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.</p>
 
 <details>
   <summary>hint#1</summary>
@@ -665,7 +692,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
   전문분석가는 www.threatminer.org와 같은 사이트를 사용하여 악성 IP 주소와 관련된 맬웨어를 검색하지만, 발견 실패시 Google에서 검색하십시오!
 </details>
 
-<p>112	What special hex code is associated with the customized malware discussed in question 111? (Hint: It’s not in Splunk)</p>
+<p>112 What special hex code is associated with the customized malware discussed in question 111? (Hint: It’s not in Splunk)</p>
 
 <details>
   <summary>hint#1</summary>
@@ -684,7 +711,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
   16진수 코드는 49 66 20 79 6f 75 20 64 65 63 6f 64 65 20 74 68 65 20 68 69 6e 74 2c 20 79 6f 645 64 20 61 20 68 69 6e 74 21. 16진수 코드를 제출하되 웹에서 디코딩하십시오!
 </details>
 
-<p>113	One of Po1s0n1vy’s staged domains has some disjointed “unique” whois information. Concatenate the two codes together and submit as a single answer.</p>
+<p>113 One of Po1s0n1vy’s staged domains has some disjointed “unique” whois information. Concatenate the two codes together and submit as a single answer.</p>
 
 <details>
   <summary>hint#1</summary>
@@ -696,7 +723,7 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
   Use a high quality whois site like www.domaintools.com to perform whois lookups against these domains until you see a hex code where you were expecting text. Warning not all whois sites show you all fields!  <br />
 </details>
 
-<p>114	What was the first brute force password used?</p>
+<p>114 What was the first brute force password used?</p>
 
 <details>
   <summary>hint#1</summary>
@@ -727,8 +754,9 @@ imreallynotbatman.com에 대해 무차별 암호 대입 공격을 시도할 가�
 
 <p>답 : 12345678</p>
 
-<p>115	One of the passwords in the brute force attack is James Brodsky’s favorite Coldplay song. Hint: we are looking for a six character word on this one. Which is it?<br />
+<p>115 One of the passwords in the brute force attack is James Brodsky’s favorite Coldplay song. Hint: we are looking for a six character word on this one. Which is it?<br />
 brute force attack의 암호 중 하나는 James Brodsky가 가장 좋아하는 Coldplay 노래입니다. 힌트: 이 단어에서 6자 단어를 찾고 있습니다. 어떤것 인가?</p>
+
 <details>
   <summary>hint#1</summary>
   If you have not done so already, try to extract the attempted password into a new field using the "rex" SPL command and a regular expression. Having the password attempt in its own field will serve you well for the next several questions! <br /> 
@@ -749,17 +777,19 @@ brute force attack의 암호 중 하나는 James Brodsky가 가장 좋아하는 
 </code></pre></div></div>
 
 <p>overview에서 소개한 쿼리를 사용할 차례입니다. csv파일중 cp.csv 파일이 있습니다.</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| rest /servicesNS/-/-/data/lookup-table-files
 </code></pre></div></div>
+
 <p><img src="https://wind-flow.github.io/assets/built/images/splunk/bots/overview/csvFileSearch.jpg" alt="csv파일 조회" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http http_method=POST src=23.22.63.114 dest=192.168.250.70
 | rex field=form_data "passwd=(?&lt;brutePassword&gt;\w+)" ```brutePassword변수에 패스워드 발췌 표현식```
 | where len(brutePassword)=6```패스워드 중 6자리글자인것만 발췌```
-| table brutePassword 
+| table brutePassword
 | join type=inner brutePassword ```cold play 노래제목 파일과 join```
-    [ | inputlookup coldplay.csv 
-    | rename song as brutePassword 
+    [ | inputlookup coldplay.csv
+    | rename song as brutePassword
     | fields brutePassword ]
 </code></pre></div></div>
 
@@ -782,8 +812,9 @@ brute force attack의 암호 중 하나는 James Brodsky가 가장 좋아하는 
 
 <p>답 : yellow</p>
 
-<p>116	What was the correct password for admin access to the content management system running “imreallynotbatman.com”?<br />
+<p>116 What was the correct password for admin access to the content management system running “imreallynotbatman.com”?<br />
 “imreallynotbatman.com”을 실행하는 콘텐츠 관리 시스템에 대한 관리자 액세스의 올바른 비밀번호는 무엇입니까?</p>
+
 <details>
   <summary>hint#1</summary>
   From the previous questions, you should know how to extract the password attempts.  You should also know what IP is submitting passwords.  Are any other IP addresses submitting passwords?<br />
@@ -791,6 +822,7 @@ brute force attack의 암호 중 하나는 James Brodsky가 가장 좋아하는 
 </details>
 
 <p>탐색 전략은 아래와 같습니다.</p>
+
 <ol>
   <li>brute force는 같은 패스워드는 한번만 시도한다.</li>
   <li>올바른 패스워드를 찾았다면 같은 패스워드 사용이 2번이상 있을것이다.</li>
@@ -860,7 +892,7 @@ brute force attack의 암호 중 하나는 James Brodsky가 가장 좋아하는 
 
 <p>답 : batman</p>
 
-<p>117	What was the average password length used in the password brute forcing attempt? (Round to closest whole integer. For example “5” not “5.23213”)
+<p>117 What was the average password length used in the password brute forcing attempt? (Round to closest whole integer. For example “5” not “5.23213”)
 brute force attack 시도에 사용된 평균 암호 길이는 얼마입니까? (가장 가까운 정수로 반올림합니다. 예를 들어 “5.23213”이 아닌 “5”)</p>
 
 <details>
@@ -898,7 +930,7 @@ brute force attack 시도에 사용된 평균 암호 길이는 얼마입니까? 
 
 <p>답 : 6</p>
 
-<p>118	How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? Round to 2 decimal places.<br />
+<p>118 How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? Round to 2 decimal places.<br />
 brute force attack시 올바른 암호를 식별한 시간과 성공한 로그인 사이에 몇 초가 경과했습니까? 소수점 이하 2자리까지 반올림합니다.</p>
 
 <details>
@@ -947,10 +979,10 @@ brute force attack시 올바른 암호를 식별한 시간과 성공한 로그�
 transaction이라는 명령어가 있다.
 <a href="https://docs.splunk.com/Documentation/Splunk/8.2.2/SearchReference/Transaction">splunk transaction명령어</a></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http  
-| rex field=form_data "passwd=(?&lt;brutePassword&gt;\w+)" 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http
+| rex field=form_data "passwd=(?&lt;brutePassword&gt;\w+)"
 | search brutePassword=batman
-| transaction brutePassword 
+| transaction brutePassword
 | eval duration=round(duration, 2)
 | table duration
 </code></pre></div></div>
@@ -968,7 +1000,7 @@ transaction이라는 명령어가 있다.
   </tbody>
 </table>
 
-<p>119	How many unique passwords were attempted in the brute force attempt?<br />
+<p>119 How many unique passwords were attempted in the brute force attempt?<br />
 brute force attack에서 사용한 패스워드는 몇가지입니까?</p>
 
 <details>
@@ -978,8 +1010,9 @@ brute force attack에서 사용한 패스워드는 몇가지입니까?</p>
 </details>
 
 <p>중복값을 제거하는 dedup명령어를 사용하여 총 이벤트 수를 파악한다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http  
-| rex field=form_data "passwd=(?&lt;brutePassword&gt;\w+)" 
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourcetype=stream:http
+| rex field=form_data "passwd=(?&lt;brutePassword&gt;\w+)"
 | dedup brutePassword
 </code></pre></div></div>
 
