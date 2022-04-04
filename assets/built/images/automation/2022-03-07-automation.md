@@ -52,12 +52,12 @@ author: wind-flow
 [Python] (크롤링으로 업무 자동화)[https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1/]
 
 1. 우측상단 더보기 아이콘 클릭 후 설정
-   ![](2022-03-07-17-36-00.png)
+   ![]({{site.url}}/assets/built/images/automation/2022-03-07-17-36-00.png)
 2. 크롬 버전정보
-   ![](2022-03-07-17-28-56.png)
+   ![]({{site.url}}/assets/built/images/automation/2022-03-07-17-28-56.png)
 
 버전은 98.0.4758.102이므로, 해당버전을 다운받습니다.
-![](2022-03-07-17-32-39.png)
+![]({{site.url}}/assets/built/images/automation/2022-03-07-17-32-39.png)
 https://chromedriver.chromium.org/downloads
 
 ### 셀레니움 사용하기
@@ -313,7 +313,7 @@ chrome.find_element_by_xpath('XPath')
 XPath는 XML문장 속의 요소, 속성 등을 지정하기 위한 언어입니다.
 선택할 엘리먼트 태그를 우클릭하면 해당 엘리먼트의 XPath를 얻을 수 있습니다.
 
-![XPath](2022-04-01-11-22-58.png)
+![XPath]({{site.url}}/assets/built/images/automation/2022-04-01-11-22-58.png)
 
 ```python
 # login ~ enter download page
