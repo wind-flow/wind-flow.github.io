@@ -48,62 +48,116 @@
     <![endif]-->
     
     <!-- This tag outputs SEO meta+structured data and other important settings -->
-    <meta name="description" content="wind-flow Tech Blog" />
-    <link rel="shortcut icon" href="https://wind-flow.github.io/assets/built/images/wind-flow.png" type="image/png" />
-    <link rel="canonical" href="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <meta
+  name="description"
+  content="wind-flow Tech Blog"
+/>
+<link
+  rel="shortcut icon"
+  href="https://wind-flow.github.io/assets/built/images/wind-flow.png"
+  type="image/png"
+/>
+<link
+  rel="canonical"
+  href="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3"
+/>
+<meta name="referrer" content="no-referrer-when-downgrade" />
 
-     <!--title below is coming from _includes/dynamic_title-->
-    <meta property="og:site_name" content="wind-flow Tech Blog" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="splunk-bots-v3 write up(3)" />
-    <meta property="og:description" content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한" />
-    <meta property="og:url" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3" />
-    <meta property="og:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
-    <meta property="article:publisher" content="https://www.facebook.com/" />
-    <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2021-10-05T23:34:36+09:00" />
-    <meta property="article:modified_time" content="2021-10-05T23:34:36+09:00" />
-    <meta property="article:tag" content="Splunk" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="splunk-bots-v3 write up(3)" />
-    <meta name="twitter:description" content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한" />
-    <meta name="twitter:url" content="https://wind-flow.github.io/" />
-    <meta name="twitter:image" content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg" />
-    <meta name="twitter:label1" content="Written by" />
-    <meta name="twitter:data1" content="wind-flow Tech Blog" />
-    <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Splunk" />
-    <meta name="twitter:site" content="@" />
-    <meta name="twitter:creator" content="@" />
-    <meta property="og:image:width" content="1400" />
-    <meta property="og:image:height" content="933" />
 
-    <script type="application/ld+json">
-{
+<!--title below is coming from _includes/dynamic_title-->
+<meta property="og:site_name" content="wind-flow Tech Blog" />
+<meta property="og:type" content="website" />
+<meta
+  property="og:title"
+  content="splunk-bots-v3 write up(3)"
+/>
+<meta
+  property="og:description"
+  content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한"
+/>
+<meta
+  property="og:url"
+  content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3"
+/>
+<meta
+  property="og:image"
+  content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg"
+/>
+<meta
+  property="article:publisher"
+  content="https://www.facebook.com/"
+/>
+<meta
+  property="article:author"
+  content="https://www.facebook.com/"
+/>
+<meta
+  property="article:published_time"
+  content="2021-10-05T23:34:36+09:00"
+/>
+<meta
+  property="article:modified_time"
+  content="2021-10-05T23:34:36+09:00"
+/>
+<meta
+  property="article:tag"
+  content="Splunk"
+/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:title"
+  content="splunk-bots-v3 write up(3)"
+/>
+<meta
+  name="twitter:description"
+  content="{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한"
+/>
+<meta name="twitter:url" content="https://wind-flow.github.io/" />
+<meta
+  name="twitter:image"
+  content="https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg"
+/>
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="wind-flow Tech Blog" />
+<meta name="twitter:label2" content="Filed under" />
+<meta
+  name="twitter:data2"
+  content="Splunk"
+/>
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@" />
+<meta property="og:image:width" content="1400" />
+<meta property="og:image:height" content="933" />
+
+<script type="application/ld+json">
+  {
     "@context": "https://schema.org",
     "@type": "Website",
     "publisher": {
-        "@type": "Organization",
-        "name": "wind-flow Tech Blog",
-        "logo": "https://wind-flow.github.io/"
+      "@type": "Organization",
+      "name": "wind-flow Tech Blog",
+      "logo": "https://wind-flow.github.io/"
     },
     "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3",
     "image": {
-        "@type": "ImageObject",
-        "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg",
-        "width": 2000,
-        "height": 666
+      "@type": "ImageObject",
+      "url": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/bots-v3.jpg",
+      "width": 2000,
+      "height": 666
     },
     "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3"
+      "@type": "WebPage",
+      "@id": "https://wind-flow.github.io/assets/built/images/splunk/bots/v3/2021-10-05-splunk-BOTS-v3-part3"
     },
     "description": "{% include bots-table-of-contents.html %} - secnario #1 Note: All the information you need to answer each question is present within the question itself. You just need to figure out how to create the proper splunk search query that will get you the information you want. 각 질문에 답하는 데 필요한"
-}
-    </script>
-
-    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+  }
+</script>
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6619794523475927"
+  crossorigin="anonymous"
+></script>
+<!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
     <script type="text/javascript">
     ghost.init({
     	clientId: "ghost-frontend",
@@ -111,8 +165,13 @@
     });
     </script> -->
 
-    <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="splunk-bots-v3 write up(3)" href="/feed.xml" />
+<meta name="generator" content="Jekyll 3.6.2" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="splunk-bots-v3 write up(3)"
+  href="/feed.xml"
+/>
 
 
 </head>
