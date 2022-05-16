@@ -1,4 +1,164 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://wind-flow.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://wind-flow.github.io/" rel="alternate" type="text/html" /><updated>2022-03-07T15:44:10+09:00</updated><id>https://wind-flow.github.io/feed.xml</id><title type="html">wind-flow Tech Blog</title><subtitle>wind-flow Tech Blog</subtitle><entry><title type="html">NFT란?</title><link href="https://wind-flow.github.io/Definition-NFT" rel="alternate" type="text/html" title="NFT란?" /><published>2021-11-04T09:22:00+09:00</published><updated>2021-11-04T09:22:00+09:00</updated><id>https://wind-flow.github.io/Definition-NFT</id><content type="html" xml:base="https://wind-flow.github.io/Definition-NFT">&lt;h1 id=&quot;nft의-정의&quot;&gt;NFT의 정의&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://wind-flow.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://wind-flow.github.io/" rel="alternate" type="text/html" /><updated>2022-03-25T09:44:34+09:00</updated><id>https://wind-flow.github.io/feed.xml</id><title type="html">wind-flow Tech Blog</title><subtitle>wind-flow Tech Blog</subtitle><entry><title type="html">파일 다운로드 및 수정 자동화</title><link href="https://wind-flow.github.io/automation" rel="alternate" type="text/html" title="파일 다운로드 및 수정 자동화" /><published>2022-03-07T16:06:36+09:00</published><updated>2022-03-07T16:06:36+09:00</updated><id>https://wind-flow.github.io/automation</id><content type="html" xml:base="https://wind-flow.github.io/automation">&lt;h1 id=&quot;개론&quot;&gt;개론&lt;/h1&gt;
+
+&lt;p&gt;「전자금융감독규정」제 16조에 따라 백신 엔진 패턴을 항상 최신화 해야합니다.
+&lt;img src=&quot;2022-03-07-16-19-56.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;보통의 PC는 인터넷이 연결되어있기 때문에 백신 엔진 패턴이 자동으로 업데이트 되지만, 금융권은 망분리 규정으로인해 인터넷이 불가하기때문에 백신 공식 홈페이지에서 패턴 파일을 직접 다운받아 내부망으로 이동시킨 후 수동으로 업데이트작업을 해줘야합니다.&lt;/p&gt;
+
+&lt;p&gt;매일 하기엔 공수가 많이들어 자동으로 파일을 다운로드 받고, 업로드할 수 있는 자동화 스크립트를 작성해보겠습니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;업무설명&quot;&gt;업무설명&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;안랩 공식홈페이지에 로그인한다.&lt;/li&gt;
+  &lt;li&gt;패턴 파일을 다운로드 한다.&lt;/li&gt;
+  &lt;li&gt;다운로드 받은 파일이 이상없는지 무결성 검사를 한다.(hash값 비교)&lt;/li&gt;
+  &lt;li&gt;업로드 형식게 맞게 파일을 구성한다.&lt;/li&gt;
+  &lt;li&gt;USB로 옮긴다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;구현-전략&quot;&gt;구현 전략&lt;/h1&gt;
+
+&lt;p&gt;크롬을 자동으로 띄우고, 로그인 후 다운로드를 받는 기능을 구현해야합니다.
+위의 기능을 구현하기위해서는 크롬을 동적으로 다룰 수 있는 &lt;strong&gt;셀레니움&lt;/strong&gt;과 &lt;strong&gt;Chrome driver&lt;/strong&gt;를 사용합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;셀레니움-&quot;&gt;셀레니움 ?&lt;/h2&gt;
+
+&lt;p&gt;셀레니움은 웹 애플리케이션 테스트를 위한 프레임워크입니다. 웹 UI, 기능 테스트 뿐 아니라 크롤링에도 많이 사용됩니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;크롬-드라이버-&quot;&gt;크롬 드라이버 ?&lt;/h2&gt;
+
+&lt;p&gt;크롬 드라이버는 크롬브라우저를 컨트롤 할 수 있게 해주는 파일입니다. 셀레니움으로 크롬 드라이버 기능을 사용하여 크롬 브라우저를 조작할 예정입니다.&lt;/p&gt;
+
+&lt;h1 id=&quot;구현&quot;&gt;구현&lt;/h1&gt;
+
+&lt;p&gt;우선 크롬 드라이버를 다운받습니다. 설치된 크롬 버전에 맞는 드라이버를 다운받아야합니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;크롬-버전-확인하기&quot;&gt;크롬 버전 확인하기&lt;/h3&gt;
+
+&lt;p&gt;※ 해당 코드는 아래 포스트를 참고하여 작성하였습니다.
+[Python] 크롤링으로 업무 자동화 [https://dc7303.github.io/python/essay/2019/12/01/pythonMakedCrawler1/]&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;우측상단 더보기 아이콘 클릭 후 설정
+&lt;img src=&quot;2022-03-07-17-36-00.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;크롬 버전정보
+&lt;img src=&quot;2022-03-07-17-28-56.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;버전은 98.0.4758.102이므로, 해당버전을 다운받습니다.
+&lt;img src=&quot;2022-03-07-17-32-39.png&quot; alt=&quot;&quot; /&gt;
+https://chromedriver.chromium.org/downloads&lt;/p&gt;
+
+&lt;h3 id=&quot;셀레니움-사용하기&quot;&gt;셀레니움 사용하기&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;selenum&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;chromedirver.py&lt;/strong&gt; 파일을 생성하고, 셀레니움 webdriver를 import 합니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;크롬-조작-인스턴스-정의&quot;&gt;크롬 조작 인스턴스 정의&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
+
+def generate_chrome(
+    driver_path: str,
+    download_path: str,
+    headless: bool=False
+    ) -&amp;gt; webdriver:
+    &quot;&quot;&quot;
+    크롭 웹드라이버 인스턴스 생성
+
+    :param driver_path: 드라이버 경로
+    :param download_path: 파일 다운로드 경로
+    :param headless: headless 옵션 설정 플래그
+
+    :return webdriver: 크롬 드라이버 인스턴스
+    &quot;&quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;크롬-브라우저-옵션-세팅&quot;&gt;크롬 브라우저 옵션 세팅&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from selenium import webdriver
+
+def generate_chrome(
+    driver_path: str,
+    download_path: str,
+    headless: bool=False
+    ) -&amp;gt; webdriver:
+    &quot;&quot;&quot;
+    크롭 웹드라이버 인스턴스 생성
+
+    :param driver_path: 드라이버 경로
+    :param download_path: 파일 다운로드 경로
+    :param headless: headless 옵션 설정 플래그
+    :return webdriver: 크롬 드라이버 인스턴스
+    &quot;&quot;&quot;
+
+    options = webdriver.ChromeOptions()
+    if headless:
+        options.add_argument('headless')
+        options.add_argument('--disable-gpu')
+    options.add_experimental_option('prefs', {
+        'download.default_directory': download_path,
+        'download.prompt_for_download': False,
+        &quot;profile.default_content_settings.popups&quot;: 0,
+        &quot;safebrowsing.enabled&quot;: True
+    })
+
+    chrome = webdriver.Chrome(executable_path=driver_path, options=options)
+
+    if headless:
+        _enable_download_in_headless_chrome(chrome, download_path)
+
+    atexit.register(_close_chrome(chrome))       # 스크립트 종료전 무조건 크롬 종료
+
+    return chrome
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;headless&lt;/strong&gt; : 브라우저 창을 띄우지않고 프로세스를 실행합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;–disable-gpu&lt;/strong&gt; : 브라우저가 CPU의 부담을 줄이고자 렌더링 시 GPU를 사용하여 그래픽 가속을 하는데, GPU 버그가 일어날 수 있기때문에 GPU 사용을 disable 시킵니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;download.default_directory: download_path&lt;/strong&gt; : 다운로드 경로를 download_path로 설정합니다.
+&lt;strong&gt;download.prompt_for_download: False&lt;/strong&gt; :
+&lt;strong&gt;profile.default_content_settings.popups: 0&lt;/strong&gt; : 팝업을 금지합니다.
+&lt;strong&gt;safebrowsing.enabled: True&lt;/strong&gt; : 세이프 브라우징모드를 킵니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def _enable_download_in_headless_chrome(driver: webdriver, download_dir: str):
+        &quot;&quot;&quot;
+        headless does not allow file download: https://bugs.chromium.org/p/chromium/issues/detail?id=696481
+        크롬 드라이버는 크롤링을 이용한 해킹을 예방하기 위해 기본적으로 headless 모드에서 다운로드를 지원하지 않는다.
+        전문을 먼저 보내야 사용이 가능. 자세한 내용 위 링크 참조
+        :param driver: 크롬 드라이버 인스턴스
+        :param download_dir: 파일 다운로드 경로
+        &quot;&quot;&quot;
+        driver.command_executor._commands[&quot;send_command&quot;] = (&quot;POST&quot;, '/session/$sessionId/chromium/send_command')
+
+        params = {
+            'cmd': 'Page.setDownloadBehavior',
+            'params': {
+                'behavior': 'allow',
+                'downloadPath': download_dir
+            }
+        }
+        driver.execute(&quot;send_command&quot;, params)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def _close_chrome(chrome: webdriver):
+    &quot;&quot;&quot;
+    크롬 종료
+    :param chrome: 크롬 드라이버 인스턴스
+    &quot;&quot;&quot;
+    def close():
+        chrome.close()
+    return close
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;github 주소 (https://github.com/wind-flow/avdownload)&lt;/p&gt;</content><author><name>Kim-Gunwoo</name></author><category term="python" /><category term="automation" /><category term="script" /><summary type="html">개론</summary></entry><entry><title type="html">NFT란?</title><link href="https://wind-flow.github.io/Definition-NFT" rel="alternate" type="text/html" title="NFT란?" /><published>2021-11-04T09:22:00+09:00</published><updated>2021-11-04T09:22:00+09:00</updated><id>https://wind-flow.github.io/Definition-NFT</id><content type="html" xml:base="https://wind-flow.github.io/Definition-NFT">&lt;h1 id=&quot;nft의-정의&quot;&gt;NFT의 정의&lt;/h1&gt;
 &lt;p&gt;NFT는 &lt;strong&gt;Non-Fungible Token&lt;/strong&gt;의 약자로, 한국어로는 &lt;strong&gt;대체 불가능한 토큰&lt;/strong&gt;을 뜻합니다.&lt;br /&gt;
 NFT를 이해하기위해선 &lt;strong&gt;Fungible&lt;/strong&gt;의 뜻을 이해해야 합니다.&lt;/p&gt;
 
@@ -102,21 +262,7 @@ NFT를 이해하기위해선 &lt;strong&gt;Fungible&lt;/strong&gt;의 뜻을 이
 &lt;a href=&quot;https://youtu.be/5bhLfOE2LlY&quot;&gt;‘대세’ 된 NFT, 사고파는 법 제일 쉽게 이해하기 | 이일호 기자, BloterTV&lt;/a&gt;
 &lt;a href=&quot;https://brunch.co.kr/@jellyplanet/40&quot;&gt;손쉽게 NFT 거래하기&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Kim-Gunwoo</name></author><category term="blockchain" /><category term="NFT" /><summary type="html">NFT의 정의 NFT는 Non-Fungible Token의 약자로, 한국어로는 대체 불가능한 토큰을 뜻합니다. NFT를 이해하기위해선 Fungible의 뜻을 이해해야 합니다.</summary></entry><entry><title type="html">splunk 2021 bots 결과</title><link href="https://wind-flow.github.io/splunk-2021-BOTS-END-copy" rel="alternate" type="text/html" title="splunk 2021 bots 결과" /><published>2021-11-03T23:28:36+09:00</published><updated>2021-11-03T23:28:36+09:00</updated><id>https://wind-flow.github.io/splunk-2021-BOTS-END%20copy</id><content type="html" xml:base="https://wind-flow.github.io/splunk-2021-BOTS-END-copy">&lt;h1 id=&quot;2021-bots-결과&quot;&gt;2021 BOTS 결과&lt;/h1&gt;
-
-&lt;h3 id=&quot;신청정보&quot;&gt;신청정보&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v4/teamInfo.png&quot; alt=&quot;temInfo&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;팀-6등34개팀&quot;&gt;팀 6등(34개팀)&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v4/teamRanking.png&quot; alt=&quot;팀랭킹&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;개인-9등52명&quot;&gt;개인 9등(52명)&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://wind-flow.github.io/assets/built/images/splunk/bots/v4/individualRanking.png&quot; alt=&quot;개인랭킹&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;2022년에는 1등을 목표로..!&lt;/p&gt;</content><author><name>Kim-Gunwoo</name></author><category term="splunk" /><category term="bots" /><category term="soc" /><summary type="html">2021 BOTS 결과</summary></entry><entry><title type="html">splunk 2021 bots 결과</title><link href="https://wind-flow.github.io/splunk-2021-BOTS-END" rel="alternate" type="text/html" title="splunk 2021 bots 결과" /><published>2021-11-03T23:28:36+09:00</published><updated>2021-11-03T23:28:36+09:00</updated><id>https://wind-flow.github.io/splunk-2021-BOTS-END</id><content type="html" xml:base="https://wind-flow.github.io/splunk-2021-BOTS-END">&lt;h1 id=&quot;2021-bots-결과&quot;&gt;2021 BOTS 결과&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name>Kim-Gunwoo</name></author><category term="blockchain" /><category term="NFT" /><summary type="html">NFT의 정의 NFT는 Non-Fungible Token의 약자로, 한국어로는 대체 불가능한 토큰을 뜻합니다. NFT를 이해하기위해선 Fungible의 뜻을 이해해야 합니다.</summary></entry><entry><title type="html">splunk 2021 bots 결과</title><link href="https://wind-flow.github.io/splunk-2021-BOTS-END" rel="alternate" type="text/html" title="splunk 2021 bots 결과" /><published>2021-11-03T23:28:36+09:00</published><updated>2021-11-03T23:28:36+09:00</updated><id>https://wind-flow.github.io/splunk-2021-BOTS-END</id><content type="html" xml:base="https://wind-flow.github.io/splunk-2021-BOTS-END">&lt;h1 id=&quot;2021-bots-결과&quot;&gt;2021 BOTS 결과&lt;/h1&gt;
 
 &lt;h3 id=&quot;신청정보&quot;&gt;신청정보&lt;/h3&gt;
 
