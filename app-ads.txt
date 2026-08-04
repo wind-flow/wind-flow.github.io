@@ -1,1 +1,4 @@
+---
+permalink: /app-ads.txt
+---
 google.com, pub-6619794523475927, DIRECT, f08c47fec0942fa0
